@@ -17,7 +17,6 @@
         <thead>
         <tr>
             <th>Name</th>
-            <th>Settings</th>
             <th>Game</th>
             <th>Node</th>
             <th>Team</th>
@@ -31,16 +30,6 @@
             <tr>
                 <!-- Server name -->
                 <td>{{ $server->name }}</td>
-
-                <!-- Settings -->
-                <td>
-                    <button type="button" class="btn btn-sm btn-primary" data-toggle="popover" title="Settings" data-html="true" data-content="{{
-                        $server->configuration()->map(function ($v, $k) {
-                            return "<span class=\"badge badge-dark\">$k: <span class=\"font-normal\">$v</span></span><br>";
-                        })->join('')
-                    }}">Settings
-                    </button>
-                </td>
 
                 <!-- Game name -->
                 <td>{{ $server->game->name }}</td>
@@ -65,14 +54,12 @@
 
                 <!-- Actions -->
                 <td>
-                    @component('partials.form', ['method' => 'DELETE', 'url' => route('servers.destroy', $server)])
-                        <div class="btn-group" role="group">
-                            <a class="btn btn-outline-secondary btn-sm" href="{{ route('servers.show', $server) }}">View</a>
-                            @admin
-                            <button class="btn btn-danger btn-sm">Delete</button>
-                            @endadmin
-                        </div>
-                    @endcomponent
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-outline-secondary btn-sm" href="#">View</a>
+                        @admin
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                        @endadmin
+                    </div>
                 </td>
             </tr>
         @empty

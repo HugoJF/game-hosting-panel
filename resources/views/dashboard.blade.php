@@ -3,13 +3,6 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    @component('partials.card')
-        @slot('title')
-            Deploy new server
-        @endslot
-        @include('partials.location-deck')
-    @endcomponent
-    <br/>
     @include('cards.servers')
     <div class="flex justify-center">
         <div class="w-1/3 p-8">

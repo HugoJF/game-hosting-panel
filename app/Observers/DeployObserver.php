@@ -11,11 +11,10 @@ class DeployObserver
 {
 	public function created(Deploy $deploy)
 	{
-		/** @var Transaction $transaction */
-		$transaction = Transaction::make();
+		$transaction = new Transaction;
 
 		$transaction->value = 0;
-		$transaction->user()->associate(Auth::user());
+		$transaction->user()->associate($deploy->server->user);
 		$transaction->reason()->associate($deploy);
 
 		$transaction->save();
@@ -23,43 +22,5 @@ class DeployObserver
 		$deploy->transaction()->associate($transaction);
 
 		$deploy->save();
-
-		$deploy->fireDeployed();
-	}
-
-	public function deployed(Deploy $deploy)
-	{
-		/** @var IGameDriver $driver */
-		$driver = $deploy->server->driver();
-
-		$driver->setup($deploy);
-
-		$driver->start();
-	}
-
-	public function started(Deploy $deploy)
-	{
-		/** @var IGameDriver $driver */
-		$driver = $deploy->server->driver();
-
-		$driver->setup($deploy);
-
-		$driver->start();
-	}
-
-	public function stopped(Deploy $deploy)
-	{
-		/** @var IGameDriver $driver */
-		$driver = $deploy->server->driver();
-
-		$driver->stop();
-	}
-
-	public function terminated(Deploy $deploy)
-	{
-		/** @var IGameDriver $driver */
-		$driver = $deploy->server->driver();
-
-		$driver->stop();
 	}
 }

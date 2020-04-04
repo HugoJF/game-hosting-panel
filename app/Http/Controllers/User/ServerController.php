@@ -56,7 +56,7 @@ class ServerController extends Controller
         $server = $serverCreation->handle(auth()->user(), $game, $node, $request->input());
 
         // Dispatch async deployment
-        dispatch(new AsyncServerDeployment($server, $request->input()));
+        dispatch(new AsyncServerDeployment($server, 'hourly', $request->input()));
 
         return redirect()->route('home');
     }

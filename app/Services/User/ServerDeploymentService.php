@@ -3,6 +3,7 @@
 namespace App\Services\User;
 
 use App\Server;
+use Exception;
 use HCGCloud\Pterodactyl\Pterodactyl;
 
 class ServerDeploymentService
@@ -12,24 +13,35 @@ class ServerDeploymentService
      */
     protected $pterodactyl;
 
-    public function __construct(Pterodactyl $pterodactyl)
+    /**
+     * @var DeployCreationService
+     */
+    protected $deployCreation;
+
+    public function __construct(Pterodactyl $pterodactyl, DeployCreationService $deployCreation)
     {
         $this->pterodactyl = $pterodactyl;
+        $this->deployCreation = $deployCreation;
     }
 
-    public function handle(Server $server, array $config)
+    /**
+     * Deploys server by creating a Deploy model and updating server build config.
+     *
+     * @param Server $server
+     * @param string $billingPeriod
+     * @param array  $config
+     *
+     * @throws Exception
+     */
+    public function handle(Server $server, string $billingPeriod, array $config)
     {
-        $this->createDeployment();
-        $this->updateServerConfig();
+        $this->deployCreation->handle($server, $billingPeriod, $config);
+
+        $this->updateServerConfig($server, $config);
     }
 
-    protected function createDeployment()
+    protected function updateServerConfig(Server $server, array $config)
     {
-
-    }
-
-    protected function updateServerConfig()
-    {
-
+        $this->pterodactyl->updateServerBuild($server->panel_id, $config);
     }
 }

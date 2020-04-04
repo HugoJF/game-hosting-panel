@@ -48,7 +48,7 @@ class DeploymentConfigService
             'start_on_completion' => false,
             // This should be based on form data, since it needs to have enough space to install the game.
             'limits'              => [
-                'disk' => $config['storage'],
+                'disk' => $config['storage'] * 1000, // MB to GB
             ],
             'allocation'          => [
                 'default' => $allocation->id,

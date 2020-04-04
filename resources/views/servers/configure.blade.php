@@ -50,8 +50,8 @@
 
     <!-- Databases -->
     <div class="form-group">
-        <label for="database">Databases</label>
-        <select name="database" class="form-control" id="database">
+        <label for="databases">Databases</label>
+        <select name="databases" class="form-control" id="databases">
             <option value="1">1 database</option>
             <option value="2">2 databases</option>
             <option value="3">3 databases</option>

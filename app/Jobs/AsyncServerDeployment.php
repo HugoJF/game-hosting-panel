@@ -37,6 +37,11 @@ class AsyncServerDeployment implements ShouldQueue
     protected $config;
 
     /**
+     * @var string
+     */
+    protected $billingPeriod;
+
+    /**
      * The number of seconds to wait before retrying the job.
      *
      * @var int
@@ -54,11 +59,13 @@ class AsyncServerDeployment implements ShouldQueue
      * Create a new job instance.
      *
      * @param Server $server
+     * @param string $billingPeriod
      * @param array  $config
      */
-    public function __construct(Server $server, array $config)
+    public function __construct(Server $server, string $billingPeriod, array $config)
     {
         $this->server = $server;
+        $this->billingPeriod = $billingPeriod;
         $this->config = $config;
     }
 
@@ -79,7 +86,7 @@ class AsyncServerDeployment implements ShouldQueue
             throw new ServerNotInstalledException;
         }
 
-        $deploymentService->handle($this->server, $this->config);
+        $deploymentService->handle($this->server, $this->billingPeriod, $this->config);
     }
 
     /**
