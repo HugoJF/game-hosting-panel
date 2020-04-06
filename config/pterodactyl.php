@@ -28,7 +28,7 @@ return [
             'memory' => 512,
             'swap'   => 256,
             'io'     => 100,
-            'cpu'    => intval($data['cpu']),
+            'cpu'    => 10,
         ],
         'feature_limits' => [
             'databases'   => 0,
