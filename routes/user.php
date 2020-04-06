@@ -14,7 +14,7 @@
 */
 
 Route::get('template', function () {
-	return view('template.vip');
+    return view('template.vip');
 });
 
 /*
@@ -34,11 +34,11 @@ Route::get('faq', 'HomeController@faq')->name('faq');
 */
 
 Route::middleware('auth')->group(function () {
-	/*
-	|--------------------------------------------------------------------------
-	| Home routes
-	|--------------------------------------------------------------------------
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Home routes
+    |--------------------------------------------------------------------------
+    */
 
     Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
 
@@ -48,128 +48,130 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-	Route::prefix('transactions')->group(function () {
-		Route::get('/', 'TransactionController@index')->name('transactions.index')->middleware('can:list,App\Transaction');
-	});
+    Route::prefix('transactions')->group(function () {
+        Route::get('/', 'TransactionController@index')->name('transactions.index')->middleware('can:list,App\Transaction');
+    });
 
-	/*
-	|--------------------------------------------------------------------------
-	| User routes
-	|--------------------------------------------------------------------------
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | User routes
+    |--------------------------------------------------------------------------
+    */
 
-	// TODO: Policies
-	Route::prefix('users')->group(function () {
-		Route::get('{user}/edit', 'UserController@edit')->name('users.edit');
+    // TODO: Policies
+    Route::prefix('users')->group(function () {
+        Route::get('{user}/edit', 'UserController@edit')->name('users.edit');
 
-		Route::patch('{user}', 'UserController@update')->name('users.update');
-	});
+        Route::patch('{user}', 'UserController@update')->name('users.update');
+    });
 
-	/*
-	|--------------------------------------------------------------------------
-	| API Keys routes
-	|--------------------------------------------------------------------------
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | API Keys routes
+    |--------------------------------------------------------------------------
+    */
 
-	Route::prefix('api-keys')->group(function () {
-		Route::get('/', 'ApiKeyController@index')->name('api-keys.index')->middleware('can:index,App\ApiKey');
-		Route::get('create', 'ApiKeyController@create')->name('api-keys.create')->middleware('can:create,App\ApiKey');
-		Route::get('{key}', 'ApiKeyController@edit')->name('api-keys.edit')->middleware('can:update,key');
+    Route::prefix('api-keys')->group(function () {
+        Route::get('/', 'ApiKeyController@index')->name('api-keys.index')->middleware('can:index,App\ApiKey');
+        Route::get('create', 'ApiKeyController@create')->name('api-keys.create')->middleware('can:create,App\ApiKey');
+        Route::get('{key}', 'ApiKeyController@edit')->name('api-keys.edit')->middleware('can:update,key');
 
-		Route::post('/', 'ApiKeyController@store')->name('api-keys.store')->middleware('can:create,App\ApiKey');
+        Route::post('/', 'ApiKeyController@store')->name('api-keys.store')->middleware('can:create,App\ApiKey');
 
-		Route::patch('{key}', 'ApiKeyController@update')->name('api-keys.update')->middleware('can:update,key');
+        Route::patch('{key}', 'ApiKeyController@update')->name('api-keys.update')->middleware('can:update,key');
 
-		Route::delete('{key}', 'ApiKeyController@destroy')->name('api-keys.destroy')->middleware('can:delete,key');
-	});
+        Route::delete('{key}', 'ApiKeyController@destroy')->name('api-keys.destroy')->middleware('can:delete,key');
+    });
 
-	/*
-	|--------------------------------------------------------------------------
-	| Location routes
-	|--------------------------------------------------------------------------
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Location routes
+    |--------------------------------------------------------------------------
+    */
 
-	Route::prefix('locations')->group(function () {
-	    Route::get('/', 'LocationController@index')->name('locations.index');
-		Route::get('{location}', 'LocationController@show')->name('locations.show');
-	});
+    Route::prefix('locations')->group(function () {
+        Route::get('/', 'LocationController@index')->name('locations.index');
+        Route::get('{location}', 'LocationController@show')->name('locations.show');
+    });
 
-	/*
-	|--------------------------------------------------------------------------
-	| Coupon routes
-	|--------------------------------------------------------------------------
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Coupon routes
+    |--------------------------------------------------------------------------
+    */
 
-	Route::prefix('coupons')->group(function () {
-		Route::get('/', 'CouponController@index')->name('coupons.index')->middleware('can:index,App\Coupon');
-		Route::get('create', 'CouponController@create')->name('coupons.create')->middleware('can:create,App\Coupon');
-		Route::get('{coupon}', 'CouponController@show')->name('coupons.show')->middleware('can:view,coupon');
-		Route::get('{coupon}/edit', 'CouponController@edit')->name('coupons.edit')->middleware('can:update,coupon');
+    Route::prefix('coupons')->group(function () {
+        Route::get('/', 'CouponController@index')->name('coupons.index')->middleware('can:index,App\Coupon');
+        Route::get('create', 'CouponController@create')->name('coupons.create')->middleware('can:create,App\Coupon');
+        Route::get('{coupon}', 'CouponController@show')->name('coupons.show')->middleware('can:view,coupon');
+        Route::get('{coupon}/edit', 'CouponController@edit')->name('coupons.edit')->middleware('can:update,coupon');
 
-		Route::post('{coupon}/use', 'CouponController@use')->name('coupons.use')->middleware('can:use,coupon');
-		Route::post('/', 'CouponController@store')->name('coupons.store')->middleware('can:create,App\Coupon');
+        Route::post('{coupon}/use', 'CouponController@use')->name('coupons.use')->middleware('can:use,coupon');
+        Route::post('/', 'CouponController@store')->name('coupons.store')->middleware('can:create,App\Coupon');
 
-		Route::patch('{coupon}', 'CouponController@update')->name('coupons.update')->middleware('can:update,coupon');
+        Route::patch('{coupon}', 'CouponController@update')->name('coupons.update')->middleware('can:update,coupon');
 
-		Route::delete('{coupon}', 'CouponController@destroy')->name('coupons.destroy')->middleware('can:delete,coupon');
-	});
+        Route::delete('{coupon}', 'CouponController@destroy')->name('coupons.destroy')->middleware('can:delete,coupon');
+    });
 
-	/*
-	|--------------------------------------------------------------------------
-	| Order routes
-	|--------------------------------------------------------------------------
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Order routes
+    |--------------------------------------------------------------------------
+    */
 
-	Route::prefix('orders')->group(function () {
-		Route::get('/', 'OrderController@index')->name('orders.index');
-		Route::get('create', 'OrderController@create')->name('orders.create');
-		Route::get('create/{value}', 'OrderController@store')->name('orders.store');
-	});
+    Route::prefix('orders')->group(function () {
+        Route::get('/', 'OrderController@index')->name('orders.index');
+        Route::get('create', 'OrderController@create')->name('orders.create');
+        Route::get('create/{value}', 'OrderController@store')->name('orders.store');
+    });
 
-	/*
-	|--------------------------------------------------------------------------
-	| Node routes
-	|--------------------------------------------------------------------------
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Node routes
+    |--------------------------------------------------------------------------
+    */
 
-	Route::prefix('nodes')->group(function () {
-	    //
-	});
+    Route::prefix('nodes')->group(function () {
+        //
+    });
 
-	/*
-	|--------------------------------------------------------------------------
-	| Server routes
-	|--------------------------------------------------------------------------
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Server routes
+    |--------------------------------------------------------------------------
+    */
 
-	Route::prefix('servers')->group(function () {
-		Route::get('/', 'ServerController@index')->name('servers.index');
-		Route::get('create/game', 'ServerController@selectGame')->name('servers.select-game');
-		Route::get('create/game/{game}/location', 'ServerController@selectLocation')->name('servers.select-location');
-		Route::get('create/game/{game}/location/{location}/configure', 'ServerController@configure')->name('servers.configure');
+    Route::prefix('servers')->group(function () {
+        Route::get('/', 'ServerController@index')->name('servers.index');
+        Route::get('create/game', 'ServerController@selectGame')->name('servers.select-game');
+        Route::get('create/game/{game}/location', 'ServerController@selectLocation')->name('servers.select-location');
+        Route::get('create/game/{game}/location/{location}/configure', 'ServerController@configure')->name('servers.configure');
 
-		Route::post('game/{game}/location/{location}', 'ServerController@store')->name('servers.store');
-	});
+        Route::post('game/{game}/location/{location}', 'ServerController@store')->name('servers.store');
 
-	/*
-	|--------------------------------------------------------------------------
-	| Deploy routes
-	|--------------------------------------------------------------------------
-	*/
+        Route::delete('{server}', 'ServerController@destroy')->name('servers.destroy');
+    });
 
-	Route::prefix('deploys')->group(function () {
-		Route::get('{deploy}', 'DeployController@show')->name('deploys.show');
+    /*
+    |--------------------------------------------------------------------------
+    | Deploy routes
+    |--------------------------------------------------------------------------
+    */
 
-		Route::get('{server}/create', 'DeployController@create')->name('deploys.create');
-		Route::get('{server}/terminate', 'DeployController@terminate')->name('deploys.terminate');
-		Route::get('{server}/force-terminate', 'DeployController@forceTerminate')->name('deploys.force-terminate');
+    Route::prefix('deploys')->group(function () {
+        Route::get('{deploy}', 'DeployController@show')->name('deploys.show');
 
-		Route::get('{deploy}/edit', 'DeployController@edit')->name('deploys.edit');
-		Route::get('{deploy}/start', 'DeployController@start')->name('deploys.start');
-		Route::get('{deploy}/stop', 'DeployController@stop')->name('deploys.stop');
+        Route::get('{server}/create', 'DeployController@create')->name('deploys.create');
+        Route::get('{server}/terminate', 'DeployController@terminate')->name('deploys.terminate');
+        Route::get('{server}/force-terminate', 'DeployController@forceTerminate')->name('deploys.force-terminate');
 
-		Route::patch('{deploy}', 'DeployController@update')->name('deploys.update');
+        Route::get('{deploy}/edit', 'DeployController@edit')->name('deploys.edit');
+        Route::get('{deploy}/start', 'DeployController@start')->name('deploys.start');
+        Route::get('{deploy}/stop', 'DeployController@stop')->name('deploys.stop');
 
-		Route::post('{server}', 'DeployController@store')->name('deploys.store');
-	});
+        Route::patch('{deploy}', 'DeployController@update')->name('deploys.update');
+
+        Route::post('{server}', 'DeployController@store')->name('deploys.store');
+    });
 });

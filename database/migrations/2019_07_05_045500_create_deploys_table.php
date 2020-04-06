@@ -17,6 +17,7 @@ class CreateDeploysTable extends Migration
 			$table->bigIncrements('id');
 
 			$table->string('billing_period');
+			$table->unsignedInteger('cost_per_period');
 
             $table->unsignedInteger('cpu');
             $table->unsignedInteger('ram');
@@ -27,13 +28,14 @@ class CreateDeploysTable extends Migration
 			$table->uuid('transaction_id')->nullable();
 			$table->foreign('transaction_id')->references('id')->on('transactions');
 
-			$table->unsignedBigInteger('server_id');
+			$table->unsignedBigInteger('server_id')->nullable();
 			$table->foreign('server_id')->references('id')->on('servers');
+
+			$table->string('termination_reason')->nullable();
+            $table->dateTime('terminated_at')->nullable();
 
 			$table->unsignedBigInteger('terminated_by')->nullable();
 			$table->foreign('terminated_by')->references('id')->on('users');
-
-			$table->dateTime('terminated_at')->nullable();
 
 			$table->timestamps();
 		});

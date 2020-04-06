@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Exceptions\ServerNotInstalledException;
 use App\Server;
+use App\Services\ServerService;
 use App\Services\User\ServerDeploymentService;
 use DateTime;
 use HCGCloud\Pterodactyl\Pterodactyl;
@@ -73,33 +74,25 @@ class AsyncServerDeployment implements ShouldQueue
      * Execute the job.
      *
      * @param Pterodactyl             $pterodactyl
+     * @param ServerService           $serverService
      * @param ServerDeploymentService $deploymentService
      *
      * @return void
      * @throws ServerNotInstalledException
      */
-    public function handle(Pterodactyl $pterodactyl, ServerDeploymentService $deploymentService)
+    public function handle(
+        Pterodactyl $pterodactyl,
+        ServerService $serverService,
+        ServerDeploymentService $deploymentService
+    )
     {
         $this->pterodactyl = $pterodactyl;
 
-        if (!$this->serverInstalled()) {
+        if (!$serverService->isInstalled($this->server)) {
             throw new ServerNotInstalledException;
         }
 
         $deploymentService->handle($this->server, $this->billingPeriod, $this->config);
-    }
-
-    /**
-     * Checks if server has finished game installation
-     *
-     * @return bool
-     */
-    protected function serverInstalled()
-    {
-        $resource = $this->pterodactyl->server($this->server->panel_id);
-
-        // Waiting installation if container is NOT installed
-        return $resource->container['installed'];
     }
 
     /**

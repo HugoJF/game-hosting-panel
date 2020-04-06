@@ -5,6 +5,18 @@
 
     {!! Form::open(['method' => 'POST', 'url' => route('servers.store', [$game, $location])]) !!}
 
+    <!-- Period -->
+    <div class="form-group">
+        <label for="period">CPU</label>
+        <select name="period" class="form-control" id="period">
+            <option value="minutely">Minutely</option>
+            <option value="hourly">Hourly</option>
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+        </select>
+    </div>
+
     <!-- Name -->
     <div class="form-group">
         <label for="name">Name</label>

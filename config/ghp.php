@@ -10,6 +10,13 @@
  */
 
 return [
+    'termination-reasons' => [
+        'TERMINATED_BY_ADMIN',
+        'TERMINATED_BY_USER',
+        'INSUFFICIENT_BALANCE',
+        'INSUFFICIENT_RESOURCES',
+    ],
+
     'billing-periods' => [
         'minutely',
         'hourly',

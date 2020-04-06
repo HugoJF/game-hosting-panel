@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\HasTransactions;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,6 +10,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
+    use HasTransactions;
 	use Notifiable;
 
 	/**
@@ -39,11 +41,6 @@ class User extends Authenticatable implements JWTSubject
 		'email_verified_at' => 'datetime',
 	];
 
-	public function transactions()
-	{
-		return $this->hasMany(Transaction::class);
-	}
-
 	public function servers()
 	{
 		return $this->hasMany(Server::class);
@@ -62,11 +59,6 @@ class User extends Authenticatable implements JWTSubject
 	public function apiKeys()
 	{
 		return $this->hasMany(ApiKey::class);
-	}
-
-	public function getBalanceAttribute()
-	{
-		return $this->transactions()->sum('value');
 	}
 
 	/**

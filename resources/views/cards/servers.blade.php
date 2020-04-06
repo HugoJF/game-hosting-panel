@@ -19,7 +19,6 @@
             <th>Name</th>
             <th>Game</th>
             <th>Node</th>
-            <th>Team</th>
             <th>Deploys</th>
             <th>Status</th>
             <th>Actions</th>
@@ -37,9 +36,6 @@
                 <!-- Node name -->
                 <td>{{ $server->node->name }}</td>
 
-                <!-- Team name -->
-                <td>{{ $server->team->name ?? 'N/A' }}</td>
-
                 <!-- Deploys -->
                 <td>{{ $server->deploys()->count() }}</td>
 
@@ -54,12 +50,14 @@
 
                 <!-- Actions -->
                 <td>
+                    {!! Form::open(['method' => 'DELETE', 'url' => route('servers.destroy', $server)]) !!}
                     <div class="btn-group" role="group">
                         <a class="btn btn-outline-secondary btn-sm" href="#">View</a>
                         @admin
                         <button class="btn btn-danger btn-sm">Delete</button>
                         @endadmin
                     </div>
+                    {!! Form::close() !!}
                 </td>
             </tr>
         @empty

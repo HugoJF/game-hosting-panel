@@ -3,6 +3,7 @@
 namespace App\Services\User;
 
 use App\Deploy;
+use App\Exceptions\InsufficientBalanceException;
 use App\Exceptions\InvalidBillingPeriodException;
 use App\Server;
 use Exception;
@@ -10,6 +11,16 @@ use Illuminate\Support\Facades\DB;
 
 class DeployCreationService
 {
+    /**
+     * @var DeployCostService
+     */
+    protected $costService;
+
+    public function __construct(DeployCostService $costService)
+    {
+        $this->costService = $costService;
+    }
+
     /**
      * Creates a new Deploy model inside a migration.
      *
@@ -26,18 +37,25 @@ class DeployCreationService
             throw new InvalidBillingPeriodException($billingPeriod);
         }
 
+        $costPerPeriod = $this->costService->getCostPerPeriod($server->node, $billingPeriod, $config);
+
+        if (!$server->user->hasBalance($costPerPeriod)) {
+            throw new InsufficientBalanceException;
+        }
+
         try {
             DB::beginTransaction();
 
             $deploy = new Deploy();
             $deploy->forceFill([
-                'cpu'            => $config['cpu'],
-                'ram'            => $config['ram'],
-                'disk'           => $config['storage'],
-                'io'             => 500,
-                'databases'      => $config['databases'],
-                'billing_period' => $billingPeriod,
-                'server_id'      => $server->id,
+                'billing_period'  => $billingPeriod,
+                'cost_per_period' => $costPerPeriod, // TODO: actually compute this
+                'cpu'             => $config['cpu'],
+                'ram'             => $config['ram'],
+                'disk'            => $config['storage'],
+                'io'              => 500,
+                'databases'       => $config['databases'],
+                'server_id'       => $server->id,
             ])->save();
 
             DB::commit();
