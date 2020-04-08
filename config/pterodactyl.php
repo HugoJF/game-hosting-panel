@@ -29,6 +29,7 @@ return [
             'swap'   => 256,
             'io'     => 100,
             'cpu'    => 10,
+            'disk'   => 10,
         ],
         'feature_limits' => [
             'databases'   => 0,

@@ -2,10 +2,8 @@
 
 namespace App\Observers;
 
-use App\Contracts\IGameDriver;
 use App\Deploy;
 use App\Transaction;
-use Illuminate\Support\Facades\Auth;
 
 class DeployObserver
 {
@@ -15,7 +13,7 @@ class DeployObserver
 
 		$transaction->value = 0;
 		$transaction->user()->associate($deploy->server->user);
-		$transaction->reason()->associate($deploy);
+//		$transaction->reason()->associate($deploy);
 
 		$transaction->save();
 

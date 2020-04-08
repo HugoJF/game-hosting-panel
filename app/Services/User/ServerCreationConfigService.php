@@ -9,12 +9,16 @@ use HCGCloud\Pterodactyl\Pterodactyl;
 use HCGCloud\Pterodactyl\Resources\Allocation;
 use HCGCloud\Pterodactyl\Resources\Egg;
 
-class DeploymentConfigService
+class ServerCreationConfigService
 {
-    /** @var Pterodactyl */
+    /**
+     * @var Pterodactyl
+     */
     protected $pterodactyl;
 
-    /** @var AllocationSelectionService */
+    /**
+     * @var AllocationSelectionService
+     */
     protected $allocationService;
 
     public function __construct(Pterodactyl $pterodactyl, AllocationSelectionService $allocationService)
@@ -46,10 +50,6 @@ class DeploymentConfigService
             'user'                => $user->panel_id,
             'node_id'             => $node->id,
             'start_on_completion' => false,
-            // This should be based on form data, since it needs to have enough space to install the game.
-            'limits'              => [
-                'disk' => $config['storage'] * 1000, // MB to GB
-            ],
             'allocation'          => [
                 'default' => $allocation->id,
             ],
@@ -60,13 +60,13 @@ class DeploymentConfigService
     {
         $egg = $this->pterodactyl->egg($game->nest_id, $game->id, ['variables']);
 
-        $properties = $this->getProperties($egg);
-        $environment = $this->getEnvironment($egg);
+        $properties = $this->getImageProperties($egg);
+        $environment = $this->getDefaultEnvironment($egg);
 
         return array_merge($properties, $environment);
     }
 
-    protected function getProperties(Egg $egg)
+    protected function getImageProperties(Egg $egg)
     {
         return [
             'egg'          => $egg->id,
@@ -75,12 +75,12 @@ class DeploymentConfigService
         ];
     }
 
-    protected function getEnvironment(Egg $egg)
+    protected function getDefaultEnvironment(Egg $egg)
     {
-        $env = collect($egg->relationships['variables'])->mapWithKeys(function ($v) {
+        $environment = collect($egg->relationships['variables'])->mapWithKeys(function ($v) {
             return [$v['env_variable'] => $v['default_value']];
         })->toArray();
 
-        return ['environment' => $env];
+        return ['environment' => $environment];
     }
 }

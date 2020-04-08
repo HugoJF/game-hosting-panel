@@ -10,13 +10,17 @@ use HCGCloud\Pterodactyl\Pterodactyl;
 
 class ServerCreationService
 {
-    /** @var Pterodactyl */
+    /**
+     * @var Pterodactyl
+     */
     protected $pterodactyl;
 
-    /** @var DeploymentConfigService */
+    /**
+     * @var ServerCreationConfigService
+     */
     protected $configService;
 
-    public function __construct(Pterodactyl $pterodactyl, DeploymentConfigService $configService)
+    public function __construct(Pterodactyl $pterodactyl, ServerCreationConfigService $configService)
     {
         $this->pterodactyl = $pterodactyl;
         $this->configService = $configService;
@@ -41,14 +45,13 @@ class ServerCreationService
 
     protected function preCreateServerModel(Node $node, Game $game, array $config)
     {
-        Server::unguard();
-        $server = Server::create([
+        $server = new Server;
+        $server->forceFill([
             'name'    => $config['name'],
             'user_id' => auth()->id(),
             'game_id' => $game->id,
             'node_id' => $node->id,
-        ]);
-        Server::reguard();
+        ])->save();
 
         return $server;
     }

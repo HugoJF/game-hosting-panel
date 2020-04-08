@@ -20,20 +20,45 @@
                     </div>
                 </div>
                 <div class="flex px-2 py-4 bg-gray-100 border border-t-0 rounded-b-lg">
-                    <input class="hidden" id="cpu" name="cpu" type="radio" value="25">
-                    <label for="cpu" class="trans flex items-center justify-center w-1/4 py-4 mx-2 text-2xl text-gray-800 border rounded-lg cursor-pointer select-none hover:bg-white hover:text-gray-900 hover:shadow">
+                    <!-- CPU 25% -->
+                    <input class="hidden" id="cpu-25" name="cpu" type="radio" value="25">
+                    <label for="cpu-25" class="
+                        trans flex items-center justify-center w-1/4 py-4 mx-2
+                        text-2xl text-gray-800 border rounded-lg cursor-pointer select-none
+                        checked:bg-gray-900 checked:text-gray-100 checked:shadow-md checked:font-medium checked:cursor-default
+                        hover:bg-white hover:text-gray-900 hover:shadow">
                         25%
                     </label>
-                    <input class="hidden" id="cpu" name="cpu" type="radio" value="50">
-                    <div class="trans flex items-center justify-center w-1/4 py-4 mx-2 bg-gray-900 font-medium text-2xl text-gray-100 rounded-lg cursor-pointer select-none shadow-md">
+
+                    <!-- CPU 50% -->
+                    <input class="hidden" id="cpu-50" name="cpu" type="radio" value="50">
+                    <label for="cpu-50" class="
+                        trans flex items-center justify-center w-1/4 py-4 mx-2
+                        text-2xl text-gray-800 border rounded-lg cursor-pointer select-none
+                        checked:bg-gray-900 checked:text-gray-100 checked:shadow-md checked:font-medium checked:cursor-default
+                        hover:bg-white hover:text-gray-900 hover:shadow">
                         50%
-                    </div>
-                    <div class="trans flex items-center justify-center w-1/4 py-4 mx-2 text-2xl text-gray-800 border rounded-lg cursor-pointer select-none hover:bg-white hover:text-gray-900 hover:shadow">
+                    </label>
+
+                    <!-- CPU 75% -->
+                    <input class="hidden" id="cpu-75" name="cpu" type="radio" value="75">
+                    <label for="cpu-75" class="
+                        trans flex items-center justify-center w-1/4 py-4 mx-2
+                        text-2xl text-gray-800 border rounded-lg cursor-pointer select-none
+                        checked:bg-gray-900 checked:text-gray-100 checked:shadow-md checked:font-medium checked:cursor-default
+                        hover:bg-white hover:text-gray-900 hover:shadow">
                         75%
-                    </div>
-                    <div class="trans flex items-center justify-center w-1/4 py-4 mx-2 text-2xl text-gray-800 border rounded-lg cursor-pointer select-none hover:bg-white hover:text-gray-900 hover:shadow">
+                    </label>
+
+                    <!-- CPU 100% -->
+                    <input class="hidden" id="cpu-100" name="cpu" type="radio" value="100">
+                    <label for="cpu-100" class="
+                        trans flex items-center justify-center w-1/4 py-4 mx-2
+                        text-2xl text-gray-800 border rounded-lg cursor-pointer select-none
+                        checked:bg-gray-900 checked:text-gray-100 checked:shadow-md checked:font-medium checked:cursor-default
+                        hover:bg-white hover:text-gray-900 hover:shadow">
                         100%
-                    </div>
+                    </label>
                 </div>
             </div>
             <div class="mt-8">
@@ -50,24 +75,65 @@
                     </div>
                 </div>
                 <div class="flex px-2 py-4 bg-gray-100 border border-t-0 rounded-b-lg">
-                    <div class="trans flex items-center justify-center w-1/4 py-4 mx-2 text-2xl text-gray-800 border rounded-lg cursor-pointer select-none hover:bg-white hover:text-gray-900 hover:shadow">
+                    <!-- RAM 1GB -->
+                    <input class="hidden" id="ram-1" name="ram" type="radio" value="1">
+                    <label for="ram-1" class="
+                        trans flex items-center justify-center w-1/4 py-4 mx-2
+                        text-2xl text-gray-800 border rounded-lg cursor-pointer select-none
+                        checked:bg-gray-900 checked:text-gray-100 checked:shadow-md checked:font-medium checked:cursor-default
+                        hover:bg-white hover:text-gray-900 hover:shadow">
                         1GB
-                    </div>
-                    <div class="trans flex items-center justify-center w-1/4 py-4 mx-2 bg-gray-900 font-medium text-2xl text-gray-100 rounded-lg cursor-pointer select-none shadow-md">
+                    </label>
+
+                    <!-- RAM 2GB -->
+                    <input class="hidden" id="ram-2" name="ram" type="radio" value="100">
+                    <label for="ram-2" class="
+                        trans flex items-center justify-center w-1/4 py-4 mx-2
+                        text-2xl text-gray-800 border rounded-lg cursor-pointer select-none
+                        checked:bg-gray-900 checked:text-gray-100 checked:shadow-md checked:font-medium checked:cursor-default
+                        hover:bg-white hover:text-gray-900 hover:shadow">
                         2GB
-                    </div>
-                    <div class="trans flex items-center justify-center w-1/4 py-4 mx-2 text-2xl text-gray-800 border rounded-lg cursor-pointer select-none hover:bg-white hover:text-gray-900 hover:shadow">
+                    </label>
+
+                    <!-- RAM 3GB -->
+                    <input class="hidden" id="ram-3" name="ram" type="radio" value="100">
+                    <label for="ram-3" class="
+                        trans flex items-center justify-center w-1/4 py-4 mx-2
+                        text-2xl text-gray-800 border rounded-lg cursor-pointer select-none
+                        checked:bg-gray-900 checked:text-gray-100 checked:shadow-md checked:font-medium checked:cursor-default
+                        hover:bg-white hover:text-gray-900 hover:shadow">
                         3GB
-                    </div>
-                    <div class="trans flex items-center justify-center w-1/4 py-4 mx-2 text-2xl text-gray-800 border rounded-lg cursor-pointer select-none hover:bg-white hover:text-gray-900 hover:shadow">
+                    </label>
+
+                    <!-- RAM 4GB -->
+                    <input class="hidden" id="ram-4" name="ram" type="radio" value="100">
+                    <label for="ram-4" class="
+                        trans flex items-center justify-center w-1/4 py-4 mx-2
+                        text-2xl text-gray-800 border rounded-lg cursor-pointer select-none
+                        checked:bg-gray-900 checked:text-gray-100 checked:shadow-md checked:font-medium checked:cursor-default
+                        hover:bg-white hover:text-gray-900 hover:shadow">
                         4GB
-                    </div>
-                    <div class="trans flex items-center justify-center w-1/4 py-4 mx-2 text-2xl text-gray-800 border rounded-lg cursor-pointer select-none hover:bg-white hover:text-gray-900 hover:shadow">
+                    </label>
+
+                    <!-- RAM 5GB -->
+                    <input class="hidden" id="ram-5" name="ram" type="radio" value="100">
+                    <label for="ram-5" class="
+                        trans flex items-center justify-center w-1/4 py-4 mx-2
+                        text-2xl text-gray-800 border rounded-lg cursor-pointer select-none
+                        checked:bg-gray-900 checked:text-gray-100 checked:shadow-md checked:font-medium checked:cursor-default
+                        hover:bg-white hover:text-gray-900 hover:shadow">
                         5GB
-                    </div>
-                    <div class="trans flex items-center justify-center w-1/4 py-4 mx-2 text-2xl text-gray-800 border rounded-lg cursor-pointer select-none hover:bg-white hover:text-gray-900 hover:shadow">
+                    </label>
+
+                    <!-- RAM 6GB -->
+                    <input class="hidden" id="ram-6" name="ram" type="radio" value="100">
+                    <label for="ram-6" class="
+                        trans flex items-center justify-center w-1/4 py-4 mx-2
+                        text-2xl text-gray-800 border rounded-lg cursor-pointer select-none
+                        checked:bg-gray-900 checked:text-gray-100 checked:shadow-md checked:font-medium checked:cursor-default
+                        hover:bg-white hover:text-gray-900 hover:shadow">
                         6GB
-                    </div>
+                    </label>
                 </div>
             </div>
             <div class="mt-8">
@@ -84,21 +150,55 @@
                     </div>
                 </div>
                 <div class="flex px-2 py-4 bg-gray-100 border border-t-0 rounded-b-lg">
-                    <div class="trans flex items-center justify-center w-1/4 py-4 mx-2 text-2xl text-gray-800 border rounded-lg cursor-pointer select-none hover:bg-white hover:text-gray-900 hover:shadow">
+                    <!-- Storage 10GB -->
+                    <input class="hidden" id="storage-10000" name="storage" type="radio" value="10000">
+                    <label for="storage-10000" class="
+                        trans flex items-center justify-center w-1/4 py-4 mx-2
+                        text-2xl text-gray-800 border rounded-lg cursor-pointer select-none
+                        checked:bg-gray-900 checked:text-gray-100 checked:shadow-md checked:font-medium checked:cursor-default
+                        hover:bg-white hover:text-gray-900 hover:shadow">
                         10GB
-                    </div>
-                    <div class="trans flex items-center justify-center w-1/4 py-4 mx-2 text-2xl text-gray-800 border rounded-lg cursor-pointer select-none hover:bg-white hover:text-gray-900 hover:shadow">
+                    </label>
+
+                    <!-- Storage 20GB -->
+                    <input class="hidden" id="storage-20000" name="storage" type="radio" value="20000">
+                    <label for="storage-20000" class="
+                        trans flex items-center justify-center w-1/4 py-4 mx-2
+                        text-2xl text-gray-800 border rounded-lg cursor-pointer select-none
+                        checked:bg-gray-900 checked:text-gray-100 checked:shadow-md checked:font-medium checked:cursor-default
+                        hover:bg-white hover:text-gray-900 hover:shadow">
                         20GB
-                    </div>
-                    <div class="trans flex items-center justify-center w-1/4 py-4 mx-2 text-2xl text-gray-800 border rounded-lg cursor-pointer select-none hover:bg-white hover:text-gray-900 hover:shadow">
+                    </label>
+
+                    <!-- Storage 30GB -->
+                    <input class="hidden" id="storage-30000" name="storage" type="radio" value="30000">
+                    <label for="storage-30000" class="
+                        trans flex items-center justify-center w-1/4 py-4 mx-2
+                        text-2xl text-gray-800 border rounded-lg cursor-pointer select-none
+                        checked:bg-gray-900 checked:text-gray-100 checked:shadow-md checked:font-medium checked:cursor-default
+                        hover:bg-white hover:text-gray-900 hover:shadow">
                         30GB
-                    </div>
-                    <div class="trans flex items-center justify-center w-1/4 py-4 mx-2 text-2xl text-gray-800 border rounded-lg cursor-pointer select-none hover:bg-white hover:text-gray-900 hover:shadow">
+                    </label>
+
+                    <!-- Storage 40GB -->
+                    <input class="hidden" id="storage-40000" name="storage" type="radio" value="40000">
+                    <label for="storage-40000" class="
+                        trans flex items-center justify-center w-1/4 py-4 mx-2
+                        text-2xl text-gray-800 border rounded-lg cursor-pointer select-none
+                        checked:bg-gray-900 checked:text-gray-100 checked:shadow-md checked:font-medium checked:cursor-default
+                        hover:bg-white hover:text-gray-900 hover:shadow">
                         40GB
-                    </div>
-                    <div class="trans flex items-center justify-center w-1/4 py-4 mx-2 bg-gray-900 font-medium text-2xl text-gray-100 rounded-lg cursor-pointer select-none shadow-md">
+                    </label>
+
+                    <!-- Storage 50GB -->
+                    <input class="hidden" id="storage-50000" name="storage" type="radio" value="50000">
+                    <label for="storage-50000" class="
+                        trans flex items-center justify-center w-1/4 py-4 mx-2
+                        text-2xl text-gray-800 border rounded-lg cursor-pointer select-none
+                        checked:bg-gray-900 checked:text-gray-100 checked:shadow-md checked:font-medium checked:cursor-default
+                        hover:bg-white hover:text-gray-900 hover:shadow">
                         50GB
-                    </div>
+                    </label>
                 </div>
             </div>
         </div>

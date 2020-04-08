@@ -3,6 +3,7 @@
 namespace App\Services\User;
 
 use App\Exceptions\InsufficientBalanceException;
+use App\Exceptions\TooManyServersException;
 use App\Jobs\AsyncServerDeployment;
 use App\Node;
 use App\Server;
@@ -52,7 +53,7 @@ class AutoServerDeploymentService
      */
     public function handle(Server $server, string $billingPeriod, array $config)
     {
-        $this->preChecks($server->user);
+        $this->preChecks($server->user, $server->node, $billingPeriod, $config);
 
         if ($this->serverService->isInstalled($server)) {
             $this->deploymentService->handle($server, $billingPeriod, $config);
@@ -68,11 +69,16 @@ class AutoServerDeploymentService
      * @param array  $config
      *
      * @throws InsufficientBalanceException
+     * @throws TooManyServersException
      */
     public function preChecks(User $user, Node $node, string $billingPeriod, array $config)
     {
         if (!$user->hasBalance($this->costService->getCostPerPeriod($node, $billingPeriod, $config))) {
             throw new InsufficientBalanceException;
+        }
+
+        if ($user->servers()->count() >= $user->server_limit) {
+            throw new TooManyServersException;
         }
     }
 }

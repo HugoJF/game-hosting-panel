@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin');
+
 module.exports = {
     prefix: '',
     important: true,
@@ -305,7 +307,7 @@ module.exports = {
             disc: 'disc',
             decimal: 'decimal',
         },
-        margin: (theme, { negative }) => ({
+        margin: (theme, {negative}) => ({
             auto: 'auto',
             ...theme('spacing'),
             ...negative(theme('spacing')),
@@ -424,7 +426,7 @@ module.exports = {
         alignSelf: ['responsive'],
         appearance: ['responsive'],
         backgroundAttachment: ['responsive'],
-        backgroundColor: ['responsive', 'hover', 'focus'],
+        backgroundColor: ['responsive', 'hover', 'focus', 'checked'],
         backgroundPosition: ['responsive'],
         backgroundRepeat: ['responsive'],
         backgroundSize: ['responsive'],
@@ -433,8 +435,8 @@ module.exports = {
         borderRadius: ['responsive'],
         borderStyle: ['responsive'],
         borderWidth: ['responsive'],
-        boxShadow: ['responsive', 'hover', 'focus'],
-        cursor: ['responsive'],
+        boxShadow: ['responsive', 'hover', 'focus', 'checked'],
+        cursor: ['responsive', 'checked'],
         display: ['responsive'],
         fill: ['responsive'],
         flex: ['responsive'],
@@ -473,7 +475,7 @@ module.exports = {
         stroke: ['responsive'],
         tableLayout: ['responsive'],
         textAlign: ['responsive'],
-        textColor: ['responsive', 'hover', 'focus'],
+        textColor: ['responsive', 'hover', 'focus', 'checked'],
         textDecoration: ['responsive', 'hover', 'focus'],
         textTransform: ['responsive'],
         userSelect: ['responsive'],
@@ -485,5 +487,13 @@ module.exports = {
         zIndex: ['responsive'],
     },
     corePlugins: {},
-    plugins: [],
+    plugins: [
+        plugin(({addVariant, e}) => {
+            addVariant('checked', ({modifySelectors, separator}) => {
+                modifySelectors(({className}) => {
+                    return `:checked + .${e(`checked${separator}${className}`)}`
+                })
+            });
+        })
+    ],
 }

@@ -20,8 +20,6 @@ class CreateTransactionsTable extends Migration
 
             $table->unsignedInteger('user_id')->references('id')->on('users');
 
-            $table->morphs('reason');
-
             $table->timestamps();
         });
     }

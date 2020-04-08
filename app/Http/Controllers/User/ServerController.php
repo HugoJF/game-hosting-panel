@@ -56,18 +56,19 @@ class ServerController extends Controller
     {
         // TODO: Extract form parameters
         $config = $request->input();
+        $period = $request->input('period');
 
         // Selects node to create the server on
         $node = $nodeSelection->handle($location);
 
-        // Check if user can create the server
-        $autoDeployment->preChecks(auth()->user(), $node, 'minutely', $config);
+        // Checks if user can deploy a server, before creating the server.
+        $autoDeployment->preChecks(auth()->user(), $node, $period, $config);
 
         // Create the server
         $server = $serverCreation->handle(auth()->user(), $game, $node, $config);
 
         // Dispatch async deployment
-        $autoDeployment->handle($server, 'minutely', $config);
+        $autoDeployment->handle($server, $period, $config);
 
         flash()->success("Server created successfully! It will be automatically deployed once installed.");
 
