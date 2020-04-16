@@ -51,8 +51,8 @@ class DeployCreationService
                 'billing_period'  => $billingPeriod,
                 'cost_per_period' => $costPerPeriod, // TODO: actually compute this
                 'cpu'             => $config['cpu'],
-                'ram'             => $config['ram'],
-                'disk'            => $config['storage'],
+                'ram'             => $config['memory'],
+                'disk'            => $config['disk'],
                 'io'              => 500,
                 'databases'       => $config['databases'],
                 'server_id'       => $server->id,

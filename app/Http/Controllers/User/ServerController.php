@@ -4,13 +4,14 @@ namespace App\Http\Controllers\User;
 
 use App\Game;
 use App\Http\Controllers\Controller;
-use App\Jobs\AsyncServerDeployment;
 use App\Location;
 use App\Server;
 use App\Services\User\AutoServerDeploymentService;
+use App\Services\User\DeployCreationService;
 use App\Services\User\NodeSelectionService;
 use App\Services\User\ServerCreationService;
 use App\Services\User\ServerDeletionService;
+use App\Services\User\ServerDeploymentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,6 +23,13 @@ class ServerController extends Controller
         $servers = $user->servers;
 
         return view('servers.index', compact('user', 'servers'));
+    }
+
+    public function show(Server $server)
+    {
+        $deploys = $server->deploys;
+
+        return view('servers.show', compact('server', 'deploys'));
     }
 
     public function selectGame()
@@ -67,12 +75,35 @@ class ServerController extends Controller
         // Create the server
         $server = $serverCreation->handle(auth()->user(), $game, $node, $config);
 
-        // Dispatch async deployment
-        $autoDeployment->handle($server, $period, $config);
-
         flash()->success("Server created successfully! It will be automatically deployed once installed.");
 
         return redirect()->route('home');
+    }
+
+    public function deploy(ServerDeploymentService $deployment, Server $server)
+    {
+        // deploy server
+        $deployment->handle($server, 'daily', [
+            'cpu'       => rand(10, 100),
+            'memory'    => rand(512, 2048),
+            'disk'      => rand(10, 10000),
+            'databases' => rand(0, 5),
+        ]);
+
+        flash()->success('Server deployed');
+
+        return back();
+    }
+
+    public function customDeploy(Request $request, Server $server)
+    {
+        // validate request
+
+        // generate launch options
+
+        // deploy server
+
+        return back();
     }
 
     public function destroy(ServerDeletionService $deletionService, Server $server)

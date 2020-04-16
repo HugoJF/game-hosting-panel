@@ -4,10 +4,12 @@ namespace App\Services\User;
 
 use App\Game;
 use App\Node;
+use App\Server;
 use App\User;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use HCGCloud\Pterodactyl\Resources\Allocation;
 use HCGCloud\Pterodactyl\Resources\Egg;
+use Illuminate\Support\Str;
 
 class ServerCreationConfigService
 {
@@ -27,13 +29,13 @@ class ServerCreationConfigService
         $this->allocationService = $allocationService;
     }
 
-    public function handle(User $user, Node $node, Game $game, array $config)
+    public function handle(User $user, Node $node, Game $game, Server $server, array $config)
     {
         $allocation = $this->allocationService->handle($node);
 
         $defaults = $this->getDefaultConfig();
         $base = $this->getBaseConfig($game);
-        $config = $this->getConfig($user, $node, $allocation, $config);
+        $config = $this->getConfig($user, $node, $allocation, $server, $config);
 
         return array_merge_recursive($defaults, $base, $config);
     }
@@ -43,10 +45,10 @@ class ServerCreationConfigService
         return config('pterodactyl.server-creation-defaults');
     }
 
-    protected function getConfig(User $user, Node $node, Allocation $allocation, array $config)
+    protected function getConfig(User $user, Node $node, Allocation $allocation, Server $server, array $config)
     {
         return [
-            'name'                => $config['name'],
+            'name'                => $server->name,
             'user'                => $user->panel_id,
             'node_id'             => $node->id,
             'start_on_completion' => false,

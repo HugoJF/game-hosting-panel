@@ -41,7 +41,9 @@
 
                 <!-- Status -->
                 <td>
-                    @if($server->currentDeploy()->exists())
+                    @if(!$server->installed_at)
+                        <span class="badge badge-warning">Installing</span>
+                    @elseif($server->currentDeploy()->exists())
                         <span class="badge badge-primary">Deployed</span>
                     @else
                         <span class="badge badge-dark">Stopped</span>
@@ -52,7 +54,7 @@
                 <td>
                     {!! Form::open(['method' => 'DELETE', 'url' => route('servers.destroy', $server)]) !!}
                     <div class="btn-group" role="group">
-                        <a class="btn btn-outline-secondary btn-sm" href="#">View</a>
+                        <a class="btn btn-outline-secondary btn-sm" href="{{ route('servers.show', $server) }}">View</a>
                         @admin
                         <button class="btn btn-danger btn-sm">Delete</button>
                         @endadmin

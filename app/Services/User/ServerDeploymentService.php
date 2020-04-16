@@ -5,6 +5,7 @@ namespace App\Services\User;
 use App\Server;
 use Exception;
 use HCGCloud\Pterodactyl\Pterodactyl;
+use HCGCloud\Pterodactyl\Resources\Resource;
 
 class ServerDeploymentService
 {
@@ -31,17 +32,24 @@ class ServerDeploymentService
      * @param string $billingPeriod
      * @param array  $config
      *
+     * @return bool
      * @throws Exception
      */
     public function handle(Server $server, string $billingPeriod, array $config)
     {
+        $details = $this->pterodactyl->server($server->panel_id);
+
+        $buildConfig = [
+            'limits'         => array_merge($details->limits, $config),
+            'feature_limits' => $details->featureLimits,
+            'allocation'     => $details->allocation,
+            'oom_disabled'   => true,
+        ];
+
+        $s = $this->pterodactyl->updateServerBuild($server->panel_id, $buildConfig);
+
         $this->deployCreation->handle($server, $billingPeriod, $config);
 
-        $this->updateServerConfig($server, $config);
-    }
-
-    protected function updateServerConfig(Server $server, array $config)
-    {
-        $this->pterodactyl->updateServerBuild($server->panel_id, $config);
+        return $s instanceof Resource;
     }
 }

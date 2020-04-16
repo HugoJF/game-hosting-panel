@@ -25,7 +25,7 @@ return [
 
     'server-creation-defaults' => [
         'limits'         => [
-            'memory' => 512,
+            'memory' => 256,
             'swap'   => 256,
             'io'     => 100,
             'cpu'    => 10,
@@ -36,4 +36,19 @@ return [
             'allocations' => 1,
         ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Server deployment default parameters
+    |--------------------------------------------------------------------------
+    |
+    | Defaults parameters used when a server is deployed
+    |
+    */
+
+    'server-deployment-defaults' => [
+        'limits' => [
+            'io' => 500,
+        ]
+    ]
 ];

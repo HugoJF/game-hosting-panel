@@ -18,11 +18,19 @@ class CreateServersTable extends Migration
 
             $table->string('name');
 
-            $table->unsignedInteger('game_id')->references('id')->on('games');
-			$table->unsignedInteger('node_id')->references('id')->on('nodes');
-			$table->unsignedInteger('user_id')->references('id')->on('users');
+            $table->unsignedInteger('cpu');
+            $table->unsignedInteger('ram');
+            $table->unsignedInteger('disk');
+            $table->unsignedInteger('io');
+            $table->unsignedInteger('databases');
 
-			$table->unsignedBigInteger('panel_id')->nullable();
+            $table->unsignedInteger('game_id')->references('id')->on('games');
+            $table->unsignedInteger('node_id')->references('id')->on('nodes');
+            $table->unsignedInteger('user_id')->references('id')->on('users');
+
+            $table->unsignedBigInteger('panel_id')->nullable();
+
+            $table->timestamp('installed_at')->nullable();
 
             $table->timestamps();
         });

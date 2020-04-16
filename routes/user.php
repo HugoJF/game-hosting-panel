@@ -144,6 +144,11 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('servers')->group(function () {
         Route::get('/', 'ServerController@index')->name('servers.index');
+        Route::get('{server}', 'ServerController@show')->name('servers.show');
+        Route::get('{server}/deploy', 'ServerController@deploy')->name('servers.deploy');
+        Route::get('{server}/custom-deploy', 'ServerController@customDeploy')->name('servers.custom-deploy');
+
+
         Route::get('create/game', 'ServerController@selectGame')->name('servers.select-game');
         Route::get('create/game/{game}/location', 'ServerController@selectLocation')->name('servers.select-location');
         Route::get('create/game/{game}/location/{location}/configure', 'ServerController@configure')->name('servers.configure');
@@ -160,18 +165,6 @@ Route::middleware('auth')->group(function () {
     */
 
     Route::prefix('deploys')->group(function () {
-        Route::get('{deploy}', 'DeployController@show')->name('deploys.show');
-
-        Route::get('{server}/create', 'DeployController@create')->name('deploys.create');
-        Route::get('{server}/terminate', 'DeployController@terminate')->name('deploys.terminate');
-        Route::get('{server}/force-terminate', 'DeployController@forceTerminate')->name('deploys.force-terminate');
-
-        Route::get('{deploy}/edit', 'DeployController@edit')->name('deploys.edit');
-        Route::get('{deploy}/start', 'DeployController@start')->name('deploys.start');
-        Route::get('{deploy}/stop', 'DeployController@stop')->name('deploys.stop');
-
-        Route::patch('{deploy}', 'DeployController@update')->name('deploys.update');
-
-        Route::post('{server}', 'DeployController@store')->name('deploys.store');
+        //
     });
 });

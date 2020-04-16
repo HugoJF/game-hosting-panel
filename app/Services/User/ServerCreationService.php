@@ -3,10 +3,12 @@
 namespace App\Services\User;
 
 use App\Game;
+use App\Jobs\ServerCreationMonitor;
 use App\Node;
 use App\Server;
 use App\User;
 use HCGCloud\Pterodactyl\Pterodactyl;
+use Illuminate\Support\Str;
 
 class ServerCreationService
 {
@@ -32,7 +34,7 @@ class ServerCreationService
         $server = $this->preCreateServerModel($node, $game, $data);
 
         // Generate config
-        $config = $this->configService->handle($user, $node, $game, $data);
+        $config = $this->configService->handle($user, $node, $game, $server, $data);
 
         // Create server on panel
         $resource = $this->pterodactyl->createServer($config);
@@ -40,18 +42,25 @@ class ServerCreationService
         // Attach panel_id to server
         $this->attachPanelId($server, $resource->id);
 
+        // Dispatch job that will monitor when server is installed
+        $this->dispatchMonitoringJob($server);
+
         return $server;
     }
 
     protected function preCreateServerModel(Node $node, Game $game, array $config)
     {
         $server = new Server;
-        $server->forceFill([
-            'name'    => $config['name'],
+
+        $fromDefaults = ['io' => 500];
+        $fromForm = collect($config)->only(['cpu', 'ram', 'disk', 'databases'])->toArray();
+        $fromRelationships = [
+            'name'    => Str::random(),
             'user_id' => auth()->id(),
             'game_id' => $game->id,
             'node_id' => $node->id,
-        ])->save();
+        ];
+        $server->forceFill(array_merge($fromDefaults, $fromForm, $fromRelationships))->save();
 
         return $server;
     }
@@ -60,5 +69,10 @@ class ServerCreationService
     {
         $server->panel_id = $id;
         $server->save();
+    }
+
+    protected function dispatchMonitoringJob(Server $server)
+    {
+        dispatch(new ServerCreationMonitor($server));
     }
 }
