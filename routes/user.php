@@ -155,6 +155,9 @@ Route::middleware('auth')->group(function () {
 
         Route::post('game/{game}/location/{location}', 'ServerController@store')->name('servers.store');
 
+        // TODO: patch
+        Route::get('{server}/terminate', 'ServerController@terminate')->name('servers.terminate');
+
         Route::delete('{server}', 'ServerController@destroy')->name('servers.destroy');
     });
 

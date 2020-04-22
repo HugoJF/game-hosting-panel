@@ -51,11 +51,11 @@ class DeployCreationService
                 'billing_period'  => $billingPeriod,
                 'cost_per_period' => $costPerPeriod, // TODO: actually compute this
                 'cpu'             => $config['cpu'],
-                'ram'             => $config['memory'],
+                'memory'          => $config['memory'],
                 'disk'            => $config['disk'],
-                'io'              => 500,
                 'databases'       => $config['databases'],
                 'server_id'       => $server->id,
+                'io'              => 500,
             ])->save();
 
             DB::commit();

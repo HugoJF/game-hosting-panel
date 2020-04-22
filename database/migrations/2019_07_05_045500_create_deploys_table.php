@@ -20,7 +20,7 @@ class CreateDeploysTable extends Migration
 			$table->unsignedInteger('cost_per_period');
 
             $table->unsignedInteger('cpu');
-            $table->unsignedInteger('ram');
+            $table->unsignedInteger('memory');
             $table->unsignedInteger('disk');
             $table->unsignedInteger('io');
             $table->unsignedInteger('databases');
@@ -31,6 +31,7 @@ class CreateDeploysTable extends Migration
 			$table->unsignedBigInteger('server_id')->nullable();
 			$table->foreign('server_id')->references('id')->on('servers');
 
+			$table->dateTime('termination_requested_at')->nullable();
 			$table->string('termination_reason')->nullable();
             $table->dateTime('terminated_at')->nullable();
 

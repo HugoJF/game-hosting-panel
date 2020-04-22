@@ -19,7 +19,7 @@ class CreateServersTable extends Migration
             $table->string('name');
 
             $table->unsignedInteger('cpu');
-            $table->unsignedInteger('ram');
+            $table->unsignedInteger('memory');
             $table->unsignedInteger('disk');
             $table->unsignedInteger('io');
             $table->unsignedInteger('databases');

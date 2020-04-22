@@ -14,6 +14,10 @@ return [
         'key'      => env('PTERODACTYL_API_KEY'),
     ],
 
+    'client' => [
+        'key' => env('PTERODACTYL_CLIENT_KEY'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Server creation default parameters
@@ -25,11 +29,11 @@ return [
 
     'server-creation-defaults' => [
         'limits'         => [
-            'memory' => 256,
-            'swap'   => 256,
-            'io'     => 100,
+            'memory' => 10,
+            'swap'   => 10,
+            'io'     => 10,
             'cpu'    => 10,
-            'disk'   => 10,
+            'disk'   => 1,
         ],
         'feature_limits' => [
             'databases'   => 0,
@@ -49,6 +53,25 @@ return [
     'server-deployment-defaults' => [
         'limits' => [
             'io' => 500,
-        ]
-    ]
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Server termination default parameters
+    |--------------------------------------------------------------------------
+    |
+    | Defaults parameters used when a server is terminated
+    |
+    */
+
+    'server-termination-defaults' => [
+        'limits'         => [
+            'memory' => 10,
+            'swap'   => 10,
+            'io'     => 10,
+            'cpu'    => 10,
+            'disk'   => 1,
+        ],
+    ],
 ];

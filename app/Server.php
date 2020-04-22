@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 class Server extends Model
@@ -33,5 +34,14 @@ class Server extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getDeploy()
+    {
+        if (($current = $this->currentDeploy)->count() > 1) {
+            throw new Exception('Multiple non-terminated deploys, something is fucked');
+        }
+
+        return $current->first();
     }
 }

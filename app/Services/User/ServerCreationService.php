@@ -53,7 +53,7 @@ class ServerCreationService
         $server = new Server;
 
         $fromDefaults = ['io' => 500];
-        $fromForm = collect($config)->only(['cpu', 'ram', 'disk', 'databases'])->toArray();
+        $fromForm = collect($config)->only(['cpu', 'memory', 'disk', 'databases'])->toArray();
         $fromRelationships = [
             'name'    => Str::random(),
             'user_id' => auth()->id(),

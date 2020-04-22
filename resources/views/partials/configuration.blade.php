@@ -25,33 +25,33 @@
                 ],
             ],
         ],
-        'ram' => [
+        'memory' => [
             'name' => 'RAM',
             'cost' => 20,
             'unit' => 'GB',
             'description' => 'por GB de RAM',
             'options' => [
-                'ram-1' => [
+                'memory-1' => [
                     'label'=> '1GB',
                     'value' => 1,
                 ],
-                'ram-2' => [
+                'memory-2' => [
                     'label'=> '2GB',
                     'value' => 2,
                 ],
-                'ram-3' => [
+                'memory-3' => [
                     'label'=> '3GB',
                     'value' => 3,
                 ],
-                'ram-4' => [
+                'memory-4' => [
                     'label'=> '4GB',
                     'value' => 4,
                 ],
-                'ram-5' => [
+                'memory-5' => [
                     'label'=> '5GB',
                     'value' => 5,
                 ],
-                'ram-6' => [
+                'memory-6' => [
                     'label'=> '6GB',
                     'value' => 6,
                 ],
@@ -113,7 +113,7 @@
     function billing() {
         return {
             cpu: 25,
-            ram: 1,
+            memory: 1,
             disk: 10000,
             databases: 1,
             period: 'daily',

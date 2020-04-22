@@ -2,13 +2,14 @@
 
 namespace App;
 
+use App\Services\User\DeployCostService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class Deploy extends Model
 {
-	protected $dates = ['terminated_at'];
+	protected $dates = ['termination_requested_at', 'terminated_at'];
 
     public function transaction()
     {
@@ -23,28 +24,12 @@ class Deploy extends Model
 
 	public function billablePeriod()
 	{
-		$billingPeriod = $this->billing_period;
+	    /** @var DeployCostService $service */
+	    $service = app(DeployCostService::class);
 
-		$differMap = [
-			'minutely'  => 'diffInMinutes',
-			'hourly'  => 'diffInHours',
-			'daily'   => 'diffInDays',
-			'weekly'  => 'diffInWeeks',
-			'monthly' => 'diffInMonths',
-		];
-
-		$differ = $differMap[ $billingPeriod ];
-
-		if ($this->terminated_at) {
-			$base = $this->terminated_at;
-		} else {
-			$base = Carbon::now();
-		}
-
-		$duration = $base->$differ($this->created_at) + 1;
-
-		return $duration;
+	    return $service->getBillablePeriod($this);
 	}
+
 	public function updateTransaction(): void
 	{
 		/** @var Server $server */

@@ -8,10 +8,12 @@ use App\Location;
 use App\Server;
 use App\Services\User\AutoServerDeploymentService;
 use App\Services\User\DeployCreationService;
+use App\Services\User\DeployTerminationService;
 use App\Services\User\NodeSelectionService;
 use App\Services\User\ServerCreationService;
 use App\Services\User\ServerDeletionService;
 use App\Services\User\ServerDeploymentService;
+use App\Services\User\ServerTerminationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -83,7 +85,7 @@ class ServerController extends Controller
     public function deploy(ServerDeploymentService $deployment, Server $server)
     {
         // deploy server
-        $deployment->handle($server, 'daily', [
+        $deployment->handle($server, 'minutely', [
             'cpu'       => rand(10, 100),
             'memory'    => rand(512, 2048),
             'disk'      => rand(10, 10000),
@@ -102,6 +104,15 @@ class ServerController extends Controller
         // generate launch options
 
         // deploy server
+
+        return back();
+    }
+
+    public function terminate(DeployTerminationService $terminationService, Server $server)
+    {
+        $terminationService->handle($server, true);
+
+        flash()->success('Server terminated');
 
         return back();
     }
