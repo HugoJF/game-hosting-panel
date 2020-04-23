@@ -154,7 +154,7 @@
                 <!-- Parameter options -->
                 <div class="flex px-2 py-4 bg-gray-100 border border-t-0 rounded-b-lg">
                     @foreach($parameter['options'] as $optionKey => $option)
-                        <input x-model="{{ $key }}" class="hidden" id="{{ $key }}" name="{{ $key }}" type="radio" value="{{ $option['value'] }}">
+                        <input x-model="{{ $key }}" class="hidden" id="{{ $optionKey }}" name="{{ $key }}" type="radio" value="{{ $option['value'] }}">
                         <label for="{{ $optionKey }}"
                                class="trans flex items-center justify-center w-1/2 py-4 mx-2
                                         text-2xl text-gray-800 border rounded-lg cursor-pointer select-none
