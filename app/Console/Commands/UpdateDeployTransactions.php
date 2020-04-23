@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Deploy;
 use App\Services\User\DeployCostService;
+use App\Services\User\DeployTerminationService;
 use App\Services\User\ServerTerminationService;
 use Exception;
 use Illuminate\Console\Command;
@@ -51,12 +52,13 @@ class UpdateDeployTransactions extends Command
 
     protected function updateDeploy(Deploy $deploy)
     {
-        $cost = $this->costService->getDeployCost($deploy);
+        $realCost = $this->costService->getDeployCost($deploy, true);
+        $cost = $this->costService->getDeployCost($deploy, false);
 
         $transaction = $deploy->transaction;
 
         try {
-            if ($transaction->value === -$cost) {
+            if ($transaction->value === -$realCost) {
                 return;
             }
 
@@ -71,10 +73,10 @@ class UpdateDeployTransactions extends Command
 
             $this->info("Updating transaction $transaction->id to -$cost");
         } catch (Exception $e) {
-            /** @var ServerTerminationService $terminationService */
-            $terminationService = app(ServerTerminationService::class);
+            /** @var DeployTerminationService $terminationService */
+            $terminationService = app(DeployTerminationService::class);
 
-            $terminationService->handle($deploy->server);
+            $terminationService->handle($deploy->server, true);
         }
     }
 }

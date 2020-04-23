@@ -41,6 +41,7 @@
                 <th>Status</th>
                 <th>Cost</th>
                 <th>Created at</th>
+                <th>Termination request</th>
                 <th>Terminated at</th>
             </tr>
             </thead>
@@ -85,6 +86,9 @@
                     <!-- Created at -->
                     <td>{{ $deploy->created_at }}</td>
 
+                    <!-- Termination request at -->
+                    <td>{{ $deploy->termination_requested_at }}</td>
+
                     <!-- Terminated at -->
                     <td>{{ $deploy->terminated_at }}</td>
                 </tr>
@@ -96,10 +100,10 @@
 
         <div class="text-center">
             <div class="btn-group">
-                @if($server->getDeploy())
-                    <a class="btn btn-primary btn-lg" href="{{ route('servers.terminate', $server) }}" data-toggle="tooltip" data-placement="top" title="Set deploy to terminate at the end of paid period.">Terminate</a>
-                    <a class="btn btn-danger btn-lg" href="#" data-toggle="tooltip" data-placement="top" title="Terminates deploy without waiting for currently paid period.">Force terminate</a>
-                    <a class="btn btn-outline-secondary btn-lg" href="#">Help</a>
+                @if($server->getdeploy())
+                    <a class="btn btn-primary btn-lg" href="{{ route('servers.terminate', $server) }}" data-toggle="tooltip" data-placement="top" title="set deploy to terminate at the end of paid period.">Terminate</a>
+                    <a class="btn btn-danger btn-lg" href="{{ route('servers.force-terminate', $server) }}" data-toggle="tooltip" data-placement="top" title="terminates deploy without waiting for currently paid period.">Force terminate</a>
+                    <a class="btn btn-outline-secondary btn-lg" href="#">help</a>
                 @else
                     <a class="btn btn-primary btn-lg" href="{{ route('servers.deploy', $server) }}">Deploy</a>
                     <a class="btn btn-outline-primary btn-lg" href="{{ route('servers.custom-deploy', $server) }}">Custom deploy</a>

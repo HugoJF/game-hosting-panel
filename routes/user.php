@@ -157,6 +157,7 @@ Route::middleware('auth')->group(function () {
 
         // TODO: patch
         Route::get('{server}/terminate', 'ServerController@terminate')->name('servers.terminate');
+        Route::get('{server}/force-terminate', 'ServerController@forceTerminate')->name('servers.force-terminate');
 
         Route::delete('{server}', 'ServerController@destroy')->name('servers.destroy');
     });

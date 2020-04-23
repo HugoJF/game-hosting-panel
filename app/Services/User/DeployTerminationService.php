@@ -23,7 +23,10 @@ class DeployTerminationService
     {
         /** @var Deploy $deploy */
         $deploy = $server->getDeploy();
-        $deploy->termination_requested_at = now();
+
+        if (!$deploy->termination_requested_at) {
+            $deploy->termination_requested_at = now();
+        }
 
         if ($forced) {
             $this->terminationService->handle($server);
