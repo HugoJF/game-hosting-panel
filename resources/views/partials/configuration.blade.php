@@ -211,9 +211,12 @@
                     </div>
 
                 </div>
-                <div class="mt-4 px-6 py-4 bg-green-600 font-normal text-center text-gray-100 text-2xl tracking-wide rounded-lg shadow-md">
+                <button
+                    class="w-full mt-4 px-6 py-4 bg-green-600 font-normal text-center text-gray-100 text-2xl tracking-wide rounded-lg shadow-md"
+                    type="submit"
+                >
                     Finalizar
-                </div>
+                </button>
             </div>
         </div>
     </div>

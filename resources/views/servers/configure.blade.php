@@ -7,7 +7,5 @@
 
     @include('partials.configuration')
 
-    <button class="btn btn-lg btn-block btn-success" type="submit">Criar servidor</button>
-
     {!! Form::close() !!}
 @endsection
