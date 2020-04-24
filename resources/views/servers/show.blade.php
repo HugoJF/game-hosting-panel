@@ -106,7 +106,7 @@
                     <a class="btn btn-outline-secondary btn-lg" href="#">help</a>
                 @else
                     <a class="btn btn-primary btn-lg" href="{{ route('servers.deploy', $server) }}">Deploy</a>
-                    <a class="btn btn-outline-primary btn-lg" href="{{ route('servers.custom-deploy', $server) }}">Custom deploy</a>
+                    <a class="btn btn-outline-primary btn-lg" href="{{ route('servers.configure-deploy', $server) }}">Custom deploy</a>
                 @endif
             </div>
         </div>

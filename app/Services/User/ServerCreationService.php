@@ -31,7 +31,7 @@ class ServerCreationService
     public function handle(User $user, Game $game, Node $node, array $data)
     {
         // Register server on database
-        $server = $this->preCreateServerModel($node, $game, $data);
+        $server = $this->preCreateServerModel($user, $node, $game, $data);
 
         // Generate config
         $config = $this->configService->handle($user, $node, $game, $server, $data);
@@ -48,7 +48,7 @@ class ServerCreationService
         return $server;
     }
 
-    protected function preCreateServerModel(Node $node, Game $game, array $config)
+    protected function preCreateServerModel(User $user, Node $node, Game $game, array $config)
     {
         $server = new Server;
 
@@ -56,7 +56,7 @@ class ServerCreationService
         $fromForm = collect($config)->only(['cpu', 'memory', 'disk', 'databases'])->toArray();
         $fromRelationships = [
             'name'    => Str::random(),
-            'user_id' => auth()->id(),
+            'user_id' => $user->id,
             'game_id' => $game->id,
             'node_id' => $node->id,
         ];

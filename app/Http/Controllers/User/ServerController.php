@@ -7,21 +7,18 @@ use App\Http\Controllers\Controller;
 use App\Location;
 use App\Server;
 use App\Services\User\AutoServerDeploymentService;
-use App\Services\User\DeployCreationService;
 use App\Services\User\DeployTerminationService;
 use App\Services\User\NodeSelectionService;
 use App\Services\User\ServerCreationService;
 use App\Services\User\ServerDeletionService;
 use App\Services\User\ServerDeploymentService;
-use App\Services\User\ServerTerminationService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ServerController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        $user = auth()->user();
         $servers = $user->servers;
 
         return view('servers.index', compact('user', 'servers'));
@@ -82,6 +79,11 @@ class ServerController extends Controller
         return redirect()->route('home');
     }
 
+    public function configureDeploy(Request $request, Server $server)
+    {
+        return view('servers.custom-deploy', compact('server'));
+    }
+
     public function deploy(ServerDeploymentService $deployment, Server $server)
     {
         // deploy server
@@ -94,18 +96,17 @@ class ServerController extends Controller
 
         flash()->success('Server deployed');
 
-        return back();
+        return redirect()->route('servers.show', $server);
     }
 
-    public function customDeploy(Request $request, Server $server)
+    public function customDeploy(ServerDeploymentService $deployment, Request $request, Server $server)
     {
-        // validate request
-
-        // generate launch options
-
         // deploy server
+        $deployment->handle($server, 'minutely', $request->only(['cpu', 'memory', 'disk', 'databases']));
 
-        return back();
+        flash()->success('Server deployed');
+
+        return redirect()->route('servers.show', $server);
     }
 
     public function terminate(DeployTerminationService $terminationService, Server $server)
