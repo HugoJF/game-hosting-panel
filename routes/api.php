@@ -13,6 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::prefix('nodes')->group(function () {
+    Route::get('location/{location}/cost', 'NodeController@cost')->name('servers.cost');
+    Route::get('test', function () {
+       return rand(0, 8000);
+    });
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

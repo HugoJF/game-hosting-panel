@@ -18,16 +18,28 @@ class DeployCostService
      */
     public function getCostPerPeriod(Node $node, string $billingPeriod, array $config)
     {
-        // TODO: this is temporary for testing reasons
-        $costs = [
-            'minutely' => 100,
-            'hourly'   => 200,
-            'daily'    => 300,
-            'weekly'   => 400,
-            'monthly'  => 500,
+        $multipliers = [
+            'minutely' => 1 / (30 * 24 * 60) * 20,
+            'hourly'   => 1 / (30 * 24) * 10,
+            'daily'    => 1 / 30 * 4,
+            'weekly'   => 1 / 4 * 1.5,
+            'monthly'  => 1,
         ];
 
-        return $costs[ $billingPeriod ];
+        $costs = [
+            'cpu'       => 50,
+            'memory'    => 2,
+            'disk'      => 0.05,
+            'databases' => 500,
+        ];
+
+        $final = 0;
+
+        foreach ($costs as $name => $cost) {
+            $final += $cost * $config[ $name ] ?? 0;
+        }
+
+        return $final * $multipliers[ $billingPeriod ];
     }
 
     public function getDeployCost(Deploy $deploy, bool $real = false)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Game;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdvancedDeployRequest;
 use App\Location;
 use App\Server;
 use App\Services\User\AutoServerDeploymentService;
@@ -88,10 +89,10 @@ class ServerController extends Controller
     {
         // deploy server
         $deployment->handle($server, 'minutely', [
-            'cpu'       => rand(10, 100),
-            'memory'    => rand(512, 2048),
-            'disk'      => rand(10, 10000),
-            'databases' => rand(0, 5),
+            'cpu'       => $server->cpu,
+            'memory'    => $server->memory,
+            'disk'      => $server->disk,
+            'databases' => $server->databases,
         ]);
 
         flash()->success('Server deployed');
@@ -99,10 +100,18 @@ class ServerController extends Controller
         return redirect()->route('servers.show', $server);
     }
 
-    public function customDeploy(ServerDeploymentService $deployment, Request $request, Server $server)
+    public function customDeploy(
+        ServerDeploymentService $deployment,
+        AdvancedDeployRequest $request,
+        Server $server
+    )
     {
         // deploy server
-        $deployment->handle($server, 'minutely', $request->only(['cpu', 'memory', 'disk', 'databases']));
+        $deployment->handle(
+            $server,
+            $request->get('period'),
+            $request->only(['cpu', 'memory', 'disk', 'databases'])
+        );
 
         flash()->success('Server deployed');
 

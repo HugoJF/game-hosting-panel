@@ -117,7 +117,21 @@
             disk: 10000,
             databases: 1,
             period: 'daily',
-            log: (n, e) => console.log(n, 'changed to', e)
+            onChange: function (a) {
+                console.log('changed', this, a);
+                axios.post('/api/nodes/location/{{ $location->id }}/cost', {
+                    cpu: cpu,
+                    memory: this.memory,
+                    disk: this.disk,
+                    databases: this.databases,
+                    period: this.period,
+                }).then((response) => {
+                    console.log(response.data);
+                })
+            },
+            a(cpu) {
+                console.log(this, cpu, disk);
+            }
         }
     }
 </script>
@@ -125,8 +139,9 @@
 <div
     x-data="billing()"
     class="flex justify-center"
-    x-init="{{ join('; ', array_map(function ($e) {
-	            return "\$watch('$e', log.bind(null, '$e'))";
+    x-init="$watch('cpu', () => { console.log(this, disk); })"
+    x-iinit="{{ join('; ', array_map(function ($e) {
+	            return "\$watch('$e', onChange.bind(this, this))";
             }, ['cpu', 'ram', 'disk', 'databases', 'period'])) }}"
 >
 

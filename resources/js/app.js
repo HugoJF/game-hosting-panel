@@ -1,13 +1,30 @@
+require('./bootstrap');
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Console from "./components/Console";
+import Configurer from "./components/configurer/Configurer";
 
-let home = document.getElementById('console');
-if (home) {
-    let id = home.getAttribute('data-home-id');
-    let host = home.getAttribute('data-ws-host');
-    let jwt = home.getAttribute('data-ws-jwt');
+const mappings = {
+    'configurer': Configurer,
+};
 
-    ReactDOM.render(<Console jwt={jwt} wsHost={host} homeId={id}/>, home);
+console.dir(mappings);
+
+for (const [dataReact, Component] of Object.entries(mappings)) {
+    let selector = `[data-react="${dataReact}"]`;
+    let elements = document.querySelectorAll(selector);
+
+    console.log(`Found ${elements.length} elements with selector ${selector}`);
+
+    for (let element of elements) {
+        const data = {};
+
+        for (const attr of element.attributes) {
+            let name = attr.name.replace(/^data-/gi, '');
+            data[name] = attr.value;
+        }
+
+        console.log(`Rendering component with: ${Object.keys(data).map(k => 'data-'.concat(k)).join(',')}`);
+
+        ReactDOM.render(<Component {...data} />, element);
+    }
 }
-
