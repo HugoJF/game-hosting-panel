@@ -7,7 +7,7 @@ export default function ({parameterKey, parameter: {name, cost, description, opt
     return <div className="mb-8">
         {/* Header */}
         <div className="flex items-stretch bg-green-600 overflow-hidden rounded-t-lg">
-            <ParameterTitle title={name}/>
+            <ParameterTitle name={name}/>
 
             <ParameterDetails cost={cost} description={description}/>
         </div>

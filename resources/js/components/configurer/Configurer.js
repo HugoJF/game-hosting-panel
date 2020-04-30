@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Parameters from "./Parameters";
-import Summary from "./Summary";
+import Cart from "./Cart";
 
 const parameters = {
     cpu: {
@@ -104,7 +104,7 @@ const parameters = {
 
 export default function ({location}) {
     const [state, setState] = useState({});
-    const [cost, setCost] = useState(null);
+    const [cost, setCost] = useState(0);
 
     function handleOnChange(e) {
         const newState = {
@@ -114,17 +114,17 @@ export default function ({location}) {
         console.log(newState);
         setState(newState);
         axios.get(`/api/nodes/location/${location}/cost`, {params: newState})
-            .then(handleCostUpdate());
+            .then(handleCostUpdate);
     }
 
-    function handleCostUpdate(cost) {
-        setCost(cost)
+    function handleCostUpdate(response) {
+        setCost(response.data)
     }
 
     return <div className="flex justify-center">
         <form className="flex w-full" action="" onChange={handleOnChange}>
             <Parameters parameters={parameters}/>
-            <Summary parameters={parameters} state={state} totalCost={cost} />
+            <Cart parameters={parameters} state={state} totalCost={cost} />
         </form>
     </div>
 }
