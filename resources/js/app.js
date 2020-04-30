@@ -1,13 +1,15 @@
+import DeploymentConfigurer from "./components/configurer/DeploymentConfigurer";
+
 require('./bootstrap');
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Configurer from "./components/configurer/Configurer";
+import CreationConfigurer from "./components/configurer/CreationConfigurer";
 
 const mappings = {
-    'configurer': Configurer,
+    'creation-configurer': CreationConfigurer,
+    'deployment-configurer': DeploymentConfigurer,
 };
-
-console.dir(mappings);
 
 for (const [dataReact, Component] of Object.entries(mappings)) {
     let selector = `[data-react="${dataReact}"]`;

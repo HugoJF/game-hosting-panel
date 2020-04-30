@@ -46,7 +46,7 @@ class DeployCostService
     {
         $billable = $this->getBillablePeriod($deploy, $real);
 
-        return $billable * $this->getCostPerPeriod($deploy->server->node, $deploy->billing_period, []);
+        return $billable * $this->getCostPerPeriod($deploy->server->node, $deploy->billing_period, $deploy->config);
     }
 
     public function getBillablePeriod(Deploy $deploy, bool $real = false)

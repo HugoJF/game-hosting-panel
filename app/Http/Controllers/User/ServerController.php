@@ -88,7 +88,7 @@ class ServerController extends Controller
     public function deploy(ServerDeploymentService $deployment, Server $server)
     {
         // deploy server
-        $deployment->handle($server, 'minutely', [
+        $deployment->handle($server, 'daily', [
             'cpu'       => $server->cpu,
             'memory'    => $server->memory,
             'disk'      => $server->disk,

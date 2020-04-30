@@ -13,10 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::prefix('cost')->group(function () {
+    Route::get('creation', 'CostController@creation')->name('cost.creation');
+    Route::get('deployment', 'CostController@deployment')->name('cost.deployment');
+});
+
 Route::prefix('nodes')->group(function () {
     Route::get('location/{location}/cost', 'NodeController@cost')->name('servers.cost');
     Route::get('test', function () {
-       return rand(0, 8000);
+        return rand(0, 8000);
     });
 });
 
