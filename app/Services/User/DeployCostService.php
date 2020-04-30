@@ -42,11 +42,11 @@ class DeployCostService
         return $final * $multipliers[ $billingPeriod ];
     }
 
-    public function getDeployCost(Deploy $deploy, bool $real = false)
+    public function getDeployCost(Deploy $deploy, bool $real = false): int
     {
         $billable = $this->getBillablePeriod($deploy, $real);
-
-        return $billable * $this->getCostPerPeriod($deploy->server->node, $deploy->billing_period, $deploy->config);
+        $costPerPeriod = $this->getCostPerPeriod($deploy->server->node, $deploy->billing_period, $deploy->config);
+        return (int) round($billable * $costPerPeriod);
     }
 
     public function getBillablePeriod(Deploy $deploy, bool $real = false)

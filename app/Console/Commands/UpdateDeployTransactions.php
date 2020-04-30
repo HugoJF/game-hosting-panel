@@ -58,12 +58,15 @@ class UpdateDeployTransactions extends Command
         $transaction = $deploy->transaction;
 
         try {
-            if ($transaction->value === -$realCost) {
+            if (abs($transaction->value) === abs($realCost)) {
+                $this->info("Deploy $deploy->id cost did not change, skipping...");
+
                 return;
             }
 
             // Use try-catch to terminate server
             if ($deploy->termination_requested_at) {
+                $this->warn("Deploy $deploy->id cost changed and termination was requested...");
                 throw new Exception;
             }
 
@@ -73,9 +76,11 @@ class UpdateDeployTransactions extends Command
 
             $this->info("Updating transaction $transaction->id to -$cost");
         } catch (Exception $e) {
+            report($e);
             /** @var DeployTerminationService $terminationService */
             $terminationService = app(DeployTerminationService::class);
 
+            $this->info("Terminating deploy $deploy->id");
             $terminationService->handle($deploy->server, true);
         }
     }
