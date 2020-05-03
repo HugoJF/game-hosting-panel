@@ -18,20 +18,9 @@ class DeployCostService
      */
     public function getCostPerPeriod(Node $node, string $billingPeriod, array $config)
     {
-        $multipliers = [
-            'minutely' => 1 / (30 * 24 * 60) * 20,
-            'hourly'   => 1 / (30 * 24) * 10,
-            'daily'    => 1 / 30 * 4,
-            'weekly'   => 1 / 4 * 1.5,
-            'monthly'  => 1,
-        ];
+        $multipliers = config('ghp.cost-multiplier');
 
-        $costs = [
-            'cpu'       => 50,
-            'memory'    => 2,
-            'disk'      => 0.05,
-            'databases' => 500,
-        ];
+        $costs = $node->only(['cpu', 'memory', 'disk', 'databases']);
 
         $final = 0;
 

@@ -17,6 +17,14 @@ return [
         'INSUFFICIENT_RESOURCES',
     ],
 
+    'cost-multiplier' => [
+        'minutely' => 1 / (30 * 24 * 60) * 20,
+        'hourly'   => 1 / (30 * 24) * 10,
+        'daily'    => 1 / 30 * 4,
+        'weekly'   => 1 / 4 * 1.5,
+        'monthly'  => 1,
+    ],
+
     'billing-periods' => [
         'minutely',
         'hourly',

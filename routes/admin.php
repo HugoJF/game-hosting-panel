@@ -34,6 +34,9 @@ Route::prefix('locations')->group(function () {
 Route::prefix('nodes')->group(function () {
     Route::get('/', 'NodeController@index')->name('admins.nodes.index');
     Route::get('{node}', 'NodeController@show')->name('admins.nodes.show');
+    Route::get('{node}/edit', 'NodeController@edit')->name('admins.nodes.edit');
+
+    Route::patch('{node}', 'NodeController@update')->name('admins.nodes.update');
 });
 
 /*

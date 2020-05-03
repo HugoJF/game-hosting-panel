@@ -19,6 +19,7 @@
             <th>Name</th>
             <th>Description</th>
             <th>Location</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -39,6 +40,11 @@
                 <!-- Location -->
                 <td>
                     <span class="badge badge-secondary">{{ $node->location->short }}</span>
+                </td>
+
+                <!-- Actions -->
+                <td>
+                    <a class="btn btn-primary btn-sm" href="{{ route('admins.nodes.edit', $node) }}">Edit</a>
                 </td>
             </tr>
         @empty
