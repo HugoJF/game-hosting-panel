@@ -49,7 +49,7 @@ class DeployCreationService
             $deploy = new Deploy();
             $deploy->forceFill([
                 'billing_period'  => $billingPeriod,
-                'cost_per_period' => $costPerPeriod, // TODO: actually compute this
+                'cost_per_period' => $costPerPeriod,
                 'cpu'             => $config['cpu'],
                 'memory'          => $config['memory'],
                 'disk'            => $config['disk'],

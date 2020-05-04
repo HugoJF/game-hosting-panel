@@ -34,15 +34,15 @@ class DeployCostService
     public function getDeployCost(Deploy $deploy, bool $real = false): int
     {
         $billable = $this->getBillablePeriod($deploy, $real);
-        $costPerPeriod = $this->getCostPerPeriod($deploy->server->node, $deploy->billing_period, $deploy->config);
-        return (int) round($billable * $costPerPeriod);
+
+        return (int) round($billable * $deploy->cost_per_period);
     }
 
     public function getBillablePeriod(Deploy $deploy, bool $real = false)
     {
         $period = $deploy->billing_period;
         $reference = $real ? 'terminated_at' : 'termination_requested_at';
-        $differs = [
+        $diffs = [
             'minutely' => 'diffInMinutes',
             'hourly'   => 'diffInHours',
             'daily'    => 'diffInDays',
@@ -50,10 +50,10 @@ class DeployCostService
             'monthly'  => 'diffInMonths',
         ];
 
-        $differ = $differs[ $period ];
+        $diff = $diffs[ $period ];
 
         $ending = $deploy->$reference ?? now();
 
-        return $deploy->created_at->$differ($ending) + 1;
+        return $deploy->created_at->$diff($ending) + 1;
     }
 }
