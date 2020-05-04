@@ -93,7 +93,7 @@
                     <!-- Servidores -->
                     <li class="flex justify-between my-2 ml-3">
                         <a href="{{ route('servers.index') }}" class="flex items-center text-gray-500 no-underline text-base group">
-                            <span class="group-hover:text-white" data-feather="cpu"></span>
+                            <span class="group-hover:text-white" data-feather="server"></span>
                             <span class="group-hover:text-gray-400">Servidores</span>
                         </a>
                         <a class="group no-underline" href="#">
