@@ -8,7 +8,7 @@
 
     <h1>Server {{ $server->name }}</h1>
 
-    @include('cards.deploys');
+    @include('cards.deploys')
 
     <br/>
 
