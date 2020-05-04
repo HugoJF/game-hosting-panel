@@ -13,21 +13,21 @@
                     <div class="flex py-2 justify-between border-b border-gray-100">
                         <p>
                             <span class="inline text-gray-600" data-feather="cpu"></span>
-                            <span class="text-gray-900 font-medium">CPU</span>
+                            <span class="text-gray-900 font-semibolda">CPU</span>
                         </p>
                         <span class="text-gray-700">{{ round($server->cpu) }}%</span>
                     </div>
                     <div class="flex py-2 justify-between border-b border-gray-100">
                         <p>
                             <span class="inline text-gray-600" data-feather="database"></span>
-                            <span class="text-gray-900 font-medium">RAM</span>
+                            <span class="text-gray-900 font-semibolda">RAM</span>
                         </p>
                         <span class="text-gray-700">{{ number_format($server->memory) }} MB</span>
                     </div>
                     <div class="flex py-2 justify-between">
                         <p>
                             <span class="inline text-gray-600" data-feather="hard-drive"></span>
-                            <span class="text-gray-900 font-medium">Disk</span>
+                            <span class="text-gray-900 font-semibolda">Disk</span>
                         </p>
                         <span class="text-gray-700">{{ $server->disk / 1000 }} GB</span>
                     </div>
@@ -38,9 +38,9 @@
             <div class="flex p-4 bg-gray-100 border-t ">
                 <p class="flex-grow">
                     @if($server->currentDeploy()->exists())
-                        <a class="text-blue-500 text-sm font-medium" href="#">Go to panel</a>
+                        <a class="text-blue-500 text-base font-semibold" href="#">Go to panel</a>
                     @else
-                        <a class="text-blue-500 text-sm font-medium" href="#">Deploy</a>
+                        <a class="text-blue-500 text-base font-semibold" href="#">Deploy</a>
                     @endif
                 </p>
                 <div class="pl-3 border-l border-gray-300">

@@ -1,7 +1,7 @@
 @if($deploy->terminated_at)
-    <span class="text-lg badge badge-secondary">Terminated</span>
+    <span class="text-inherit badge badge-secondary">Terminated</span>
 @elseif($deploy->termination_requested_at)
-    <span class="text-lg badge badge-warning">Terminating</span>
+    <span class="text-inherit badge badge-warning">Terminating</span>
 @else
-    <span class="text-lg badge badge-primary">Running</span>
+    <span class="text-inherit badge badge-primary">Running</span>
 @endif

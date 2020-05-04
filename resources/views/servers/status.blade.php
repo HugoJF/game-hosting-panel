@@ -1,7 +1,7 @@
 @if(!$server->installed_at)
-    <span class="badge badge-warning text-lg">Installing</span>
+    <span class="text-inherit badge badge-warning">Installing</span>
 @elseif($deploy = $server->getDeploy())
     @include('deploy.status')
 @else
-    <span class="badge badge-dark text-lg">Stopped</span>
+    <span class="text-inherit badge badge-dark">Stopped</span>
 @endif

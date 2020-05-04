@@ -130,9 +130,8 @@ h6 {
  * FeatherIcons alignment fixes
  */
 .feather {
-    vertical-align: text-bottom;
-    @apply w-5
-    h-5 text-gray-400 mx-2;
+    vertical-align: middle;
+    padding: 3px;
 }
 
 /**

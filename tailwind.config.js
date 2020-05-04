@@ -224,6 +224,7 @@ module.exports = {
         },
         fontFamily: {
             sans: [
+                'Cairo',
                 '-apple-system',
                 'BlinkMacSystemFont',
                 '"Segoe UI"',
@@ -254,6 +255,7 @@ module.exports = {
             ],
         },
         fontSize: {
+            inherit: 'inherit',
             xs: '0.75rem',
             sm: '0.875rem',
             base: '1rem',
@@ -475,7 +477,7 @@ module.exports = {
         stroke: ['responsive'],
         tableLayout: ['responsive'],
         textAlign: ['responsive'],
-        textColor: ['responsive', 'hover', 'focus', 'checked'],
+        textColor: ['responsive', 'hover', 'focus', 'checked', 'group-hover'],
         textDecoration: ['responsive', 'hover', 'focus'],
         textTransform: ['responsive'],
         userSelect: ['responsive'],
