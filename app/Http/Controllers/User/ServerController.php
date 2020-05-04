@@ -27,7 +27,7 @@ class ServerController extends Controller
 
     public function show(Server $server)
     {
-        $deploys = $server->deploys;
+        $deploys = $server->deploys()->orderBy('created_at', 'DESC')->limit(1)->get();
 
         return view('servers.show', compact('server', 'deploys'));
     }
