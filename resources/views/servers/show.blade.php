@@ -5,18 +5,6 @@
 @endphp
 
 @section('content')
-    @if($currentDeploy)
-        @component('partials.card')
-            @slot('title')
-                <div class="d-flex items-center justify-between">
-                    <span>Deploys</span>
-                </div>
-            @endslot
-
-        @endcomponent
-        <br/>
-    @endif
-
     @component('partials.card')
         @slot('title')
             <div class="d-flex items-center justify-between">
