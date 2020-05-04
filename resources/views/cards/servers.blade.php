@@ -5,13 +5,7 @@
                 <!-- Header -->
                 <div class="flex mb-4 justify-between items-center">
                     <h2 class="text-xl font-normal font-mono tracking-tight">{{ $server->name }}</h2>
-                    @if(!$server->installed_at)
-                        <span class="badge badge-warning text-lg">Installing</span>
-                    @elseif($server->currentDeploy()->exists())
-                        <span class="badge badge-primary text-lg">Deployed</span>
-                    @else
-                        <span class="badge badge-dark text-lg">Stopped</span>
-                    @endif
+                    @include('servers.status')
                 </div>
 
                 <!-- Specs -->
