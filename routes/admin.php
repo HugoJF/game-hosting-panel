@@ -23,6 +23,9 @@ Route::get('/', 'AdminController@dashboard')->name('admins.dashboard');
 Route::prefix('locations')->group(function () {
     Route::get('/', 'LocationController@index')->name('admins.locations.index');
     Route::get('{location}', 'LocationController@show')->name('admins.locations.show');
+    Route::get('{location}/edit', 'LocationController@edit')->name('admins.locations.edit');
+
+    Route::patch('{location}', 'LocationController@update')->name('admins.locations.update');
 });
 
 /*

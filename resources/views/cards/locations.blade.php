@@ -18,6 +18,7 @@
         <tr>
             <th>Short</th>
             <th>Long</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -33,6 +34,11 @@
                 <!-- Long -->
                 <td>
                     {{ $location->long }}
+                </td>
+
+                <!-- Actions -->
+                <td>
+                    <a class="btn btn-primary btn-sm" href="{{ route('admins.locations.edit', $location) }}">Edit</a>
                 </td>
             </tr>
         @empty
