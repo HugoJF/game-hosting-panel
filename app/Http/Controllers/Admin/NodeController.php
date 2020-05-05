@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Forms\NodeForm;
 use App\Http\Controllers\Controller;
 use App\Node;
+use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\FormBuilder;
 
 class NodeController extends Controller
@@ -29,6 +30,16 @@ class NodeController extends Controller
             'form'        => $form,
             'submit_text' => 'Update',
         ]);
+    }
+
+    public function update(Request $request, Node $node)
+    {
+        $node->fill($request->all());
+        $node->save();
+
+        flash()->success('Node updated!');
+
+        return redirect()->route('admins.dashboard');
     }
 
     public function show(Node $node)
