@@ -13,31 +13,31 @@
         <!-- Body -->
             <div class="p-8 flex-grow bg-white">
                 <!-- Started  -->
-                <div class="mb-2 flex justify-between">
+                <div class="mb-2 flex flex-col lg:flex-row justify-between">
                     @if($deploy->created_at)
-                        <p class="text-sm text-gray-400 font-light tracking-tight">Created at {{ $deploy->created_at }}</p>
+                        <p class="text-sm text-gray-400 font-light tracking-tight">Created at: {{ $deploy->created_at }}</p>
                     @endif
                     @if($deploy->terminated_at)
-                        <p class="text-sm text-gray-400 font-light tracking-tight">Terminated at {{ $deploy->terminated_at }}</p>
+                        <p class="text-sm text-gray-400 font-light tracking-tight">Terminated at: {{ $deploy->terminated_at }}</p>
                     @elseif($deploy->termination_requested_at)
-                        <p class="text-sm text-gray-400 font-light tracking-tight">Termination requested at {{ $deploy->termination_requested_at }}</p>
+                        <p class="text-sm text-gray-400 font-light tracking-tight">Termination requested at: {{ $deploy->termination_requested_at }}</p>
                     @endif
                 </div>
 
                 <!-- Header + Status -->
-                <div class="mb-6 flex items-center">
-                    <h2 class="mr-auto text-2xl text-gray-700 font-normal">
-                        Deploy
-                        <span class="py-1 px-2 bg-red-200 text-red-800 font-mono tracking-tight rounded">{{ Uuid::generate()->string }}</span>
+                <div class="mb-6 flex flex-col lg:flex-row items-center">
+                    <h2 class="mb-4 lg:mr-auto text-center text-base md:text-lg lg:text-2xl text-gray-700 font-normal">
+                        <span class="hidden xl:inline">Deploy</span>
+                        <span class="py-1 px-2 bg-red-200 text-red-800 font-mono tracking-tight break-words rounded">{{ Uuid::generate()->string }}</span>
                     </h2>
 
-                    <span class="text-xl">
+                    <span class="text-base lg:text-xl">
                         @include('deploy.status')
                     </span>
                 </div>
 
                 <!-- Information -->
-                <div class="grid grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 col-gap-8">
                     <div class="flex-grow">
                         <div class="flex py-2 justify-between border-b border-gray-100">
                             <p>
@@ -60,7 +60,7 @@
                             </p>
                             <span class="text-gray-700">{{ $deploy->disk / 1000 }} GB</span>
                         </div>
-                        <div class="flex py-2 justify-between">
+                        <div class="flex py-2 justify-between border-b lg:border-none border-gray-100">
                             <p>
                                 <span class="inline text-gray-600" data-feather="archive"></span>
                                 <span class="text-gray-900 font-semibold">Databases</span>

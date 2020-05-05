@@ -1,6 +1,6 @@
 <div class="grid grid-cols-4 gap-4 p-8">
     @foreach ($servers as $server)
-        <div class="bg-white border rounded-lg overflow-hidden hover:shadow">
+        <div class="trans bg-white border rounded-lg overflow-hidden hover:shadow hover:border-gray-400">
             <a class="block p-4" href="{{ route('servers.show', $server) }}">
                 <!-- Header -->
                 <div class="flex mb-4 justify-between items-center">
@@ -13,23 +13,30 @@
                     <div class="flex py-2 justify-between border-b border-gray-100">
                         <p>
                             <span class="inline text-gray-600" data-feather="cpu"></span>
-                            <span class="text-gray-900 font-semibolda">CPU</span>
+                            <span class="text-gray-700 font-semibold">CPU</span>
                         </p>
                         <span class="text-gray-700">{{ round($server->cpu) }}%</span>
                     </div>
                     <div class="flex py-2 justify-between border-b border-gray-100">
                         <p>
                             <span class="inline text-gray-600" data-feather="database"></span>
-                            <span class="text-gray-900 font-semibolda">RAM</span>
+                            <span class="text-gray-700 font-semibold">RAM</span>
                         </p>
                         <span class="text-gray-700">{{ number_format($server->memory) }} MB</span>
                     </div>
-                    <div class="flex py-2 justify-between">
+                    <div class="flex py-2 justify-between border-b border-gray-100">
                         <p>
                             <span class="inline text-gray-600" data-feather="hard-drive"></span>
-                            <span class="text-gray-900 font-semibolda">Disk</span>
+                            <span class="text-gray-700 font-semibold">Disk</span>
                         </p>
                         <span class="text-gray-700">{{ $server->disk / 1000 }} GB</span>
+                    </div>
+                    <div class="flex py-2 justify-between">
+                        <p>
+                            <span class="inline text-gray-600" data-feather="archive"></span>
+                            <span class="text-gray-700 font-semibold">Databases</span>
+                        </p>
+                        <span class="text-gray-700">{{ $server->databases }}</span>
                     </div>
                 </div>
             </a>
@@ -44,7 +51,9 @@
                     @endif
                 </p>
                 <div class="pl-3 border-l border-gray-300">
-                    <a href="{{ route('servers.custom-deploy', $server) }}"><span class="inline text-gray-600" data-feather="settings"></span></a>
+                    <a href="{{ route('servers.custom-deploy', $server) }}">
+                        <span class="trans inline text-gray-600 hover:text-gray-700" data-feather="settings"></span>
+                    </a>
                 </div>
             </div>
         </div>

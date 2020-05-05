@@ -116,10 +116,29 @@ h6 {
 /*
  * Bootstrap custom CSS
  */
+.sidebar {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100; /* Behind the navbar */
+    padding: 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+@media (min-width: 768px) {
+    .sidebar-sticky {
+        margin-top: 51px; /* Height of navbar */
+    }
+}
+
 .sidebar-sticky {
     padding-top: .5rem;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.navbar-z {
+    z-index: 1030;
 }
 
 .navbar-z {
