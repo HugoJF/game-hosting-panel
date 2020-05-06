@@ -14,9 +14,9 @@ class CreateDeploysTable extends Migration
 	public function up()
 	{
 		Schema::create('deploys', function (Blueprint $table) {
-			$table->bigIncrements('id');
+            $table->uuid('id')->primary();
 
-			$table->string('billing_period');
+            $table->string('billing_period');
 			$table->unsignedInteger('cost_per_period');
 
             $table->unsignedInteger('cpu');
