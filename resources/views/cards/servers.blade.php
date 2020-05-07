@@ -1,9 +1,9 @@
-<div class="grid grid-cols-4 gap-4 p-8">
+<div class="grid grid-col-1 md:grid-cols-2 xl:grid-cols-4 gap-4 p-8">
     @foreach ($servers as $server)
-        <div class="trans bg-white border rounded-lg overflow-hidden hover:shadow hover:border-gray-400">
-            <a class="block p-4" href="{{ route('servers.show', $server) }}">
+        <div class="trans flex flex-col justify-between bg-white border rounded-lg overflow-hidden hover:shadow hover:border-gray-400">
+            <a class="flex flex-grow flex-col p-4" href="{{ route('servers.show', $server) }}">
                 <!-- Header -->
-                <div class="flex justify-between items-center">
+                <div class="flex flex-wrap justify-between items-center">
                     <h2 class="text-xl font-normal font-mono tracking-tight">{{ $server->name }}</h2>
                     @include('servers.status')
                 </div>
@@ -14,7 +14,7 @@
                 </p>
 
                 <!-- Specs -->
-                <div class="">
+                <div class="flex flex-col flex-grow justify-end">
                     <div class="flex py-2 justify-between border-b border-gray-100">
                         <p>
                             <span class="inline text-gray-600" data-feather="cpu"></span>
