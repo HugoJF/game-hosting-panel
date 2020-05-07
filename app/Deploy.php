@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class Deploy extends Model
 {
     use Uuids;
-    
+
     protected $dates = ['termination_requested_at', 'terminated_at'];
 
     public function transaction()

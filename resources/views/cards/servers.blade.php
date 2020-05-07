@@ -3,10 +3,15 @@
         <div class="trans bg-white border rounded-lg overflow-hidden hover:shadow hover:border-gray-400">
             <a class="block p-4" href="{{ route('servers.show', $server) }}">
                 <!-- Header -->
-                <div class="flex mb-4 justify-between items-center">
+                <div class="flex justify-between items-center">
                     <h2 class="text-xl font-normal font-mono tracking-tight">{{ $server->name }}</h2>
                     @include('servers.status')
                 </div>
+
+                <!-- Game -->
+                <p class="mb-4 text-xs text-gray-600">
+                    ~{{ $server->game->name }}
+                </p>
 
                 <!-- Specs -->
                 <div class="">

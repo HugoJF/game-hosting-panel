@@ -17,11 +17,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-    	factory(User::class, 5)->create();
-    	factory(Transaction::class, 500)->create();
-    	factory(Location::class, 5)->create();
-    	factory(Node::class, 10)->create();
-    	factory(Game::class, 10)->create();
-    	factory(Server::class, 5)->create();
+        Artisan::call('panel:sync-all');
+
+        /** @var User $user */
+        $user = factory(User::class)->create([
+            'first_name' => 'Hugo',
+            'last_name'  => 'JF',
+            'username'   => 'hugojf',
+            'email'      => 'asdasdasd@hotmail.com',
+            'admin'      => true,
+            'password'   => bcrypt('123123123'),
+        ]);
+
+        foreach (Game::all() as $game) {
+            Node::first()->games()->attach($game);
+        }
+
+        $user->transactions()->
     }
 }
