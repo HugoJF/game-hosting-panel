@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class Deploy extends Model
 {
     use Uuids;
+    
+    public $incrementing = false;
 
     protected $dates = ['termination_requested_at', 'terminated_at'];
 
