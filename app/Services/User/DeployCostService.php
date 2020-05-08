@@ -20,12 +20,17 @@ class DeployCostService
     {
         $multipliers = config('ghp.cost-multiplier');
 
-        $costs = $node->only(['cpu', 'memory', 'disk', 'databases']);
+        $params = [
+            'cpu'       => 'cpu_cost',
+            'memory'    => 'memory_cost',
+            'disk'      => 'disk_cost',
+            'databases' => 'database_cost',
+        ];
 
         $final = 0;
 
-        foreach ($costs as $name => $cost) {
-            $final += $cost * $config[ $name ] ?? 0;
+        foreach ($params as $name => $costName) {
+            $final += $node->$costName * $config[ $name ] ?? 0;
         }
 
         return $final * $multipliers[ $billingPeriod ];

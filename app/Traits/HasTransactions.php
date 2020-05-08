@@ -18,6 +18,6 @@ trait HasTransactions
 
     public function hasBalance($amount): bool
     {
-        return $this->balance >= $amount;
+        return $amount >= 0 || $this->balance >= abs($amount);
     }
 }

@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Node extends Model
 {
-    protected $fillable = ['id', 'name', 'description', 'location_id'];
+    protected $fillable = ['id', 'name', 'description', 'cpu_cost',
+        'memory_cost', 'disk_cost', 'database_cost', 'location_id'];
 
     public function location()
     {

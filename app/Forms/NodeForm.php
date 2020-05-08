@@ -11,7 +11,7 @@ class NodeForm extends Form
 {
     private $numberParameters = [
         'attr' => [
-            'step' => '1',
+            'step' => '0.01',
         ],
         'min'  => 0,
     ];

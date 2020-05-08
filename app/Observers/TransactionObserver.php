@@ -9,7 +9,7 @@ class TransactionObserver
 {
     public function creating(Transaction $transaction)
     {
-        if (!$transaction->user->hasBalance(abs($transaction->value))) {
+        if (!$transaction->user->hasBalance($transaction->value)) {
             throw new InsufficientBalanceException;
         }
     }
