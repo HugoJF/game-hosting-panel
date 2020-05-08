@@ -7,9 +7,9 @@ module.exports = {
     theme: {
         screens: {
             sm: '640px',
-            md: '768px',
-            lg: '1024px',
-            xl: '1280px',
+            md: '1052px',
+            lg: '1358px',
+            xl: '1664px',
         },
         colors: {
             transparent: 'transparent',
@@ -488,7 +488,9 @@ module.exports = {
         wordBreak: ['responsive'],
         zIndex: ['responsive'],
     },
-    corePlugins: {},
+    corePlugins: {
+        container: false,
+    },
     plugins: [
         plugin(({addVariant, e}) => {
             addVariant('checked', ({modifySelectors, separator}) => {
@@ -496,6 +498,26 @@ module.exports = {
                     return `:checked + .${e(`checked${separator}${className}`)}`
                 })
             });
+        }),
+        plugin(({addComponents}) => {
+            addComponents({
+                '.container': {
+                    maxWidth: '100%',
+                    padding: '0',
+                    '@screen sm': {
+                        maxWidth: 'calc(640px - 4rem)',
+                    },
+                    '@screen md': {
+                        maxWidth: 'calc(640px - 4rem)',
+                    },
+                    '@screen lg': {
+                        maxWidth: 'calc(1024px - 4rem)',
+                    },
+                    '@screen xl': {
+                        maxWidth: 'calc(1280px - 4rem)',
+                    },
+                }
+            })
         })
     ],
 }

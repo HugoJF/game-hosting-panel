@@ -20,27 +20,27 @@ body {
 }
 
 h1 {
-    @apply font-thin text-center text-5xl text-gray-800 tracking-wider
+    @apply text-5xl text-gray-800 tracking-wider
 }
 
 h2 {
-    @apply font-thin text-center text-3xl text-gray-800 tracking-wider
+    @apply text-3xl text-gray-800 tracking-wider
 }
 
 h3 {
-    @apply font-thin text-center text-2xl text-gray-800 tracking-wider
+    @apply text-2xl text-gray-800 tracking-wider
 }
 
 h4 {
-    @apply font-thin text-center text-xl text-gray-800 tracking-wider
+    @apply text-xl text-gray-800 tracking-wider
 }
 
 h5 {
-    @apply font-thin text-center text-lg text-gray-800 tracking-wider
+    @apply text-lg text-gray-800 tracking-wider
 }
 
 h6 {
-    @apply font-thin text-center text-base text-gray-800 tracking-wider
+    @apply text-base text-gray-800 tracking-wider
 }
 
 /**
@@ -123,6 +123,33 @@ h6 {
     z-index: 100; /* Behind the navbar */
     padding: 0;
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+@screen md {
+    .sidebar-width {
+        width: 284px;
+    }
+    .sidebar-margin {
+        margin-left: 284px;
+    }
+}
+
+@screen lg {
+    .sidebar-width {
+        width: 334px;
+    }
+    .sidebar-margin {
+        margin-left: 334px;
+    }
+}
+
+@screen xl {
+    .sidebar-width {
+        width: 384px;
+    }
+    .sidebar-margin {
+        margin-left: 384px;
+    }
 }
 
 @media (min-width: 768px) {

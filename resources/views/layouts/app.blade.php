@@ -21,7 +21,7 @@
 <body>
 
 <nav class="navbar-z flex items-center flex-no-wrap flex-col md:flex-row items-stretch justify-center sticky top-0 left-0 right-0 bg-gray-800 p-0">
-    <a class="px-6 py-3 text-gray-400 text-lg no-underline flex-shrink-0 md:w-1/3 lg:w-1/5 mr-0" href="{{ route('home') }}">Servidores de_nerdTV</a>
+    <a class="sidebar-width px-6 py-3 text-gray-400 text-lg no-underline flex-shrink-0 mr-0" href="{{ route('home') }}">Servidores de_nerdTV</a>
     <div class="hidden md:flex items-stretch flex-grow text-gray-400">
         {!! Form::open(['url' => route('home'), 'method' => 'GET', 'class' => 'flex items-stretch w-100']) !!}
         <input autocomplete="off" name="term" class="trans-fast py-2 px-5 w-100 bg-transparent outline-none focus:border-b focus:border-gray-500 focus:shadow-inner focus:bg-gray-200 focus:text-gray-700" type="text" placeholder="Search" aria-label="Search">
@@ -58,7 +58,7 @@
 
 <div class="w-full">
     <main class="flex flex-col md:flex-row md:flex-wrap">
-        <nav class="w-full block md:w-1/3 lg:w-1/5 md:fixed light sidebar bg-gray-900">
+        <nav class="block md:fixed light sidebar sidebar-width bg-gray-900">
             <div class="sidebar-sticky p-4">
                 <div class="hidden md:flex flex-col px-20 mt-4 mb-4 items-center">
                     @auth
@@ -231,14 +231,15 @@
                 </div>
             </div>
         </nav>
-        <main role="main" class="w-full md:w-2/3 lg:w-4/5 ml-auto">
+        <main role="main" class="flex-grow sidebar-margin">
             <div class="flex items-center py-3 px-8 bg-gray-100 text-gray-600 border-b border-gray-400">
                 {{ Breadcrumbs::render() }}
             </div>
             <div class="text-gray-800 pt-8 p-1 md:p-8 overflow-x-hidden">
                 @include('flash::message')
-
-                @yield('content')
+                <div class="container">
+                    @yield('content')
+                </div>
             </div>
         </main>
     </main>

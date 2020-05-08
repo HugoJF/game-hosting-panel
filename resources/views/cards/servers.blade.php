@@ -1,10 +1,10 @@
-<div class="grid grid-col-1 md:grid-cols-2 xl:grid-cols-4 gap-4 p-8">
+<div class="grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
     @foreach ($servers as $server)
         <div class="trans flex flex-col justify-between bg-white border rounded-lg overflow-hidden hover:shadow hover:border-gray-400">
             <a class="flex flex-grow flex-col p-4" href="{{ route('servers.show', $server) }}">
                 <!-- Header -->
-                <div class="flex flex-wrap justify-between items-center">
-                    <h2 class="text-xl font-normal font-mono tracking-tight">{{ $server->name }}</h2>
+                <div class="flex flex-wrap justify-between items-center text-base">
+                    <h2 class="text-lg font-normal font-mono tracking-tight">{{ $server->name }}</h2>
                     @include('servers.status')
                 </div>
 
