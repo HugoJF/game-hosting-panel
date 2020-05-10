@@ -1,9 +1,6 @@
-import DeploymentConfigurer from "./components/configurer/DeploymentConfigurer";
-
-require('./bootstrap');
-
 import React from 'react';
 import ReactDOM from 'react-dom';
+import DeploymentConfigurer from "./components/configurer/DeploymentConfigurer";
 import CreationConfigurer from "./components/configurer/CreationConfigurer";
 
 const mappings = {
