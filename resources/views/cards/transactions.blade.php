@@ -18,8 +18,6 @@
         <tr>
             <th>ID</th>
             <th>Value</th>
-            <th>User</th>
-            <th>Reason</th>
             <th>Created at</th>
         </tr>
         </thead>
@@ -42,19 +40,7 @@
                     @endif
                 </td>
 
-                <!-- User -->
-                <td>{{ $transaction->user->name }}</td>
-
-                <!-- Reason -->
-                @if(config('model-routes.' . $transaction->reason_type))
-                    <td>
-                        <strong><a href="{{ route(config('model-routes.' . $transaction->reason_type), $transaction->reason_id) }}">{{ $transaction->reason_type }}</a></strong>
-                    </td>
-                @else
-                    <td>{{ $transaction->reason_type }}</td>
-            @endif
-
-            <!-- Created at -->
+                <!-- Created at -->
                 <td>{{ $transaction->created_at->diffForHumans() }}</td>
             </tr>
         @empty
