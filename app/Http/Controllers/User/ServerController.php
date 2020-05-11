@@ -13,6 +13,7 @@ use App\Services\User\NodeSelectionService;
 use App\Services\User\ServerCreationService;
 use App\Services\User\ServerDeletionService;
 use App\Services\User\ServerDeploymentService;
+use App\Transaction;
 use Illuminate\Http\Request;
 
 class ServerController extends Controller
@@ -27,9 +28,13 @@ class ServerController extends Controller
 
     public function show(Server $server)
     {
-        $deploys = $server->deploys()->orderBy('created_at', 'DESC')->limit(1)->get();
+        // TODO: fix this shit show
+        $latestDeploys = $server->deploys()->latest()->limit(5)->get();
+        $transactions = Transaction::whereIn('id', $latestDeploys->pluck('transaction_id'))->get();
 
-        return view('servers.show', compact('server', 'deploys'));
+        $deploys = collect($latestDeploys->count() == 0 ? [] : [$latestDeploys->first()]);
+
+        return view('servers.show', compact('server', 'deploys', 'transactions'));
     }
 
     public function selectGame()

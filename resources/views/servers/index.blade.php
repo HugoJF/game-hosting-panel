@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Servers</h1>
-    <br/>
-    @component('cards.servers', ['servers' => $servers])
-        <a class="btn btn-primary btn-sm" href="{{ route('servers.select-game') }}">Create new server</a>
-    @endcomponent
-    <br/>
+    <div class="flex justify-between items-baseline">
+        <h1 class="mb-8">Servers</h1>
+        <div class="btn-group btn-group-lg">
+            <a class="btn btn-primary btn-lg" href="{{ route('servers.select-game') }}">Create server</a>
+        </div>
+    </div>
+
+    @include('cards.servers')
 @endsection

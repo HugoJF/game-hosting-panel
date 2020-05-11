@@ -21,6 +21,11 @@ class Server extends Model
         return $this->hasMany(Deploy::class);
     }
 
+    public function transactions()
+    {
+        return $this->hasManyThrough(Transaction::class, Deploy::class);
+    }
+
     public function currentDeploy()
     {
         return $this->deploys()->whereNull('terminated_at');
