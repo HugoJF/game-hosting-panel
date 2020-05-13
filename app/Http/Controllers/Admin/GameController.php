@@ -33,7 +33,7 @@ class GameController extends Controller
         $game->fill($request->all());
         $game->save();
 
-        flash()->success("Game <strong>$game->cover</strong> updated!");
+        flash()->success("Game <strong>$game->name</strong> updated!");
 
         return redirect()->route('admins.dashboard');
     }
