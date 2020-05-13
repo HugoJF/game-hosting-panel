@@ -61,28 +61,30 @@ export const games = {
         async load(payload, root) {
             dispatch.games.setLoading(true);
             await new Promise(resolve => setTimeout(resolve, 2000));
-            dispatch.games.set({
-                minecraft: {
-                    name: 'Minecraft',
-                    image: 'https://i.redd.it/uhdomasbp1p31.png'
-                },
-                csgo: {
-                    name: 'Counter Strike: Global Offensive',
-                    image: 'https://i.imgur.com/rAwX8Af.png'
-                },
-                cod4: {
-                    name: 'Call of Duty 4: Modern Warfare',
-                    image: 'https://i.imgur.com/ADfCGqM.png'
-                },
-                css: {
-                    name: 'Counter Strike: Source',
-                    image: 'https://i.imgur.com/aSpVNeW.png'
-                },
-                cod2: {
-                    name: 'Call of Duty: 2',
-                    image: 'https://i.imgur.com/ORlkG0P.png'
-                },
-            });
+            let response = await axios.get('/api/configurer/games');
+            dispatch.games.set(response.data);
+            // dispatch.games.set({
+            //     minecraft: {
+            //         name: 'Minecraft',
+            //         image: 'https://i.redd.it/uhdomasbp1p31.png'
+            //     },
+            //     csgo: {
+            //         name: 'Counter Strike: Global Offensive',
+            //         image: 'https://i.imgur.com/rAwX8Af.png'
+            //     },
+            //     cod4: {
+            //         name: 'Call of Duty 4: Modern Warfare',
+            //         image: 'https://i.imgur.com/ADfCGqM.png'
+            //     },
+            //     css: {
+            //         name: 'Counter Strike: Source',
+            //         image: 'https://i.imgur.com/aSpVNeW.png'
+            //     },
+            //     cod2: {
+            //         name: 'Call of Duty: 2',
+            //         image: 'https://i.imgur.com/ORlkG0P.png'
+            //     },
+            // });
             dispatch.games.setLoading(false);
         },
     }),
