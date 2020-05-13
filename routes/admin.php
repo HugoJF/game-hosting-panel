@@ -44,6 +44,18 @@ Route::prefix('nodes')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
+| Game routes
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('games')->group(function () {
+    Route::get('{game}/edit', 'GameController@edit')->name('admins.games.edit');
+
+    Route::patch('{game}', 'GameController@update')->name('admins.games.update');
+});
+
+/*
+|--------------------------------------------------------------------------
 | Server routes
 |--------------------------------------------------------------------------
 */

@@ -17,6 +17,7 @@ class CreateGamesTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('name');
+            $table->text('cover');
             $table->mediumText('description'); // TODO: check if mediumText is too overkill
 
             $table->unsignedBigInteger('nest_id');

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Game extends Model
 {
-	protected $fillable = ['id', 'stub', 'name', 'description', 'nest_id'];
+	protected $fillable = ['id', 'stub', 'cover', 'name', 'description', 'nest_id'];
 
     public function nodes()
     {

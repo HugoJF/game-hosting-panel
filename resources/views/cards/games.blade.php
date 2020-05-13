@@ -17,7 +17,9 @@
         <thead>
         <tr>
             <th>Name</th>
+            <th>Cover</th>
             <th>Description</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -26,9 +28,23 @@
                 <!-- Name -->
                 <td>{{ $game->name }}</td>
 
+                <!-- Cover -->
+                <td>
+                    @if($game->cover)
+                        <a href="{{ $game->cover }}">{{ $game->cover }}</a>
+                    @else
+                        <span class="badge badge-dark">N/A</span>
+                    @endif
+                </td>
+
                 <!-- Description -->
                 <td>
                     <small>{{ $game->description }}</small>
+                </td>
+
+                <!-- Actions -->
+                <td>
+                    <a class="btn btn-primary btn-sm" href="{{ route('admins.games.edit', $game) }}">Edit</a>
                 </td>
             </tr>
         @empty
