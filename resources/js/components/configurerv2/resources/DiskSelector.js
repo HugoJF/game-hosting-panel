@@ -1,5 +1,5 @@
 import React from 'react';
-import disk from './../icons/disk.svg';
+import disk from '../../icons/disk.svg';
 import GenericSelector from "./GenericSelector";
 
 const options = {

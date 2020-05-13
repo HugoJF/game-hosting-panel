@@ -1,20 +1,12 @@
 import React from 'react';
-import Card from "./Card";
-import Section from "./Section";
-import summary from './../icons/summary.svg';
-import costIcon from './../icons/cost.svg';
-import PeriodSelector from "./PeriodSelector";
-import useSpecs from "./useSpecs";
-import useCost from "./useCost";
+import Card from "../../ui/Card";
+import Section from "../../ui/Section";
+import summary from '../../../icons/summary.svg';
+import costIcon from '../../../icons/cost.svg';
+import PeriodSelector from "./../../sections/PeriodSelector";
+import useSpecs from "../../hooks/useSpecs";
+import useCost from "../../hooks/useCost";
 
-const specs = {
-    'Game': 'Call of Duty 4: Modern Warfare',
-    'CPU': '25%',
-    'Memory': '2 GB',
-    'Disk': '30 GB',
-    'Databases': '1 database',
-    'Period': 'Daily',
-};
 const formatter = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
 export default function Summary({onPeriodSelect}) {

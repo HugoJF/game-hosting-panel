@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import Card from "./Card";
-import Game from "./Game";
-import useGames from "./useGames";
+import Card from "../ui/Card";
+import Game from "./../sections/partials/Game";
+import useGames from "../hooks/useGames";
 import {useDispatch} from "react-redux";
 
 export default function GameSelection({onSelect}) {

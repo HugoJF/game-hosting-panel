@@ -1,9 +1,9 @@
 import React from 'react';
 import Title from "./Title";
-import GameSelection from "./GameSelection";
-import LocationSelection from "./LocationSelection";
-import ResourceSelection from "./ResourceSelection";
-import Summary from "./Summary";
+import GameSelection from "./sections/GameSelection";
+import LocationSelection from "./sections/LocationSelection";
+import ResourceSelection from "./sections/ResourceSelection";
+import Summary from "./sections/partials/Summary";
 import {useDispatch} from "react-redux";
 
 export default function Configurer({handleChange, cost}) {

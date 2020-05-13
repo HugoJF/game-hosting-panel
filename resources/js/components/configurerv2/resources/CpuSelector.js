@@ -1,5 +1,5 @@
 import React from 'react';
-import cpu from './../icons/cpu.svg';
+import cpu from '../../icons/cpu.svg';
 import GenericSelector from "./GenericSelector";
 
 const options = {

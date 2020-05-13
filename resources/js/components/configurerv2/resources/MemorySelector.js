@@ -1,5 +1,5 @@
 import React from 'react';
-import memory from './../icons/memory.svg';
+import memory from '../../icons/memory.svg';
 import GenericSelector from "./GenericSelector";
 
 const options = {

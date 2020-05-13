@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import Card from "./Card";
-import Brazil from "../flags/Brazil.svg";
-import UnitedStates from "../flags/UnitedStates.svg";
-import Canada from "../flags/Canada.svg";
-import Location from "./Location";
-import useLocations from "./useLocations";
+import Card from "../ui/Card";
+import Brazil from "../../flags/Brazil.svg";
+import UnitedStates from "../../flags/UnitedStates.svg";
+import Canada from "../../flags/Canada.svg";
+import Location from "./../sections/partials/Location";
+import useLocations from "../hooks/useLocations";
 
 const flags = {
     brazil: Brazil,

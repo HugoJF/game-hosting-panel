@@ -1,9 +1,9 @@
 import React from 'react';
-import Card from "./Card";
-import CpuSelector from "./CpuSelector";
-import MemorySelector from "./MemorySelector";
-import DiskSelector from "./DiskSelector";
-import DatabasesSelector from "./DatabasesSelector";
+import Card from "../ui/Card";
+import CpuSelector from "../resources/CpuSelector";
+import MemorySelector from "../resources/MemorySelector";
+import DiskSelector from "../resources/DiskSelector";
+import DatabasesSelector from "../resources/DatabasesSelector";
 
 export default function ResourceSelection({onSelect}) {
     function generateOnClick(key) {

@@ -1,6 +1,6 @@
 import React from 'react';
-import period from './../icons/period.svg';
-import GenericSelector from "./GenericSelector";
+import period from '../../icons/period.svg';
+import GenericSelector from "../resources/GenericSelector";
 
 const options = {
     minutely: 'Minutely',

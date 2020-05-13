@@ -1,5 +1,5 @@
 import React from 'react';
-import databases from './../icons/databases.svg';
+import databases from '../../icons/databases.svg';
 import GenericSelector from "./GenericSelector";
 
 const options = {

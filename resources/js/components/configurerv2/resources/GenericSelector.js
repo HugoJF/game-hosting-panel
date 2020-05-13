@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import Section from "./Section";
-import Button from "./Button";
+import Section from "../ui/Section";
+import Button from "../ui/Button";
 
 export default function GenericSelector({title, subtitle, icon, onSelect, options, cols = 4}) {
     const [selected, setSelected] = useState(false);
