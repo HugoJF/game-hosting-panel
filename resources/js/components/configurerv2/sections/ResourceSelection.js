@@ -1,14 +1,11 @@
 import React from 'react';
 import Card from "../ui/Card";
-import CpuSelector from "../resources/CpuSelector";
-import MemorySelector from "../resources/MemorySelector";
-import DiskSelector from "../resources/DiskSelector";
-import DatabasesSelector from "../resources/DatabasesSelector";
+import GenericSelector from "../resources/GenericSelector";
+import useSpecs from "../hooks/useSpecs";
+import icons from '../icons';
 
 export default function ResourceSelection({onSelect}) {
-    function generateOnClick(key) {
-        return (value) => onSelect && onSelect({[key]: value});
-    }
+    const specs = useSpecs();
 
     return <Card
         title="Server resources"
@@ -16,9 +13,18 @@ export default function ResourceSelection({onSelect}) {
         cols={2}
         gap={8}
     >
-        <CpuSelector onSelect={generateOnClick('cpu')}/>
-        <MemorySelector onSelect={generateOnClick('memory')}/>
-        <DiskSelector onSelect={generateOnClick('disk')}/>
-        <DatabasesSelector onSelect={generateOnClick('databases')}/>
+        {
+            Object.entries(specs).map(([id, spec]) => (
+                <GenericSelector
+                    key={id}
+                    specId={id}
+                    title={spec.name}
+                    subtitle={spec.description}
+                    icon={icons[spec.icon]}
+                    onSelect={onSelect}
+                    options={spec.options}
+                />
+            ))
+        }
     </Card>
 }

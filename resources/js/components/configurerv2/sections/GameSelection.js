@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import Card from "../ui/Card";
-import Game from "./../sections/partials/Game";
-import useGames from "../hooks/useGames";
 import {useDispatch} from "react-redux";
+import useGames from "../hooks/useGames";
+import Game from "./../sections/partials/Game";
+import Card from "../ui/Card";
 
 export default function GameSelection({onSelect}) {
     const [selected, setSelected] = useState(null);
@@ -25,14 +25,18 @@ export default function GameSelection({onSelect}) {
         loading={games.loading}
         cols={5}
     >
-        {Object.entries(games.games).map(([id, game]) => (
-            <Game
-                key={id}
-                id={id}
-                game={game}
-                selected={selected ? id === selected : null}
-                onClick={handleOnClick}
-            />
-        ))}
+        {
+            Object.entries(games.games)
+                .filter(([_, game]) => game.cover)
+                .map(([id, game]) => (
+                    <Game
+                        key={id}
+                        id={id}
+                        game={game}
+                        selected={selected ? id === selected : null}
+                        onClick={handleOnClick}
+                    />
+                ))
+        }
     </Card>
 }

@@ -57,15 +57,7 @@
             <p class="ml-2 text-gray-500 font-light tracking-tight">Select which location you want your server to be hosted at.</p>
         </div>
         <div class="relative">
-            <div class="absolute top-0 left-0 right-0 bottom-0
-                text-3xl bg-gray-400
-                z-40 opacity-50
-            "></div>
-            <div class="flex items-center justify-center
-                absolute top-0 left-0 right-0 bottom-0
-                text-3xl font-semibold z-50
-            ">Loading, please wait...</div>
-            <div class="grid grid-cols-4 gap-4 p-8 z-0" style="filter: blur(4px)">
+            <div class="grid grid-cols-4 gap-4 p-8 z-0">
                 @foreach (['canada' => 'Canada', 'us' => 'United States', 'brazil' => 'Brazil'] as $country => $c)
                     @if($loop->first)
                         <div class="z-0 relative flex flex-row items-center px-6 py-4 border-2 bg-blue-100 border-blue-600 rounded cursor-pointer shadow">
@@ -74,12 +66,18 @@
                             </div>
 
                             <div class="w-16 h-16">@include("flags.$country")</div>
-                            <span class="ml-4 flex-grow text-blue-700 text-center text-xl font-bold">{{ $c }}</span>
+                            <div class="ml-4 flex-grow text-blue-700">
+                                <p class="text-xl font-bold">{{ $c }}</p>
+                                <p class="text-sm font-light tracking-tight">Maxihost - MH1</p>
+                            </div>
                         </div>
                     @else
                         <div class="z-0 flex flex-row items-center px-6 py-4 border rounded cursor-pointer hover:border-blue-600 hover:shadow">
                             <div class="w-16 h-16">@include("flags.$country")</div>
-                            <span class="ml-4 flex-grow text-center text-xl font-bold">{{ $c }}</span>
+                            <div class="ml-4 flex-grow">
+                                <p class="text-xl font-bold">{{ $c }}</p>
+                                <p class="text-sm font-light tracking-tight">Maxihost - MH1</p>
+                            </div>
                         </div>
                     @endif
                 @endforeach

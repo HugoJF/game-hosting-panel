@@ -10,11 +10,5 @@ const options = {
 };
 
 export default function CpuSelector({onSelect}) {
-    return <GenericSelector
-        title="CPU"
-        subtitle="Maximum core usage"
-        icon={cpu}
-        onSelect={onSelect}
-        options={options}
-    />;
+
 }

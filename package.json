@@ -24,6 +24,7 @@
         "@rematch/core": "^1.4.0",
         "@rematch/immer": "^1.2.0",
         "feather-icons": "^4.28.0",
+        "lodash.get": "^4.4.2",
         "moment": "^2.25.3",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",

@@ -12,6 +12,7 @@ const options = {
 
 export default function PeriodSelector({onSelect}) {
     return <GenericSelector
+        specId="period"
         title="Billing period"
         subtitle=""
         icon={period}

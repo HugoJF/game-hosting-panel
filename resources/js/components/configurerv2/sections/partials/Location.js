@@ -2,7 +2,7 @@ import React from 'react';
 import feather from "feather-icons";
 
 export default function Location({id, flag, location, selected, onClick}) {
-    const {name, enabled} = location;
+    const {name, short, long, enabled} = location;
 
     return <div
         onClick={enabled ? onClick.bind(this, id) : undefined}
@@ -24,6 +24,9 @@ export default function Location({id, flag, location, selected, onClick}) {
         </div>
 
         {/* Location name and description */}
-        <div className={`ml-4 flex-grow ${selected ? 'text-blue-700' : 'text-black'} text-center text-xl font-bold select-none`}>{name}</div>
+        <div className={`ml-4 flex-grow ${selected ? 'text-blue-700' : ''}`}>
+            <p className="text-xl font-bold">{short}</p>
+            <p className="text-sm font-light tracking-tight">{long}</p>
+        </div>
     </div>
 }

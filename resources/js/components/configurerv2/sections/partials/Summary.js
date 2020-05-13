@@ -1,17 +1,22 @@
 import React from 'react';
-import Card from "../../ui/Card";
-import Section from "../../ui/Section";
+import get from 'lodash.get';
+import useCost from "../../hooks/useCost";
+import useForm from "../../hooks/useForm";
+import useSpecs from "../../hooks/useSpecs";
 import summary from '../../../icons/summary.svg';
 import costIcon from '../../../icons/cost.svg';
 import PeriodSelector from "./../../sections/PeriodSelector";
-import useSpecs from "../../hooks/useSpecs";
-import useCost from "../../hooks/useCost";
+import Card from "../../ui/Card";
+import Section from "../../ui/Section";
 
-const formatter = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+const formatter = new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'});
 
 export default function Summary({onPeriodSelect}) {
+    const form = useForm();
     const specs = useSpecs();
     const cost = useCost();
+
+    console.log(specs, form);
 
     return <Card
         title="Summary"
@@ -24,12 +29,16 @@ export default function Summary({onPeriodSelect}) {
             icon={summary}
             cols={1}
         >
-            {Object.entries(specs).filter(([k, v]) => v).map(([name, value]) => (
-                <div className="trans flex justify-between px-4 py-2 text-black text-center border rounded">
-                    <h4>{name}:</h4>
-                    {value}
-                </div>
-            ))}
+            {
+                Object.entries(form)
+                    .filter(([k, v]) => v)
+                    .map(([specId, optionId]) => (
+                        <div className="trans flex justify-between px-4 py-2 text-black text-center border rounded">
+                            <h4>{get(specs, `${specId}.name`, specId)}:</h4>
+                            {get(specs, `${specId}.options.${optionId}`, optionId)}
+                        </div>
+                    ))
+            }
         </Section>
         <div>
             <div className="mb-8">
