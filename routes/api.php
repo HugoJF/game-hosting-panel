@@ -13,9 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 
+// TODO: @deprecated
 Route::prefix('cost')->group(function () {
     Route::get('creation', 'CostController@creation')->name('cost.creation');
     Route::get('deployment', 'CostController@deployment')->name('cost.deployment');
+});
+
+Route::prefix('configurer')->group(function () {
+    Route::get('game/{game}/locations', 'ConfigurerController@locations')->name('configurer.locations');
 });
 
 Route::prefix('nodes')->group(function () {

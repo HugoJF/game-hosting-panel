@@ -2,10 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import DeploymentConfigurer from "./components/configurer/DeploymentConfigurer";
 import CreationConfigurer from "./components/configurer/CreationConfigurer";
+import CreationConfigurer2 from "./components/configurerv2/CreationConfigurer2";
 
 const mappings = {
     'creation-configurer': CreationConfigurer,
     'deployment-configurer': DeploymentConfigurer,
+    'creation-configurer2': CreationConfigurer2,
 };
 
 for (const [dataReact, Component] of Object.entries(mappings)) {
@@ -27,3 +29,8 @@ for (const [dataReact, Component] of Object.entries(mappings)) {
         ReactDOM.render(<Component {...data} />, element);
     }
 }
+
+(function () {
+    'use strict';
+    feather.replace();
+}());

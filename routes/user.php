@@ -27,6 +27,14 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('home', 'HomeController@index')->name('home');
 Route::get('faq', 'HomeController@faq')->name('faq');
 
+Route::get('fuck', function () {
+   return view('fuck');
+})->name('fuck');
+
+Route::get('fuck2', function () {
+   return view('fuck2');
+})->name('fuck2');
+
 /*
 |--------------------------------------------------------------------------
 | Authed only routes

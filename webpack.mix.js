@@ -18,6 +18,7 @@ mix
     .postCss('resources/css/app.css', 'public/css', [
         tailwindcss('./tailwind.config.js'),
     ])
+    .webpackConfig({devtool: 'source-map'})
     .sourceMaps()
     .version()
 ;
