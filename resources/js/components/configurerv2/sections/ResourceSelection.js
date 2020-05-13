@@ -14,7 +14,10 @@ export default function ResourceSelection({onSelect}) {
         gap={8}
     >
         {
-            Object.entries(specs).map(([id, spec]) => (
+            Object
+                .entries(specs)
+                .filter(([id, spec]) => spec.custom === undefined || spec.custom)
+                .map(([id, spec]) => (
                 <GenericSelector
                     key={id}
                     specId={id}

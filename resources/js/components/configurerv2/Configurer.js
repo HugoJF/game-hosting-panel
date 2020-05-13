@@ -11,7 +11,8 @@ export default function Configurer({handleChange, cost}) {
 
     function handleGameSelect(game) {
         dispatch.form.update({game});
-        if (game) dispatch.locations.load();
+        console.log(game);
+        if (game) dispatch.locations.load(game);
     }
 
     function handleLocationSelect(location) {
