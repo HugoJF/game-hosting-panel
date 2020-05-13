@@ -1,24 +1,5 @@
 export const specs = {
     state: {
-        game: {
-            custom: false,
-            name: 'Game',
-        },
-        location: {
-            custom: false,
-            name: 'Location',
-        },
-        period: {
-            custom: false,
-            name: 'Period',
-            options: {
-                minutely: 'Minutely',
-                hourly: 'Hourly',
-                daily: 'Daily',
-                weekly: 'Weekly',
-                monthly: 'Monthly',
-            }
-        },
         cpu: {
             name: 'CPU',
             icon: 'cpu',

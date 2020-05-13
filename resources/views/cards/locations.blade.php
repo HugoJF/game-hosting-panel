@@ -18,6 +18,7 @@
         <tr>
             <th>Short</th>
             <th>Long</th>
+            <th>Flag</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -34,6 +35,11 @@
                 <!-- Long -->
                 <td>
                     {{ $location->long }}
+                </td>
+
+                <!-- Flag -->
+                <td>
+                    {{ $location->flag }}
                 </td>
 
                 <!-- Actions -->

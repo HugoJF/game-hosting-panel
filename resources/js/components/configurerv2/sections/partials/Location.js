@@ -1,8 +1,9 @@
 import React from 'react';
 import feather from "feather-icons";
+import icons from "../../icons";
 
-export default function Location({id, flag, location, selected, onClick}) {
-    const {name, short, long, available} = location;
+export default function Location({id, location, selected, onClick}) {
+    const {short, long, flag, available} = location;
 
     return <div
         onClick={available ? onClick.bind(this, id) : undefined}
@@ -20,7 +21,7 @@ export default function Location({id, flag, location, selected, onClick}) {
 
         {/* Location flag */}
         <div className="w-16 h-16">
-            <img alt={name} src={flag}/>
+            <img alt={`${short} | ${long}`} src={icons[flag]}/>
         </div>
 
         {/* Location name and description */}

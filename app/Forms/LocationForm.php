@@ -13,6 +13,7 @@ class LocationForm extends Form
     {
         $this->add('short', 'text', $this->params('Short description of location'));
         $this->add('long', 'text', $this->params('Long description of location'));
+        $this->add('flag', 'text', $this->params('Flag ID for location'));
     }
 
     protected function params($text)

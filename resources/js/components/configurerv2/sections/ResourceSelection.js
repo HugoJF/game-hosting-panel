@@ -16,7 +16,6 @@ export default function ResourceSelection({onSelect}) {
         {
             Object
                 .entries(specs)
-                .filter(([id, spec]) => spec.custom === undefined || spec.custom)
                 .map(([id, spec]) => (
                 <GenericSelector
                     key={id}

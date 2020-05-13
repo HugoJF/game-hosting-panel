@@ -3,7 +3,7 @@ import Title from "./Title";
 import GameSelection from "./sections/GameSelection";
 import LocationSelection from "./sections/LocationSelection";
 import ResourceSelection from "./sections/ResourceSelection";
-import Summary from "./sections/partials/Summary";
+import Summary from "./sections/Summary";
 import {useDispatch} from "react-redux";
 
 export default function Configurer({handleChange, cost}) {
