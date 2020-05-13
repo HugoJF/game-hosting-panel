@@ -26,7 +26,8 @@ export default function GameSelection({onSelect}) {
         cols={5}
     >
         {
-            Object.entries(games.games)
+            Object
+                .entries(games.games)
                 .filter(([_, game]) => game.cover)
                 .map(([id, game]) => (
                     <Game

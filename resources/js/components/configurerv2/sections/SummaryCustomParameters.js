@@ -15,7 +15,8 @@ export default function SummaryCustomParameters() {
         return get(spec, `options.${get(form, specId)}`, '')
     }
 
-    return Object.entries(specs)
+    return Object
+        .entries(specs)
         .map(([specId, spec]) => (
             <div className="trans flex justify-between px-4 py-2 text-black text-center border rounded">
                 <h4>{getSpecName(spec)}:</h4>

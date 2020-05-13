@@ -1,5 +1,5 @@
 export const locations = {
-    state: {locations: {}, loading: true}, // initial state
+    state: {locations: {}, loading: false}, // initial state
     reducers: {
         // handle state changes with pure functions
         setLoading(state, payload) {

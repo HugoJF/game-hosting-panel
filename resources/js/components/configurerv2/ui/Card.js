@@ -3,16 +3,23 @@ import ScaleLoader from "react-spinners/ScaleLoader";
 
 export default function Card({title, subtitle, children, loading = false, gap = 4, cols = 4}) {
     return <div className="mb-8 bg-white rounded-lg overflow-hidden">
+        {/* Header */}
         <div className="px-8 py-4 border-b bg-gray-100">
             <h2>{title}</h2>
             <p className="text-gray-700">{subtitle}</p>
         </div>
+
+        {/* Body */}
         <div className="relative">
+            {/* Loading overlay */}
             {
                 loading && <>
+                    {/* Content overlay */}
                     <div className="absolute top-0 left-0 right-0 bottom-0
                         text-3xl z-40"
                     />
+
+                    {/* Background overlay */}
                     <div className="flex items-center justify-center
                         absolute top-0 left-0 right-0 bottom-0
                         text-3xl font-semibold z-50"
@@ -27,6 +34,8 @@ export default function Card({title, subtitle, children, loading = false, gap = 
                 </>
             }
 
+            {/* Content */}
+            {/* TODO: remove direct stylings */}
             <div
                 className={`trans grid grid-cols-${cols} gap-${gap} p-8`}
                 style={{minHeight: '8rem', filter: loading ? 'grayscale(100%) blur(4px)' : 'grayscale(0%) blur(0)'}}

@@ -71,6 +71,7 @@ export default function Summary({onPeriodSelect}) {
             <SummaryCustomParameters/>
         </Section>
 
+        {/* Second column */}
         <div>
             <div className="mb-8">
                 <PeriodSelector onSelect={onPeriodSelect}/>
