@@ -2,6 +2,7 @@ import React from 'react';
 import get from "lodash.get";
 import useSpecs from "../hooks/useSpecs";
 import useForm from "../hooks/useForm";
+import SummaryItem from "./SummaryItem";
 
 export default function SummaryCustomParameters() {
     const specs = useSpecs();
@@ -16,11 +17,11 @@ export default function SummaryCustomParameters() {
     }
 
     return Object
-        .entries(specs)
+        .entries(specs.specs)
         .map(([specId, spec]) => (
-            <div className="trans flex justify-between px-4 py-2 text-black text-center border rounded">
-                <h4>{getSpecName(spec)}:</h4>
-                {getSpecValue(spec, specId)}
-            </div>
+            <SummaryItem
+                name={getSpecName(spec)}
+                value={getSpecValue(spec, specId)}
+            />
         ))
 }

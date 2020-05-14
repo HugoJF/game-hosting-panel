@@ -9,6 +9,7 @@ import useGames from "../hooks/useGames";
 import useLocations from "../hooks/useLocations";
 import SummaryCustomParameters from "./SummaryCustomParameters";
 import SummaryTotalCost from "./SummaryTotalCost";
+import SummaryItem from "./SummaryItem";
 
 
 const periods = {
@@ -26,16 +27,16 @@ export default function Summary({onPeriodSelect}) {
 
     function getGameName() {
         const id = get(form, 'game');
-        return get(games, `games.${id}.name`, '')
+        return get(games, `games.${id}.name`)
     }
 
     function getLocationName() {
         const id = get(form, 'location');
-        return get(locations, `locations.${id}.short`, '');
+        return get(locations, `locations.${id}.short`);
     }
 
     function getPeriod() {
-        return get(periods, form.period, '');
+        return get(periods, form.period);
     }
 
     return <Card
@@ -50,25 +51,16 @@ export default function Summary({onPeriodSelect}) {
             cols={1}
         >
             {/* Global parameter Game */}
-            <div className="trans flex justify-between px-4 py-2 text-black text-center border rounded">
-                <h4>Game:</h4>
-                {getGameName()}
-            </div>
+            <SummaryItem name="Game" value={getGameName()}/>
 
             {/* Global parameter Location */}
-            <div className="trans flex justify-between px-4 py-2 text-black text-center border rounded">
-                <h4>Location:</h4>
-                {getLocationName()}
-            </div>
-
-            {/* Global parameter Period */}
-            <div className="trans flex justify-between px-4 py-2 text-black text-center border rounded">
-                <h4>Period:</h4>
-                {getPeriod()}
-            </div>
+            <SummaryItem name="Location" value={getLocationName()}/>
 
             {/* Custom parameters */}
             <SummaryCustomParameters/>
+
+            {/* Global parameter Period */}
+            <SummaryItem name="Period" value={getPeriod()}/>
         </Section>
 
         {/* Second column */}

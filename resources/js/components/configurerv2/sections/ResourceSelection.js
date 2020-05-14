@@ -10,12 +10,13 @@ export default function ResourceSelection({onSelect}) {
     return <Card
         title="Server resources"
         subtitle="Select the resource limits based on your demand."
+        loading={specs.loading}
         cols={2}
         gap={8}
     >
         {
             Object
-                .entries(specs)
+                .entries(specs.specs)
                 .map(([id, spec]) => (
                 <GenericSelector
                     key={id}

@@ -22,6 +22,7 @@ Route::prefix('cost')->group(function () {
 Route::prefix('configurer')->group(function () {
     Route::get('games', 'ConfigurerController@games')->name('configurer.games');
     Route::get('games/{game}/locations', 'ConfigurerController@locations')->name('configurer.locations');
+    Route::get('games/{game}/locations/{location}/specs', 'ConfigurerController@specs')->name('configurer.specs');
 });
 
 Route::prefix('nodes')->group(function () {

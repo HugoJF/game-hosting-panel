@@ -5,9 +5,11 @@ import LocationSelection from "./sections/LocationSelection";
 import ResourceSelection from "./sections/ResourceSelection";
 import Summary from "./sections/Summary";
 import {useDispatch} from "react-redux";
+import useForm from "./hooks/useForm";
 
 export default function Configurer({handleChange, cost}) {
     const dispatch = useDispatch();
+    const form = useForm();
 
     function handleGameSelect(game) {
         dispatch.form.update({game});
@@ -17,7 +19,11 @@ export default function Configurer({handleChange, cost}) {
     }
 
     function handleLocationSelect(location) {
-        dispatch.form.update({location})
+        dispatch.form.update({location});
+        dispatch.specs.load({
+            game: form.game,
+            location
+        });
     }
 
     function handleResourceSelect(resource) {
