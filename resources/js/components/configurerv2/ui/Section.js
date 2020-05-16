@@ -1,12 +1,13 @@
 import React from 'react';
 import tailwind from "../tailwind";
+import icons from '../icons';
 
 const Wrapper = tailwind.div(() => `
     flex
 `);
 
-const Icon = tailwind.div(() => `
-    w-16 h-16 mr-6
+const IconWrapper = tailwind.div(() => `
+    w-16 h-16 mr-6 text-gray-800 fill-current
 `);
 
 const Body = tailwind.div(() => `
@@ -26,10 +27,12 @@ const Options = tailwind.div(({cols}) => `
 `);
 
 export default function Section({icon, title, subtitle, cols = 4, children}) {
+    const Icon = icons[icon];
+
     return <Wrapper>
-        <Icon>
-            <img src={icon} alt=""/>
-        </Icon>
+        <IconWrapper>
+            <Icon/>
+        </IconWrapper>
 
         <Body>
             <Header>

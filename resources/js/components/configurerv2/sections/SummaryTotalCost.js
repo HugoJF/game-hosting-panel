@@ -1,5 +1,4 @@
 import React from 'react';
-import costIcon from "../../icons/cost.svg";
 import Section from "../ui/Section";
 import useCost from "../hooks/useCost";
 import Loader from "../ui/Loader";
@@ -20,7 +19,7 @@ export default function SummaryTotalCost() {
     const cost = useCost();
 
     return <Section
-        icon={costIcon}
+        icon="cost"
         title="Total cost"
         cols={1}
     >

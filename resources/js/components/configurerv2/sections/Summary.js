@@ -1,7 +1,6 @@
 import React from 'react';
 import get from 'lodash.get';
 import useForm from "../hooks/useForm";
-import summary from '../../icons/summary.svg';
 import PeriodSelector from "./PeriodSelector";
 import Card from "../ui/Card";
 import Section from "../ui/Section";
@@ -10,7 +9,6 @@ import useLocations from "../hooks/useLocations";
 import SummaryCustomParameters from "./SummaryCustomParameters";
 import SummaryTotalCost from "./SummaryTotalCost";
 import SummaryItem from "./SummaryItem";
-
 
 const periods = {
     minutely: 'Minutely',
@@ -47,7 +45,7 @@ export default function Summary({onPeriodSelect}) {
         <Section
             title="Resumo"
             subtitle="Server specification"
-            icon={summary}
+            icon="summary"
             cols={1}
         >
             {/* Global parameter Game */}

@@ -25,7 +25,7 @@ export default function ResourceSelection({onSelect}) {
                     specId={id}
                     title={spec.name}
                     subtitle={spec.description}
-                    icon={icons[spec.icon]}
+                    icon={spec.icon}
                     selected={form[id]}
                     onSelect={onSelect}
                     options={spec.options}

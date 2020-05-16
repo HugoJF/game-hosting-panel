@@ -8,7 +8,10 @@ import get from 'lodash.get';
 import tailwind from "../tailwind";
 
 const OrderButton = tailwind.div(() => `
-    trans px-5 py-3 bg-green-500 text-center text-3xl text-white font-semibold rounded cursor-pointer hover:shadow
+    trans px-5 py-3 bg-green-500
+    text-center text-3xl text-white font-semibold
+    rounded cursor-pointer
+    hover:bg-green-600 hover:shadow-md
 `);
 
 const Center = tailwind.div(() => `

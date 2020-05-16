@@ -1,17 +1,19 @@
-import cpu from "./../icons/cpu.svg";
-import cost from "./../icons/cost.svg";
-import databases from "./../icons/databases.svg";
-import disk from "./../icons/disk.svg";
-import memory from "./../icons/memory.svg";
-import period from "./../icons/period.svg";
-import summary from "./../icons/summary.svg";
-import brazil from "./../flags/Brazil.svg";
-import canada from "./../flags/Canada.svg";
-import us from "./../flags/UnitedStates.svg";
+import Cpu from '../icons/Cpu';
+import Cost from '../icons/Cost';
+import Databases from '../icons/Databases';
+import Disk from '../icons/Disk';
+import Memory from '../icons/Memory';
+import Period from '../icons/Period';
+import Summary from '../icons/Summary';
 
 const icons = {
-    cpu, cost, databases, disk, memory, period, summary,
-    brazil, canada, us,
+    cpu: Cpu,
+    cost: Cost,
+    databases: Databases,
+    disk: Disk,
+    memory: Memory,
+    period: Period,
+    summary: Summary,
 };
 
 export default icons;

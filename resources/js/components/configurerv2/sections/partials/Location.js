@@ -1,12 +1,13 @@
 import React from 'react';
 import feather from "feather-icons";
-import icons from "../../icons";
+import flags from "../../flags";
 import tailwind from "../../tailwind";
 
 const Wrapper = tailwind.div(({available, selected}) => `
     trans relative flex flex-row items-center
     px-6 py-4 border ${selected ? 'border-blue-600 bg-blue-100 shadow' : ''}
     rounded ${available ? 'cursor-pointer' : 'opacity-50 cursor-not-allowed'}
+    ${available && 'hover:shadow'}
 `);
 
 const SelectionCheck = tailwind.div(({selected}) => `
@@ -56,7 +57,7 @@ export default function Location({id, location, selected, onClick}) {
         />
 
         <Flag>
-            <img alt={`${short} | ${long}`} src={icons[flag]}/>
+            <img alt={`${short} | ${long}`} src={flags[flag]}/>
         </Flag>
 
         <Info>

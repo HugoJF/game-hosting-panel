@@ -2,7 +2,7 @@ import React from 'react';
 import tailwind from "../../tailwind";
 
 const Card = tailwind.div(() => `
-    trans relative rounded overflow-hidden
+    trans relative rounded hover:shadow-md overflow-hidden
 `);
 
 const Image = tailwind.img(() => `
@@ -11,7 +11,7 @@ const Image = tailwind.img(() => `
 
 export default function Game({id, game, selected, onClick}) {
     const scaled = {transform: 'scale(1.05)'};
-    const muted = {transform: 'scale(1.01)', filter: 'blur(1px) grayscale(100%) brightness(60%)'};
+    const muted = {transform: '', filter: 'blur(1px) grayscale(100%) brightness(60%)'};
 
     const {name, cover} = game;
 

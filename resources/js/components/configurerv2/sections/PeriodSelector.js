@@ -1,5 +1,4 @@
 import React from 'react';
-import period from '../../icons/period.svg';
 import GenericSelector from "../resources/GenericSelector";
 
 const options = {
@@ -15,7 +14,7 @@ export default function PeriodSelector({selected, onSelect}) {
         specId="period"
         title="Billing period"
         subtitle=""
-        icon={period}
+        icon="period"
         selected={selected}
         onSelect={onSelect}
         cols={3}
