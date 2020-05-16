@@ -56,7 +56,7 @@
             <!-- Footer -->
             <div class="flex p-4 bg-gray-100 border-t ">
                 <p class="flex-grow">
-                    @if($server->currentDeploy()->exists())
+                    @if($server->getDeploy())
                         <a class="text-blue-500 text-base font-semibold" href="#">Go to panel</a>
                     @else
                         <a class="text-blue-500 text-base font-semibold" href="#">Deploy</a>

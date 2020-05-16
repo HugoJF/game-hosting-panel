@@ -26,11 +26,6 @@ class Server extends Model
         return $this->hasManyThrough(Transaction::class, Deploy::class);
     }
 
-    public function currentDeploy()
-    {
-        return $this->deploys()->whereNull('terminated_at');
-    }
-
     public function game()
     {
         return $this->belongsTo(Game::class);
@@ -43,10 +38,16 @@ class Server extends Model
 
     public function getDeploy()
     {
-        if (($current = $this->currentDeploy)->count() > 1) {
+        if ($this->relationLoaded('deploys')) {
+            $deploys = $this->deploys->where('terminated_at', null);
+        } else {
+            $deploys = $this->deploys()->whereNull('terminated_at');
+        }
+
+        if ($deploys->count() > 1) {
             throw new Exception('Multiple non-terminated deploys, something is fucked');
         }
 
-        return $current->first();
+        return $deploys->first();
     }
 }

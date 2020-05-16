@@ -15,14 +15,16 @@ use App\Services\User\ServerCreationService;
 use App\Services\User\ServerDeletionService;
 use App\Services\User\ServerDeploymentService;
 use App\Transaction;
+use App\User;
 use Illuminate\Http\Request;
 
 class ServerController extends Controller
 {
     public function index()
     {
+        /** @var User $user */
         $user = auth()->user();
-        $servers = $user->servers;
+        $servers = $user->servers()->with(['game', 'node', 'deploys'])->get();
 
         return view('servers.index', compact('user', 'servers'));
     }
