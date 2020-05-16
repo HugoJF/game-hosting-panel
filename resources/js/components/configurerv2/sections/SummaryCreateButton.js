@@ -5,6 +5,15 @@ import useForm from "../hooks/useForm";
 import Loader from "../ui/Loader";
 import Error from "../ui/Error";
 import get from 'lodash.get';
+import tailwind from "../tailwind";
+
+const OrderButton = tailwind.div(() => `
+    trans px-5 py-3 bg-green-500 text-center text-3xl text-white font-semibold rounded cursor-pointer hover:shadow
+`);
+
+const Center = tailwind.div(() => `
+    flex justify-center
+`);
 
 export default function SummaryCreateButton() {
     const dispatch = useDispatch();
@@ -28,9 +37,9 @@ export default function SummaryCreateButton() {
 
     return servers.loading
         ?
-        <div className="flex justify-center">
+        <Center>
             <Loader/>
-        </div>
+        </Center>
         :
         (
             servers.error
@@ -39,8 +48,8 @@ export default function SummaryCreateButton() {
                     {servers.error}
                 </Error>
                 :
-                <div onClick={handleOnClick} className="trans px-5 py-3 bg-green-500 text-center text-3xl text-white font-semibold rounded cursor-pointer hover:shadow">
+                <OrderButton $onClick={handleOnClick}>
                     Finalizar pedido
-                </div>
+                </OrderButton>
         )
 }

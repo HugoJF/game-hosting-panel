@@ -1,17 +1,31 @@
 import React from 'react';
-import feather from 'feather-icons';
+import Feather from "./Feather";
+import tailwind from "../tailwind";
+
+
+const ErrorWrapper = tailwind.div(() => `
+    px-5 py-4 flex bg-red-200 text-red-600 border border-red-600 rounded shadow
+`);
+
+const Title = tailwind.div(() => `
+    flex-grow font-semibold
+`);
+
+const Description = tailwind.div(() => `
+    mt-2 ml-2 text-xs font-thin font-mono
+`);
 
 export default function Error({title, children}) {
     const _title = title || children || 'Error';
-    return <div className="px-5 py-4 flex bg-red-200 text-red-600 border border-red-600 rounded shadow">
-        <div className="pr-4" dangerouslySetInnerHTML={{__html: feather.icons['alert-circle'].toSvg()}}/>
 
+    return <ErrorWrapper>
+        <Feather className="pr-4" icon="alert-circle"/>
         <div>
-            <p className="flex-grow font-semibold">{_title}</p>
+            <Title>{_title}</Title>
             {
                 title &&
-                <p className="mt-2 ml-2 text-xs font-thin font-mono">{children}</p>
+                <Description>{children}</Description>
             }
         </div>
-    </div>
+    </ErrorWrapper>
 }

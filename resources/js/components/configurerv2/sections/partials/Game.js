@@ -1,4 +1,13 @@
 import React from 'react';
+import tailwind from "../../tailwind";
+
+const Card = tailwind.div(() => `
+    trans relative rounded overflow-hidden
+`);
+
+const Image = tailwind.img(() => `
+    z-0 trans cursor-pointer shadow-lg
+`);
 
 export default function Game({id, game, selected, onClick}) {
     const scaled = {transform: 'scale(1.05)'};
@@ -14,17 +23,14 @@ export default function Game({id, game, selected, onClick}) {
         return selected === null || selected ? {} : muted;
     }
 
-    return <div
-        onClick={onClick.bind(this, id)}
-        className="trans relative rounded overflow-hidden"
-        style={getContainerStyle()}
+    return <Card
+        $onClick={onClick.bind(this, id)}
+        $style={getContainerStyle()}
     >
-        {/* Image */}
-        <img
-            className="z-0 trans cursor-pointer shadow-lg"
-            src={cover}
-            style={getImageStyle()}
-            alt={name}
+        <Image
+            $src={cover}
+            $style={getImageStyle()}
+            $alt={name}
         />
-    </div>
+    </Card>
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import Title from "./Title";
+import Title from "./ui/Title";
 import GameSelection from "./sections/GameSelection";
 import LocationSelection from "./sections/LocationSelection";
 import ResourceSelection from "./sections/ResourceSelection";

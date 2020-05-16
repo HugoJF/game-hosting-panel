@@ -4,8 +4,17 @@ import Section from "../ui/Section";
 import useCost from "../hooks/useCost";
 import Loader from "../ui/Loader";
 import SummaryCreateButton from "./SummaryCreateButton";
+import tailwind from "../tailwind";
 
 const formatter = new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'});
+
+const Period = tailwind.div(() => `
+    ml-1 text-2xl text-gray-700 font-light tracking-tight
+`);
+
+const Wrapper = tailwind.div(() => `
+    flex mb-6 justify-center items-baseline text-3xl
+`);
 
 export default function SummaryTotalCost() {
     const cost = useCost();
@@ -16,16 +25,16 @@ export default function SummaryTotalCost() {
         cols={1}
     >
         {/* Cost */}
-        <div className="flex mb-6 justify-center items-baseline text-3xl">
+        <Wrapper>
             {
-                cost.loading ? <>
-                    <Loader/>
-                </> : <>
-                    <span>{formatter.format(cost.value / 100)}</span>
-                    <span className="ml-1 text-2xl text-gray-700 font-light tracking-tight">por dia</span>
-                </>
+                cost.loading
+                    ? <Loader/>
+                    : <>
+                        <span>{formatter.format(cost.value / 100)}</span>
+                        <Period>por dia</Period>
+                    </>
             }
-        </div>
+        </Wrapper>
 
         {/* Button */}
         <SummaryCreateButton/>
