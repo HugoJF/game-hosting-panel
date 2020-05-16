@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Game;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdvancedDeployRequest;
+use App\Http\Resources\ServerResource;
 use App\Location;
 use App\Server;
 use App\Services\User\AutoServerDeploymentService;
@@ -26,6 +27,36 @@ class ServerController extends Controller
         return view('servers.index', compact('user', 'servers'));
     }
 
+    public function create()
+    {
+        return view('servers.create');
+    }
+
+    public function store(
+        NodeSelectionService $nodeSelection,
+        ServerCreationService $serverCreation,
+        AutoServerDeploymentService $autoDeployment,
+        Request $request
+    )
+    {
+        $config = $request->input();
+        $period = $request->input('period');
+        $game = Game::findOrFail($request->input('game'));
+        $location = Location::findOrFail($request->input('location'));
+        // TODO: Extract form parameters
+
+        // Selects node to create the server on
+        $node = $nodeSelection->handle($location);
+
+        // Checks if user can deploy a server, before creating the server.
+        $autoDeployment->preChecks(auth()->user(), $node, $period, $config);
+
+        // Create the server
+        $server = $serverCreation->handle(auth()->user(), $game, $node, $config);
+
+        return new ServerResource($server);
+    }
+
     public function show(Server $server)
     {
         // TODO: fix this shit show
@@ -37,52 +68,9 @@ class ServerController extends Controller
         return view('servers.show', compact('server', 'deploys', 'transactions'));
     }
 
-    public function selectGame()
-    {
-        $games = Game::all();
-
-        return view('servers.select-game', compact('games'));
-    }
-
-    public function selectLocation(Game $game)
-    {
-        $game->loadMissing(['nodes', 'nodes.location']);
-
-        $locations = $game->nodes->pluck('location')->unique('id');
-
-        return view('servers.select-location', compact('game', 'locations'));
-    }
-
     public function configure(Game $game, Location $location)
     {
         return view('servers.configure', compact('game', 'location'));
-    }
-
-    public function store(
-        NodeSelectionService $nodeSelection,
-        ServerCreationService $serverCreation,
-        AutoServerDeploymentService $autoDeployment,
-        Request $request,
-        Game $game,
-        Location $location
-    )
-    {
-        // TODO: Extract form parameters
-        $config = $request->input();
-        $period = $request->input('period');
-
-        // Selects node to create the server on
-        $node = $nodeSelection->handle($location);
-
-        // Checks if user can deploy a server, before creating the server.
-        $autoDeployment->preChecks(auth()->user(), $node, $period, $config);
-
-        // Create the server
-        $server = $serverCreation->handle(auth()->user(), $game, $node, $config);
-
-        flash()->success("Server created successfully! It will be automatically deployed once installed.");
-
-        return redirect()->route('home');
     }
 
     public function configureDeploy(Request $request, Server $server)
@@ -103,29 +91,6 @@ class ServerController extends Controller
         flash()->success('Server deployed');
 
         return redirect()->route('servers.show', $server);
-    }
-
-    public function create(
-        NodeSelectionService $nodeSelection,
-        ServerCreationService $serverCreation,
-        AutoServerDeploymentService $autoDeployment,
-        Request $request
-    )
-    {
-        $config = $request->input();
-        $period = $request->input('period');
-        $game = Game::findOrFail($request->input('game'));
-        $location = Location::findOrFail($request->input('location'));
-        // TODO: Extract form parameters
-
-        // Selects node to create the server on
-        $node = $nodeSelection->handle($location);
-
-        // Checks if user can deploy a server, before creating the server.
-        $autoDeployment->preChecks(auth()->user(), $node, $period, $config);
-
-        // Create the server
-        return $serverCreation->handle(auth()->user(), $game, $node, $config);
     }
 
     public function customDeploy(

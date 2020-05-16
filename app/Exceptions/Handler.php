@@ -52,7 +52,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof FlashException) {
+        if (!$request->expectsJson() && $exception instanceof FlashException) {
             flash()->error($exception->getMessage());
 
             return back();

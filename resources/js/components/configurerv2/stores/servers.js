@@ -18,14 +18,17 @@ export const servers = {
             try {
                 dispatch.servers.setLoading(true);
                 let response = await axios.post(`/servers`, payload);
-                console.log(response);
+                dispatch.servers.setLoading(false);
+
+                return response.data;
             } catch (e) {
                 let message = e.message;
                 let responseMessage = get(e, 'response.data.message');
 
-                dispatch.servers.setError(responseMessage || message);
-            } finally {
                 dispatch.servers.setLoading(false);
+                dispatch.servers.setError(responseMessage || message);
+
+                return false;
             }
         }
     })

@@ -32,8 +32,11 @@ Route::get('fuck', function () {
 })->name('fuck');
 
 Route::get('fuck2', function () {
-   return view('fuck2');
 })->name('fuck2');
+
+Route::get('fuck3', function () {
+    return \App\Http\Resources\ServerResource::collection(\App\Server::all());
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -152,16 +155,13 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('servers')->group(function () {
         Route::get('/', 'ServerController@index')->name('servers.index');
+        Route::get('create', 'ServerController@create')->name('servers.create');
+
         Route::get('{server}', 'ServerController@show')->name('servers.show');
         Route::get('{server}/deploy', 'ServerController@deploy')->name('servers.deploy');
         Route::get('{server}/custom-deploy', 'ServerController@configureDeploy')->name('servers.configure-deploy');
 
-
-        Route::get('create/game', 'ServerController@selectGame')->name('servers.select-game');
-        Route::get('create/game/{game}/location', 'ServerController@selectLocation')->name('servers.select-location');
-        Route::get('create/game/{game}/location/{location}/configure', 'ServerController@configure')->name('servers.configure');
-
-        Route::post('/', 'ServerController@create')->name('asdjoijad');
+        Route::post('/', 'ServerController@store')->name('servers.store');
 
         Route::post('game/{game}/location/{location}', 'ServerController@store')->name('servers.store');
         Route::post('{server}/custom-deploy', 'ServerController@customDeploy')->name('servers.custom-deploy');

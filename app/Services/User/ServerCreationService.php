@@ -7,6 +7,7 @@ use App\Jobs\ServerCreationMonitor;
 use App\Node;
 use App\Server;
 use App\User;
+use Exception;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use Illuminate\Support\Str;
 
@@ -28,7 +29,7 @@ class ServerCreationService
         $this->configService = $configService;
     }
 
-    public function handle(User $user, Game $game, Node $node, array $data)
+    public function handle(User $user, Game $game, Node $node, array $data): Server
     {
         // Register server on database
         $server = $this->preCreateServerModel($user, $node, $game, $data);
@@ -38,6 +39,12 @@ class ServerCreationService
 
         // Create server on panel
         $resource = $this->pterodactyl->createServer($config);
+
+        // TODO: temporary check since we disabled non-useful validation messages from panel.
+        if (!($resource instanceof \HCGCloud\Pterodactyl\Resources\Server)) {
+            logger()->error($resource);
+            throw new Exception('Pterodactyl API returned non-resource');
+        }
 
         // Attach panel_id to server
         $this->attachPanelId($server, $resource->id);
