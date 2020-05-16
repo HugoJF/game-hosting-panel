@@ -17,6 +17,10 @@ Route::get('template', function () {
     return view('template.vip');
 });
 
+Route::get('fuck', function () {
+    return view('fuck');
+})->name('fuck');
+
 /*
 |--------------------------------------------------------------------------
 | Front-page routes
@@ -26,10 +30,6 @@ Route::get('template', function () {
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('home', 'HomeController@index')->name('home');
 Route::get('faq', 'HomeController@faq')->name('faq');
-
-Route::get('fuck', function () {
-   return view('fuck');
-})->name('fuck');
 
 /*
 |--------------------------------------------------------------------------

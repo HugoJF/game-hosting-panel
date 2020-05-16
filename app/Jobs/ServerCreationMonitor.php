@@ -75,6 +75,6 @@ class ServerCreationMonitor implements ShouldQueue
      */
     public function retryUntil()
     {
-        return now()->addMinutes(5);
+        return now()->addMinutes(10);
     }
 }
