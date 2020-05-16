@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @php
-    $currentDeploy = $server->currentDeploy()->first();
+    $currentDeploy = $server->getDeploy();
 @endphp
 
 @section('content')

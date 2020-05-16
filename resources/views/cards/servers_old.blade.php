@@ -43,7 +43,7 @@
                 <td>
                     @if(!$server->installed_at)
                         <span class="badge badge-warning">Installing</span>
-                    @elseif($server->currentDeploy()->exists())
+                    @elseif($server->getDeploy())
                         <span class="badge badge-primary">Deployed</span>
                     @else
                         <span class="badge badge-dark">Stopped</span>

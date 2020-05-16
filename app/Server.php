@@ -38,11 +38,8 @@ class Server extends Model
 
     public function getDeploy()
     {
-        if ($this->relationLoaded('deploys')) {
-            $deploys = $this->deploys->where('terminated_at', null);
-        } else {
-            $deploys = $this->deploys()->whereNull('terminated_at');
-        }
+        $this->loadMissing('deploys');
+        $deploys = $this->deploys->where('terminated_at', null);
 
         if ($deploys->count() > 1) {
             throw new Exception('Multiple non-terminated deploys, something is fucked');
