@@ -31,13 +31,6 @@ Route::get('fuck', function () {
    return view('fuck');
 })->name('fuck');
 
-Route::get('fuck2', function () {
-})->name('fuck2');
-
-Route::get('fuck3', function () {
-    return \App\Http\Resources\ServerResource::collection(\App\Server::all());
-});
-
 /*
 |--------------------------------------------------------------------------
 | Authed only routes
