@@ -9,6 +9,7 @@ use App\Server;
 use App\User;
 use Exception;
 use HCGCloud\Pterodactyl\Pterodactyl;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ServerCreationService
@@ -29,7 +30,31 @@ class ServerCreationService
         $this->configService = $configService;
     }
 
-    public function handle(User $user, Game $game, Node $node, array $data): Server
+    public function handle(User $user, Game $game, Node $node, array $data)
+    {
+        DB::beginTransaction();
+        try {
+            $server = $this->create($user, $game, $node, $data);
+            DB::commit();
+
+            return $server;
+        } catch (Exception $e) {
+            report($e);
+            DB::rollBack();
+
+            return null;
+        }
+    }
+
+    /**
+     * @param User $user
+     * @param Game $game
+     * @param Node $node
+     * @param array $data
+     * @return Server
+     * @throws Exception
+     */
+    public function create(User $user, Game $game, Node $node, array $data): Server
     {
         // Register server on database
         $server = $this->preCreateServerModel($user, $node, $game, $data);
@@ -62,7 +87,7 @@ class ServerCreationService
         $fromDefaults = ['io' => 500];
         $fromForm = collect($config)->only(['cpu', 'memory', 'disk', 'databases'])->toArray();
         $fromRelationships = [
-            'name'    => Str::random(),
+            'name' => Str::random(),
             'user_id' => $user->id,
             'game_id' => $game->id,
             'node_id' => $node->id,
