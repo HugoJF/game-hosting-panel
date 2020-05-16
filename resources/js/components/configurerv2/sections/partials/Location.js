@@ -45,10 +45,10 @@ export default function Location({id, location, selected, onClick}) {
     }
 
     return <Wrapper
-        onClick={getWrapperOnClick()}
+        $onClick={getWrapperOnClick()}
         selected={selected}
         available={available}
-        style={getWrapperStyle()}
+        $style={getWrapperStyle()}
     >
         <SelectionCheck
             selected={selected}

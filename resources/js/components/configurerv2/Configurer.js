@@ -15,6 +15,8 @@ export default function Configurer({handleChange, cost}) {
         dispatch.form.update({game});
         if (game) {
             dispatch.locations.load(game);
+        } else {
+            dispatch.locations.makeUnavailable();
         }
     }
 

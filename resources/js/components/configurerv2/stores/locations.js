@@ -6,6 +6,21 @@ export const locations = {
             state.loading = payload;
             return state;
         },
+        makeUnavailable(state, payload) {
+            let entries = Object.entries(state.locations);
+
+            let up = {};
+
+            for (let [k, v] of entries) {
+                up[k] = {
+                    ...v,
+                    available: false,
+                }
+            }
+            state.locations = up;
+
+            return state;
+        },
         set(state, payload) {
             state.locations = payload;
             return state;
@@ -17,8 +32,10 @@ export const locations = {
             dispatch.locations.setLoading(true);
             let response = await axios.get(`/api/configurer/locations`);
             dispatch.locations.set(response.data);
+            dispatch.locations.makeUnavailable();
             dispatch.locations.setLoading(false);
         },
+
         async load(payload, root) {
             console.log('payload', payload);
             dispatch.locations.setLoading(true);

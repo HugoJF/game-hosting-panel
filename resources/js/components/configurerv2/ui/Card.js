@@ -51,7 +51,7 @@ export default function Card({title, subtitle, children, loading = false, gap = 
             <ContentWrapper
                 cols={cols}
                 gap={gap}
-                style={getContentWrapperStyle()}
+                $style={getContentWrapperStyle()}
             >
                 {children}
             </ContentWrapper>
