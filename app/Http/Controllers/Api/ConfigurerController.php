@@ -14,7 +14,16 @@ class ConfigurerController extends Controller
         return Game::all()->keyBy('id');
     }
 
-    public function locations(Game $game)
+    public function locations()
+    {
+        return Location::all()->map(function (Location $location) {
+            return $location->attributesToArray() + [
+                    'available' => true,
+                ];
+        })->keyBy('id');
+    }
+
+    public function gameLocations(Game $game)
     {
         $locations = Location::with(['nodes', 'nodes.games'])->get();
 

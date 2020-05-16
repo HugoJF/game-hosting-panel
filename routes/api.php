@@ -21,8 +21,13 @@ Route::prefix('cost')->group(function () {
 
 Route::prefix('configurer')->group(function () {
     Route::get('games', 'ConfigurerController@games')->name('configurer.games');
-    Route::get('games/{game}/locations', 'ConfigurerController@locations')->name('configurer.locations');
+    Route::get('locations', 'ConfigurerController@locations')->name('configurer.locations');
+    Route::get('games/{game}/locations', 'ConfigurerController@gameLocations')->name('configurer.gameLocations');
     Route::get('games/{game}/locations/{location}/specs', 'ConfigurerController@specs')->name('configurer.specs');
+});
+
+Route::prefix('servers')->middleware(['auth'])->group(function () {
+    Route::post('/', 'ServerController@store')->name('api.servers.store');
 });
 
 Route::prefix('nodes')->group(function () {

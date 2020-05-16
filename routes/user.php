@@ -161,6 +161,8 @@ Route::middleware('auth')->group(function () {
         Route::get('create/game/{game}/location', 'ServerController@selectLocation')->name('servers.select-location');
         Route::get('create/game/{game}/location/{location}/configure', 'ServerController@configure')->name('servers.configure');
 
+        Route::post('/', 'ServerController@create')->name('asdjoijad');
+
         Route::post('game/{game}/location/{location}', 'ServerController@store')->name('servers.store');
         Route::post('{server}/custom-deploy', 'ServerController@customDeploy')->name('servers.custom-deploy');
 

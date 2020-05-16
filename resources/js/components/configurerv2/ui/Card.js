@@ -1,5 +1,6 @@
 import React from 'react';
 import ScaleLoader from "react-spinners/ScaleLoader";
+import Loader from "./Loader";
 
 export default function Card({title, subtitle, children, loading = false, gap = 4, cols = 4}) {
     return <div className="mb-8 bg-white rounded-lg overflow-hidden">
@@ -24,12 +25,7 @@ export default function Card({title, subtitle, children, loading = false, gap = 
                         absolute top-0 left-0 right-0 bottom-0
                         text-3xl font-semibold z-50"
                     >
-                        <ScaleLoader
-                            color="#2d3748"
-                            width={6}
-                            height={50}
-                            margin={5}
-                        />
+                        <Loader/>
                     </div>
                 </>
             }

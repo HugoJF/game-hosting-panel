@@ -1,11 +1,17 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Card from "../ui/Card";
 import Location from "./../sections/partials/Location";
 import useLocations from "../hooks/useLocations";
+import {useDispatch} from "react-redux";
 
 export default function LocationSelection({onSelect}) {
+    const dispatch = useDispatch();
     const [selected, setSelected] = useState(null);
     const locations = useLocations();
+
+    useEffect(() => {
+        dispatch.locations.preLoad();
+    }, []);
 
     function handleOnClick(id) {
         let n = selected === id ? null : id;

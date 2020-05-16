@@ -27,11 +27,11 @@ export default function Configurer({handleChange, cost}) {
     }
 
     function handleResourceSelect(resource) {
-        dispatch.form.update(resource);
+        dispatch.form.refresh(resource);
     }
 
     function handlePeriodSelect(period) {
-        dispatch.form.update(period);
+        dispatch.form.refresh(period);
     }
 
     return <>

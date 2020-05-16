@@ -224,6 +224,15 @@
                                 <span>R$ 20,00</span>
                                 <span class="ml-1 text-2xl text-gray-700 font-light tracking-tight">por dia</span>
                             </div>
+                            <div class="px-5 py-4 flex bg-red-200 text-red-600 border border-red-600 rounded shadow">
+                                <div class="pr-4">
+                                    <span data-feather="alert-circle"></span>
+                                </div>
+                                <div>
+                                    <p class="flex-grow font-semibold">Request failed with status code 500</p>
+                                    <p class="mt-2 ml-2 text-xs font-thin font-mono">Return value of App\Services\User\NodeSelectionService::handle() must be an instance of App\Node, null returned</p>
+                                </div>
+                            </div>
                             <div class="trans px-5 py-3 bg-green-500 text-center text-3xl text-white font-semibold rounded cursor-pointer hover:shadow">
                                 Finalizar pedido
                             </div>

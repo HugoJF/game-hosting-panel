@@ -105,6 +105,29 @@ class ServerController extends Controller
         return redirect()->route('servers.show', $server);
     }
 
+    public function create(
+        NodeSelectionService $nodeSelection,
+        ServerCreationService $serverCreation,
+        AutoServerDeploymentService $autoDeployment,
+        Request $request
+    )
+    {
+        $config = $request->input();
+        $period = $request->input('period');
+        $game = Game::findOrFail($request->input('game'));
+        $location = Location::findOrFail($request->input('location'));
+        // TODO: Extract form parameters
+
+        // Selects node to create the server on
+        $node = $nodeSelection->handle($location);
+
+        // Checks if user can deploy a server, before creating the server.
+        $autoDeployment->preChecks(auth()->user(), $node, $period, $config);
+
+        // Create the server
+        return $serverCreation->handle(auth()->user(), $game, $node, $config);
+    }
+
     public function customDeploy(
         ServerDeploymentService $deployment,
         AdvancedDeployRequest $request,
