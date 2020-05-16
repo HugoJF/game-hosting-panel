@@ -150,7 +150,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'ServerController@index')->name('servers.index');
         Route::get('create', 'ServerController@create')->name('servers.create');
 
-        Route::get('{server}', 'ServerController@show')->name('servers.show');
+        Route::get('{server}', 'ServerController@show')->middleware('panel.id')->name('servers.show');
         Route::get('{server}/deploy', 'ServerController@deploy')->name('servers.deploy');
         Route::get('{server}/custom-deploy', 'ServerController@configureDeploy')->name('servers.configure-deploy');
 
