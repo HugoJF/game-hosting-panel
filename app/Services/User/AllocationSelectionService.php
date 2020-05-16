@@ -22,6 +22,8 @@ class AllocationSelectionService
     {
         $allocations = $this->pterodactyl->allocations($node->id);
 
-        return collect($allocations['data'])->random();
+        return collect($allocations['data'])->reject(function (Allocation $allocation) {
+            return $allocation->assigned;
+        })->random();
     }
 }
