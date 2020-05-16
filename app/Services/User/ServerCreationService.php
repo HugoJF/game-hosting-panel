@@ -9,6 +9,7 @@ use App\Server;
 use App\User;
 use Exception;
 use HCGCloud\Pterodactyl\Pterodactyl;
+use HCGCloud\Pterodactyl\Resources\Allocation;
 use Illuminate\Support\Str;
 
 class ServerCreationService
@@ -23,19 +24,32 @@ class ServerCreationService
      */
     protected $configService;
 
-    public function __construct(Pterodactyl $pterodactyl, ServerCreationConfigService $configService)
+    /**
+     * @var AllocationSelectionService
+     */
+    protected $allocationService;
+
+    public function __construct(
+        Pterodactyl $pterodactyl,
+        ServerCreationConfigService $configService,
+        AllocationSelectionService $allocationService
+    )
     {
         $this->pterodactyl = $pterodactyl;
         $this->configService = $configService;
+        $this->allocationService = $allocationService;
     }
 
     public function handle(User $user, Game $game, Node $node, array $data): Server
     {
+        // Find an allocation
+        $allocation = $this->allocationService->handle($node);
+
         // Register server on database
-        $server = $this->preCreateServerModel($user, $node, $game, $data);
+        $server = $this->preCreateServerModel($user, $node, $game, $allocation, $data);
 
         // Generate config
-        $config = $this->configService->handle($user, $node, $game, $server, $data);
+        $config = $this->configService->handle($user, $node, $game, $server, $allocation, $data);
 
         // Create server on panel
         $resource = $this->pterodactyl->createServer($config);
@@ -55,7 +69,7 @@ class ServerCreationService
         return $server;
     }
 
-    protected function preCreateServerModel(User $user, Node $node, Game $game, array $config)
+    protected function preCreateServerModel(User $user, Node $node, Game $game, Allocation $allocation, array $config)
     {
         $server = new Server;
 
@@ -63,6 +77,7 @@ class ServerCreationService
         $fromForm = collect($config)->only(['cpu', 'memory', 'disk', 'databases'])->toArray();
         $fromRelationships = [
             'name'    => Str::random(),
+            'ip'      => "$allocation->ip:$allocation->port",
             'user_id' => $user->id,
             'game_id' => $game->id,
             'node_id' => $node->id,

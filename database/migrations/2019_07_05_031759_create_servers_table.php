@@ -17,6 +17,7 @@ class CreateServersTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('name');
+            $table->string('ip');
 
             $table->unsignedInteger('cpu');
             $table->unsignedInteger('memory');

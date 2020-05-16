@@ -13,6 +13,11 @@
                     ~{{ $server->game->name }}
                 </p>
 
+                <!-- IP -->
+                <p class="text-xs text-center font-mono font-semibold select-all">
+                    <span class="px-2 py-1 bg-gray-100 rounded">{{ $server->ip }}</span>
+                </p>
+
                 <!-- Specs -->
                 <div class="flex flex-col flex-grow justify-end">
                     <div class="flex py-2 justify-between border-b border-gray-100">

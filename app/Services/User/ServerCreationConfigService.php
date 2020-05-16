@@ -18,21 +18,14 @@ class ServerCreationConfigService
      */
     protected $pterodactyl;
 
-    /**
-     * @var AllocationSelectionService
-     */
-    protected $allocationService;
-
     public function __construct(Pterodactyl $pterodactyl, AllocationSelectionService $allocationService)
     {
         $this->pterodactyl = $pterodactyl;
         $this->allocationService = $allocationService;
     }
 
-    public function handle(User $user, Node $node, Game $game, Server $server, array $config)
+    public function handle(User $user, Node $node, Game $game, Server $server, Allocation $allocation, array $config)
     {
-        $allocation = $this->allocationService->handle($node);
-
         $defaults = $this->getDefaultConfig();
         $base = $this->getBaseConfig($game);
         $config = $this->getConfig($user, $node, $allocation, $server, $config);
