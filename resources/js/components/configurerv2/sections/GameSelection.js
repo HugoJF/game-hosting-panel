@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch} from "react-redux";
 import useGames from "../hooks/useGames";
 import Game from "./../sections/partials/Game";
 import Card from "../ui/Card";
 
-export default function GameSelection({onSelect}) {
-    const [selected, setSelected] = useState(null);
+export default function GameSelection({selected, onSelect}) {
     const dispatch = useDispatch();
     const games = useGames();
 
@@ -14,9 +13,7 @@ export default function GameSelection({onSelect}) {
     }, []);
 
     function handleOnClick(id) {
-        let n = selected === id ? null : id;
-        setSelected(n);
-        onSelect && onSelect(n);
+        onSelect && onSelect(selected === id ? null : id);
     }
 
     return <Card

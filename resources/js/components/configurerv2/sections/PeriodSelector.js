@@ -10,12 +10,13 @@ const options = {
     monthly: 'Monthly',
 };
 
-export default function PeriodSelector({onSelect}) {
+export default function PeriodSelector({selected, onSelect}) {
     return <GenericSelector
         specId="period"
         title="Billing period"
         subtitle=""
         icon={period}
+        selected={selected}
         onSelect={onSelect}
         cols={3}
         options={options}

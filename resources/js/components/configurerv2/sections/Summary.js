@@ -66,7 +66,7 @@ export default function Summary({onPeriodSelect}) {
         {/* Second column */}
         <div>
             <div className="mb-8">
-                <PeriodSelector onSelect={onPeriodSelect}/>
+                <PeriodSelector selected={form.period} onSelect={onPeriodSelect}/>
             </div>
             <SummaryTotalCost />
         </div>

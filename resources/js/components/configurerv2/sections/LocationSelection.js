@@ -1,14 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Card from "../ui/Card";
 import Location from "./../sections/partials/Location";
 import useLocations from "../hooks/useLocations";
 import {useDispatch} from "react-redux";
-import useForm from "../hooks/useForm";
 
-export default function LocationSelection({onSelect}) {
+export default function LocationSelection({selected, onSelect}) {
     const dispatch = useDispatch();
-    const form = useForm();
-    const [selected, setSelected] = useState(null);
     const locations = useLocations();
 
     useEffect(() => {
@@ -16,9 +13,7 @@ export default function LocationSelection({onSelect}) {
     }, []);
 
     function handleOnClick(id) {
-        let n = selected === id ? null : id;
-        setSelected(n);
-        onSelect && onSelect(n);
+        onSelect && onSelect(selected === id ? null : id);
     }
 
     console.log('rendered location selector');

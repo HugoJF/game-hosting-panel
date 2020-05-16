@@ -1,14 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Section from "../ui/Section";
 import Button from "../ui/Button";
 
-export default function GenericSelector({specId, title, subtitle, icon, onSelect, options, cols = 4}) {
-    const [selected, setSelected] = useState(false);
-
+export default function GenericSelector({specId, title, subtitle, icon, selected, onSelect, options, cols = 4}) {
     function handleOnClick(optionId) {
-        let n = selected === optionId ? null : optionId;
-        setSelected(n);
-        if (onSelect) onSelect({[specId]: n});
+        if (onSelect) onSelect({
+            [specId]: selected === optionId ? null : optionId
+        });
     }
 
     return <Section

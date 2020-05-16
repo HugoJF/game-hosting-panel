@@ -13,6 +13,7 @@ export default function Configurer({handleChange, cost}) {
 
     function handleGameSelect(game) {
         dispatch.form.update({game});
+        dispatch.form.clear(['game', 'period']);
         if (game) {
             dispatch.locations.load(game);
         } else {
@@ -22,6 +23,7 @@ export default function Configurer({handleChange, cost}) {
 
     function handleLocationSelect(location) {
         dispatch.form.update({location});
+        dispatch.form.clear(['game', 'location', 'period']);
         dispatch.specs.load({
             game: form.game,
             location
@@ -38,8 +40,14 @@ export default function Configurer({handleChange, cost}) {
 
     return <>
         <Title/>
-        <GameSelection onSelect={handleGameSelect}/>
-        <LocationSelection onSelect={handleLocationSelect}/>
+        <GameSelection
+            selected={form.game}
+            onSelect={handleGameSelect}
+        />
+        <LocationSelection
+            selected={form.location}
+            onSelect={handleLocationSelect}
+        />
         <ResourceSelection onSelect={handleResourceSelect}/>
         <Summary onPeriodSelect={handlePeriodSelect}/>
     </>

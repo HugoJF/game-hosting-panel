@@ -3,9 +3,11 @@ import Card from "../ui/Card";
 import GenericSelector from "../resources/GenericSelector";
 import useSpecs from "../hooks/useSpecs";
 import icons from '../icons';
+import useForm from "../hooks/useForm";
 
 export default function ResourceSelection({onSelect}) {
     const specs = useSpecs();
+    const form = useForm();
 
     return <Card
         title="Server resources"
@@ -24,6 +26,7 @@ export default function ResourceSelection({onSelect}) {
                     title={spec.name}
                     subtitle={spec.description}
                     icon={icons[spec.icon]}
+                    selected={form[id]}
                     onSelect={onSelect}
                     options={spec.options}
                 />
