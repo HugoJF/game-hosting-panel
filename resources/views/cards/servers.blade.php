@@ -10,13 +10,15 @@
 
                 <!-- Game -->
                 <p class="mb-4 text-xs text-gray-600">
-                    ~{{ $server->game->name }}
+                    {{ '~' . $server->game->name . '@' . $server->node->name }}
                 </p>
 
                 <!-- IP -->
-                <p class="text-xs text-center font-mono font-semibold select-all">
-                    <span class="px-2 py-1 bg-gray-100 rounded">{{ $server->ip }}</span>
-                </p>
+                @if($server->ip)
+                    <p class="text-xs text-center font-mono font-semibold select-all">
+                        <span class="px-2 py-1 bg-gray-100 rounded">{{ $server->ip }}</span>
+                    </p>
+                @endif
 
                 <!-- Specs -->
                 <div class="flex flex-col flex-grow justify-end">
