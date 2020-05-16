@@ -9,24 +9,24 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-	public function index()
-	{
-		return redirect()->route('dashboard');
-	}
+    public function index()
+    {
+        return redirect()->route('dashboard');
+    }
 
-	public function dashboard()
-	{
-		/** @var User $user */
-		$user = Auth::user();
-		$locations = Location::all();
-		$servers = $user->servers;
+    public function dashboard()
+    {
+        /** @var User $user */
+        $user = Auth::user();
+        $locations = Location::all();
+        $servers = $user->servers()->with(['game', 'node', 'deploys'])->get();
 
-		return view('dashboard', compact('servers', 'locations'));
-	}
+        return view('dashboard', compact('servers', 'locations'));
+    }
 
-	public function faq()
-	{
-		// TODO: implement FAQ
-		return 'todo';
-	}
+    public function faq()
+    {
+        // TODO: implement FAQ
+        return 'todo';
+    }
 }
