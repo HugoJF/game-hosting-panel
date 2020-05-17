@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Classes\PterodactylClient;
 use App\Coupon;
+use App\GlobalComposer;
 use App\Deploy;
 use App\Observers\DeployObserver;
 use App\Observers\OrderObserver;
@@ -43,6 +44,7 @@ class AppServiceProvider extends ServiceProvider
 		$this->registerObservers();
 		$this->registerCustomBladeDirectives();
 		$this->registerCustomRouteBindinds();
+		$this->registerViewComposers();
 	}
 
     protected function registerSingletons()
@@ -76,4 +78,9 @@ class AppServiceProvider extends ServiceProvider
 			return Coupon::where('code', $value)->first() ?? abort(404);
 		});
 	}
+
+    protected function registerViewComposers()
+    {
+        view()->composer('*', GlobalComposer::class);
+    }
 }

@@ -105,6 +105,29 @@
                 @endauth
 
                 @auth
+                    @isset($onlineServers)
+                        <a class="flex justify-between items-center px-3 mb-4 uppercase font-normal tracking-wider text-gray-700" data-toggle="collapse" href="#servers">
+                            <span class="md:hidden" data-feather="menu"></span>
+                            <span>Servers online {{ $onlineServers->count() }} / {{ $totalServers }}</span>
+                            <span class="ml-4 mt-px flex-grow border-b border-dashed border-gray-800"></span>
+                        </a>
+
+                        <div id="servers" class="collapse">
+                            <ul class="ml-3 mr-2 mb-6 grid grid-cols-2 lg:grid-cols-1 lg:grid-cols-2 gap-2">
+                                @foreach ($onlineServers as $server)
+                                    <li>
+                                        <a class="trans inline py-1 flex justify-center items-center hover:bg-gray-800 cursor-pointer rounded" href="{{ route('servers.show', $server) }}">
+                                            <div class="flex-shrink-0 mr-4 h-2 w-2 bg-green-600 rounded-full"></div>
+                                            <p class="text-gray-400 text-sm lg:text-xs xl:text-sm font-mono">{{ $server->name }}</p>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endisset
+                @endauth
+
+                @auth
                     <a class="flex justify-between items-center px-3 mb-4 uppercase font-normal tracking-wider text-gray-700" data-toggle="collapse" href="#menu">
                         <span class="md:hidden" data-feather="menu"></span>
                         <span>Menu</span>
@@ -193,7 +216,7 @@
                         </ul>
                     </div>
                 @endauth
-                <a class="flex justify-between items-center px-3 mt-8 mb-4 uppercase font-normal tracking-wider text-gray-700" data-toggle="collapse" href="#links">
+                <a class="flex justify-between items-center px-3 mb-4 uppercase font-normal tracking-wider text-gray-700" data-toggle="collapse" href="#links">
                     <span class="md:hidden" data-feather="menu"></span>
                     <span>Links rápidos</span>
                     <span class="ml-4 mt-px flex-grow border-b border-dashed border-gray-800"></span>
