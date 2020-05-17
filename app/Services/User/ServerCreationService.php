@@ -10,6 +10,7 @@ use App\User;
 use Exception;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use HCGCloud\Pterodactyl\Resources\Allocation;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ServerCreationService
@@ -40,7 +41,31 @@ class ServerCreationService
         $this->allocationService = $allocationService;
     }
 
-    public function handle(User $user, Game $game, Node $node, array $data): Server
+    public function handle(User $user, Game $game, Node $node, array $data)
+    {
+        DB::beginTransaction();
+        try {
+            $server = $this->create($user, $game, $node, $data);
+            DB::commit();
+
+            return $server;
+        } catch (Exception $e) {
+            report($e);
+            DB::rollBack();
+
+            return null;
+        }
+    }
+
+    /**
+     * @param User $user
+     * @param Game $game
+     * @param Node $node
+     * @param array $data
+     * @return Server
+     * @throws Exception
+     */
+    public function create(User $user, Game $game, Node $node, array $data): Server
     {
         // Find an allocation
         $allocation = $this->allocationService->handle($node);
