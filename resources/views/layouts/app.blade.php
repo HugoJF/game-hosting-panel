@@ -20,40 +20,49 @@
 </head>
 <body>
 
-<nav class="navbar-z flex items-center flex-no-wrap flex-col md:flex-row items-stretch justify-center sticky top-0 left-0 right-0 bg-gray-800 p-0">
-    <a class="sidebar-width px-6 py-3 text-gray-400 text-lg no-underline flex-shrink-0 mr-0" href="{{ route('home') }}">Servidores de_nerdTV</a>
-    <div class="hidden md:flex items-stretch flex-grow text-gray-400">
-        {!! Form::open(['url' => route('home'), 'method' => 'GET', 'class' => 'flex items-stretch w-100']) !!}
-        <input autocomplete="off" name="term" class="trans-fast py-2 px-5 w-100 bg-transparent outline-none focus:border-b focus:border-gray-500 focus:shadow-inner focus:bg-gray-200 focus:text-gray-700" type="text" placeholder="Search" aria-label="Search">
-        {!! Form::close() !!}
+<nav class="navbar-z sticky top-0 left-0 right-0 p-0">
+    @isset($announcement)
+        <div class="px-5 py-2 flex justify-center items-center text-white bg-red-500 font-semibold shadow-inner">
+            <span class="h-8 w-8 mr-3 flex-shrink-0" data-feather="alert-circle"></span>
+            <p>Nossos servidores estão em manutenção até 11h00 UTC</p>
+            <a class="trans px-2 py-1 ml-5 hover:text-black border border-white hover:bg-green-500" href="#">Informações</a>
+        </div>
+    @endisset
+    <div class="flex items-center flex-no-wrap flex-col md:flex-row items-stretch justify-center bg-gray-800">
+        <a class="sidebar-width px-6 py-3 text-gray-400 text-lg no-underline flex-shrink-0 mr-0" href="{{ route('home') }}">Servidores de_nerdTV</a>
+        <div class="hidden md:flex items-stretch flex-grow text-gray-400">
+            {!! Form::open(['url' => route('home'), 'method' => 'GET', 'class' => 'flex items-stretch w-100']) !!}
+            <input autocomplete="off" name="term" class="trans-fast py-2 px-5 w-100 bg-transparent outline-none focus:border-b focus:border-gray-500 focus:shadow-inner focus:bg-gray-200 focus:text-gray-700" type="text" placeholder="Search" aria-label="Search">
+            {!! Form::close() !!}
+        </div>
+        <ul class="navbar-nav flex-shrink">
+            <li class="h-full flex items-stretch text-nowrap">
+                <a href="https://denerdtv.com/faq/" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
+                    <span class="mr-1 inline text-gray-400" data-feather="help-circle"></span>
+                    <span>FAQ</span>
+                </a>
+                @auth
+                    <a href="#" class="trans p-3 no-underline text-gray-400 hover:bg-gray-700">
+                        <span class="mr-1 inline text-gray-400" data-feather="plus"></span>
+                        <span>Criar servidor</span>
+                    </a>
+                    <a href="#" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
+                        <span class="mr-1 inline text-gray-400" data-feather="settings"></span>
+                        <span>Configurações</span>
+                    </a>
+                    <a href="#" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
+                        <span class="mr-1 inline text-gray-400" data-feather="log-out"></span>
+                        <span>Sair</span>
+                    </a>
+                @else
+                    <a href="#" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
+                        <span class="mr-1 inline text-gray-400" data-feather="log-in"></span>
+                        <span>Entrar</span>
+                    </a>
+                @endauth
+            </li>
+        </ul>
     </div>
-    <ul class="navbar-nav flex-shrink">
-        <li class="h-full flex items-stretch text-nowrap">
-            <a href="https://denerdtv.com/faq/" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
-                <span class="mr-1 inline text-gray-400" data-feather="help-circle"></span>
-                <span>FAQ</span>
-            </a>
-            @auth
-                <a href="#" class="trans p-3 no-underline text-gray-400 hover:bg-gray-700">
-                    <span class="mr-1 inline text-gray-400" data-feather="plus"></span>
-                    <span>Criar servidor</span>
-                </a>
-                <a href="#" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
-                    <span class="mr-1 inline text-gray-400" data-feather="settings"></span>
-                    <span>Configurações</span>
-                </a>
-                <a href="#" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
-                    <span class="mr-1 inline text-gray-400" data-feather="log-out"></span>
-                    <span>Sair</span>
-                </a>
-            @else
-                <a href="#" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
-                    <span class="mr-1 inline text-gray-400" data-feather="log-in"></span>
-                    <span>Entrar</span>
-                </a>
-            @endauth
-        </li>
-    </ul>
 </nav>
 
 <div class="w-full">
