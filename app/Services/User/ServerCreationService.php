@@ -99,7 +99,7 @@ class ServerCreationService
         $server = new Server;
 
         $fromDefaults = ['io' => 500];
-        $fromForm = collect($config)->only(['cpu', 'memory', 'disk', 'databases'])->toArray();
+        $fromForm = collect($config)->only(['cpu', 'memory', 'disk', 'databases', 'billing_period'])->toArray();
         $fromRelationships = [
             'name'    => Str::random(),
             'ip'      => "$allocation->ip:$allocation->port",

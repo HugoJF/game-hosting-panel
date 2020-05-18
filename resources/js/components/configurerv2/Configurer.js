@@ -13,7 +13,7 @@ export default function Configurer({handleChange, cost}) {
 
     function handleGameSelect(game) {
         dispatch.form.update({game});
-        dispatch.form.clear(['game', 'period']);
+        dispatch.form.clear(['game', 'billing_period']);
         if (game) {
             dispatch.locations.load(game);
         } else {
@@ -23,7 +23,7 @@ export default function Configurer({handleChange, cost}) {
 
     function handleLocationSelect(location) {
         dispatch.form.update({location});
-        dispatch.form.clear(['game', 'location', 'period']);
+        dispatch.form.clear(['game', 'location', 'billing_period']);
         dispatch.specs.load({
             game: form.game,
             location

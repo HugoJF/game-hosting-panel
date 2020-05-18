@@ -19,6 +19,8 @@ class CreateServersTable extends Migration
             $table->string('name');
             $table->string('ip');
 
+            $table->string('billing_period');
+
             $table->unsignedInteger('cpu');
             $table->unsignedInteger('memory');
             $table->unsignedInteger('disk');

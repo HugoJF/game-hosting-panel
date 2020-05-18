@@ -42,7 +42,7 @@ class ServerController extends Controller
     )
     {
         $config = $request->input();
-        $period = $request->input('period');
+        $period = $request->input('billing_period');
         $game = Game::findOrFail($request->input('game'));
         $location = Location::findOrFail($request->input('location'));
         // TODO: Extract form parameters
@@ -83,7 +83,7 @@ class ServerController extends Controller
     public function deploy(ServerDeploymentService $deployment, Server $server)
     {
         // deploy server
-        $deployment->handle($server, 'daily', [
+        $deployment->handle($server, $server->billing_period, [
             'cpu'       => $server->cpu,
             'memory'    => $server->memory,
             'disk'      => $server->disk,
@@ -104,7 +104,7 @@ class ServerController extends Controller
         // deploy server
         $deployment->handle(
             $server,
-            $request->get('period'),
+            $request->get('billing_period'),
             $request->only(['cpu', 'memory', 'disk', 'databases'])
         );
 

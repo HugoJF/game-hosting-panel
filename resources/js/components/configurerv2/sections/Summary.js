@@ -34,7 +34,7 @@ export default function Summary({onPeriodSelect}) {
     }
 
     function getPeriod() {
-        return get(periods, form.period);
+        return get(periods, form.billing_period);
     }
 
     return <Card
@@ -64,7 +64,7 @@ export default function Summary({onPeriodSelect}) {
         {/* Second column */}
         <div>
             <div className="mb-8">
-                <PeriodSelector selected={form.period} onSelect={onPeriodSelect}/>
+                <PeriodSelector selected={form.billing_period} onSelect={onPeriodSelect}/>
             </div>
             <SummaryTotalCost />
         </div>

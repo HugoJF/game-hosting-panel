@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Server extends Model
 {
-    protected $fillable = ['name', 'game_id', 'node_id', 'user_id',];
+    protected $fillable = ['name', 'game_id', 'node_id', 'user_id', 'billing_period'];
 
     protected $dates = ['installed_at'];
 
