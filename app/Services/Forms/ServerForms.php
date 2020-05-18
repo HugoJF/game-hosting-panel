@@ -11,8 +11,8 @@ namespace App\Services\Forms;
 use App\Forms\ServerForm;
 use App\Forms\ServerGameSelectionForm;
 use App\Game;
-use App\Node;
 use App\Location;
+use App\Node;
 use App\User;
 
 class ServerForms extends ServiceForm

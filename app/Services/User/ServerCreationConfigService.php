@@ -9,7 +9,6 @@ use App\User;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use HCGCloud\Pterodactyl\Resources\Allocation;
 use HCGCloud\Pterodactyl\Resources\Egg;
-use Illuminate\Support\Str;
 
 class ServerCreationConfigService
 {

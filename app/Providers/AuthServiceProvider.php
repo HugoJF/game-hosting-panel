@@ -5,16 +5,15 @@ namespace App\Providers;
 use App\ApiKey;
 use App\Coupon;
 use App\Game;
+use App\Location;
 use App\Policies\ApiKeyPolicy;
 use App\Policies\CouponPolicy;
 use App\Policies\GamePolicy;
 use App\Policies\LocationPolicy;
 use App\Policies\TransactionPolicy;
 use App\Policies\UserPolicy;
-use App\Location;
 use App\Transaction;
 use App\User;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider

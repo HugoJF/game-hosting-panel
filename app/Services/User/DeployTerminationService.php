@@ -3,9 +3,7 @@
 namespace App\Services\User;
 
 use App\Deploy;
-use App\Node;
 use App\Server;
-use Exception;
 
 class DeployTerminationService
 {

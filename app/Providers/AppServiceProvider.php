@@ -4,14 +4,13 @@ namespace App\Providers;
 
 use App\Classes\PterodactylClient;
 use App\Coupon;
-use App\GlobalComposer;
 use App\Deploy;
+use App\GlobalComposer;
 use App\Observers\DeployObserver;
 use App\Observers\OrderObserver;
 use App\Observers\ServerObserver;
 use App\Observers\TransactionObserver;
 use App\Order;
-use App\Server;
 use App\Transaction;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use Illuminate\Support\Facades\Blade;

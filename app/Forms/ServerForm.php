@@ -2,7 +2,6 @@
 
 namespace App\Forms;
 
-use App\Game;
 use App\Node;
 use Kris\LaravelFormBuilder\Form;
 

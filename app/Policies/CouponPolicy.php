@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Coupon;
 use App\User;
-use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CouponPolicy extends BasePolicy
 {

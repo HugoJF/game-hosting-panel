@@ -6,8 +6,6 @@ use App\Coupon;
 use App\Events\CouponUsed;
 use App\Transaction;
 use App\User;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class CreateCouponTransaction
 {

@@ -3,10 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Node;
-use App\Services\LocationService;
 use App\Services\NodeService;
 use App\Services\PterodactylApiService;
-use HCGCloud\Pterodactyl\Pterodactyl;
 use HCGCloud\Pterodactyl\Resources\Node as NodeResource;
 use Illuminate\Console\Command;
 

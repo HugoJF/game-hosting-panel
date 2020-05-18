@@ -5,8 +5,6 @@ namespace App\Jobs;
 use App\Exceptions\ServerNotInstalledException;
 use App\Server;
 use App\Services\ServerService;
-use DateTime;
-use HCGCloud\Pterodactyl\Pterodactyl;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

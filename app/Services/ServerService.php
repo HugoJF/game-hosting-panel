@@ -8,13 +8,8 @@
 
 namespace App\Services;
 
-use App\Game;
-use App\Location;
 use App\Server;
-use App\User;
 use HCGCloud\Pterodactyl\Pterodactyl;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Facades\JWTFactory;
 
 class ServerService
 {

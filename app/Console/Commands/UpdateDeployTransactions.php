@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Deploy;
 use App\Services\User\DeployCostService;
 use App\Services\User\DeployTerminationService;
-use App\Services\User\ServerTerminationService;
 use Exception;
 use Illuminate\Console\Command;
 

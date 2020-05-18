@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Artisan;
 use Illuminate\Console\Command;
-use Illuminate\Console\Scheduling\ScheduleRunCommand;
 
 class SyncAll extends Command
 {

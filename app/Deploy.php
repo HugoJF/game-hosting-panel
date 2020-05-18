@@ -4,9 +4,7 @@ namespace App;
 
 use App\Services\User\DeployCostService;
 use App\Traits\Uuids;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 
 class Deploy extends Model
 {
