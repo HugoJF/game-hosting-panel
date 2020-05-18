@@ -3,7 +3,7 @@ import Configurer from "./Configurer";
 import {Provider} from 'react-redux'
 import store from './store'
 
-export default function CreationConfigurer2() {
+export default function CreationConfigurer() {
     const [state, setState] = useState({});
     const [cost, setCost] = useState(0);
 

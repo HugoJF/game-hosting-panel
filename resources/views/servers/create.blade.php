@@ -2,5 +2,5 @@
 
 
 @section('content')
-    <div data-react="creation-configurer2"></div>
+    <div data-react="creation-configurer"></div>
 @endsection

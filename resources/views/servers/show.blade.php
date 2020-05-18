@@ -9,7 +9,7 @@
         <h1 class="flex items-center">
             <div class="mr-4 h-12 w-12">@include('flags.brazil')</div>
             <span>Server</span>
-            <span class="py-1 px-2 bg-red-200 text-red-800 font-mono tracking-tight break-words rounded">{{ $server->name }}</span>
+            <span class="ml-2 py-1 px-2 bg-red-200 text-red-800 font-mono tracking-tight break-words rounded">{{ $server->name }}</span>
         </h1>
         <div class="btn-group">
             @if($server->getDeploy())

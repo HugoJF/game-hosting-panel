@@ -69,210 +69,36 @@
 
 <div class="w-full">
     <main class="flex flex-col md:flex-row md:flex-wrap">
+        <!-- Sidebar -->
         <nav class="block md:fixed light sidebar sidebar-width bg-gray-900">
             <div class="sidebar-sticky p-4">
-                <div class="hidden md:flex flex-col px-20 mt-4 mb-4 items-center">
-                    @auth
-                        <div class="top-0 self-center p-4 justify-center items-center bg-white rounded-full shadow sm:flex">
-                            <img class="h-28 w-28 rounded-full" src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/45/45be9bd313395f74762c1a5118aee58eb99b4688_full.jpg"/>
-                        </div>
-                        @auth
-                            <a href="{{ route('orders.create') }}" class="flex items-center mt-3 font-semibold text-gray-200 no-underline">
-                                <span class="m-0 mr-2 inline hover:text-white cursor-pointer" data-feather="plus-circle"></span>
-                                <span class="mr-1 text-base font-light">R$</span>
-                                <span>{{ number_format(Auth::user()->balance / 100, 2) }}</span>
-                            </a>
-                        @endauth
-                    @endauth
-                </div>
+                @include('sidebar.header')
 
-                @auth
-                    @php
-                        // $alerts = auth()->user()->getAlerts();
-                        $alerts = collect();
-                    @endphp
+                @include('sidebar.alerts')
 
-                    @if($alerts->count() !== 0)
-                        <h6 class="flex justify-between items-center px-3 mt-8 mb-4 uppercase font-normal tracking-wider text-gray-700">
-                            <span>Alertas</span>
-                            <span class="ml-4 mt-px flex-grow border-b border-dashed border-gray-800"></span>
-                        </h6>
+                @include('sidebar.packs.servers')
 
-                        <ul class="flex flex-col items-center">
-                            @foreach ($alerts as $alert)
-                                <li><a href="{{ $alert['url'] }}" class="badge badge-{{ $alert['level'] }}">{{ $alert['message'] }}</a></li>
-                            @endforeach
-                        </ul>
-                    @endif
-                @endauth
+                @include('sidebar.packs.menu')
 
-                @auth
-                    @isset($onlineServers)
-                        <a class="flex justify-between items-center px-3 mb-4 uppercase font-normal tracking-wider text-gray-700" data-toggle="collapse" href="#servers">
-                            <span class="md:hidden" data-feather="menu"></span>
-                            <span>Servers online {{ $onlineServers->count() }} / {{ $totalServers }}</span>
-                            <span class="ml-4 mt-px flex-grow border-b border-dashed border-gray-800"></span>
-                        </a>
-
-                        <div id="servers" class="collapse">
-                            <ul class="ml-3 mr-2 mb-6 grid grid-cols-2 lg:grid-cols-1 lg:grid-cols-2 gap-2">
-                                @foreach ($onlineServers as $server)
-                                    <li>
-                                        <a class="trans inline py-1 flex justify-center items-center hover:bg-gray-800 cursor-pointer rounded" href="{{ route('servers.show', $server) }}">
-                                            <div class="flex-shrink-0 mr-4 h-2 w-2 bg-green-600 rounded-full"></div>
-                                            <p class="text-gray-400 text-sm lg:text-xs xl:text-sm font-mono">{{ $server->name }}</p>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endisset
-                @endauth
-
-                @auth
-                    <a class="flex justify-between items-center px-3 mb-4 uppercase font-normal tracking-wider text-gray-700" data-toggle="collapse" href="#menu">
-                        <span class="md:hidden" data-feather="menu"></span>
-                        <span>Menu</span>
-                        <span class="ml-4 mt-px flex-grow border-b border-dashed border-gray-800"></span>
-                    </a>
-
-                    <!-- Home -->
-                    <div id="menu" class="collapse">
-                        <ul class="collapse pl-0 mb-0 flex flex-col text-sm">
-                            <!-- Home -->
-                            <li class="flex justify-between my-2 ml-3">
-                                <a href="{{ route('home') }}" class="flex items-center text-gray-500 no-underline text-base group">
-                                    <span class="mr-1 text-gray-400 group-hover:text-white" data-feather="home"></span>
-                                    <span class="group-hover:text-gray-400">Home</span>
-                                </a>
-                                <a class="group no-underline" href="#">
-                                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#homeHelpModal" data-feather="help-circle"></span>
-                                </a>
-                            </li>
-
-                            <!-- Servidores -->
-                            <li class="flex justify-between my-2 ml-3">
-                                <a href="{{ route('servers.index') }}" class="flex items-center text-gray-500 no-underline text-base group">
-                                    <span class="mr-1 text-gray-400 group-hover:text-white" data-feather="server"></span>
-                                    <span class="group-hover:text-gray-400">Servidores</span>
-                                </a>
-                                <a class="group no-underline" href="#">
-                                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#ordersHelpModal" data-feather="help-circle"></span>
-                                </a>
-                            </li>
-
-                            <!-- Transactions -->
-                            <li class="flex justify-between my-2 ml-3">
-                                <a href="{{ route('transactions.index') }}" class="flex items-center text-gray-500 no-underline text-base group">
-                                    <span class="mr-1 text-gray-400 group-hover:text-white" data-feather="credit-card"></span>
-                                    <span class="group-hover:text-gray-400">Transações</span>
-                                </a>
-                                <a class="group no-underline" href="#">
-                                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#tokensHelpModal" data-feather="help-circle"></span>
-                                </a>
-                            </li>
-
-                            <!-- Usuários -->
-                            <li class="flex justify-between my-2 ml-3">
-                                <a href="{{ route('orders.index') }}" class="flex items-center text-gray-500 no-underline text-base group">
-                                    <span class="mr-1 text-gray-400 group-hover:text-white" data-feather="shopping-cart"></span>
-                                    <span class="group-hover:text-gray-400">Pedidos</span>
-                                </a>
-                                <a class="group no-underline" href="#">
-                                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#usersHelpModal" data-feather="help-circle"></span>
-                                </a>
-                            </li>
-
-                            <!-- Afiliados -->
-                            <li class="flex justify-between my-2 ml-3">
-                                <a href="{{ route('coupons.index') }}" class="flex items-center text-gray-500 no-underline text-base group">
-                                    <span class="mr-1 text-gray-400 group-hover:text-white" data-feather="gift"></span>
-                                    <span class="group-hover:text-gray-400">Coupons</span>
-                                </a>
-                                <a class="group no-underline" href="#">
-                                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#affiliatesHelpModal" data-feather="help-circle"></span>
-                                </a>
-                            </li>
-
-                            <!-- API -->
-                            <li class="flex justify-between my-2 ml-3">
-                                <a href="{{ route('api-keys.index') }}" class="flex items-center text-gray-500 no-underline text-base group">
-                                    <span class="mr-1 text-gray-400 group-hover:text-white" data-feather="key"></span>
-                                    <span class="group-hover:text-gray-400">API Keys</span>
-                                </a>
-                                <a class="group no-underline" href="#">
-                                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#productsHelpModal" data-feather="help-circle"></span>
-                                </a>
-                            </li>
-
-                            <!-- Cupons -->
-                            <li class="flex justify-between my-2 ml-3">
-                                <a href="{{ route('admins.dashboard') }}" class="flex items-center text-gray-500 no-underline text-base group">
-                                    <span class="mr-1 text-gray-400 group-hover:text-white" data-feather="briefcase"></span>
-                                    <span class="group-hover:text-gray-400">Administrative</span>
-                                </a>
-                                <a class="group no-underline" href="#">
-                                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#couponsHelpModal" data-feather="help-circle"></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                @endauth
-                <a class="flex justify-between items-center px-3 mb-4 uppercase font-normal tracking-wider text-gray-700" data-toggle="collapse" href="#links">
-                    <span class="md:hidden" data-feather="menu"></span>
-                    <span>Links rápidos</span>
-                    <span class="ml-4 mt-px flex-grow border-b border-dashed border-gray-800"></span>
-                </a>
-                <div id="links" class="collapse">
-                    <ul class="pl-0 mb-0 flex flex-col text-sm">
-                        <li class="my-2 ml-3 group">
-                            <a class="flex items-center text-gray-500 no-underline text-sm group-hover:text-gray-400" href="https://denerdtv.com/como-comprar-vip-com-skins/">
-                                <span class="flex-shrink-0 mr-1 w-4 h-4" data-feather="chevron-right"></span>
-                                Como comprar VIP com skins <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="my-2 ml-3 group">
-                            <a class="flex items-center text-gray-500 no-underline text-sm group-hover:text-gray-400" href="https://denerdtv.com/como-comprar-vip-com-mercadopago/">
-                                <span class="flex-shrink-0 mr-1 w-4 h-4" data-feather="chevron-right"></span>
-                                Como comprar VIP com MercadoPago
-                            </a>
-                        </li>
-                        <li class="my-2 ml-3 group">
-                            <a class="flex items-center text-gray-500 no-underline text-sm group-hover:text-gray-400" href="https://denerdtv.com/como-comprar-vip-com-paypal/">
-                                <span class="flex-shrink-0 mr-1 w-4 h-4" data-feather="chevron-right"></span>
-                                Como comprar VIP com PayPal
-                            </a>
-                        </li>
-                        <li class="my-2 ml-3 group">
-                            <a class="flex items-center text-gray-500 no-underline text-sm group-hover:text-gray-400" href="https://denerdtv.com/faq/">
-                                <span class="flex-shrink-0 mr-1 w-4 h-4" data-feather="chevron-right"></span>
-                                Perguntas frequentes
-                            </a>
-                        </li>
-                        <li class="my-2 ml-3 group">
-                            <a class="flex items-center text-gray-500 no-underline text-sm group-hover:text-gray-400" href="https://denerdtv.com/discord">
-                                <span class="flex-shrink-0 mr-1 w-4 h-4" data-feather="chevron-right"></span>
-                                Suporte
-                            </a>
-                        </li>
-                        <li class="my-2 ml-3 group">
-                            <a class="flex items-center text-gray-500 no-underline text-sm group-hover:text-gray-400" href="#">
-                                <span class="flex-shrink-0 mr-1 w-4 h-4" data-feather="chevron-right"></span>
-                                Termos de uso
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                @include('sidebar.packs.fast-links')
             </div>
         </nav>
+
+        <!-- Main -->
         <main role="main" class="flex-grow sidebar-margin">
+            <!-- Breadcrumbs -->
             <div class="flex items-center py-3 px-8 bg-gray-100 text-gray-600 border-b border-gray-400">
                 {{ Breadcrumbs::render() }}
             </div>
+
+            <!-- Main container -->
             <div class="text-gray-800 pt-8 p-1 md:p-8 overflow-x-hidden">
+                <!-- Flash message -->
                 <div class="container">
                     @include('flash::message')
                 </div>
+
+                <!-- Content -->
                 <div class="container">
                     @yield('content')
                 </div>
