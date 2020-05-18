@@ -18,9 +18,9 @@
                     <p class="text-xs text-center font-mono font-semibold select-all">
                         <span class="px-2 py-1 bg-gray-100 rounded">{{ $server->ip }}</span>
                     </p>
-                @endif
+            @endif
 
-                <!-- Specs -->
+            <!-- Specs -->
                 <div class="flex flex-col flex-grow justify-end">
                     <div class="flex py-2 justify-between border-b border-gray-100">
                         <p>
@@ -62,9 +62,18 @@
                         <a class="text-blue-500 text-base font-semibold" href="#">Deploy</a>
                     @endif
                 </p>
-                <div class="pl-3 border-l border-gray-300">
+                <div class="flex items-items-center pl-3 border-l border-gray-300">
+                    @if($deploy = $server->getDeploy())
+                        <a data-toggle="tooltip"
+                           data-placement="bottom"
+                           title="Servidor será cobrado um novo período em {{ $deploy->getNextBillablePeriod()->longAbsoluteDiffForHumans() }}"
+                        >
+                            <span class="trans text-gray-600 hover:text-gray-700 cursor-pointer" data-feather="clock"></span>
+                        </a>
+                    @endif
+
                     <a href="{{ route('servers.custom-deploy', $server) }}">
-                        <span class="trans inline text-gray-600 hover:text-gray-700" data-feather="settings"></span>
+                        <span class="trans ml-1 text-gray-600 hover:text-gray-700" data-feather="settings"></span>
                     </a>
                 </div>
             </div>

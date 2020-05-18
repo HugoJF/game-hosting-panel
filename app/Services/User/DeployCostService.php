@@ -43,10 +43,8 @@ class DeployCostService
         return (int) round($billable * $deploy->cost_per_period);
     }
 
-    public function getBillablePeriod(Deploy $deploy, bool $real = false)
+    public function getBillingPeriodDiff($billingPeriod)
     {
-        $period = $deploy->billing_period;
-        $reference = $real ? 'terminated_at' : 'termination_requested_at';
         $diffs = [
             'minutely' => 'diffInMinutes',
             'hourly'   => 'diffInHours',
@@ -55,7 +53,35 @@ class DeployCostService
             'monthly'  => 'diffInMonths',
         ];
 
-        $diff = $diffs[ $period ];
+        return $diffs[ $billingPeriod ];
+    }
+
+    public function getBillingPeriodAdd($billingPeriod)
+    {
+        $adds = [
+            'minutely' => 'addMinutes',
+            'hourly'   => 'addHours',
+            'daily'    => 'addDays',
+            'weekly'   => 'addWeeks',
+            'monthly'  => 'addMonths',
+        ];
+
+        return $adds[ $billingPeriod ];
+    }
+
+    public function getNextBillablePeriod(Deploy $deploy)
+    {
+        $billablePeriod = $this->getBillablePeriod($deploy, false);
+        $adder = $this->getBillingPeriodAdd($deploy->billing_period);
+
+        return $deploy->created_at->$adder($billablePeriod);
+    }
+
+    public function getBillablePeriod(Deploy $deploy, bool $real = false)
+    {
+        $billingPeriod = $deploy->billing_period;
+        $reference = $real ? 'terminated_at' : 'termination_requested_at';
+        $diff = $this->getBillingPeriodDiff($billingPeriod);
 
         $ending = $deploy->$reference ?? now();
 

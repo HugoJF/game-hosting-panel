@@ -34,6 +34,14 @@ class Deploy extends Model
         ];
     }
 
+    public function getNextBillablePeriod()
+    {
+        $service = app(DeployCostService::class);
+
+
+        return $service->getNextBillablePeriod($this);
+    }
+
     public function billablePeriod()
     {
         /** @var DeployCostService $service */
