@@ -37,11 +37,13 @@
         </div>
         <ul class="navbar-nav flex-shrink">
             <li class="h-full flex items-stretch text-nowrap">
-                <a href="https://denerdtv.com/faq/" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
-                    <span class="mr-1 inline text-gray-400" data-feather="help-circle"></span>
-                    <span>FAQ</span>
-                </a>
                 @auth
+                    <a href="#" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
+                        <div class="relative">
+                            <span class="mr-1 inline text-gray-400" data-feather="message-circle"></span>
+                            <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                        </div>
+                    </a>
                     <a href="#" class="trans p-3 no-underline text-gray-400 hover:bg-gray-700">
                         <span class="mr-1 inline text-gray-400" data-feather="plus"></span>
                         <span>Criar servidor</span>
