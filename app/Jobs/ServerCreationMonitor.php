@@ -38,7 +38,7 @@ class ServerCreationMonitor implements ShouldQueue
      *
      * @var int
      */
-    public $tries = 50;
+    public $tries = 20;
 
     /**
      * Create a new job instance.
@@ -64,17 +64,9 @@ class ServerCreationMonitor implements ShouldQueue
             throw new ServerNotInstalledException;
         }
 
-        $this->server->installed_at = now();
-        $this->server->save();
-    }
-
-    /**
-     * Determine the time at which the job should timeout.
-     *
-     * @return DateTime
-     */
-    public function retryUntil()
-    {
-        return now()->addMinutes(10);
+        if (!$this->server->installed_at) {
+            $this->server->installed_at = now();
+            $this->server->save();
+        }
     }
 }
