@@ -41,7 +41,7 @@ export default function SummaryTotalCost() {
                 cost.loading
                     ? <Loader/>
                     : <>
-                        <span>{formatter.format(cost.value / 100)}</span>
+                        <span>{ isNaN(cost.value) ? '-' : formatter.format(value)}</span>
                         {
                             perPeriod && <Period>{perPeriod}</Period>
                         }
