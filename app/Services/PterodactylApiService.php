@@ -33,6 +33,11 @@ class PterodactylApiService
         return $aggregate;
     }
 
+    public function users()
+    {
+        return $this->fetchAll('users');
+    }
+
     /**
      * Paginates the entire /locations endpoint to fetch all locations
      *
