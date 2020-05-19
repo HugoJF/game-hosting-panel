@@ -4,6 +4,7 @@ import useCost from "../hooks/useCost";
 import Loader from "../ui/Loader";
 import SummaryCreateButton from "./SummaryCreateButton";
 import tailwind from "../tailwind";
+import useForm from "../hooks/useForm";
 
 const formatter = new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'});
 
@@ -15,8 +16,19 @@ const Wrapper = tailwind.div(() => `
     flex mb-6 justify-center items-baseline text-3xl
 `);
 
+const texts = {
+    minutely: 'per minute',
+    hourly: 'per hour',
+    daily: 'per day',
+    weekly: 'per week',
+    monthly: 'per month',
+};
+
 export default function SummaryTotalCost() {
     const cost = useCost();
+    const form = useForm();
+
+    const perPeriod = texts[form.billing_period];
 
     return <Section
         icon="cost"
@@ -30,7 +42,9 @@ export default function SummaryTotalCost() {
                     ? <Loader/>
                     : <>
                         <span>{formatter.format(cost.value / 100)}</span>
-                        <Period>por dia</Period>
+                        {
+                            perPeriod && <Period>{perPeriod}</Period>
+                        }
                     </>
             }
         </Wrapper>
