@@ -70,7 +70,7 @@
 </nav>
 
 <div class="w-full">
-    <main class="flex flex-col md:flex-row md:flex-wrap">
+    <main class="flex flex-col md:flex-row md:flex-wrap min-h-screen">
         <!-- Sidebar -->
         <nav class="block md:fixed light sidebar sidebar-width bg-gray-900">
             <div class="sidebar-sticky p-4">
@@ -87,14 +87,14 @@
         </nav>
 
         <!-- Main -->
-        <main role="main" class="flex-grow sidebar-margin">
+        <main role="main" class="flex flex-col flex-grow sidebar-margin">
             <!-- Breadcrumbs -->
             <div class="flex items-center py-3 px-8 bg-gray-100 text-gray-600 border-b border-gray-400">
                 {{ Breadcrumbs::render() }}
             </div>
 
             <!-- Main container -->
-            <div class="text-gray-800 pt-8 p-1 md:p-8 overflow-x-hidden">
+            <div class="flex-grow text-gray-800 pt-8 p-1 md:p-8 overflow-x-hidden">
                 <!-- Flash message -->
                 <div class="container">
                     @include('flash::message')
@@ -104,6 +104,27 @@
                 <div class="container">
                     @yield('content')
                 </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="flex flex-col py-1 px-8 bg-gray-100 text-gray-600 border-t border-gray-400">
+                <p>
+                    Copyright © {{ now()->year }} <a href="https://denerdtv.com/">de_nerdTV</a>.
+                </p>
+
+                <!-- Flaticon attributions -->
+                @isset($flaticon)
+                    <div class="flex flex-wrap text-gray-400 text-sm tracking-tight">
+                        @foreach ($flaticon as $url => $name)
+                            @if(!$loop->first)
+                                <div class="mx-2">|</div>
+                            @endif
+                            <div class="flex-shrink-0">
+                                Icons made by <a href="https://www.flaticon.com/authors/{{ $url }}" title="{{ $name }}">{{ $name }}</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+                            </div>
+                        @endforeach
+                    </div>
+                @endisset
             </div>
         </main>
     </main>
