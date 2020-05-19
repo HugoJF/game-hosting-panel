@@ -3,7 +3,10 @@
 namespace App\Observers;
 
 use App\Exceptions\InsufficientBalanceException;
+use App\Notifications\TransactionUpdated;
 use App\Transaction;
+use App\User;
+use Exception;
 
 class TransactionObserver
 {
@@ -23,6 +26,16 @@ class TransactionObserver
 
         if ($diff < 0 && !$transaction->user->hasBalance(abs($diff))) {
             throw new InsufficientBalanceException;
+        }
+
+        try {
+            /** @var User $user */
+            $user = $transaction->user;
+
+            $user->notify(new TransactionUpdated($transaction, $old, $new));
+        } catch (Exception $e) {
+            logger()->error('Failed to notify user of updated transaction');
+            report($e);
         }
     }
 }
