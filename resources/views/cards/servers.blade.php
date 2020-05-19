@@ -91,7 +91,7 @@
         </p>
         <div class="btn-group mt-8 flex justify-center">
             <a class="btn btn-primary" href="{{ route('servers.create') }}">Create server</a>
-            <a class="btn btn-outline-primary" href="#">Add credits</a>
+            <a class="btn btn-outline-primary" href="{{ route('orders.create') }}">Add credits</a>
             <a class="btn btn-outline-secondary" href="#">Help</a>
         </div>
     </div>
