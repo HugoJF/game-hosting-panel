@@ -4,12 +4,15 @@ namespace App;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Server extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = ['name', 'game_id', 'node_id', 'user_id', 'billing_period'];
 
-    protected $dates = ['installed_at'];
+    protected $dates = ['installed_at', 'removed_at'];
 
     public function node()
     {

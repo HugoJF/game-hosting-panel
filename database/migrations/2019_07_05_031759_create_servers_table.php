@@ -35,6 +35,7 @@ class CreateServersTable extends Migration
 
             $table->timestamp('installed_at')->nullable();
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }
