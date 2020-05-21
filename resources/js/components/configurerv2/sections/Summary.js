@@ -9,6 +9,7 @@ import useLocations from "../hooks/useLocations";
 import SummaryCustomParameters from "./SummaryCustomParameters";
 import SummaryTotalCost from "./SummaryTotalCost";
 import SummaryItem from "./SummaryItem";
+import SummarySubmitButton from "./SummarySubmitButton";
 
 const periods = {
     minutely: 'Minutely',
@@ -18,7 +19,7 @@ const periods = {
     monthly: 'Monthly',
 };
 
-export default function Summary({onPeriodSelect}) {
+export default function Summary({onPeriodSelect, onSubmit, onSubmitted}) {
     const form = useForm();
     const games = useGames();
     const locations = useLocations();
@@ -63,10 +64,16 @@ export default function Summary({onPeriodSelect}) {
 
         {/* Second column */}
         <div>
+            {/* Period select */}
             <div className="mb-8">
                 <PeriodSelector selected={form.billing_period} onSelect={onPeriodSelect}/>
             </div>
+
+            {/* Total cost */}
             <SummaryTotalCost />
+
+            {/* Submit button */}
+            <SummarySubmitButton onSubmit={onSubmit} onSubmitted={onSubmitted}/>
         </div>
     </Card>
 }

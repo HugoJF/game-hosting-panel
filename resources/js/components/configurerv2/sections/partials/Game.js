@@ -5,11 +5,11 @@ const Card = tailwind.div(() => `
     trans relative rounded hover:shadow-md overflow-hidden
 `);
 
-const Image = tailwind.img(() => `
-    z-0 trans cursor-pointer shadow-lg
+const Image = tailwind.img(({selectable}) => `
+    z-0 trans ${selectable ? 'cursor-pointer' : 'cursor-not-allowed'} shadow-lg
 `);
 
-export default function Game({id, game, selected, onClick}) {
+export default function Game({id, game, selectable = true, selected, onClick}) {
     const scaled = {transform: 'scale(1.05)'};
     const muted = {transform: '', filter: 'blur(1px) grayscale(100%) brightness(60%)'};
 
@@ -28,6 +28,7 @@ export default function Game({id, game, selected, onClick}) {
         $style={getContainerStyle()}
     >
         <Image
+            selectable={selectable}
             $src={cover}
             $style={getImageStyle()}
             $alt={name}

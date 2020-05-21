@@ -16,8 +16,6 @@ export default function LocationSelection({selected, onSelect}) {
         onSelect && onSelect(selected === id ? null : id);
     }
 
-    console.log('rendered location selector');
-
     return <Card
         title="Location"
         subtitle="Where do you want the server to be hosted"

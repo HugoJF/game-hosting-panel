@@ -70,47 +70,20 @@ class ServerController extends Controller
         return view('servers.show', compact('server', 'deploys', 'transactions'));
     }
 
-    public function configure(Game $game, Location $location)
+    public function configure(Server $server)
     {
-        return view('servers.configure', compact('game', 'location'));
+        return view('servers.configure', compact('server'));
     }
 
-    public function configureDeploy(Request $request, Server $server)
+    public function deploy(Request $request, ServerDeploymentService $deployment, Server $server)
     {
-        return view('servers.custom-deploy', compact('server'));
-    }
-
-    public function deploy(ServerDeploymentService $deployment, Server $server)
-    {
-        // deploy server
-        $deployment->handle($server, $server->billing_period, [
-            'cpu'       => $server->cpu,
-            'memory'    => $server->memory,
-            'disk'      => $server->disk,
-            'databases' => $server->databases,
-        ]);
-
-        flash()->success('Server deployed');
-
-        return redirect()->route('servers.show', $server);
-    }
-
-    public function customDeploy(
-        ServerDeploymentService $deployment,
-        AdvancedDeployRequest $request,
-        Server $server
-    )
-    {
-        // deploy server
         $deployment->handle(
             $server,
             $request->get('billing_period'),
             $request->only(['cpu', 'memory', 'disk', 'databases'])
         );
 
-        flash()->success('Server deployed');
-
-        return redirect()->route('servers.show', $server);
+        return new ServerResource($server);
     }
 
     public function terminate(DeployTerminationService $terminationService, Server $server)

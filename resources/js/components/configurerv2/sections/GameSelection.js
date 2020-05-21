@@ -4,7 +4,7 @@ import useGames from "../hooks/useGames";
 import Game from "./../sections/partials/Game";
 import Card from "../ui/Card";
 
-export default function GameSelection({selected, onSelect}) {
+export default function GameSelection({selected, selectable = true, onSelect}) {
     const dispatch = useDispatch();
     const games = useGames();
 
@@ -31,6 +31,7 @@ export default function GameSelection({selected, onSelect}) {
                         key={id}
                         id={id}
                         game={game}
+                        selectable={selectable}
                         selected={selected ? id === selected : null}
                         onClick={handleOnClick}
                     />

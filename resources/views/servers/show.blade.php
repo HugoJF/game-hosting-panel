@@ -17,8 +17,7 @@
                 <a class="btn btn-danger btn-lg" href="{{ route('servers.force-terminate', $server) }}" data-toggle="tooltip" data-placement="top" title="terminates deploy without waiting for currently paid period.">Force terminate</a>
                 <a class="btn btn-outline-secondary btn-lg" href="#">help</a>
             @else
-                <a class="btn btn-primary btn-lg" href="{{ route('servers.deploy', $server) }}">Deploy</a>
-                <a class="btn btn-outline-primary btn-lg" href="{{ route('servers.configure-deploy', $server) }}">Custom deploy</a>
+                <a class="btn btn-primary btn-lg" href="{{ route('servers.configure', $server) }}">Deploy</a>
             @endif
         </div>
     </div>

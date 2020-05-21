@@ -2,7 +2,6 @@ import React from 'react';
 import Section from "../ui/Section";
 import useCost from "../hooks/useCost";
 import Loader from "../ui/Loader";
-import SummaryCreateButton from "./SummaryCreateButton";
 import tailwind from "../tailwind";
 import useForm from "../hooks/useForm";
 
@@ -41,15 +40,12 @@ export default function SummaryTotalCost() {
                 cost.loading
                     ? <Loader/>
                     : <>
-                        <span>{isNaN(cost.value) ? '-' : formatter.format(cost.value)}</span>
+                        <span>{isNaN(cost.value / 100) ? '-' : formatter.format(cost.value / 100)}</span>
                         {
                             perPeriod && <Period>{perPeriod}</Period>
                         }
                     </>
             }
         </Wrapper>
-
-        {/* Button */}
-        <SummaryCreateButton/>
     </Section>
 }

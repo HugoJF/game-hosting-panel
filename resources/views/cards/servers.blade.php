@@ -72,7 +72,7 @@
                         </a>
                     @endif
 
-                    <a href="{{ route('servers.custom-deploy', $server) }}">
+                    <a href="{{ route('servers.configure', $server) }}">
                         <span class="trans ml-1 text-gray-600 hover:text-gray-700" data-feather="settings"></span>
                     </a>
                 </div>

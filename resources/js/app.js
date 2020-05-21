@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CreationConfigurer from "./components/configurerv2/CreationConfigurer";
+import CreationConfigurerWrapper from "./components/configurerv2/CreationConfigurerWrapper";
+import DeployConfigurerWrapper from "./components/configurerv2/DeployConfigurerWrapper";
 
 const mappings = {
-    'creation-configurer': CreationConfigurer,
+    'creation-configurer': CreationConfigurerWrapper,
+    'deploy-configurer': DeployConfigurerWrapper,
 };
 
 for (const [dataReact, Component] of Object.entries(mappings)) {
