@@ -13,9 +13,9 @@
         </h1>
         <div class="btn-group">
             @if($server->getDeploy())
-                <a class="btn btn-primary btn-lg" href="{{ route('servers.terminate', $server) }}" data-toggle="tooltip" data-placement="top" title="set deploy to terminate at the end of paid period.">Terminate</a>
-                <a class="btn btn-danger btn-lg" href="{{ route('servers.force-terminate', $server) }}" data-toggle="tooltip" data-placement="top" title="terminates deploy without waiting for currently paid period.">Force terminate</a>
-                <a class="btn btn-outline-secondary btn-lg" href="#">help</a>
+                <a class="btn btn-primary btn-lg" href="{{ config('pterodactyl.url') }}/server/{{ $server->panel_hash }}" >Access panel</a>
+                <a class="btn btn-outline-warning btn-lg" href="{{ route('servers.terminate', $server) }}" data-toggle="tooltip" data-placement="top" title="set deploy to terminate at the end of paid period.">Terminate</a>
+                <a class="btn btn-outline-danger btn-lg" href="{{ route('servers.force-terminate', $server) }}" data-toggle="tooltip" data-placement="top" title="terminates deploy without waiting for currently paid period.">Force terminate</a>
             @else
                 <a class="btn btn-primary btn-lg" href="{{ route('servers.configure', $server) }}">Deploy</a>
             @endif

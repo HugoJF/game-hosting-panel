@@ -86,7 +86,7 @@ class ServerCreationService
         }
 
         // Attach panel_id to server
-        $this->attachPanelId($server, $resource->id);
+        $this->attachPanelId($server, $resource->id, $resource->identifier);
 
         // Dispatch job that will monitor when server is installed
         $this->dispatchMonitoringJob($server);
@@ -112,9 +112,11 @@ class ServerCreationService
         return $server;
     }
 
-    protected function attachPanelId(Server $server, int $id)
+    protected function attachPanelId(Server $server, int $id, string $hash)
     {
         $server->panel_id = $id;
+        $server->panel_hash = $hash;
+
         $server->save();
     }
 

@@ -32,6 +32,7 @@ class CreateServersTable extends Migration
             $table->unsignedInteger('user_id')->references('id')->on('users');
 
             $table->unsignedBigInteger('panel_id')->nullable();
+            $table->string('panel_hash')->nullable();
 
             $table->timestamp('installed_at')->nullable();
 
