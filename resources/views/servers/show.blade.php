@@ -5,13 +5,13 @@
 @endphp
 
 @section('content')
-    <div class="flex mb-8 items-center justify-between">
-        <h1 class="flex items-center">
+    <div class="flex flex-col lg:flex-row mb-8 items-center justify-between">
+        <h1 class="flex items-center text-xl md:text-3xl lg:text-4xl xl:text-5xl">
             <div class="mr-4 h-12 w-12">@include('flags.brazil')</div>
             <span>Server</span>
             <span class="ml-2 py-1 px-2 bg-red-200 text-red-800 font-mono tracking-tight break-words rounded">{{ $server->name }}</span>
         </h1>
-        <div class="btn-group">
+        <div class="btn-group mt-4 lg:m-0">
             @if($server->getDeploy())
                 <a class="btn btn-primary btn-lg" href="{{ config('pterodactyl.url') }}/server/{{ $server->panel_hash }}" >Access panel</a>
                 <a class="btn btn-outline-warning btn-lg" href="{{ route('servers.terminate', $server) }}" data-toggle="tooltip" data-placement="top" title="set deploy to terminate at the end of paid period.">Terminate</a>
