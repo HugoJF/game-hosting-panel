@@ -58,6 +58,8 @@ return [
     'pending'         => 'Pending',
     'terminated'      => 'Terminated',
     'terminating'     => 'Terminating',
+    'installing'      => 'Installing',
+    'stopped'         => 'Stopped',
     'terminate'       => 'Terminate',
     'force_terminate' => 'Force terminate',
     'running'         => 'Running',
@@ -67,13 +69,18 @@ return [
     'notifications'   => 'Notifications',
     'total'           => 'Total :total',
     'link'            => 'Link',
+    'menu' => 'Menu',
+    'home' => 'Home',
+    'alerts' => 'Alerts',
+    'dashboard' => 'Dashboard',
+    'administrative' => 'Administrative',
 
     'billing_period'   => 'Billing period',
     'period_cost'      => 'Period cost',
     'total_cost'       => 'Total cost',
     'denerdtv_servers' => 'de_nerdTV Servers',
-
     'no_notifications' => 'No notifications!',
+    'online_servers' => 'Online servers :online / :total',
 
     'server_limit'      => 'Server limit',
     'server_expiration' => 'Server expiration (days)',
@@ -85,5 +92,8 @@ return [
     'terminated_at'            => 'Terminated at',
     'termination_requested_at' => 'Termination requested at',
 
+    'quick_links'  => 'Quick links',
+    'support'      => 'Support',
+    'terms_of_use' => 'Terms of use',
     'not_used_yet' => 'Not used yet',
 ];
