@@ -1,9 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Orders</h1>
+    <h1>
+        @lang('orders')
+    </h1>
     <br/>
-    <h2>Escolha o valor que deseja creditar sua conta:</h2>
+    <h2>
+        @lang('orders.select_amount'):
+    </h2>
     <br/>
     <div class="row justify-content-center">
         <div class="col-md-10">

@@ -1,10 +1,14 @@
 @component('partials.card')
     @slot('title')
         <div class="d-flex items-center justify-between">
-            <span>Coupons</span>
+            <span>
+                @lang('words.coupons')
+            </span>
             <div class="btn-group" role="group">
                 @isset($indexRoute)
-                    <a class="btn btn-outline-dark btn-sm" href="{{ route($indexRoute ?? 'admins.nodes') }}">View coupons</a>
+                    <a class="btn btn-outline-dark btn-sm" href="{{ route($indexRoute ?? 'admins.nodes') }}">
+                        @lang('coupons.view_all')
+                    </a>
                 @endisset
                 @isset($slot)
                     {{ $slot }}
@@ -16,10 +20,10 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Coupon</th>
-            <th>Value</th>
-            <th>Uses</th>
-            <th>Actions</th>
+            <th>@lang('words.coupon')</th>
+            <th>@lang('words.value')</th>
+            <th>@lang('words.users')</th>
+            <th>@lang('words.actions')</th>
         </tr>
         </thead>
         <tbody>
@@ -39,26 +43,39 @@
                     @endif
                 </td>
 
-                <!-- Uses -->
-                <td class="font-mono">{{ $coupon->users()->count() }} / {{ $coupon->max_uses }}</td>
+                <!-- Users -->
+                <td class="font-mono">
+                    {{ $coupon->users()->count() }} / {{ $coupon->max_uses }}
+                </td>
 
                 <!-- Actions -->
                 <td>
                     @component('partials.form', ['method' => 'DELETE', 'url' => route('coupons.destroy', $coupon)])
                         <div class="btn-group" role="group">
-                            <a class="btn btn-outline-dark btn-sm" href="{{ route('coupons.show', $coupon) }}">View</a>
+                            <a class="btn btn-outline-dark btn-sm" href="{{ route('coupons.show', $coupon) }}">
+                                @lang('words.view')
+                            </a>
                             @admin
-                            <a class="btn btn-primary btn-sm" href="{{ route('coupons.edit', $coupon) }}">Edit</a>
-                            <button class="btn btn-danger btn-sm">Delete</button>
+                            <a class="btn btn-primary btn-sm" href="{{ route('coupons.edit', $coupon) }}">
+                                @lang('words.edit')
+                            </a>
+                            <button class="btn btn-danger btn-sm">
+                                @lang('words.delete')
+                            </button>
                             @endadmin
                         </div>
                     @endcomponent
                 </td>
             </tr>
         @empty
-            <tr><td colspan="100"><h5 class="text-center">No coupons here!</h5></td></tr>
+            <tr>
+                <td colspan="100">
+                    <h5 class="text-center">
+                        @lang('coupons.no_coupons')
+                    </h5>
+                </td>
+            </tr>
         @endforelse
         </tbody>
     </table>
-
 @endcomponent

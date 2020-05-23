@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Users</h1>
+    <h1>
+        @lang('passwords.users')
+    </h1>
     <br/>
     @include('cards.users')
     <br/>

@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Admin dashboard</h1>
+    <h1>
+        @lang('words.admin_dashboard')
+    </h1>
     <br/>
     @include('cards.locations', ['showRoute' => 'admins.locations.show'])
     <br/>

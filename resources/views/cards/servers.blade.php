@@ -4,7 +4,9 @@
             <a class="flex flex-grow flex-col p-4" href="{{ route('servers.show', $server) }}">
                 <!-- Header -->
                 <div class="flex flex-wrap justify-between items-center text-base">
-                    <h2 class="text-lg font-normal font-mono tracking-tight">{{ $server->name }}</h2>
+                    <h2 class="text-lg font-normal font-mono tracking-tight">
+                        {{ $server->name }}
+                    </h2>
                     @include('servers.status')
                 </div>
 
@@ -16,39 +18,57 @@
                 <!-- IP -->
                 @if($server->ip)
                     <p class="text-xs text-center font-mono font-semibold select-all">
-                        <span class="px-2 py-1 bg-gray-100 rounded">{{ $server->ip }}</span>
+                        <span class="px-2 py-1 bg-gray-100 rounded">
+                            {{ $server->ip }}
+                        </span>
                     </p>
-            @endif
+                @endif
 
-            <!-- Specs -->
+                <!-- Specs -->
                 <div class="flex flex-col flex-grow justify-end">
                     <div class="flex py-2 justify-between border-b border-gray-100">
                         <p>
                             <span class="inline text-gray-600" data-feather="cpu"></span>
-                            <span class="text-gray-700 font-semibold">CPU</span>
+                            <span class="text-gray-700 font-semibold">
+                                @lang('words.cpu')
+                            </span>
                         </p>
-                        <span class="text-gray-700">{{ round($server->cpu) }}%</span>
+                        <span class="text-gray-700">
+                            {{ round($server->cpu) }}%
+                        </span>
                     </div>
                     <div class="flex py-2 justify-between border-b border-gray-100">
                         <p>
                             <span class="inline text-gray-600" data-feather="database"></span>
-                            <span class="text-gray-700 font-semibold">RAM</span>
+                            <span class="text-gray-700 font-semibold">
+                                @lang('words.ram')
+                            </span>
                         </p>
-                        <span class="text-gray-700">{{ number_format($server->memory) }} MB</span>
+                        <span class="text-gray-700">
+                            {{ number_format($server->memory) }} MB
+                        </span>
                     </div>
                     <div class="flex py-2 justify-between border-b border-gray-100">
                         <p>
                             <span class="inline text-gray-600" data-feather="hard-drive"></span>
-                            <span class="text-gray-700 font-semibold">Disk</span>
+                            <span class="text-gray-700 font-semibold">
+                                @lang('words.disk')
+                            </span>
                         </p>
-                        <span class="text-gray-700">{{ $server->disk / 1000 }} GB</span>
+                        <span class="text-gray-700">
+                            {{ $server->disk / 1000 }} GB
+                        </span>
                     </div>
                     <div class="flex py-2 justify-between">
                         <p>
                             <span class="inline text-gray-600" data-feather="archive"></span>
-                            <span class="text-gray-700 font-semibold">Databases</span>
+                            <span class="text-gray-700 font-semibold">
+                                @lang('words.databases')
+                            </span>
                         </p>
-                        <span class="text-gray-700">{{ $server->databases }}</span>
+                        <span class="text-gray-700">
+                            {{ $server->databases }}
+                        </span>
                     </div>
                 </div>
             </a>
@@ -57,9 +77,13 @@
             <div class="flex p-4 bg-gray-100 border-t ">
                 <p class="flex-grow">
                     @if($server->getDeploy())
-                        <a class="text-blue-500 text-base font-semibold" href="{{ config('pterodactyl.url') }}/server/{{ $server->panel_hash }}">Go to panel</a>
+                        <a class="text-blue-500 text-base font-semibold" href="{{ config('pterodactyl.url') }}/server/{{ $server->panel_hash }}">
+                            @lang('words.go_to_panel')
+                        </a>
                     @else
-                        <a class="text-blue-500 text-base font-semibold" href="{{ route('servers.deploy', $server) }}">Deploy</a>
+                        <a class="text-blue-500 text-base font-semibold" href="{{ route('servers.deploy', $server) }}">
+                            @lang('words.deploy')
+                        </a>
                     @endif
                 </p>
                 <div class="flex items-items-center pl-3 border-l border-gray-300">
@@ -83,16 +107,24 @@
 
 @if($servers->count() === 0)
     <div>
-        <h2 class="text-center">You don't have any servers yet!</h2>
+        <h2 class="text-center">
+            @lang('servers.no_servers_yet')
+        </h2>
         <p class="text-center font-light tracking-tight">
-            If you need any help on how to create your first server,
-            <a class="underline" href="#">click here</a>
-            to read out documentation.
+            <a class="underline" href="#">
+                @lang('servers.first_server_help')
+            </a>
         </p>
         <div class="btn-group mt-8 flex justify-center">
-            <a class="btn btn-primary" href="{{ route('servers.create') }}">Create server</a>
-            <a class="btn btn-outline-primary" href="{{ route('orders.create') }}">Add credits</a>
-            <a class="btn btn-outline-secondary" href="#">Help</a>
+            <a class="btn btn-primary" href="{{ route('servers.create') }}">
+                @lang('servers.create')
+            </a>
+            <a class="btn btn-outline-primary" href="{{ route('orders.create') }}">
+                @lang('words.add_credits')
+            </a>
+            <a class="btn btn-outline-secondary" href="#">
+                @lang('words.help')
+            </a>
         </div>
     </div>
 @endif

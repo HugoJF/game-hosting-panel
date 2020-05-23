@@ -1,10 +1,14 @@
 @component('partials.card')
     @slot('title')
         <div class="d-flex items-center justify-between">
-            <span>Transactions</span>
+            <span>
+                @lang('words.transactions')
+            </span>
             <div class="btn-group" role="group">
                 @isset($indexRoute)
-                    <a class="btn btn-outline-dark btn-sm" href="{{ route($indexRoute ?? 'admins.transactions') }}">View transactions</a>
+                    <a class="btn btn-outline-dark btn-sm" href="{{ route($indexRoute ?? 'admins.transactions') }}">
+                        @lang('transactions.view_all')
+                    </a>
                 @endisset
                 @isset($slot)
                     {{ $slot }}
@@ -16,9 +20,9 @@
     <table class="table">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Value</th>
-            <th>Created at</th>
+            <th>@lang('words.id')</th>
+            <th>@lang('words.value')</th>
+            <th>@lang('words.created_at')</th>
         </tr>
         </thead>
         <tbody>
@@ -26,7 +30,9 @@
             <tr>
                 <!-- ID -->
                 <td>
-                    <code>{{ $transaction->id }}</code>
+                    <code>
+                        {{ $transaction->id }}
+                    </code>
                 </td>
 
                 <!-- Value -->
@@ -41,11 +47,17 @@
                 </td>
 
                 <!-- Created at -->
-                <td>{{ $transaction->created_at->diffForHumans() }}</td>
+                <td>
+                    {{ $transaction->created_at->diffForHumans() }}
+                </td>
             </tr>
         @empty
             <tr>
-                <td colspan="100"><h5 class="text-center">No transactions!</h5></td>
+                <td colspan="100">
+                    <h5 class="text-center">
+                        @lang('transactions.no_transactions')
+                    </h5>
+                </td>
             </tr>
         @endforelse
         </tbody>

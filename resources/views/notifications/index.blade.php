@@ -2,8 +2,10 @@
 
 @section('content')
     <h1 class="mb-8">
-        Notifications
-        <span class="text-gray-800 text-xl font-normal">(total {{ $notifications->total() }})</span>
+        @lang('words.notifications')
+        <span class="text-gray-800 text-xl font-normal">
+            ({{ trans('words.total', $notifications->total()) }})
+        </span>
     </h1>
 
     <table class="w-full mb-8">
@@ -32,12 +34,16 @@
                 </td>
                 @if($link = $notification->data['link'] ?? null)
                     <div>
-                        <a class="btn btn-primary" href="{{ $link }}">Link</a>
+                        <a class="btn btn-primary" href="{{ $link }}">
+                            @lang('words.link')
+                        </a>
                     </div>
                 @endif
             </tr>
         @empty
-            <h2>No notifications!</h2>
+            <h2>
+                @lang('words.no_notifications')
+            </h2>
         @endforelse
     </table>
 

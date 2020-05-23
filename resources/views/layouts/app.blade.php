@@ -29,7 +29,9 @@
         </div>
     @endisset
     <div class="flex items-center flex-no-wrap flex-col md:flex-row items-stretch justify-center bg-gray-800">
-        <a class="sidebar-width px-6 py-3 text-gray-400 text-lg no-underline flex-shrink-0 mr-0" href="{{ route('home') }}">Servidores de_nerdTV</a>
+        <a class="sidebar-width px-6 py-3 text-gray-400 text-lg no-underline flex-shrink-0 mr-0" href="{{ route('home') }}">
+            @lang('words.denerdtv_servers')
+        </a>
         <div class="hidden md:flex items-stretch flex-grow text-gray-400">
             {!! Form::open(['url' => route('home'), 'method' => 'GET', 'class' => 'flex items-stretch w-100']) !!}
             <input autocomplete="off" name="term" class="trans-fast py-2 px-5 w-100 bg-transparent outline-none focus:border-b focus:border-gray-500 focus:shadow-inner focus:bg-gray-200 focus:text-gray-700" type="text" placeholder="Search" aria-label="Search">
@@ -48,20 +50,28 @@
                     </a>
                     <a href="{{ route('servers.create') }}" class="trans p-3 no-underline text-gray-400 hover:bg-gray-700">
                         <span class="mr-1 inline text-gray-400" data-feather="plus"></span>
-                        <span>Criar servidor</span>
+                        <span>
+                            @lang('servers.create')
+                        </span>
                     </a>
                     <a href="#" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
                         <span class="mr-1 inline text-gray-400" data-feather="settings"></span>
-                        <span>Configurações</span>
+                        <span>
+                            @lang('words.configuration')
+                        </span>
                     </a>
                     <a href="#" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
                         <span class="mr-1 inline text-gray-400" data-feather="log-out"></span>
-                        <span>Sair</span>
+                        <span>
+                            @lang('words.logout')
+                        </span>
                     </a>
                 @else
                     <a href="#" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
                         <span class="mr-1 inline text-gray-400" data-feather="log-in"></span>
-                        <span>Entrar</span>
+                        <span>
+                            @lang('login')
+                        </span>
                     </a>
                 @endauth
             </li>
