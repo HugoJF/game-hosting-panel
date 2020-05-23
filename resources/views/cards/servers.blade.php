@@ -57,9 +57,9 @@
             <div class="flex p-4 bg-gray-100 border-t ">
                 <p class="flex-grow">
                     @if($server->getDeploy())
-                        <a class="text-blue-500 text-base font-semibold" href="#">Go to panel</a>
+                        <a class="text-blue-500 text-base font-semibold" href="{{ config('pterodactyl.url') }}/server/{{ $server->panel_hash }}">Go to panel</a>
                     @else
-                        <a class="text-blue-500 text-base font-semibold" href="#">Deploy</a>
+                        <a class="text-blue-500 text-base font-semibold" href="{{ route('servers.deploy', $server) }}">Deploy</a>
                     @endif
                 </p>
                 <div class="flex items-items-center pl-3 border-l border-gray-300">

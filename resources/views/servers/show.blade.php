@@ -12,8 +12,11 @@
             <span class="ml-2 py-1 px-2 bg-red-200 text-red-800 font-mono tracking-tight break-words rounded">{{ $server->name }}</span>
         </h1>
         <div class="btn-group mt-4 lg:m-0">
+            @if($server->installed_at)
+                <a class="btn btn-primary btn-lg" href="{{ config('pterodactyl.url') }}/server/{{ $server->panel_hash }}" target="_blank">Access panel</a>
+            @endif
+
             @if($server->getDeploy())
-                <a class="btn btn-primary btn-lg" href="{{ config('pterodactyl.url') }}/server/{{ $server->panel_hash }}" >Access panel</a>
                 <a class="btn btn-outline-warning btn-lg" href="{{ route('servers.terminate', $server) }}" data-toggle="tooltip" data-placement="top" title="set deploy to terminate at the end of paid period.">Terminate</a>
                 <a class="btn btn-outline-danger btn-lg" href="{{ route('servers.force-terminate', $server) }}" data-toggle="tooltip" data-placement="top" title="terminates deploy without waiting for currently paid period.">Force terminate</a>
             @else
