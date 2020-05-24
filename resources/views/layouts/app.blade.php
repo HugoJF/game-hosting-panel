@@ -91,8 +91,6 @@
                 @include('sidebar.packs.servers')
 
                 @include('sidebar.packs.menu')
-
-                @include('sidebar.packs.fast-links')
             </div>
         </nav>
 
