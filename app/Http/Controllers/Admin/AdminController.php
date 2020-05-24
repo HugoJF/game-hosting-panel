@@ -13,7 +13,7 @@ use App\User;
 
 class AdminController extends Controller
 {
-	const PAGINATE_SIZE = 5;
+	const PAGINATE_SIZE = 30;
 
 	public function dashboard()
 	{

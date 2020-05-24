@@ -8,6 +8,8 @@ return [
     |
     | Pls don't terminate with /
     |
+    | This is not used on APIs, just to link users to the dashboard
+    |
     */
 
     'url' => 'http://panel.test',
