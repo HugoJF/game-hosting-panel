@@ -33,7 +33,7 @@
             @lang('words.denerdtv_servers')
         </a>
         <div class="hidden md:flex items-stretch flex-grow text-gray-400">
-            {!! Form::open(['url' => route('home'), 'method' => 'GET', 'class' => 'flex items-stretch w-100']) !!}
+            {!! Form::open(['url' => route('search'), 'method' => 'GET', 'class' => 'flex items-stretch w-100']) !!}
             <input autocomplete="off" name="term" class="trans-fast py-2 px-5 w-100 bg-transparent outline-none focus:border-b focus:border-gray-500 focus:shadow-inner focus:bg-gray-200 focus:text-gray-700" type="text" placeholder="Search" aria-label="Search">
             {!! Form::close() !!}
         </div>
