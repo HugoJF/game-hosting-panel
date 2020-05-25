@@ -4,13 +4,8 @@
     <h1>Search results for: <strong>{{ request('term') }}</strong></h1>
     <br/>
 
-    @foreach($result->groupByType() as $type => $modelSearchResults)
-        <h2 class="uppercase">{{ $type }}</h2>
-
-        @foreach($modelSearchResults as $searchResult)
-            <ul class="pl-4 ">
-                <a href="{{ $searchResult->url }}">{{ $searchResult->title }}</a>
-            </ul>
-        @endforeach
+    @foreach ($result as $type => $items)
+        <h2 class="mb-8">{{ $mapping[$type]['title'] }}</h2>
+        @include($mapping[$type]['view'], [$mapping[$type]['variable'] => $items])
     @endforeach
 @endsection

@@ -7,6 +7,7 @@ use App\Location;
 use App\Server;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Searchable\Search;
 use Spatie\Searchable\SearchResult;
@@ -31,10 +32,24 @@ class HomeController extends Controller
     public function search(Request $request)
     {
         $result = (new Search)
-            ->registerModel(Server::class, 'name')
+            ->registerModel(Server::class, 'name', 'ip')
             ->search($request->input('term'));
 
-        return view('search', compact('result'));
+        // Information about each model being searched
+        $mapping = [
+            'servers' => [
+                'title'    => __('words.servers'),
+                'view'     => 'cards.servers',
+                'variable' => 'servers',
+            ],
+        ];
+
+        // Pluck Models from each type group
+        $result = $result->groupByType()->mapWithKeys(function (Collection $type, $key) {
+            return [$key => $type->pluck('searchable')];
+        });
+
+        return view('search', compact('result', 'mapping'));
     }
 
     public function faq()
