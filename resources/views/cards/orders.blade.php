@@ -5,11 +5,9 @@
                 @lang('words.orders')
             </span>
             <div class="btn-group" role="group">
-                @isset($indexRoute)
-                    <a class="btn btn-outline-dark btn-sm" href="{{ route($indexRoute ?? 'admins.orders') }}">
-                        @lang('orders.view_all')
-                    </a>
-                @endisset
+                <a class="btn btn-outline-dark btn-sm" href="#">
+                    @lang('orders.view_all')
+                </a>
                 @isset($slot)
                     {{ $slot }}
                 @endisset

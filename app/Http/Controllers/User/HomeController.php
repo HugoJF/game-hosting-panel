@@ -15,11 +15,7 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $result = (new Search)
-            ->registerModel(Server::class, 'name')
-            ->search($request->input('term'));
-
-        return view('search', compact('result'));
+        return redirect()->route('dashboard');
     }
 
     public function dashboard()
@@ -30,6 +26,15 @@ class HomeController extends Controller
         $servers = $user->servers()->with(['game', 'node', 'deploys'])->get();
 
         return view('dashboard', compact('servers', 'locations'));
+    }
+
+    public function search(Request $request)
+    {
+        $result = (new Search)
+            ->registerModel(Server::class, 'name')
+            ->search($request->input('term'));
+
+        return view('search', compact('result'));
     }
 
     public function faq()

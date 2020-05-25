@@ -8,82 +8,63 @@
 
 namespace App\Classes;
 
-use Ixudra\Curl\Facades\Curl;
+
+use Exception;
+use GuzzleHttp\Client;
 
 class PaymentSystem
 {
-	public static $saving = false;
-	public static $mocking = false;
-	public static $responses = [];
+    /**
+     * @var Client
+     */
+    private $client;
 
-	/**
-	 * @param      $path
-	 * @param null $data
-	 * @param bool $post
-	 *
-	 * @return bool|mixed
-	 * @throws \Exception
-	 */
-	public static function curl($path, $data = null, $post = false)
-	{
-		if (static::$mocking) {
-			if (array_key_exists($path, static::$responses))
-				return static::$responses[ $path ];
+    public function __construct(Client $client)
+    {
+        $this->client = $client;
+    }
 
-			throw new \Exception('Trying to mock response that does not have a saved file', ['path' => $path]);
-		}
+    /**
+     * @param      $path
+     * @param null $data
+     * @param string $method
+     * @return bool|mixed
+     * @throws Exception
+     */
+    public function curl($path, $data = null, $method = 'GET')
+    {
+        $uri = config('payment-system.url') . $path;
 
-		$result = Curl::to(config('payment-system.url') . $path);
+        $dataName = [
+            'GET' => 'query',
+            'POST' => 'form_params',
+        ];
 
-		if ($data)
-			$result = $result->withData($data);
+        $options = [
+            'headers' => [
+                'Accept' => 'application/json',
+            ],
+            $dataName[$method] => $data,
+        ];
 
-		$result = $result->asJson()->withHeader('Accept: application/json')->returnResponseObject();
+        $response = $this->client->request($method, $uri, $options);
 
-		if ($post) {
-			$response = $result->post();
-		} else {
-			$response = $result->get();
-		}
 
-		return $response;
-	}
+        if (!in_array($code = $response->getStatusCode(), [200, 201])) {
+            throw new Exception("PaymentSystem request to $path returned code $code");
+        }
 
-	public static function fileMock($request, $fileName)
-	{
-		$path = app_path('Mock/mp/') . $fileName;
+        return json_decode((string) $response->getBody());
+    }
 
-		$file = fopen($path, 'r');
-		$content = fread($file, filesize($path));
-		fclose($file);
+    public function createOrder($details)
+    {
+        return $this->curl('orders', $details, 'POST');
+    }
 
-		static::mock($request, json_decode($content));
-	}
-
-	public static function saveResponse($name, $response)
-	{
-		if (static::$saving === true) {
-			$path = app_path('Mock/' . str_replace('/', '-', $name));
-			$file = fopen($path, 'w');
-			fwrite($file, json_encode($response));
-			fclose($file);
-		}
-
-		return $response;
-	}
-
-	public function createOrder($details)
-	{
-		$response = self::curl('orders', $details, true);
-
-		return $response;
-	}
-
-	public function getOrder($reference)
-	{
-		$response = self::curl("orders/$reference");
-
-		return $response;
-	}
+    public function getOrder($reference)
+    {
+        return $this->curl("orders/$reference");
+    }
 
 }

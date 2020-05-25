@@ -20,7 +20,7 @@ class Order extends Model
 
 	public function transaction()
 	{
-		return $this->morphOne(Transaction::class, 'reason');
+		return $this->belongsTo(Transaction::class);
 	}
 
 	public function firePaid()

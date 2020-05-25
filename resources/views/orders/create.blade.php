@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>
-        @lang('orders')
+        @lang('orders.create')
     </h1>
     <br/>
     <h2>
