@@ -30,16 +30,6 @@ class OrderController extends Controller
 
 		$res = $service->storePayment($amount);
 
-		if ($res->status !== 201) {
-			flash()->error("Error $res->status communicating with payment backend");
-
-			return redirect()->route('orders.index');
-		}
-
-		// TODO: create order first to link payment back
-
-		$res = $res->content;
-
 		$order = $service->storeOrder($res, $amount);
 
 		return redirect($order->init_point);

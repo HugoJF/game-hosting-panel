@@ -5,43 +5,47 @@ namespace App\Observers;
 use App\Classes\PaymentSystem;
 use App\Order;
 use App\Transaction;
+use Exception;
 
 class OrderObserver
 {
-	public function created(Order $order)
-	{
-		$transaction = Transaction::make();
+    public function created(Order $order)
+    {
+        $transaction = Transaction::make();
 
-		$transaction->value = 0;
-		$transaction->user()->associate($order->user);
-		$transaction->reason()->associate($order);
+        $transaction->value = 0;
+        $transaction->user()->associate($order->user);
 
-		$transaction->save();
-	}
+        $transaction->save();
 
-	public function retrieved(Order $order)
-	{
-		$ps = app(PaymentSystem::class);
+        $order->transaction()->associate($transaction);
+        $order->save();
+    }
 
-		$data = $ps->getOrder($order->reference);
+    public function retrieved(Order $order)
+    {
+        $ps = app(PaymentSystem::class);
 
-		if ($data->status === 200) {
-			$order->paid = $data->content->paid;
+        $data = $ps->getOrder($order->reference);
 
-			$order->save();
-		}
-	}
+        $order->paid = $data->paid;
 
-	public function saving(Order $order)
-	{
-		if (!$order->getOriginal('paid') && $order->paid)
-			$order->firePaid();
-	}
+        $order->save();
+    }
 
-	public function paid(Order $order)
-	{
-		if(!$order->transaction) return;
-		$order->transaction->value = $order->value;
-		$order->transaction->save();
-	}
+    public function saving(Order $order)
+    {
+        if (!$order->getOriginal('paid') && $order->paid)
+            $order->firePaid();
+    }
+
+    public function paid(Order $order)
+    {
+        if (!$order->transaction) {
+            throw new Exception('Order was paid but could not find transaction to update!');
+        }
+
+        $order->transaction->value = $order->value;
+        $order->transaction->save();
+    }
 }

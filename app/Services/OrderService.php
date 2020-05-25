@@ -55,11 +55,9 @@ class OrderService
 		$details['min_units'] = 10;
 		$details['max_units'] = 100;
 
-		$paymentSystem = new PaymentSystem();
+		$paymentSystem = app(PaymentSystem::class);
 
-		$res = $paymentSystem->createOrder($details);
-
-		return $res;
+        return $paymentSystem->createOrder($details);
 	}
 
 	/**

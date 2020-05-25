@@ -22,7 +22,11 @@ class CreateOrdersTable extends Migration
 
             $table->boolean('paid')->default(false);
 
-            $table->unsignedInteger('user_id')->references('id')->on('users');
+            $table->uuid('transaction_id')->nullable();
+            $table->foreign('transaction_id')->references('id')->on('transactions');
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
 
             $table->timestamps();
         });

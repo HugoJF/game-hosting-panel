@@ -25,4 +25,9 @@ class Transaction extends Model
 	{
 		return $this->morphTo();
 	}
+
+    public function order()
+    {
+        return $this->hasOne(Order::class);
+	}
 }

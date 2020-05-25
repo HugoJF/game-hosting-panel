@@ -5,8 +5,10 @@ namespace App;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class Server extends Model
+class Server extends Model implements Searchable
 {
     use SoftDeletes;
 
@@ -49,5 +51,16 @@ class Server extends Model
         }
 
         return $deploys->first();
+    }
+
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('servers.show', $this->id);
+
+        return new SearchResult(
+            $this,
+            $this->name,
+            $url
+        );
     }
 }

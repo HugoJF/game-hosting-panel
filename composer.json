@@ -20,6 +20,7 @@
         "laravel/tinker": "^2.0",
         "laravelcollective/html": "^6.1",
         "socialiteproviders/steam": "^1.1",
+        "spatie/laravel-searchable": "^1.6",
         "tymon/jwt-auth": "1.0.*",
         "webpatser/laravel-uuid": "^3.0"
     },
