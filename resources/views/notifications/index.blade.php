@@ -4,7 +4,7 @@
     <h1 class="mb-8">
         @lang('words.notifications')
         <span class="text-gray-800 text-xl font-normal">
-            ({{ trans('words.total', $notifications->total()) }})
+            ({{ trans('words.total', ['total' => $notifications->total()]) }})
         </span>
     </h1>
 
