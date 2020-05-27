@@ -23,13 +23,13 @@ export const config = {
         },
     },
     effects: dispatch => ({
-        async translateToConfig(payload, root) {
+        async computeResources(payload, root) {
             try {
                 source.cancel();
                 source = axios.CancelToken.source();
 
                 dispatch.cost.setLoading(true);
-                let response = await axios.get(`/api/configurer/games/a/location/b/translate`, {
+                let response = await axios.get(`/api/configurer/games/a/location/b/compute-resources`, {
                     params: root.form,
                     cancelToken: source.token,
                 });

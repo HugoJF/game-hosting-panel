@@ -54,7 +54,7 @@ export default function CreationConfigurer() {
         dispatch.form.update(resource);
         if (mode === 'simple') {
             await Promise.all([
-                dispatch.config.translateToConfig(),
+                dispatch.config.computeResources(),
                 dispatch.parameters.fetchParameters({
                     mode: mode,
                     ...form,

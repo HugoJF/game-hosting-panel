@@ -44,7 +44,7 @@ class ConfigurerController extends Controller
         })->keyBy('id');
     }
 
-    public function translate(Request $request)
+    public function computeResources(Request $request)
     {
         /** @var CsgoSpecCalculator $c */
         $c = app(CsgoSpecCalculator::class);
