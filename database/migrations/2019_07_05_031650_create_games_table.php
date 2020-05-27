@@ -16,6 +16,7 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->bigIncrements('id');
 
+            $table->string('stub')->nullable();
             $table->string('name');
             $table->text('cover')->nullable();
             $table->mediumText('description'); // TODO: check if mediumText is too overkill

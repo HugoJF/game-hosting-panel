@@ -12,4 +12,9 @@ class Game extends Model
     {
         return $this->belongsToMany(Node::class);
 	}
+
+    public function getProcessor()
+    {
+        return app(config("processors.$this->stub"));
+	}
 }
