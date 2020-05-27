@@ -26,7 +26,7 @@ class ServerDeploymentService
      */
     protected $deployCreation;
 
-    public function __construct(ServerService $serverService,Pterodactyl $pterodactyl, DeployCreationService $deployCreation)
+    public function __construct(ServerService $serverService, Pterodactyl $pterodactyl, DeployCreationService $deployCreation)
     {
         $this->pterodactyl = $pterodactyl;
         $this->deployCreation = $deployCreation;
@@ -49,10 +49,11 @@ class ServerDeploymentService
             throw new ServerNotInstalledException;
         }
 
+        $serverLimits = $this->getServerLimits($server, $config);
         $details = $this->pterodactyl->server($server->panel_id);
 
         $buildConfig = [
-            'limits'         => array_merge($details->limits, $config),
+            'limits'         => array_merge($details->limits, $serverLimits),
             'feature_limits' => $details->featureLimits,
             'allocation'     => $details->allocation,
             'oom_disabled'   => true,
@@ -63,5 +64,15 @@ class ServerDeploymentService
         $this->deployCreation->handle($server, $billingPeriod, $config);
 
         return $s instanceof Resource;
+    }
+
+    private function getServerLimits(Server $server, array $config)
+    {
+        // TODO: normalize this using $node information instead of being hardcoded
+        $cpu = $config['cpu'];
+        $nodePerformance = 2400;
+        return array_merge($config, [
+            'cpu' => $cpu / $nodePerformance * 100,
+        ]);
     }
 }

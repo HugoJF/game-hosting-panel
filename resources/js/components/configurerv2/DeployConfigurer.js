@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux'
 import useForm from "./hooks/useForm";
 import Title from "./ui/Title";
@@ -7,26 +7,60 @@ import LocationSelection from "./sections/LocationSelection";
 import ResourceSelection from "./sections/ResourceSelection";
 import Summary from "./sections/Summary";
 import get from "lodash.get";
+import ModeSelection from "./sections/ModeSelection";
+import useConfig from "./hooks/useConfig";
 
 export default function DeployConfigurer({server, game, location}) {
     const dispatch = useDispatch();
+    const config = useConfig();
     const form = useForm();
+    const [mode, setMode] = useState('simple');
 
     useEffect(() => {
-        dispatch.form.refresh({game, location});
-        dispatch.specs.fetchSpecs({game, location});
+        dispatch.form.clear();
+        dispatch.form.update({game, location});
+        dispatch.specs.fetchSpecs({game, location, mode});
     }, []);
 
-    function handleResourceSelect(resource) {
-        dispatch.form.refresh(resource);
+    function handleModeSelect(_mode) {
+        setMode(_mode);
+        dispatch.form.clear(['game', 'location', 'billing_period']);
+        dispatch.specs.fetchSpecs({
+            game: form.game,
+            mode: _mode,
+            location: form.location,
+        });
+    }
+
+
+    async function handleResourceSelect(resource) {
+        dispatch.form.update(resource);
+        if (mode === 'simple') {
+            await Promise.all([
+                dispatch.config.translateToConfig(),
+                dispatch.specs.fetchSpecs({
+                    mode: mode,
+                    ...form,
+                    ...resource,
+                })
+            ]);
+        } else {
+            dispatch.config.update(resource);
+        }
+        dispatch.cost.calculateCost();
     }
 
     function handlePeriodSelect(period) {
-        dispatch.form.refresh(period);
+        dispatch.form.update(period);
+        dispatch.config.update(period);
+        dispatch.cost.calculateCost();
     }
 
     async function onSubmit() {
-        let response = await dispatch.servers.deploy({server, form});
+        let response = await dispatch.servers.deploy({
+            config: config.config,
+            server
+        });
 
         if (response === false) return;
 
@@ -48,6 +82,10 @@ export default function DeployConfigurer({server, game, location}) {
         />
         <LocationSelection
             selected={form.location}
+        />
+        <ModeSelection
+            selected={mode}
+            onSelect={handleModeSelect}
         />
         <ResourceSelection
             onSelect={handleResourceSelect}
