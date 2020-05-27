@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Classes\CsgoSpecCalculator;
+use App\Classes\CsgoProcessor;
 use App\Game;
 use App\Http\Controllers\Controller;
 use App\Location;
@@ -46,8 +46,8 @@ class ConfigurerController extends Controller
 
     public function computeResources(Request $request)
     {
-        /** @var CsgoSpecCalculator $c */
-        $c = app(CsgoSpecCalculator::class);
+        /** @var CsgoProcessor $c */
+        $c = app(CsgoProcessor::class);
 
         $cost = $c->cost($request->all());
         $remainder = $request->only(['game', 'location']);
@@ -58,8 +58,8 @@ class ConfigurerController extends Controller
     public function parameters(Request $request, Game $game, Location $location, $mode = 'simple')
     {
         if ($mode === 'simple') {
-            /** @var CsgoSpecCalculator $c */
-            $c = app(CsgoSpecCalculator::class);
+            /** @var CsgoProcessor $c */
+            $c = app(CsgoProcessor::class);
 
             return $c->calculate($request->all());
         } else {

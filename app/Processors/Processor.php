@@ -4,7 +4,7 @@ namespace App\Classes;
 
 use Exception;
 
-abstract class SpecCalculator
+abstract class Processor
 {
     protected $params;
 

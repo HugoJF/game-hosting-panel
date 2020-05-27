@@ -2,7 +2,7 @@
 
 namespace App\Classes;
 
-class CsgoSpecCalculator extends SpecCalculator
+class CsgoProcessor extends Processor
 {
     protected $params = [
         'tickrate' => [
