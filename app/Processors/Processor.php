@@ -2,6 +2,7 @@
 
 namespace App\Classes;
 
+use App\Exceptions\InvalidParameterChoiceException;
 use Exception;
 
 abstract class Processor
@@ -12,9 +13,22 @@ abstract class Processor
 
     abstract function reject($cost): bool;
 
+    public function validate(array $choices): void
+    {
+        // For each choice, check if they are present in the definition
+        foreach ($choices as $key => $value) {
+            $options = $this->params[ $key ]['options'];
+
+            if (!in_array($value, $options)) {
+                throw new InvalidParameterChoiceException;
+            }
+        }
+    }
+
     public function calculate(array $choices): array
     {
-        // TODO: assert choices exist in definitions
+        // Assert choices actually exist
+        $this->validate($choices);
 
         // Filter choices that was used in this calculator
         $usedChoices = collect($choices)->only(array_keys($this->params))->toArray();
