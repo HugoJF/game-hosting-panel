@@ -14,9 +14,12 @@ export const specs = {
         },
     },
     effects: dispatch => ({
-        async load({game, location}, root) {
+        async fetchSpecs({game, location, mode, ...rest}, root) {
+            console.log(mode);
             dispatch.specs.setLoading(true);
-            let response = await axios.get(`/api/configurer/games/${game}/locations/${location}/specs`);
+            let response = await axios.get(`/api/configurer/games/${game}/locations/${location}/specs/${mode}`, {
+                params: rest,
+            });
             dispatch.specs.set(response.data);
             dispatch.specs.setLoading(false);
         },

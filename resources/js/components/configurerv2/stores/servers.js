@@ -17,7 +17,7 @@ export const servers = {
         async deploy(payload, root) {
             try {
                 dispatch.servers.setLoading(true);
-                let response = await axios.post(`/servers/${payload.server}/deploy`, payload.form);
+                let response = await axios.post(`/servers/${payload.server}/deploy`, payload.form); // TODO: wtf .form?
                 return response.data;
             } catch (e) {
                 let message = e.message;

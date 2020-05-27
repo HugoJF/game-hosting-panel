@@ -14,7 +14,7 @@ export default function DeployConfigurer({server, game, location}) {
 
     useEffect(() => {
         dispatch.form.refresh({game, location});
-        dispatch.specs.load({game, location});
+        dispatch.specs.fetchSpecs({game, location});
     }, []);
 
     function handleResourceSelect(resource) {

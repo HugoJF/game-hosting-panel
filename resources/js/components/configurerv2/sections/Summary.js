@@ -6,10 +6,10 @@ import Card from "../ui/Card";
 import Section from "../ui/Section";
 import useGames from "../hooks/useGames";
 import useLocations from "../hooks/useLocations";
-import SummaryCustomParameters from "./SummaryCustomParameters";
 import SummaryTotalCost from "./SummaryTotalCost";
 import SummaryItem from "./SummaryItem";
 import SummarySubmitButton from "./SummarySubmitButton";
+import useConfig from "../hooks/useConfig";
 
 const periods = {
     minutely: 'Minutely',
@@ -20,6 +20,7 @@ const periods = {
 };
 
 export default function Summary({onPeriodSelect, onSubmit, onSubmitted}) {
+    const config = useConfig();
     const form = useForm();
     const games = useGames();
     const locations = useLocations();
@@ -36,6 +37,26 @@ export default function Summary({onPeriodSelect, onSubmit, onSubmitted}) {
 
     function getPeriod() {
         return get(periods, form.billing_period);
+    }
+
+    function getCpu() {
+        let cpu = get(config, 'config.cpu', '0');
+        return `${cpu}%`;
+    }
+
+    function getMemory() {
+        let memory = get(config, 'config.memory', '0');
+        return `${memory} MB`;
+    }
+
+    function getDisk() {
+        let disk = get(config, 'config.disk', '0');
+        return `${disk} MB`;
+    }
+
+    function getDatabases() {
+        let databases = get(config, 'config.databases', '0');
+        return `${databases}`;
     }
 
     return <Card
@@ -55,8 +76,11 @@ export default function Summary({onPeriodSelect, onSubmit, onSubmitted}) {
             {/* Global parameter Location */}
             <SummaryItem name="Location" value={getLocationName()}/>
 
-            {/* Custom parameters */}
-            <SummaryCustomParameters/>
+            {/* Server spec */}
+            <SummaryItem name="CPU" value={getCpu()}/>
+            <SummaryItem name="Memory" value={getMemory()}/>
+            <SummaryItem name="Disk" value={getDisk()}/>
+            <SummaryItem name="Databases" value={getDatabases()}/>
 
             {/* Global parameter Period */}
             <SummaryItem name="Period" value={getPeriod()}/>

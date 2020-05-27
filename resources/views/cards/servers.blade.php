@@ -34,7 +34,7 @@
                             </span>
                         </p>
                         <span class="text-gray-700">
-                            {{ round($server->cpu) }}%
+                            {{ round($server->cpu) }} marks
                         </span>
                     </div>
                     <div class="flex py-2 justify-between border-b border-gray-100">

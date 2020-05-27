@@ -2,9 +2,7 @@
 
 namespace App\Classes;
 
-use c;
 use Exception;
-use phpDocumentor\Reflection\Types\Collection;
 
 abstract class SpecCalculator
 {
@@ -14,31 +12,40 @@ abstract class SpecCalculator
 
     abstract function reject($cost): bool;
 
-    public function calculate(array $choices)
+    public function calculate(array $choices): array
     {
+        // TODO: assert choices exist in definitions
+
         // Filter choices that was used in this calculator
-        $usedChoices = collect($choices)->only($this->params)->toArray();
+        $usedChoices = collect($choices)->only(array_keys($this->params))->toArray();
 
         // Map 'empty_value' for each parameter
-        $defaultChoices = collect($this->params)->mapWithKeys(function ($param) {
-            return [$param => $this->$param['empty_value']];
+        $defaultChoices = collect($this->params)->mapWithKeys(function ($value, $param) {
+            return [$param => $this->params[ $param ]['empty_value']];
         })->toArray();
 
         // Add default values to missing choices
         $choices = array_merge($defaultChoices, $usedChoices);
 
-        return collect($this->params)->mapWithKeys(function ($param) use ($choices) {
+        $options = collect($this->params)->mapWithKeys(function ($value, $param) use ($choices) {
             return [$param => $this->buildVariations($param, $choices)];
-        });
+        })->toArray();
+
+        return collect($this->params)->mapWithKeys(function ($definition, $param) use ($options) {
+            return [$param => array_merge($definition, [
+                'options' => $options[ $param ],
+            ])];
+        })->toArray();
     }
 
     private function buildVariations(string $param, array $choices): array
     {
-        if (!array_key_exists('options', $this->$param)) {
+        // Assert that the parameter is defined
+        if (!array_key_exists('options', $this->params[ $param ])) {
             throw new Exception("Could not find 'options' definition for parameter $param");
         }
 
-        return collect($this->$param['options'])->mapWithKeys(function ($option) use ($param, $choices) {
+        return collect($this->params[ $param ]['options'])->mapWithKeys(function ($option) use ($param, $choices) {
             // Merge current 'choices' with each 'option' for current 'parameter'
             $newChoices = array_merge($choices, [
                 $param => $option,
@@ -48,6 +55,8 @@ abstract class SpecCalculator
             return [$option => $this->cost($newChoices)];
         })->reject(function ($cost) {
             return $this->reject($cost);
+        })->map(function ($value, $key) {
+            return $key;
         })->toArray();
     }
 }

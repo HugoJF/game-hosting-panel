@@ -8,7 +8,7 @@ class NodeForm extends Form
 {
     private $numberParameters = [
         'attr' => [
-            'step' => '0.01',
+            'step' => '0.001',
         ],
         'min'  => 0,
     ];
@@ -18,7 +18,7 @@ class NodeForm extends Form
         $this->add('name', 'text');
         $this->add('description', 'textarea');
 
-        $this->add('cpu_cost', 'number', $this->params('Cost per 1% CPU'));
+        $this->add('cpu_cost', 'number', $this->params('Cost per 1 CPU Mark'));
         $this->add('memory_cost', 'number', $this->params('Cost per MB of memory'));
         $this->add('disk_cost', 'number', $this->params('Cost per MB of disk'));
         $this->add('database_cost', 'number', $this->params('Cost per database'));

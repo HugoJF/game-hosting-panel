@@ -23,7 +23,8 @@ Route::prefix('configurer')->group(function () {
     Route::get('games', 'ConfigurerController@games')->name('configurer.games');
     Route::get('locations', 'ConfigurerController@locations')->name('configurer.locations');
     Route::get('games/{game}/locations', 'ConfigurerController@gameLocations')->name('configurer.gameLocations');
-    Route::get('games/{game}/locations/{location}/specs', 'ConfigurerController@specs')->name('configurer.specs');
+    Route::get('games/{game}/locations/{location}/specs/{mode}', 'ConfigurerController@specs')->name('configurer.specs');
+    Route::get('games/a/location/b/translate', 'ConfigurerController@translate')->name('configurer.translate');
 });
 
 Route::prefix('servers')->middleware(['auth'])->group(function () {
