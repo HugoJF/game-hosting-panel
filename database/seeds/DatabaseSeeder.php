@@ -2,8 +2,6 @@
 
 use App\Game;
 use App\Node;
-use App\Location;
-use App\Server;
 use App\Transaction;
 use App\User;
 use Illuminate\Database\Seeder;

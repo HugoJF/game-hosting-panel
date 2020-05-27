@@ -1,7 +1,6 @@
 import React from 'react';
 import get from "lodash.get";
 import useParameters from "../hooks/useParameters";
-import useForm from "../hooks/useForm";
 import SummaryItem from "./SummaryItem";
 import useConfig from "../hooks/useConfig";
 

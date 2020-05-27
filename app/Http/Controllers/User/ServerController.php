@@ -4,7 +4,6 @@ namespace App\Http\Controllers\User;
 
 use App\Game;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AdvancedDeployRequest;
 use App\Http\Resources\ServerResource;
 use App\Location;
 use App\Server;

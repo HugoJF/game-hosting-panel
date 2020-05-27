@@ -4,7 +4,6 @@ namespace Tests\Unit;
 
 use App\Classes\PriceRuleProcessor;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PricingTest extends TestCase
 {

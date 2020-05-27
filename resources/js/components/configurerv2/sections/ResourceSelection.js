@@ -2,7 +2,6 @@ import React from 'react';
 import Card from "../ui/Card";
 import GenericSelector from "../resources/GenericSelector";
 import useParameters from "../hooks/useParameters";
-import icons from '../icons';
 import useForm from "../hooks/useForm";
 
 export default function ResourceSelection({onSelect}) {

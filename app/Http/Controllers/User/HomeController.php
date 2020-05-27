@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Searchable\Search;
-use Spatie\Searchable\SearchResult;
 
 class HomeController extends Controller
 {

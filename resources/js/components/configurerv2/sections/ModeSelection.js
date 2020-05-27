@@ -1,8 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Card from "../ui/Card";
-import Location from "./../sections/partials/Location";
-import useLocations from "../hooks/useLocations";
-import {useDispatch} from "react-redux";
 import Button from "../ui/Button";
 
 export default function ModeSelection({selected, onSelect}) {
