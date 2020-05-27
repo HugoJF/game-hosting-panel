@@ -1,24 +1,24 @@
 import React from 'react';
 import Card from "../ui/Card";
 import GenericSelector from "../resources/GenericSelector";
-import useSpecs from "../hooks/useSpecs";
+import useParameters from "../hooks/useParameters";
 import icons from '../icons';
 import useForm from "../hooks/useForm";
 
 export default function ResourceSelection({onSelect}) {
-    const specs = useSpecs();
+    const parameters = useParameters();
     const form = useForm();
 
     return <Card
         title="Server resources"
         subtitle="Select the resource limits based on your demand."
-        loading={specs.loading}
+        loading={parameters.loading}
         cols={2}
         gap={8}
     >
         {
             Object
-                .entries(specs.specs)
+                .entries(parameters.parameters)
                 .map(([id, spec]) => (
                 <GenericSelector
                     key={id}

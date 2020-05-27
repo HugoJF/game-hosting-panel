@@ -55,7 +55,7 @@ class ConfigurerController extends Controller
         return array_merge($cost, $remainder);
     }
 
-    public function specs(Request $request, Game $game, Location $location, $mode = 'simple')
+    public function parameters(Request $request, Game $game, Location $location, $mode = 'simple')
     {
         if ($mode === 'simple') {
             /** @var CsgoSpecCalculator $c */

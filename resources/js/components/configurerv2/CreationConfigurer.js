@@ -33,7 +33,7 @@ export default function CreationConfigurer() {
         dispatch.form.clear(['game', 'location', 'billing_period']);
         dispatch.config.clear(['game']);
         dispatch.config.update({location});
-        dispatch.specs.fetchSpecs({
+        dispatch.parameters.fetchParameters({
             game: form.game,
             mode,
             location
@@ -43,7 +43,7 @@ export default function CreationConfigurer() {
     function handleModeSelect(_mode) {
         setMode(_mode);
         dispatch.form.clear(['game', 'location', 'billing_period']);
-        dispatch.specs.fetchSpecs({
+        dispatch.parameters.fetchParameters({
             game: form.game,
             mode: _mode,
             location: form.location,
@@ -55,7 +55,7 @@ export default function CreationConfigurer() {
         if (mode === 'simple') {
             await Promise.all([
                 dispatch.config.translateToConfig(),
-                dispatch.specs.fetchSpecs({
+                dispatch.parameters.fetchParameters({
                     mode: mode,
                     ...form,
                     ...resource,

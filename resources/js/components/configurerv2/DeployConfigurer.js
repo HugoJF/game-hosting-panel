@@ -19,13 +19,13 @@ export default function DeployConfigurer({server, game, location}) {
     useEffect(() => {
         dispatch.form.clear();
         dispatch.form.update({game, location});
-        dispatch.specs.fetchSpecs({game, location, mode});
+        dispatch.parameters.fetchParameters({game, location, mode});
     }, []);
 
     function handleModeSelect(_mode) {
         setMode(_mode);
         dispatch.form.clear(['game', 'location', 'billing_period']);
-        dispatch.specs.fetchSpecs({
+        dispatch.parameters.fetchParameters({
             game: form.game,
             mode: _mode,
             location: form.location,
@@ -38,7 +38,7 @@ export default function DeployConfigurer({server, game, location}) {
         if (mode === 'simple') {
             await Promise.all([
                 dispatch.config.translateToConfig(),
-                dispatch.specs.fetchSpecs({
+                dispatch.parameters.fetchParameters({
                     mode: mode,
                     ...form,
                     ...resource,

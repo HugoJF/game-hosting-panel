@@ -1,12 +1,12 @@
 import React from 'react';
 import get from "lodash.get";
-import useSpecs from "../hooks/useSpecs";
+import useParameters from "../hooks/useParameters";
 import useForm from "../hooks/useForm";
 import SummaryItem from "./SummaryItem";
 import useConfig from "../hooks/useConfig";
 
 export default function SummaryCustomParameters() {
-    const specs = useSpecs();
+    const parameters = useParameters();
     const config = useConfig();
 
     function getSpecName(spec) {
@@ -18,7 +18,7 @@ export default function SummaryCustomParameters() {
     }
 
     return Object
-        .entries(specs.specs)
+        .entries(parameters.parameters)
         .map(([specId, spec]) => (
             <SummaryItem
                 name={getSpecName(spec)}
