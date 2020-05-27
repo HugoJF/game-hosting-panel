@@ -13,11 +13,23 @@ use Illuminate\Http\Request;
 |
 */
 
-// TODO: @deprecated
+
+/*
+|--------------------------------------------------------------------------
+| Cost routes
+|--------------------------------------------------------------------------
+*/
+
 Route::prefix('cost')->group(function () {
     Route::get('creation', 'CostController@creation')->name('cost.creation');
     Route::get('deployment', 'CostController@deployment')->name('cost.deployment');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Configurer routes
+|--------------------------------------------------------------------------
+*/
 
 Route::prefix('configurer')->group(function () {
     Route::get('games', 'ConfigurerController@games')->name('configurer.games');
@@ -29,15 +41,4 @@ Route::prefix('configurer')->group(function () {
 
 Route::prefix('servers')->middleware(['auth'])->group(function () {
     Route::post('/', 'ServerController@store')->name('api.servers.store');
-});
-
-Route::prefix('nodes')->group(function () {
-    Route::get('location/{location}/cost', 'NodeController@cost')->name('servers.cost');
-    Route::get('test', function () {
-        return rand(0, 8000);
-    });
-});
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
 });
