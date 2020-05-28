@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Classes\CsgoProcessor;
+use App\Processors\CsgoProcessor;
 use App\Game;
 use App\Http\Controllers\Controller;
 use App\Location;

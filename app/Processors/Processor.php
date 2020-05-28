@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Classes;
+namespace App\Processors;
 
 use App\Exceptions\InvalidParameterChoiceException;
 use Exception;
