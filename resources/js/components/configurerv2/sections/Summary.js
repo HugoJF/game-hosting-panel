@@ -36,7 +36,7 @@ export default function Summary({onPeriodSelect, onSubmit, onSubmitted}) {
     }
 
     function getPeriod() {
-        return get(periods, form.billing_period);
+        return get(periods, config.config.billing_period);
     }
 
     function getCpu() {
