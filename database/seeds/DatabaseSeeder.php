@@ -37,6 +37,14 @@ class DatabaseSeeder extends Seeder
             Node::first()->games()->attach($game);
         }
 
+        // Add base cost for local node
+        Node::first()->update([
+            'cpu_cost'      => 2.1,
+            'memory_cost'      => 2,
+            'disk_cost'     => 0.05,
+            'database_cost' => 500,
+        ]);
+
         // Add money to test user
         $user->transactions()->save(factory(Transaction::class)->make([
             'value' => 100000,
