@@ -1,9 +1,11 @@
 <?php
 
 use App\Game;
+use App\Location;
 use App\Node;
 use App\Transaction;
 use App\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -27,18 +29,39 @@ class DatabaseSeeder extends Seeder
             'password'   => bcrypt('123123123'),
         ]);
 
-        event(new \Illuminate\Auth\Events\Registered($user));
+        // Trigger event to register user on Database
+        event(new Registered($user));
 
+        // Allow all games on current Node
         foreach (Game::all() as $game) {
             Node::first()->games()->attach($game);
         }
 
-        /** @var User $user */
-        $user = User::first();
-        $transaction = factory(Transaction::class)->make([
+        // Add money to test user
+        $user->transactions()->save(factory(Transaction::class)->make([
             'value' => 100000,
+        ]));
+
+        // Update nodes
+        Location::first()->update(['flag' => 'brazil']);
+        factory(Location::class)->create([
+            'id'    => 44,
+            'short' => 'Remote',
+            'long'  => 'Fake canada server',
+            'flag'  => 'canada',
         ]);
 
-        $user->transactions()->save($transaction);
+        // Add covers to each game
+        $covers = [
+            'https://i.imgur.com/aSpVNeW.png',
+            'https://i.imgur.com/rAwX8Af.png',
+            'https://i.imgur.com/ADfCGqM.png',
+            'https://i.redd.it/uhdomasbp1p31.png',
+            'https://i.imgur.com/ORlkG0P.png',
+        ];
+
+        foreach ($covers as $id => $cover) {
+            Game::query()->find($id + 1)->update(compact('cover'));
+        }
     }
 }
