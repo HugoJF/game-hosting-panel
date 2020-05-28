@@ -74,7 +74,6 @@ export default function CreationConfigurer() {
      */
 
     function handlePeriodSelect(period) {
-        dispatch.form.update(period);
         dispatch.config.update(period);
         dispatch.cost.calculateCost();
     }

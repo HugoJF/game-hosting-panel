@@ -90,7 +90,7 @@ export default function Summary({onPeriodSelect, onSubmit, onSubmitted}) {
         <div>
             {/* Period select */}
             <div className="mb-8">
-                <PeriodSelector selected={form.billing_period} onSelect={onPeriodSelect}/>
+                <PeriodSelector selected={config.config.billing_period} onSelect={onPeriodSelect}/>
             </div>
 
             {/* Total cost */}
