@@ -2,41 +2,28 @@
 
 namespace App\Classes;
 
+use App\Exceptions\MissingTickrateCpuCost;
+
 class CsgoProcessor extends Processor
 {
-    protected $params = [
-        'tickrate' => [
-            'name'        => 'Tickrate',
-            'icon'        => 'cpu',
-            'description' => 'Maximum player count',
-            'empty_value' => '64',
-            'options'     => ['128', '102.4', '64'],
-        ],
-        'slots'    => [
-            'name'        => 'Slots',
-            'icon'        => 'cpu',
-            'description' => 'Estimated slot count',
-            'empty_value' => 12,
-            'options'     => ['12', '16', '20', '24', '28', '32', '36', '40'],
-        ],
-    ];
+    public function __construct()
+    {
+        $this->params = config('processors.csgo.parameters');
+    }
 
     public function cost($parameters): array
     {
-        $tickrateCostPerSlot = [
-            '64'    => 90,
-            '102.4' => 120,
-            '128'   => 150,
-        ];
+        $tickrateCostPerSlot = config('processors.csgo.cost_per_slot');
 
-        $costPerSlot = $tickrateCostPerSlot[ $parameters['tickrate'] ];
+        if (!array_key_exists($parameters['tickrate'], $tickrateCostPerSlot)) {
+            throw new MissingTickrateCpuCost;
+        }
 
-        return [
-            'cpu'       => (int) $parameters['slots'] * (int) $costPerSlot,
-            'memory'    => 1000,
-            'disk'      => 27000,
-            'databases' => 0,
-        ];
+        $costPerSlot = $tickrateCostPerSlot[ $parameters['tickrate'] ] ?? null;
+
+        return array_merge(config('processors.csgo.costs'), [
+            'cpu' => (int) $parameters['slots'] * (int) $costPerSlot,
+        ]);
     }
 
     function reject($cost): bool

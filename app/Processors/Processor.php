@@ -7,8 +7,12 @@ use Exception;
 
 abstract class Processor
 {
-    protected $params;
+    /**
+     * @var array
+     */
+    protected $params = [];
 
+    // TODO: wrap cost function to call validate
     abstract function cost($parameters): array;
 
     abstract function reject($cost): bool;
