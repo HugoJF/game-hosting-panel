@@ -28,20 +28,28 @@ export const locations = {
     },
     effects: dispatch => ({
         async preLoad(payload, root) {
-            console.log('payload', payload);
             dispatch.locations.setLoading(true);
-            let response = await axios.get(`/api/configurer/locations`);
-            dispatch.locations.set(response.data);
-            dispatch.locations.makeUnavailable();
-            dispatch.locations.setLoading(false);
+            try {
+                let response = await axios.get(`/api/configurer/locations`);
+                dispatch.locations.set(response.data);
+                dispatch.locations.makeUnavailable();
+            } catch (e) {
+                console.error(e);
+            } finally {
+                dispatch.locations.setLoading(false);
+            }
         },
 
         async load(payload, root) {
-            console.log('payload', payload);
             dispatch.locations.setLoading(true);
-            let response = await axios.get(`/api/configurer/games/${payload}/locations`);
-            dispatch.locations.set(response.data);
-            dispatch.locations.setLoading(false);
+            try {
+                let response = await axios.get(`/api/configurer/games/${payload}/locations`);
+                dispatch.locations.set(response.data);
+            } catch (e) {
+                console.error(e);
+            } finally {
+                dispatch.locations.setLoading(false);
+            }
         },
     }),
 };

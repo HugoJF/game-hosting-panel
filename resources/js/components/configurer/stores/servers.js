@@ -15,8 +15,8 @@ export const servers = {
     },
     effects: dispatch => ({
         async deploy(payload, root) {
+            dispatch.servers.setLoading(true);
             try {
-                dispatch.servers.setLoading(true);
                 let response = await axios.post(`/servers/${payload.server}/deploy`, payload.config);
                 return response.data;
             } catch (e) {
@@ -30,8 +30,9 @@ export const servers = {
             }
         },
         async create(payload, root) {
+            dispatch.servers.setLoading(true);
+
             try {
-                dispatch.servers.setLoading(true);
                 let response = await axios.post(`/servers`, payload);
                 return response.data;
             } catch (e) {

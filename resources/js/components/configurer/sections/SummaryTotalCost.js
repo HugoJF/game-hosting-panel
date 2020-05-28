@@ -1,9 +1,9 @@
 import React from 'react';
-import Section from "../ui/Section";
+import useConfig from "../hooks/useConfig";
 import useCost from "../hooks/useCost";
+import Section from "../ui/Section";
 import Loader from "../ui/Loader";
 import tailwind from "../tailwind";
-import useForm from "../hooks/useForm";
 
 const formatter = new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'});
 
@@ -25,9 +25,11 @@ const texts = {
 
 export default function SummaryTotalCost() {
     const cost = useCost();
-    const form = useForm();
+    const config = useConfig();
 
-    const perPeriod = texts[form.billing_period];
+    const perPeriod = texts[config.config.billing_period];
+    const _cost = cost.value / 100;
+    const valid = !isNaN(_cost) && cost.value > 0;
 
     return <Section
         icon="cost"
@@ -40,9 +42,22 @@ export default function SummaryTotalCost() {
                 cost.loading
                     ? <Loader/>
                     : <>
-                        <span>{isNaN(cost.value / 100) ? '-' : formatter.format(cost.value / 100)}</span>
+                        {/* Message */}
                         {
-                            perPeriod && <Period>{perPeriod}</Period>
+                            !valid &&
+                            <span className="text-gray-700 text-2xl font-normal">Please complete the form first.</span>
+                        }
+                        {/* Cost */}
+                        {
+                            valid &&
+                            <span>
+                                {formatter.format(_cost)}
+                            </span>
+                        }
+                        {/* Suffix */}
+                        {
+                            valid &&
+                            <Period>{perPeriod}</Period>
                         }
                     </>
             }
