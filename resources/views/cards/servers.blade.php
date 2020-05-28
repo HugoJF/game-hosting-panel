@@ -3,8 +3,8 @@
         <div class="trans flex flex-col justify-between bg-white border rounded-lg overflow-hidden hover:shadow hover:border-gray-400">
             <a class="flex flex-grow flex-col p-4" href="{{ route('servers.show', $server) }}">
                 <!-- Header -->
-                <div class="flex flex-wrap justify-between items-center text-base">
-                    <h2 class="text-lg font-normal font-mono tracking-tight">
+                <div class="flex justify-between items-center text-base">
+                    <h2 class="text-lg font-normal font-mono tracking-tight truncate">
                         {{ $server->name }}
                     </h2>
                     @include('servers.status')
