@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CreationConfigurerWrapper from "./components/configurerv2/CreationConfigurerWrapper";
-import DeployConfigurerWrapper from "./components/configurerv2/DeployConfigurerWrapper";
+import CreationConfigurerWrapper from "./components/configurer/CreationConfigurerWrapper";
+import DeployConfigurerWrapper from "./components/configurer/DeployConfigurerWrapper";
 
 const mappings = {
     'creation-configurer': CreationConfigurerWrapper,
