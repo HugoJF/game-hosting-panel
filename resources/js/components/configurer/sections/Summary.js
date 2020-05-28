@@ -10,6 +10,7 @@ import SummaryTotalCost from "./SummaryTotalCost";
 import SummaryItem from "./SummaryItem";
 import SummarySubmitButton from "./SummarySubmitButton";
 import useConfig from "../hooks/useConfig";
+import NameSelector from "./NameSelector";
 
 const periods = {
     minutely: 'Minutely',
@@ -19,7 +20,7 @@ const periods = {
     monthly: 'Monthly',
 };
 
-export default function Summary({onPeriodSelect, onSubmit, onSubmitted}) {
+export default function Summary({onNameChange, onPeriodSelect, onSubmit, onSubmitted}) {
     const config = useConfig();
     const form = useForm();
     const games = useGames();
@@ -88,13 +89,20 @@ export default function Summary({onPeriodSelect, onSubmit, onSubmitted}) {
 
         {/* Second column */}
         <div>
+            {
+                onNameChange && <div className="mb-8">
+                    <NameSelector value={config.config.name} onNameChange={onNameChange}/>
+                </div>
+            }
+
+
             {/* Period select */}
             <div className="mb-8">
                 <PeriodSelector selected={config.config.billing_period} onSelect={onPeriodSelect}/>
             </div>
 
             {/* Total cost */}
-            <SummaryTotalCost />
+            <SummaryTotalCost/>
 
             {/* Submit button */}
             <SummarySubmitButton onSubmit={onSubmit} onSubmitted={onSubmitted}/>

@@ -7,7 +7,8 @@
         'freepik' => 'Freepik',
         'surang' => 'surang',
         'nhor-phai' => 'Nhor Phai',
-        'xnimrodx' => 'xnimrodx'
+        'xnimrodx' => 'xnimrodx',
+        'icongeek26' => 'Icongeek26',
     ];
 @endphp
 

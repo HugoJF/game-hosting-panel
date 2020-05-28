@@ -102,7 +102,7 @@ class ServerCreationService
         $fromDefaults = ['io' => 500];
         $fromForm = collect($config)->only(['cpu', 'memory', 'disk', 'databases', 'billing_period'])->toArray();
         $fromRelationships = [
-            'name'    => Str::random(),
+            'name'    => $config['name'] ?? Str::random(),
             'hash'    => Str::random(),
             'ip'      => "$allocation->ip:$allocation->port",
             'user_id' => $user->id,

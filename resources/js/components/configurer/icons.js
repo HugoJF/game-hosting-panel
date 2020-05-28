@@ -5,6 +5,7 @@ import Disk from '../icons/Disk';
 import Memory from '../icons/Memory';
 import Period from '../icons/Period';
 import Summary from '../icons/Summary';
+import Tag from "../icons/Tag";
 
 const icons = {
     cpu: Cpu,
@@ -14,6 +15,7 @@ const icons = {
     memory: Memory,
     period: Period,
     summary: Summary,
+    tag: Tag,
 };
 
 export default icons;

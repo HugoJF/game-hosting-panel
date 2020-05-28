@@ -78,6 +78,12 @@ export default function CreationConfigurer() {
         dispatch.cost.calculateCost();
     }
 
+    function handleNameChange(event) {
+        dispatch.config.update({
+            name: event.target.value,
+        })
+    }
+
     async function onSubmit() {
         let server = await dispatch.servers.create(config.config);
 
@@ -111,6 +117,7 @@ export default function CreationConfigurer() {
             onSelect={handleResourceSelect}
         />
         <Summary
+            onNameChange={handleNameChange}
             onPeriodSelect={handlePeriodSelect}
             onSubmit={onSubmit}
         />
