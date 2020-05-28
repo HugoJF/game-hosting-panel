@@ -51,7 +51,6 @@ export default function DeployConfigurer({server, game, location}) {
     }
 
     function handlePeriodSelect(period) {
-        dispatch.form.update(period);
         dispatch.config.update(period);
         dispatch.cost.calculateCost();
     }
