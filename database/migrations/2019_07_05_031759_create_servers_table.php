@@ -17,6 +17,7 @@ class CreateServersTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('name');
+            $table->string('hash');
             $table->string('ip');
 
             $table->string('billing_period');

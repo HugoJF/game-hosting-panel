@@ -16,6 +16,11 @@ class Server extends Model implements Searchable
 
     protected $dates = ['installed_at', 'removed_at'];
 
+    public function getRouteKeyName()
+    {
+        return 'hash';
+    }
+
     public function node()
     {
         return $this->belongsTo(Node::class);

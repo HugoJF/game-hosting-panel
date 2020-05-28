@@ -58,10 +58,11 @@ class ServerCreationService
     }
 
     /**
-     * @param User $user
-     * @param Game $game
-     * @param Node $node
+     * @param User  $user
+     * @param Game  $game
+     * @param Node  $node
      * @param array $data
+     *
      * @return Server
      * @throws Exception
      */
@@ -102,6 +103,7 @@ class ServerCreationService
         $fromForm = collect($config)->only(['cpu', 'memory', 'disk', 'databases', 'billing_period'])->toArray();
         $fromRelationships = [
             'name'    => Str::random(),
+            'hash'    => Str::random(),
             'ip'      => "$allocation->ip:$allocation->port",
             'user_id' => $user->id,
             'game_id' => $game->id,
