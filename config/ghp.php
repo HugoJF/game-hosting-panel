@@ -12,6 +12,7 @@
 return [
     'termination-reasons' => [
         'TERMINATED_BY_ADMIN',
+        'FORCE_TERMINATED_BY_USER',
         'TERMINATED_BY_USER',
         'INSUFFICIENT_BALANCE',
         'INSUFFICIENT_RESOURCES',

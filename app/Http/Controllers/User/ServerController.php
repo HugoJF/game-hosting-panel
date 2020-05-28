@@ -87,7 +87,7 @@ class ServerController extends Controller
 
     public function terminate(DeployTerminationService $terminationService, Server $server)
     {
-        $terminationService->handle($server, false);
+        $terminationService->handle($server, 'TERMINATED_BY_USER', false);
 
         flash()->success('Server set to terminate');
 
@@ -96,7 +96,7 @@ class ServerController extends Controller
 
     public function forceTerminate(DeployTerminationService $terminationService, Server $server)
     {
-        $terminationService->handle($server, true);
+        $terminationService->handle($server, 'FORCE_TERMINATED_BY_USER', true);
 
         flash()->success('Server terminated');
 

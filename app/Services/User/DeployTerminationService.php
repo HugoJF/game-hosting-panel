@@ -10,24 +10,25 @@ class DeployTerminationService
     /**
      * @var ServerTerminationService
      */
-    protected $terminationService;
+    protected $serverTermination;
 
     public function __construct(ServerTerminationService $terminationService)
     {
-        $this->terminationService = $terminationService;
+        $this->serverTermination = $terminationService;
     }
 
-    public function handle(Server $server, bool $forced = false)
+    public function handle(Server $server, string $reason, bool $forced = false)
     {
         /** @var Deploy $deploy */
         $deploy = $server->getDeploy();
 
         if (!$deploy->termination_requested_at) {
+            $deploy->termination_reason = $reason;
             $deploy->termination_requested_at = now();
         }
 
         if ($forced) {
-            $this->terminationService->handle($server);
+            $this->serverTermination->handle($server);
         }
 
         $deploy->save();

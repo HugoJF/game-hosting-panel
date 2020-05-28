@@ -80,7 +80,7 @@ class UpdateDeployTransactions extends Command
             $terminationService = app(DeployTerminationService::class);
 
             $this->info("Terminating deploy $deploy->id");
-            $terminationService->handle($deploy->server, true);
+            $terminationService->handle($deploy->server, 'INSUFFICIENT_BALANCE', true);
         }
     }
 }
