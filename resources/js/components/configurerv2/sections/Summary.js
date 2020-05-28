@@ -87,7 +87,7 @@ export default function Summary({onPeriodSelect, onSubmit, onSubmitted}) {
         </Section>
 
         {/* Second column */}
-        <div> 3
+        <div>
             {/* Period select */}
             <div className="mb-8">
                 <PeriodSelector selected={config.config.billing_period} onSelect={onPeriodSelect}/>
