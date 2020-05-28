@@ -63,8 +63,8 @@ export default function CreationConfigurer() {
             ]);
         } else {
             dispatch.config.update(resource);
+            dispatch.cost.calculateCost();
         }
-        dispatch.cost.calculateCost();
     }
 
     /*

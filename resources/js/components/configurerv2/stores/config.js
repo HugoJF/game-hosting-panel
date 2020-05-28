@@ -34,6 +34,7 @@ export const config = {
                     cancelToken: source.token,
                 });
                 dispatch.config.update(response.data);
+                await dispatch.cost.calculateCost();
                 dispatch.cost.setLoading(false);
             } catch (e) {
                 console.error(e);
