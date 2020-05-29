@@ -6,17 +6,17 @@
 
 @section('content')
     <div class="flex flex-col lg:flex-row mb-8 items-center justify-between">
-        <h1 class="flex items-center text-xl md:text-3xl lg:text-4xl xl:text-5xl">
-            <div class="mr-4 h-12 w-12">
+        <h2 class="flex items-center text-xl md:text-3xl lg:text-4xl">
+            <div class="flex-shrink-0 mr-4 h-12 w-12">
                 @include('flags.brazil')
             </div>
             <span>
                 @lang('words.server')
             </span>
-            <span class="ml-2 py-1 px-2 bg-red-200 text-red-800 font-mono tracking-tight break-words rounded">
+            <span class="ml-2 mr-4 py-1 px-2 bg-red-200 text-red-800 font-mono tracking-tight break-words rounded">
                 {{ $server->name }}
             </span>
-        </h1>
+        </h2>
         <div class="btn-group mt-4 lg:m-0">
             @if($server->installed_at)
                 <a class="btn btn-primary btn-lg" href="{{ config('pterodactyl.url') }}/server/{{ $server->panel_hash }}" target="_blank">

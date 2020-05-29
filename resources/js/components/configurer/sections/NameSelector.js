@@ -13,6 +13,7 @@ export default function NameSelector({value, onNameChange}) {
         <input
             className="px-4 py-2 text-xl border rounded"
             placeholder="Insert server name here..."
+            maxLength={191}
             value={value}
             onChange={onNameChange}
         />

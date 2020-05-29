@@ -4,7 +4,7 @@
             <a class="flex flex-grow flex-col p-4" href="{{ route('servers.show', $server) }}">
                 <!-- Header -->
                 <div class="flex justify-between items-center text-base">
-                    <h2 class="text-lg font-normal font-mono tracking-tight truncate">
+                    <h2 class="text-lg font-normal font-mono tracking-tight truncate" title="{{ $server->name }}">
                         {{ $server->name }}
                     </h2>
                     @include('servers.status')

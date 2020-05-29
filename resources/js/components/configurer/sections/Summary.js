@@ -42,7 +42,7 @@ export default function Summary({onNameChange, onPeriodSelect, onSubmit, onSubmi
 
     function getCpu() {
         let cpu = get(config, 'config.cpu', '0');
-        return `${cpu}%`;
+        return `${cpu} marks`;
     }
 
     function getMemory() {
