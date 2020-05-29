@@ -55,13 +55,13 @@ class CostController extends Controller
             return [$spec => Arr::get($config, $spec, 0)];
         })->toArray();
 
-        if ($period = $config['billing_period'] ?? null) {
-            return [
-                'node_id' => $node->id,
-                'cost'    => $this->deployCost->getCostPerPeriod($node, $period, $data),
-            ];
-        } else {
-            return 0;
+        if (!$period = $config['billing_period'] ?? null) {
+            return null;
         }
+
+        return [
+            'node_id' => $node->id,
+            'cost'    => $this->deployCost->getCostPerPeriod($node, $period, $data),
+        ];
     }
 }
