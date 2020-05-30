@@ -11,8 +11,5 @@ use Faker\Generator as Faker;
 $factory->define(Server::class, function (Faker $faker) {
 	return [
 		'name'    => $faker->name . ' Server',
-		'game_id' => Game::query()->inRandomOrder()->first(),
-		'node_id' => Node::query()->inRandomOrder()->first(),
-		'user_id' => User::query()->inRandomOrder()->first(),
 	];
 });
