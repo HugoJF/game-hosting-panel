@@ -24,4 +24,17 @@ class GameService
     {
         return Game::firstOrCreate(compact('id'), $data);
     }
+
+    public function getProcessor(Game $game)
+    {
+        $stub = $game->stub;
+
+        $handler = config("processors.$stub.handler");
+
+        if (!class_exists($handler)) {
+            return null;
+        }
+
+        return app($handler);
+    }
 }

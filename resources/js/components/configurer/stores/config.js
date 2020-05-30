@@ -23,14 +23,14 @@ export const config = {
         },
     },
     effects: dispatch => ({
-        async computeResources(payload, root) {
+        async computeResources({game, location}, root) {
             try {
                 dispatch.cost.setLoading(true);
 
                 source.cancel();
                 source = axios.CancelToken.source();
 
-                let response = await axios.get(`/api/configurer/games/a/location/b/compute-resources`, {
+                let response = await axios.get(`/api/configurer/games/${game}/location/${location}/compute-resources`, {
                     params: root.form,
                     cancelToken: source.token,
                 });

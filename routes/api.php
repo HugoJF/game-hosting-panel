@@ -34,7 +34,7 @@ Route::prefix('configurer')->group(function () {
     Route::get('locations', 'ConfigurerController@locations')->name('configurer.locations');
     Route::get('games/{game}/locations', 'ConfigurerController@gameLocations')->name('configurer.game-locations');
     Route::get('games/{game}/locations/{location}/parameters/{mode}', 'ConfigurerController@parameters')->name('configurer.parameters');
-    Route::get('games/a/location/b/compute-resources', 'ConfigurerController@computeResources')->name('configurer.compute-resources');
+    Route::get('games/{game}/location/{location}/compute-resources', 'ConfigurerController@computeResources')->name('configurer.compute-resources');
 });
 
 Route::prefix('servers')->middleware(['auth'])->group(function () {

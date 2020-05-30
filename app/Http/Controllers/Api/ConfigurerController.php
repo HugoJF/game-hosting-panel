@@ -7,6 +7,7 @@ use App\Game;
 use App\Http\Controllers\Controller;
 use App\Location;
 use App\Node;
+use App\Services\GameService;
 use Illuminate\Http\Request;
 
 class ConfigurerController extends Controller
@@ -43,24 +44,24 @@ class ConfigurerController extends Controller
         })->keyBy('id');
     }
 
-    public function computeResources(Request $request)
+    public function computeResources(GameService $service, Request $request, Game $game, Location $location)
     {
-        /** @var CsgoProcessor $c */
-        $c = app(CsgoProcessor::class);
+        /** @var CsgoProcessor $processor */
+        $processor = $service->getProcessor($game);
 
-        $cost = $c->cost($request->all());
+        $cost = $processor->cost($request->all());
         $remainder = $request->only(['game', 'location']);
 
         return array_merge($cost, $remainder);
     }
 
-    public function parameters(Request $request, Game $game, Location $location, $mode = 'simple')
+    public function parameters(GameService $service, Request $request, Game $game, Location $location, $mode = 'simple')
     {
         if ($mode === 'simple') {
-            /** @var CsgoProcessor $c */
-            $c = app(CsgoProcessor::class);
+            /** @var CsgoProcessor $processor */
+            $processor = $service->getProcessor($game);
 
-            return $c->calculate($request->all());
+            return $processor->calculate($request->all());
         } else {
             return [
                 'cpu'       => [
