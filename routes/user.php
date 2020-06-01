@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function () {
     */
 
     Route::prefix('notifications')->group(function () {
-        Route::get('/', 'NotificationController@index')->name('notifications.index');
+        Route::get('/', 'NotificationController@index')->name('notifications.index')->middleware('can:list,App\Notification');
     });
 
 
@@ -58,11 +58,10 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    // TODO: Policies
     Route::prefix('users')->group(function () {
-        Route::get('{user}/edit', 'UserController@edit')->name('users.edit');
+        Route::get('{user}/edit', 'UserController@edit')->name('users.edit')->middleware('can:update,user');
 
-        Route::patch('{user}', 'UserController@update')->name('users.update');
+        Route::patch('{user}', 'UserController@update')->name('users.update')->middleware('can:update,user');
     });
 
     /*
@@ -82,17 +81,6 @@ Route::middleware('auth')->group(function () {
 //
 //        Route::delete('{key}', 'ApiKeyController@destroy')->name('api-keys.destroy')->middleware('can:delete,key');
 //    });
-
-    /*
-    |--------------------------------------------------------------------------
-    | Location routes
-    |--------------------------------------------------------------------------
-    */
-
-    Route::prefix('locations')->group(function () {
-        Route::get('/', 'LocationController@index')->name('locations.index');
-        Route::get('{location}', 'LocationController@show')->name('locations.show');
-    });
 
     /*
     |--------------------------------------------------------------------------
@@ -121,19 +109,9 @@ Route::middleware('auth')->group(function () {
     */
 
     Route::prefix('orders')->group(function () {
-        Route::get('/', 'OrderController@index')->name('orders.index');
-        Route::get('create', 'OrderController@create')->name('orders.create');
-        Route::get('create/{value}', 'OrderController@store')->name('orders.store');
-    });
-
-    /*
-    |--------------------------------------------------------------------------
-    | Node routes
-    |--------------------------------------------------------------------------
-    */
-
-    Route::prefix('nodes')->group(function () {
-        //
+        Route::get('/', 'OrderController@index')->name('orders.index')->middleware('can:list,App\Order');
+        Route::get('create', 'OrderController@create')->name('orders.create')->middleware('can:create,App\Order');
+        Route::get('create/{value}', 'OrderController@store')->name('orders.store')->middleware('can:create,App\Order');
     });
 
     /*
@@ -143,20 +121,20 @@ Route::middleware('auth')->group(function () {
     */
 
     Route::prefix('servers')->group(function () {
-        Route::get('/', 'ServerController@index')->name('servers.index');
-        Route::get('create', 'ServerController@create')->name('servers.create');
+        Route::get('/', 'ServerController@index')->name('servers.index')->middleware('can:list,App\Server');
+        Route::get('create', 'ServerController@create')->name('servers.create')->middleware('can:create,App\Server');
 
-        Route::get('{server}', 'ServerController@show')->middleware('panel.id')->name('servers.show');
-        Route::get('{server}/deploy', 'ServerController@configure')->name('servers.configure');
+        Route::get('{server}', 'ServerController@show')->middleware('panel.id')->name('servers.show')->middleware('can:view,server');
+        Route::get('{server}/deploy', 'ServerController@configure')->name('servers.configure')->middleware('can:deploy,server');
 
-        Route::post('/', 'ServerController@store')->name('servers.store');
-        Route::post('{server}/deploy', 'ServerController@deploy')->name('servers.deploy');
+        Route::post('/', 'ServerController@store')->name('servers.store')->middleware('can:create,App\Server');
+        Route::post('{server}/deploy', 'ServerController@deploy')->name('servers.deploy')->middleware('can:deploy,server');
 
         // TODO: patch
-        Route::get('{server}/terminate', 'ServerController@terminate')->name('servers.terminate');
-        Route::get('{server}/force-terminate', 'ServerController@forceTerminate')->name('servers.force-terminate');
+        Route::get('{server}/terminate', 'ServerController@terminate')->name('servers.terminate')->middleware('can:terminate,server');
+        Route::get('{server}/force-terminate', 'ServerController@forceTerminate')->name('servers.force-terminate')->middleware('can:forceTerminate,server');
 
-        Route::delete('{server}', 'ServerController@destroy')->name('servers.destroy');
+        Route::delete('{server}', 'ServerController@destroy')->name('servers.destroy')->middleware('can:destroy,server');
     });
 
     /*
