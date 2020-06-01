@@ -49,11 +49,12 @@ class ServerDeploymentService
             throw new ServerNotInstalledException;
         }
 
-        $serverLimits = $this->getServerLimits($server, $config);
+        $newLimits = $this->getServerLimits($server, $config);
         $details = $this->pterodactyl->server($server->panel_id);
+        $defaults = config('pterodactyl.server-deployment-defaults');
 
         $buildConfig = [
-            'limits'         => array_merge($details->limits, $serverLimits),
+            'limits'         => array_merge($details->limits, $newLimits, $defaults['limits']),
             'feature_limits' => $details->featureLimits,
             'allocation'     => $details->allocation,
             'oom_disabled'   => true,
