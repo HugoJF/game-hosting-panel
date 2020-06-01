@@ -50,10 +50,4 @@ class HomeController extends Controller
 
         return view('search', compact('result', 'mapping'));
     }
-
-    public function faq()
-    {
-        // TODO: implement FAQ
-        return 'todo';
-    }
 }
