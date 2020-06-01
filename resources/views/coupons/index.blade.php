@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cards.coupons', ['indexRoute' => false])
+    @include('cards.coupons')
 @endsection

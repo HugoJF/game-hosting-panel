@@ -68,17 +68,17 @@
             </li>
 
             <!-- API -->
-            <li class="flex justify-between my-2 ml-3">
-                <a href="{{ route('api-keys.index') }}" class="flex items-center text-gray-500 no-underline text-base group">
-                    <span class="mr-1 text-gray-400 group-hover:text-white" data-feather="key"></span>
-                    <span class="group-hover:text-gray-400">
-                        @lang('words.api_keys')
-                    </span>
-                </a>
-                <a class="group no-underline" href="#">
-                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#productsHelpModal" data-feather="help-circle"></span>
-                </a>
-            </li>
+{{--            <li class="flex justify-between my-2 ml-3">--}}
+{{--                <a href="{{ route('api-keys.index') }}" class="flex items-center text-gray-500 no-underline text-base group">--}}
+{{--                    <span class="mr-1 text-gray-400 group-hover:text-white" data-feather="key"></span>--}}
+{{--                    <span class="group-hover:text-gray-400">--}}
+{{--                        @lang('words.api_keys')--}}
+{{--                    </span>--}}
+{{--                </a>--}}
+{{--                <a class="group no-underline" href="#">--}}
+{{--                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#productsHelpModal" data-feather="help-circle"></span>--}}
+{{--                </a>--}}
+{{--            </li>--}}
 
             <!-- Administrative -->
             <li class="flex justify-between my-2 ml-3">

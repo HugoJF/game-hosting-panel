@@ -5,11 +5,6 @@
                 @lang('words.coupons')
             </span>
             <div class="btn-group" role="group">
-                @isset($indexRoute)
-                    <a class="btn btn-outline-dark btn-sm" href="{{ route($indexRoute ?? 'admins.nodes') }}">
-                        @lang('coupons.view_all')
-                    </a>
-                @endisset
                 @isset($slot)
                     {{ $slot }}
                 @endisset
