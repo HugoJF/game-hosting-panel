@@ -22,21 +22,26 @@ export default function SummarySubmitButton({onSubmit}) {
         await onSubmit();
     }
 
-    return servers.loading
-        ?
-        <Center>
-            <Loader/>
-        </Center>
-        :
-        (
-            servers.error
-                ?
+    return <>
+        {
+            servers.loading &&
+            <Center>
+                <Loader/>
+            </Center>
+        }
+        {
+            servers.error &&
+            <div className="mb-6">
                 <Error title="Error while creating server!">
                     {servers.error}
                 </Error>
-                :
-                <OrderButton $onClick={handleOnClick}>
-                    Finalizar pedido
-                </OrderButton>
-        )
+            </div>
+        }
+        {
+            !servers.loading &&
+            <OrderButton $onClick={handleOnClick}>
+                Finalizar pedido
+            </OrderButton>
+        }
+    </>
 }

@@ -16,6 +16,7 @@ export const servers = {
     effects: dispatch => ({
         async deploy(payload, root) {
             dispatch.servers.setLoading(true);
+            dispatch.setError();
             try {
                 let response = await axios.post(`/servers/${payload.server}/deploy`, payload.config);
                 return response.data;
