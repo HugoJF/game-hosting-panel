@@ -6,7 +6,7 @@ use App\User;
 
 class TransactionPolicy extends BasePolicy
 {
-	public function index(User $user)
+	public function list(User $user)
 	{
 		return true;
 	}

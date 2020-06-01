@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
 	public function index()
 	{
-		$transactions = Auth::user()->transactions()->latest()->get();
+		$transactions = auth()->user()->transactions()->latest()->paginate(10);
 
 		return view('transactions.index', compact('transactions'));
 	}

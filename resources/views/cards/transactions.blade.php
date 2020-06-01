@@ -5,11 +5,6 @@
                 @lang('words.transactions')
             </span>
             <div class="btn-group" role="group">
-                @isset($indexRoute)
-                    <a class="btn btn-outline-dark btn-sm" href="{{ route($indexRoute ?? 'admins.transactions') }}">
-                        @lang('transactions.view_all')
-                    </a>
-                @endisset
                 @isset($slot)
                     {{ $slot }}
                 @endisset
@@ -47,7 +42,7 @@
                 </td>
 
                 <!-- Created at -->
-                <td>
+                <td title="{{ $transaction->created_at }}">
                     {{ $transaction->created_at->diffForHumans() }}
                 </td>
             </tr>
