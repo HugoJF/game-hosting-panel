@@ -143,11 +143,11 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::prefix('servers')->group(function () {
+    Route::prefix('servers')->middleware('panel.id')->group(function () {
         Route::get('/', 'ServerController@index')->name('servers.index');
         Route::get('create', 'ServerController@create')->name('servers.create');
 
-        Route::get('{server}', 'ServerController@show')->middleware('panel.id')->name('servers.show');
+        Route::get('{server}', 'ServerController@show')->name('servers.show');
         Route::get('{server}/deploy', 'ServerController@configure')->name('servers.configure');
 
         Route::post('/', 'ServerController@store')->name('servers.store');
