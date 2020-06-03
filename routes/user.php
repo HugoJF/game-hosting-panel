@@ -120,12 +120,12 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::prefix('servers')->group(function () {
-        Route::get('/', 'ServerController@index')->name('servers.index')->middleware('can:list,App\Server');
-        Route::get('create', 'ServerController@create')->name('servers.create')->middleware('can:create,App\Server');
+    Route::prefix('servers')->middleware('panel.id')->group(function () {
+        Route::get('/', 'ServerController@index')->name('servers.index');
+        Route::get('create', 'ServerController@create')->name('servers.create');
 
-        Route::get('{server}', 'ServerController@show')->middleware('panel.id')->name('servers.show')->middleware('can:view,server');
-        Route::get('{server}/deploy', 'ServerController@configure')->name('servers.configure')->middleware('can:deploy,server');
+        Route::get('{server}', 'ServerController@show')->name('servers.show');
+        Route::get('{server}/deploy', 'ServerController@configure')->name('servers.configure');
 
         Route::post('/', 'ServerController@store')->name('servers.store')->middleware('can:create,App\Server');
         Route::post('{server}/deploy', 'ServerController@deploy')->name('servers.deploy')->middleware('can:deploy,server');

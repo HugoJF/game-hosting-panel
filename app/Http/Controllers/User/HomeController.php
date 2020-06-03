@@ -15,6 +15,9 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
+        // Reflash messages to avoid them disappearing
+        $request->session()->reflash();
+
         return redirect()->route('dashboard');
     }
 
