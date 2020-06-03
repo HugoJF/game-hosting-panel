@@ -3,6 +3,7 @@
 namespace App\Services\User;
 
 use App\Exceptions\InsufficientBalanceException;
+use App\Exceptions\InvalidPeriodCostException;
 use App\Exceptions\TooManyServersException;
 use App\Jobs\AsyncServerDeployment;
 use App\Node;
@@ -70,10 +71,15 @@ class AutoServerDeploymentService
      *
      * @throws InsufficientBalanceException
      * @throws TooManyServersException
+     * @throws InvalidPeriodCostException
      */
     public function preChecks(User $user, Node $node, string $billingPeriod, array $config)
     {
-        if (!$user->hasBalance($this->costService->getCostPerPeriod($node, $billingPeriod, $config))) {
+        if ($costPerPeriod = $this->costService->getCostPerPeriod($node, $billingPeriod, $config) <= 0) {
+            throw new InvalidPeriodCostException;
+        }
+
+        if (!$user->hasBalance($costPerPeriod)) {
             throw new InsufficientBalanceException;
         }
 
