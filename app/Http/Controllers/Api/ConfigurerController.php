@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Processors\CsgoProcessor;
 use App\Game;
 use App\Http\Controllers\Controller;
 use App\Location;
 use App\Node;
+use App\Processors\CsgoProcessor;
 use App\Services\GameService;
 use Illuminate\Http\Request;
 

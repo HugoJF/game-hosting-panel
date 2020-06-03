@@ -2,8 +2,6 @@
 
 namespace App\Processors;
 
-use App\Exceptions\MissingTickrateCpuCost;
-
 class MinecraftProcessor extends Processor
 {
     public function __construct()

@@ -4,12 +4,9 @@ namespace App\Providers;
 
 use App\ApiKey;
 use App\Coupon;
-use App\Game;
-use App\Location;
 use App\Order;
 use App\Policies\ApiKeyPolicy;
 use App\Policies\CouponPolicy;
-use App\Policies\GamePolicy;
 use App\Policies\LocationPolicy;
 use App\Policies\NotificationPolicy;
 use App\Policies\OrderPolicy;
