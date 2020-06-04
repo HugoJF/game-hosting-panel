@@ -5,12 +5,14 @@ namespace App\Http\Controllers\User;
 use App\Deploy;
 use App\Http\Controllers\Controller;
 use App\Location;
+use App\Policies\UserPolicy;
 use App\Server;
 use App\Transaction;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Spatie\Searchable\Search;
 
 class HomeController extends Controller
@@ -62,8 +64,15 @@ class HomeController extends Controller
         ];
 
         // Pluck Models from each type group
-        $result = $result->groupByType()->mapWithKeys(function (Collection $type, $key) {
-            return [$key => $type->pluck('searchable')];
+        $result = $result->groupByType()->mapWithKeys(function (Collection $items, $type) {
+            return [$type => $items->pluck('searchable')];
+        });
+
+        // Filter Models that user should not be able to see
+        $result = $result->mapWithKeys(function (Collection $items, $type) use ($mapping) {
+            return [$type => $items->filter(function ($model) use ($type, $mapping) {
+                return Gate::allows('search', $model);
+            })];
         });
 
         return view('search', compact('result', 'mapping'));

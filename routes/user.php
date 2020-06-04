@@ -14,7 +14,6 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('home', 'HomeController@index')->name('home');
-Route::get('search', 'HomeController@search')->name('search');
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +29,7 @@ Route::middleware('auth')->group(function () {
     */
 
     Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
+    Route::get('search', 'HomeController@search')->name('search');
 
     /*
     |--------------------------------------------------------------------------

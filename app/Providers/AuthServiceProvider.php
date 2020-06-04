@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\ApiKey;
 use App\Coupon;
+use App\Deploy;
 use App\Order;
 use App\Policies\ApiKeyPolicy;
 use App\Policies\CouponPolicy;
+use App\Policies\DeployPolicy;
 use App\Policies\LocationPolicy;
 use App\Policies\NotificationPolicy;
 use App\Policies\OrderPolicy;
@@ -29,6 +31,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Notification::class => NotificationPolicy::class,
         User::class         => UserPolicy::class,
+        Deploy::class       => DeployPolicy::class,
         Transaction::class  => TransactionPolicy::class,
         ApiKey::class       => ApiKeyPolicy::class,
         Coupon::class       => CouponPolicy::class,

@@ -202,9 +202,11 @@
                         </g>
                     </g>
                 </svg>
-                <a class="btn btn-primary btn-lg shadow" href="{{ route('servers.deploy', $server) }}">
-                    @lang('servers.deploy_now')
-                </a>
+                @isset($server)
+                    <a class="btn btn-primary btn-lg shadow" href="{{ route('servers.deploy', $server) }}">
+                        @lang('servers.deploy_now')
+                    </a>
+                @endisset
             </div>
         </div>
     @endforelse

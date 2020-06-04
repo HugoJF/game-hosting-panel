@@ -25,6 +25,11 @@ class ServerPolicy extends BasePolicy
         return $user->id === $server->user_id;
     }
 
+    public function search(User $user, Server $server)
+    {
+        return $user->id === $server->user_id;
+    }
+
     public function deploy(User $user, Server $server)
     {
         return $user->id === $server->user_id;
