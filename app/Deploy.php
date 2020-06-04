@@ -5,8 +5,10 @@ namespace App;
 use App\Services\User\DeployCostService;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class Deploy extends Model
+class Deploy extends Model implements Searchable
 {
     use Uuids;
 
@@ -38,7 +40,6 @@ class Deploy extends Model
     {
         $service = app(DeployCostService::class);
 
-
         return $service->getNextBillablePeriod($this);
     }
 
@@ -48,5 +49,14 @@ class Deploy extends Model
         $service = app(DeployCostService::class);
 
         return $service->getBillablePeriod($this);
+    }
+
+    public function getSearchResult(): SearchResult
+    {
+        return new SearchResult(
+            $this,
+            $this->id,
+            route('servers.show', $this->server_id)
+        );
     }
 }

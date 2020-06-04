@@ -60,12 +60,10 @@ class Server extends Model implements Searchable
 
     public function getSearchResult(): SearchResult
     {
-        $url = route('servers.show', $this->id);
-
         return new SearchResult(
             $this,
             $this->name,
-            $url
+            route('servers.show', $this->id)
         );
     }
 }

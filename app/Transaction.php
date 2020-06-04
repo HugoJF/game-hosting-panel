@@ -4,8 +4,10 @@ namespace App;
 
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class Transaction extends Model
+class Transaction extends Model implements Searchable
 {
 	use Uuids;
 
@@ -30,4 +32,12 @@ class Transaction extends Model
     {
         return $this->hasOne(Order::class);
 	}
+
+    public function getSearchResult(): SearchResult
+    {
+        return new SearchResult(
+            $this,
+            $this->id
+        );
+    }
 }

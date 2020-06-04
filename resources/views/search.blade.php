@@ -5,7 +5,9 @@
     <br/>
 
     @foreach ($result as $type => $items)
-        <h2 class="mb-8">{{ $mapping[$type]['title'] }}</h2>
-        @include($mapping[$type]['view'], [$mapping[$type]['variable'] => $items])
+        <div class="mb-10">
+            <h2 class="mb-4">{{ $mapping[$type]['title'] }}</h2>
+            @include($mapping[$type]['view'], [$mapping[$type]['variable'] => $items])
+        </div>
     @endforeach
 @endsection
