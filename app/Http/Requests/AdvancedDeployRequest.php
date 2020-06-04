@@ -20,7 +20,7 @@ class AdvancedDeployRequest extends FormRequest
             'disk'      => 'required|gte:1000|lte:50000',
             'databases' => 'required|gte:0|lte:3',
             'period' => [
-                Rule::in(config('ghp.billing-periods'))
+                Rule::in(array_keys(config('ghp.billing-periods')->all()))
             ]
         ];
     }

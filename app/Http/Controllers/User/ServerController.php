@@ -42,6 +42,7 @@ class ServerController extends Controller
     {
         $config = $request->input();
         $period = $request->input('billing_period');
+
         $game = Game::findOrFail($request->input('game'));
         $location = Location::findOrFail($request->input('location'));
         // TODO: Extract form parameters

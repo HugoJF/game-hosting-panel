@@ -27,10 +27,10 @@ return [
     ],
 
     'billing-periods' => [
-        'minutely',
-        'hourly',
-        'daily',
-        'weekly',
-        'monthly',
+        'minutely' => false,
+        'hourly'   => true,
+        'daily'    => true,
+        'weekly'   => true,
+        'monthly'  => true,
     ],
 ];

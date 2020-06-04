@@ -25,6 +25,11 @@ class AutoServerDeploymentService
     protected $deploymentService;
 
     /**
+     * @var DeployCreationService
+     */
+    protected $deployCreation;
+
+    /**
      * @var DeployCostService
      */
     protected $costService;
@@ -32,11 +37,13 @@ class AutoServerDeploymentService
     public function __construct(
         ServerService $serverService,
         ServerDeploymentService $deploymentService,
+        DeployCreationService $deployCreation,
         DeployCostService $costService
     )
     {
         $this->serverService = $serverService;
         $this->deploymentService = $deploymentService;
+        $this->deployCreation = $deployCreation;
         $this->costService = $costService;
     }
 
@@ -54,37 +61,12 @@ class AutoServerDeploymentService
      */
     public function handle(Server $server, string $billingPeriod, array $config)
     {
-        $this->preChecks($server->user, $server->node, $billingPeriod, $config);
+        $this->deployCreation->preChecks($server->user, $server->node, $billingPeriod, $config);
 
         if ($this->serverService->isInstalled($server)) {
             $this->deploymentService->handle($server, $billingPeriod, $config);
         } else {
             dispatch(new AsyncServerDeployment($server, $billingPeriod, $config));
-        }
-    }
-
-    /**
-     * @param User   $user
-     * @param Node   $node
-     * @param string $billingPeriod
-     * @param array  $config
-     *
-     * @throws InsufficientBalanceException
-     * @throws TooManyServersException
-     * @throws InvalidPeriodCostException
-     */
-    public function preChecks(User $user, Node $node, string $billingPeriod, array $config)
-    {
-        if ($costPerPeriod = $this->costService->getCostPerPeriod($node, $billingPeriod, $config) <= 0) {
-            throw new InvalidPeriodCostException;
-        }
-
-        if (!$user->hasBalance($costPerPeriod)) {
-            throw new InsufficientBalanceException;
-        }
-
-        if ($user->servers()->count() >= $user->server_limit) {
-            throw new TooManyServersException;
         }
     }
 }
