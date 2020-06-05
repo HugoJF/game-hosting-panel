@@ -78,7 +78,7 @@ class DeployCreationService
      */
     public function preChecks(User $user, Node $node, string $billingPeriod, array $config)
     {
-        if (config("ghp.billing-periods.$billingPeriod")) {
+        if (!config("ghp.billing-periods.$billingPeriod")) {
             throw new InvalidBillingPeriodException($billingPeriod);
         }
 

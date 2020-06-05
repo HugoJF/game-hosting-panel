@@ -8,6 +8,7 @@ use App\Http\Resources\ServerResource;
 use App\Location;
 use App\Server;
 use App\Services\User\AutoServerDeploymentService;
+use App\Services\User\DeployCreationService;
 use App\Services\User\DeployTerminationService;
 use App\Services\User\NodeSelectionService;
 use App\Services\User\ServerCreationService;
@@ -36,7 +37,7 @@ class ServerController extends Controller
     public function store(
         NodeSelectionService $nodeSelection,
         ServerCreationService $serverCreation,
-        AutoServerDeploymentService $autoDeployment,
+        DeployCreationService $deployCreation,
         Request $request
     )
     {
@@ -51,7 +52,7 @@ class ServerController extends Controller
         $node = $nodeSelection->handle($location);
 
         // Checks if user can deploy a server, before creating the server.
-        $autoDeployment->preChecks(auth()->user(), $node, $period, $config);
+        $deployCreation->preChecks(auth()->user(), $node, $period, $config);
 
         // Create the server
         $server = $serverCreation->handle(auth()->user(), $game, $node, $config);
