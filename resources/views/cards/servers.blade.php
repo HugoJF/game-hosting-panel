@@ -92,13 +92,13 @@
                            data-placement="bottom"
                            title="Servidor será cobrado um novo período em {{ $deploy->getNextBillablePeriod()->longAbsoluteDiffForHumans() }}"
                         >
-                            <span class="trans text-gray-600 hover:text-gray-700 cursor-pointer" data-feather="clock"></span>
+                            <span class="trans text-gray-600 hover:text-gray-700" data-feather="clock"></span>
+                        </a>
+                    @else
+                        <a href="{{ route('servers.configure', $server) }}" title="Configure server">
+                            <span class="trans ml-1 text-gray-600 hover:text-gray-700" data-feather="settings"></span>
                         </a>
                     @endif
-
-                    <a href="{{ route('servers.configure', $server) }}">
-                        <span class="trans ml-1 text-gray-600 hover:text-gray-700" data-feather="settings"></span>
-                    </a>
                 </div>
             </div>
         </div>
