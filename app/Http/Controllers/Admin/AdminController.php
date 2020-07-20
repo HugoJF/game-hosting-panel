@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Announcement;
 use App\Coupon;
 use App\Game;
 use App\Http\Controllers\Controller;
@@ -17,6 +18,7 @@ class AdminController extends Controller
 
 	public function dashboard()
 	{
+	    $announcements = Announcement::query()->latest()->limit(self::PAGINATE_SIZE)->get();
 		$locations = Location::query()->latest()->limit(self::PAGINATE_SIZE)->get();
         $games = Game::query()->latest()->limit(self::PAGINATE_SIZE)->get();
         $nodes = Node::query()->latest()->limit(self::PAGINATE_SIZE)->get();
@@ -26,6 +28,7 @@ class AdminController extends Controller
 		$users = User::query()->latest()->limit(self::PAGINATE_SIZE)->get();
 
 		return view('admins.dashboard', compact(
+		    'announcements',
 			'locations',
             'games',
             'nodes',

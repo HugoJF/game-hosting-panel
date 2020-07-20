@@ -17,16 +17,24 @@ class GlobalComposer
         $user = auth()->user();
 
         /** @var Collection $servers */
-        $servers = cache()->remember("$user->id.servers", 300, function () {
-            return auth()->user()->servers()->with(['deploys'])->get();
-        });
+        $servers = cache()->remember("$user->id.servers", 300,
+            fn() => auth()->user()->servers()->with(['deploys'])->get()
+        );
 
-        $online = cache()->remember("$user->id.online-servers", 300, function () use ($servers) {
-            return $servers->filter(function ($server) {
-                return $server->getDeploy();
-            });
-        });
+        $filter = fn($server) => $server->getDeploy();
 
+        $online = cache()->remember("$user->id.online-servers", 300,
+            fn() => $servers->filter($filter)
+        );
+
+        $announcements = cache()->remember('announcements', 300,
+            fn() => Announcement::query()
+                                ->latest()
+                                ->where('visible', true)
+                                ->get()
+        );
+
+        $view->with('globalAnnouncements', $announcements);
         $view->with('totalServers', $servers->count());
         $view->with('onlineServers', $online);
     }

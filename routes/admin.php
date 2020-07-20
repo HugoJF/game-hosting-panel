@@ -30,6 +30,24 @@ Route::prefix('locations')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
+| Announcements routes
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('announcements')->group(function () {
+    Route::get('/', 'AnnouncementController@index')->name('admins.announcements.index');
+    Route::get('create', 'AnnouncementController@create')->name('admins.announcements.create');
+
+    Route::get('{announcement}', 'AnnouncementController@show')->name('admins.announcements.show');
+    Route::get('{announcement}/edit', 'AnnouncementController@edit')->name('admins.announcements.edit');
+
+    Route::post('/', 'AnnouncementController@store')->name('admins.announcements.store');
+
+    Route::patch('{announcement}', 'AnnouncementController@update')->name('admins.announcements.update');
+});
+
+/*
+|--------------------------------------------------------------------------
 | Node routes
 |--------------------------------------------------------------------------
 */

@@ -5,7 +5,7 @@
         @lang('words.transactions')
     </h1>
     <br/>
-    @include('cards.transactions')
+    @include('cards.announcements')
     <br/>
     <div class="flex justify-center">{{ $transactions->links() }}</div>
 @endsection

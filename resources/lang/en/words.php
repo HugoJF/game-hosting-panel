@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'announcement' => 'Announcement',
+
     'api_keys' => 'API Keys',
 
     'coupon'  => 'Coupon',
@@ -35,6 +37,7 @@ return [
     'key'             => 'Key',
     'status'          => 'Status',
     'description'     => 'Description',
+    'action'          => 'Action',
     'actions'         => 'Actions',
     'delete'          => 'Delete',
     'edit'            => 'Edit',
@@ -69,21 +72,26 @@ return [
     'notifications'   => 'Notifications',
     'total'           => 'Total :total',
     'link'            => 'Link',
-    'menu' => 'Menu',
-    'home' => 'Home',
-    'alerts' => 'Alerts',
-    'dashboard' => 'Dashboard',
-    'administrative' => 'Administrative',
+    'menu'            => 'Menu',
+    'home'            => 'Home',
+    'alerts'          => 'Alerts',
+    'dashboard'       => 'Dashboard',
+    'administrative'  => 'Administrative',
+    'visible'         => 'Visible',
+    'type'            => 'Type',
+    'create'          => 'Create',
+    'update'          => 'Update',
 
     'billing_period'   => 'Billing period',
     'period_cost'      => 'Period cost',
     'total_cost'       => 'Total cost',
     'denerdtv_servers' => 'de_nerdTV Servers',
     'no_notifications' => 'No notifications!',
-    'online_servers' => 'Online servers :online / :total',
+    'online_servers'   => 'Online servers :online / :total',
 
     'server_limit'      => 'Server limit',
     'server_expiration' => 'Server expiration (days)',
+    'expires_at'        => 'Expires at',
 
     'go_to_panel'              => 'Go to panel',
     'add_credits'              => 'Add credits',

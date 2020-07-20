@@ -21,13 +21,27 @@
 <body>
 
 <nav class="navbar-z sticky top-0 left-0 right-0 p-0">
-    @isset($announcement)
-        <div class="px-5 py-2 flex justify-center items-center text-white bg-red-500 font-semibold shadow-inner">
-            <span class="h-8 w-8 mr-3 flex-shrink-0" data-feather="alert-circle"></span>
-            <p>Nossos servidores estão em manutenção até 11h00 UTC</p>
-            <a class="trans px-2 py-1 ml-5 hover:text-black border border-white hover:bg-green-500" href="#">Informações</a>
-        </div>
-    @endisset
+    <!-- Announcement -->
+    <div class="shadow-inner">
+        @foreach ($globalAnnouncements as $announcement)
+            @php
+                $colors = [
+                    'danger' => 'red',
+                    'success' => 'green',
+                ];
+                $color = $colors[ $announcement->type ];
+            @endphp
+            <div class="px-5 py-2 flex justify-center items-center text-white bg-{{ $color }}-500 font-semibold">
+                <span class="h-8 w-8 mr-3 flex-shrink-0" data-feather="alert-circle"></span>
+                <p>{{ $announcement->description }}</p>
+                <a class="trans px-2 py-1 ml-5 hover:text-black border border-white hover:bg-{{ $color }}-400" href="{{ $announcement->action_url }}">
+                    {{ $announcement->action }}
+                </a>
+            </div>
+        @endforeach
+    </div>
+
+    <!-- Header -->
     <div class="flex items-center flex-no-wrap flex-col md:flex-row items-stretch justify-center bg-gray-800">
         <a class="sidebar-width px-6 py-3 text-gray-400 text-lg no-underline flex-shrink-0 mr-0" href="{{ route('home') }}">
             @lang('words.denerdtv_servers')
