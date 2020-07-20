@@ -24,9 +24,9 @@ class CouponService
      *
      * @return Coupon
      */
-    public function storeCoupon(array $data)
+    public function store(array $data)
     {
-        $coupon = Coupon::make();
+        $coupon = new Coupon;
 
         $coupon->fill($data);
 
@@ -43,7 +43,7 @@ class CouponService
      *
      * @return Coupon
      */
-    public function updateCoupon(Coupon $coupon, array $data)
+    public function update(Coupon $coupon, array $data)
     {
         $coupon->fill($data);
 

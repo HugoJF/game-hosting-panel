@@ -7,10 +7,7 @@ use App\Server;
 
 class DeployTerminationService
 {
-    /**
-     * @var ServerTerminationService
-     */
-    protected $serverTermination;
+    protected ServerTerminationService $serverTermination;
 
     public function __construct(ServerTerminationService $terminationService)
     {
@@ -22,15 +19,18 @@ class DeployTerminationService
         /** @var Deploy $deploy */
         $deploy = $server->getDeploy();
 
+        if (!$deploy) {
+            return;
+        }
+
         if (!$deploy->termination_requested_at) {
             $deploy->termination_reason = $reason;
             $deploy->termination_requested_at = now();
+            $deploy->save();
         }
 
         if ($forced) {
             $this->serverTermination->handle($server);
         }
-
-        $deploy->save();
     }
 }

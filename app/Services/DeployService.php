@@ -21,14 +21,16 @@ class DeployService
 	 *
 	 * @return Deploy|null
 	 */
-	public function storeDeploy(Server $server, array $deployParameters)
+	public function store(Server $server, array $deployParameters)
 	{
 		$type = $server->node->type;
 		$parameters = $server->game->parameters($type);
 		$keys = array_keys($parameters);
 
 		// Create deploy object
-		$deploy = Deploy::make($deployParameters);
+		$deploy = new Deploy;
+
+		$deploy->forceFill($deployParameters);
 
 		$deploy->server()->associate($server);
 		$deploy->settings = collect($deployParameters)->only($keys)->toArray();

@@ -7,10 +7,7 @@ use HCGCloud\Pterodactyl\Resources\Nest;
 
 class PterodactylApiService
 {
-    /**
-     * @var Pterodactyl
-     */
-    protected $pterodactyl;
+    protected Pterodactyl $pterodactyl;
 
     public function __construct(Pterodactyl $pterodactyl)
     {

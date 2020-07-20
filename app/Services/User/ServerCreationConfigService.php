@@ -12,10 +12,8 @@ use HCGCloud\Pterodactyl\Resources\Egg;
 
 class ServerCreationConfigService
 {
-    /**
-     * @var Pterodactyl
-     */
-    protected $pterodactyl;
+    protected Pterodactyl $pterodactyl;
+    protected AllocationSelectionService $allocationService;
 
     public function __construct(Pterodactyl $pterodactyl, AllocationSelectionService $allocationService)
     {
@@ -71,9 +69,9 @@ class ServerCreationConfigService
 
     protected function getDefaultEnvironment(Egg $egg)
     {
-        $environment = collect($egg->relationships['variables'])->mapWithKeys(function ($v) {
-            return [$v['env_variable'] => $v['default_value']];
-        })->toArray();
+        $environment = collect($egg->relationships['variables'])->mapWithKeys(fn($v) => [
+            $v['env_variable'] => $v['default_value'],
+        ])->toArray();
 
         return ['environment' => $environment];
     }

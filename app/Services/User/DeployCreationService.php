@@ -15,10 +15,7 @@ use Illuminate\Support\Facades\DB;
 
 class DeployCreationService
 {
-    /**
-     * @var DeployCostService
-     */
-    protected $costService;
+    protected DeployCostService $costService;
 
     public function __construct(DeployCostService $costService)
     {

@@ -15,20 +15,9 @@ use Illuminate\Support\Str;
 
 class ServerCreationService
 {
-    /**
-     * @var Pterodactyl
-     */
-    protected $pterodactyl;
-
-    /**
-     * @var ServerCreationConfigService
-     */
-    protected $configService;
-
-    /**
-     * @var AllocationSelectionService
-     */
-    protected $allocationService;
+    protected Pterodactyl $pterodactyl;
+    protected ServerCreationConfigService $configService;
+    protected AllocationSelectionService $allocationService;
 
     public function __construct(
         Pterodactyl $pterodactyl,
@@ -109,6 +98,7 @@ class ServerCreationService
             'game_id' => $game->id,
             'node_id' => $node->id,
         ];
+
         $server->forceFill(array_merge($fromDefaults, $fromForm, $fromRelationships))->save();
 
         return $server;

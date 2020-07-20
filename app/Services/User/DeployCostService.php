@@ -4,6 +4,7 @@ namespace App\Services\User;
 
 use App\Deploy;
 use App\Node;
+use Carbon\Carbon;
 
 class DeployCostService
 {
@@ -36,6 +37,17 @@ class DeployCostService
         return $final * $multipliers[ $billingPeriod ];
     }
 
+    /**
+     * Calculates the cost of a deployment.
+     *
+     * If $real is true, calculates the duration based on when Deploy was actually terminated;
+     * If $real is false, calculates the duration based on when Deploy was requested to be terminated.
+     *
+     * @param Deploy $deploy
+     * @param bool   $real
+     *
+     * @return int
+     */
     public function getDeployCost(Deploy $deploy, bool $real = false): int
     {
         $billable = $this->getBillablePeriod($deploy, $real);
@@ -43,6 +55,13 @@ class DeployCostService
         return (int) round($billable * $deploy->cost_per_period);
     }
 
+    /**
+     * Get difference function name to be used for billing period
+     *
+     * @param $billingPeriod
+     *
+     * @return mixed
+     */
     public function getBillingPeriodDiff($billingPeriod)
     {
         $diffs = [
@@ -56,6 +75,12 @@ class DeployCostService
         return $diffs[ $billingPeriod ];
     }
 
+    /**
+     * Get addition function name to be used for billing period
+     * @param $billingPeriod
+     *
+     * @return mixed
+     */
     public function getBillingPeriodAdd($billingPeriod)
     {
         $adds = [
@@ -69,6 +94,13 @@ class DeployCostService
         return $adds[ $billingPeriod ];
     }
 
+    /**
+     * Returns when current period will end
+     *
+     * @param Deploy $deploy
+     *
+     * @return Carbon
+     */
     public function getNextBillablePeriod(Deploy $deploy)
     {
         $billablePeriod = $this->getBillablePeriod($deploy, false);
@@ -77,6 +109,17 @@ class DeployCostService
         return $deploy->created_at->$adder($billablePeriod);
     }
 
+    /**
+     * Calculates how many periods the Deploy has used.
+     *
+     * If $real is true, calculates the duration based on when Deploy was actually terminated;
+     * If $real is false, calculates the duration based on when Deploy was requested to be terminated.
+     *
+     * @param Deploy $deploy
+     * @param bool   $real
+     *
+     * @return int
+     */
     public function getBillablePeriod(Deploy $deploy, bool $real = false)
     {
         $billingPeriod = $deploy->billing_period;

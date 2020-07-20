@@ -77,7 +77,7 @@ class OrderService
 		$order->init_point = $apiResponse->init_point;
 		$order->paid = false;
 
-		$order->user()->associate(Auth::user());
+		$order->user()->associate(auth()->user());
 
 		$order->save();
 

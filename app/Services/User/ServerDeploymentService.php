@@ -11,20 +11,9 @@ use HCGCloud\Pterodactyl\Resources\Resource;
 
 class ServerDeploymentService
 {
-    /**
-     * @var ServerService
-     */
-    protected $serverService;
-
-    /**
-     * @var Pterodactyl
-     */
-    protected $pterodactyl;
-
-    /**
-     * @var DeployCreationService
-     */
-    protected $deployCreation;
+    protected ServerService $serverService;
+    protected Pterodactyl $pterodactyl;
+    protected DeployCreationService $deployCreation;
 
     public function __construct(ServerService $serverService, Pterodactyl $pterodactyl, DeployCreationService $deployCreation)
     {

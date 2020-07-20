@@ -14,25 +14,10 @@ use Exception;
 
 class AutoServerDeploymentService
 {
-    /**
-     * @var ServerService
-     */
-    protected $serverService;
-
-    /**
-     * @var ServerDeploymentService
-     */
-    protected $deploymentService;
-
-    /**
-     * @var DeployCreationService
-     */
-    protected $deployCreation;
-
-    /**
-     * @var DeployCostService
-     */
-    protected $costService;
+    protected ServerService $serverService;
+    protected ServerDeploymentService $deploymentService;
+    protected DeployCreationService $deployCreation;
+    protected DeployCostService $costService;
 
     public function __construct(
         ServerService $serverService,

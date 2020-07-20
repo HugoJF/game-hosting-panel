@@ -43,7 +43,7 @@ class ApiKeyController extends Controller
 
 	public function store(ApiKeyService $service, ApiKeyStoreRequest $request)
 	{
-		$key = $service->storeApiKey(Auth::user(), $request->validated());
+		$key = $service->store(Auth::user(), $request->validated());
 
 		flash()->success("API key <strong>$key->id</strong> created successfully!");
 
@@ -52,7 +52,7 @@ class ApiKeyController extends Controller
 
 	public function update(ApiKeyService $service, ApiKeyUpdateRequest $request, ApiKey $key)
 	{
-		$service->updateApiKey($key, $request->validated());
+		$service->update($key, $request->validated());
 
 		flash()->success('API key successfully updated!');
 

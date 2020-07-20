@@ -13,10 +13,7 @@ use HCGCloud\Pterodactyl\Pterodactyl;
 
 class ServerService
 {
-    /**
-     * @var Pterodactyl
-     */
-    protected $pterodactyl;
+    protected Pterodactyl $pterodactyl;
 
     public function __construct(Pterodactyl $pterodactyl)
     {
@@ -25,6 +22,8 @@ class ServerService
 
     /**
      * Checks if server has finished game installation
+     *
+     * @param Server $server
      *
      * @return bool
      */

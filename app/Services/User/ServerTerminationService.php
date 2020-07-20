@@ -11,15 +11,8 @@ use HCGCloud\Pterodactyl\Resources\Resource;
 
 class ServerTerminationService
 {
-    /**
-     * @var Pterodactyl
-     */
-    protected $pterodactyl;
-
-    /**
-     * @var PterodactylClient
-     */
-    protected $pterodacylClient;
+    protected Pterodactyl $pterodactyl;
+    protected PterodactylClient $pterodacylClient;
 
     public function __construct(Pterodactyl $pterodactyl, PterodactylClient $pterodactylClient)
     {

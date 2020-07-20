@@ -62,7 +62,7 @@ class CouponController extends Controller
 
     public function store(CouponService $service, CouponStoreRequest $request)
     {
-        $service->storeCoupon($request->validated());
+        $service->store($request->validated());
 
         flash()->success('Coupon created!');
 
@@ -71,7 +71,7 @@ class CouponController extends Controller
 
     public function update(CouponService $service, CouponUpdateRequest $request, Coupon $coupon)
     {
-        $service->updateCoupon($coupon, $request->validated());
+        $service->update($coupon, $request->validated());
 
         flash()->success('Coupon updated!');
 

@@ -7,10 +7,7 @@ use HCGCloud\Pterodactyl\Pterodactyl;
 
 class ServerDeletionService
 {
-    /**
-     * @var Pterodactyl
-     */
-    protected $pterodactyl;
+    protected Pterodactyl $pterodactyl;
 
     public function __construct(Pterodactyl $pterodactyl)
     {
