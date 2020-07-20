@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Location;
 use App\Node;
 use App\Processors\CsgoProcessor;
+use App\Processors\Processor;
 use App\Services\GameService;
 use Illuminate\Http\Request;
 
@@ -46,7 +47,7 @@ class ConfigurerController extends Controller
 
     public function computeResources(GameService $service, Request $request, Game $game, Location $location)
     {
-        /** @var CsgoProcessor $processor */
+        /** @var Processor $processor */
         $processor = $service->getProcessor($game);
 
         $cost = $processor->cost($request->all());

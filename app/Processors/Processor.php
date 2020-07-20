@@ -7,16 +7,35 @@ use Exception;
 
 abstract class Processor
 {
+    protected array $params = [];
+
     /**
-     * @var array
+     * Calculates resources cost for a given config
+     *
+     * TODO: wrap cost function to validate it first
+     *
+     * @param $cost
+     *
+     * @return array
      */
-    protected $params = [];
+    abstract function cost(array $cost): array;
 
-    // TODO: wrap cost function to call validate
-    abstract function cost($parameters): array;
-
+    /**
+     * Checks if resource cost is invalid
+     *
+     * @param $cost
+     *
+     * @return bool
+     */
     abstract function reject($cost): bool;
 
+    /**
+     * Check if the request was somehow modified to send parameters that are not listed.
+     *
+     * @param array $choices
+     *
+     * @throws InvalidParameterChoiceException
+     */
     public function validate(array $choices): void
     {
         // For each choice, check if they are present in the definition
@@ -29,6 +48,14 @@ abstract class Processor
         }
     }
 
+    /**
+     * Calculates resource usage for a given server configuration choice.
+     *
+     * @param array $choices
+     *
+     * @return array
+     * @throws InvalidParameterChoiceException
+     */
     public function calculate(array $choices): array
     {
         // Assert choices actually exist
@@ -38,43 +65,60 @@ abstract class Processor
         $usedChoices = collect($choices)->only(array_keys($this->params))->toArray();
 
         // Map 'empty_value' for each parameter
-        $defaultChoices = collect($this->params)->mapWithKeys(function ($value, $param) {
-            return [$param => $this->params[ $param ]['empty_value']];
-        })->toArray();
+        $defaultChoices = collect($this->params)->mapWithKeys(fn($value, $param) => [
+            $param => $this->params[ $param ]['empty_value']]
+        )->toArray();
 
         // Add default values to missing choices
         $choices = array_merge($defaultChoices, $usedChoices);
 
-        $options = collect($this->params)->mapWithKeys(function ($value, $param) use ($choices) {
-            return [$param => $this->buildVariations($param, $choices)];
-        })->toArray();
+        // Map possible parameter variables (that are compatible with the current choices)
+        $options = collect($this->params)->mapWithKeys(fn($value, $param) => [
+            $param => $this->possibleVariables($param, $choices),
+        ])->toArray();
 
-        return collect($this->params)->mapWithKeys(function ($definition, $param) use ($options) {
-            return [$param => array_merge($definition, [
+        // Replace possible choices into parameter list
+        return collect($this->params)->mapWithKeys(fn($definition, $param) => [
+            $param => [
+                ...$definition,
                 'options' => $options[ $param ],
-            ])];
-        })->toArray();
+            ],
+        ])->toArray();
     }
 
-    private function buildVariations(string $param, array $choices): array
+    /**
+     * Given a parameter name, variate all it's options against a configuration and filter configurations
+     * that are get rejected by reject()
+     *
+     * @param string $param
+     * @param array  $choices
+     *
+     * @return array
+     * @throws Exception
+     */
+    private function possibleVariables(string $param, array $choices): array
     {
         // Assert that the parameter is defined
         if (!array_key_exists('options', $this->params[ $param ])) {
             throw new Exception("Could not find 'options' definition for parameter $param");
         }
 
-        return collect($this->params[ $param ]['options'])->mapWithKeys(function ($option) use ($param, $choices) {
-            // Merge current 'choices' with each 'option' for current 'parameter'
-            $newChoices = array_merge($choices, [
-                $param => $option,
-            ]);
+        $options = $this->params[ $param ]['options'];
 
-            // Map 'option' to the 'cost' of this set of parameters
-            return [$option => $this->cost($newChoices)];
-        })->reject(function ($cost) {
-            return $this->reject($cost);
-        })->map(function ($value, $key) {
-            return $key;
-        })->toArray();
+        // Build a config for each parameter option and current choices, calculate cost and filter results.
+        return collect($options)
+            ->mapWithKeys(fn($option) => [
+                $option => [
+                    ...$choices,
+                    $param => $option,
+                ],
+            ])
+            // Compute resource cost for each config
+            ->map(fn($config) => $this->cost($config))
+            // Remove configs that have their resource cost rejected
+            ->reject(fn($cost) => $this->reject($cost))
+            // Options that were not rejected
+            ->keys()
+            ->toArray();
     }
 }
