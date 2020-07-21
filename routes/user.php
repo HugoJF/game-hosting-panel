@@ -30,7 +30,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
     Route::get('search', 'HomeController@search')->name('search');
+    Route::get('settings', 'HomeController@settings')->name('settings');
 
+    Route::patch('settings', 'HomeController@update')->name('settings.update');
     /*
     |--------------------------------------------------------------------------
     | Notifications routes

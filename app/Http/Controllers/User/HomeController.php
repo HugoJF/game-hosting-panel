@@ -4,9 +4,11 @@ namespace App\Http\Controllers\User;
 
 use App\Deploy;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserSettingsUpdateRequest;
 use App\Location;
 use App\Policies\UserPolicy;
 use App\Server;
+use App\Services\Forms\UserSettingsForms;
 use App\Transaction;
 use App\User;
 use Illuminate\Http\Request;
@@ -76,5 +78,29 @@ class HomeController extends Controller
         });
 
         return view('search', compact('result', 'mapping'));
+    }
+
+    public function settings(UserSettingsForms $forms)
+    {
+        $form = $forms->settings(auth()->user());
+
+        return view('form', [
+            'title'       => trans('user-settings.updating'),
+            'form'        => $form,
+            'submit_text' => trans('words.update'),
+        ]);
+    }
+
+    public function update(UserSettingsUpdateRequest $request)
+    {
+        $user = auth()->user();
+
+        $user->fill($request->validated());
+
+        $user->save();
+
+        flash()->success(trans('user-settings.updated'));
+
+        return redirect()->route('dashboard');
     }
 }
