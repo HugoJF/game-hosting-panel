@@ -91,23 +91,23 @@
             </li>
         </ul>
     </div>
+
+    <!-- Sidebar -->
+    <div class="h-full block md:fixed light sidebar-width bg-gray-900">
+        <div class="sidebar-sticky p-4">
+            @include('sidebar.header')
+
+            @include('sidebar.alerts')
+
+            @include('sidebar.packs.servers')
+
+            @include('sidebar.packs.menu')
+        </div>
+    </div>
 </nav>
 
 <div class="w-full">
     <main class="flex flex-col md:flex-row md:flex-wrap min-h-screen">
-        <!-- Sidebar -->
-        <nav class="block md:fixed light sidebar sidebar-width bg-gray-900">
-            <div class="sidebar-sticky p-4">
-                @include('sidebar.header')
-
-                @include('sidebar.alerts')
-
-                @include('sidebar.packs.servers')
-
-                @include('sidebar.packs.menu')
-            </div>
-        </nav>
-
         <!-- Main -->
         <main role="main" class="flex flex-col flex-grow sidebar-margin">
             <!-- Breadcrumbs -->
