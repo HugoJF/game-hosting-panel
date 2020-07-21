@@ -10,6 +10,13 @@
  */
 
 return [
+    'limits' => [
+        'cpu'       => 2400,
+        'memory'    => 3072,
+        'disk'      => 50000,
+        'databases' => 3,
+    ],
+
     'termination-reasons' => [
         'TERMINATED_BY_ADMIN',
         'FORCE_TERMINATED_BY_USER',

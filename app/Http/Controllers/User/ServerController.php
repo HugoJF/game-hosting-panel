@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Game;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ServerStoreRequest;
 use App\Http\Resources\ServerResource;
 use App\Location;
 use App\Server;
@@ -38,15 +39,14 @@ class ServerController extends Controller
         NodeSelectionService $nodeSelection,
         ServerCreationService $serverCreation,
         DeployCreationService $deployCreation,
-        Request $request
+        ServerStoreRequest $request
     )
     {
-        $config = $request->input();
+        $config = $request->validated();
         $period = $request->input('billing_period');
 
         $game = Game::findOrFail($request->input('game'));
         $location = Location::findOrFail($request->input('location'));
-        // TODO: Extract form parameters
 
         // Selects node to create the server on
         $node = $nodeSelection->handle($location);
@@ -76,7 +76,11 @@ class ServerController extends Controller
         return view('servers.configure', compact('server'));
     }
 
-    public function deploy(Request $request, ServerDeploymentService $deployment, Server $server)
+    public function deploy(
+        ServerStoreRequest $request,
+        ServerDeploymentService $deployment,
+        Server $server
+    )
     {
         $deployment->handle(
             $server,
