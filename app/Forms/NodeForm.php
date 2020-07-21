@@ -6,7 +6,7 @@ use Kris\LaravelFormBuilder\Form;
 
 class NodeForm extends Form
 {
-    private $numberParameters = [
+    private array $numberParameters = [
         'attr' => [
             'step' => '0.001',
         ],
