@@ -21,12 +21,12 @@ class CsgoProcessor extends Processor
 
         $costPerSlot = $tickrateCostPerSlot[ $cost['tickrate'] ] ?? null;
 
-        return [
-            ...config('processors.csgo.costs'),
-            ...[
+        return array_merge(
+            config('processors.csgo.costs'),
+            [
                 'cpu' => (int) $cost['slots'] * (int) $costPerSlot,
-            ],
-        ];
+            ]
+        );
     }
 
     function reject($cost): bool

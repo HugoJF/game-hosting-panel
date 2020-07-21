@@ -79,10 +79,12 @@ abstract class Processor
 
         // Replace possible choices into parameter list
         return collect($this->params)->mapWithKeys(fn($definition, $param) => [
-            $param => [
-                ...$definition,
-                'options' => $options[ $param ],
-            ],
+            $param => array_merge(
+                $definition,
+                [
+                    'options' => $options[ $param ],
+                ],
+            ),
         ])->toArray();
     }
 

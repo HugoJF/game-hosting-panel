@@ -16,14 +16,14 @@ class MinecraftProcessor extends Processor
 
         $disk = $diskPerSize[ $cost['size'] ];
 
-        return [
-            ...config('processors.minecraft.costs'),
-            ...[
+        return array_merge(
+            config('processors.minecraft.costs'),
+            [
                 'cpu'    => 600 + (int) $cost['plugins'] * 50, // TODO: magic variables nop
                 'memory' => $memoryPerPlayer * (int) $cost['slots'],
                 'disk'   => $disk,
             ],
-        ];
+        );
     }
 
     function reject($cost): bool
