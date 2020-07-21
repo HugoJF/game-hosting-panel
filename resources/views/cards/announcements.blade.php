@@ -29,10 +29,14 @@
         @forelse ($announcements ?? [] as $announcement)
             <tr>
                 <!-- Visible -->
-                <td>{{ $announcement->visible }}</td>
+                <td>
+                    {{ $announcement->visible }}
+                </td>
 
                 <!-- Type -->
-                <td>{{ $announcement->type }}</td>
+                <td>
+                    {{ $announcement->type }}
+                </td>
 
                 <!-- Description -->
                 <th>

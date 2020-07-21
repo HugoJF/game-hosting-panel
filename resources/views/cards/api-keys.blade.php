@@ -16,6 +16,7 @@
             </div>
         </div>
     @endslot
+
     <table class="table">
         <thead>
         <tr>

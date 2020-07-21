@@ -1,9 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>
-        @lang('words.admin_dashboard')
-    </h1>
+    <h1>@lang('words.admin_dashboard')</h1>
+
     <br/>
     @include('cards.announcements')
     <br/>

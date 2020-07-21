@@ -1,9 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>
-        @lang('words.nodes')
-    </h1>
+    <h1>@lang('words.nodes')</h1>
     <br/>
     @include('cards.nodes')
     <br/>
