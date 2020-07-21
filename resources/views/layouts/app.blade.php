@@ -74,12 +74,12 @@
                             @lang('words.configuration')
                         </span>
                     </a>
-                    <a href="#" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
+                    {!! Form::open(['method' => 'POST', 'url' => route('logout'), 'class' => 'trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700 select-none']) !!}
                         <span class="mr-1 inline text-gray-400" data-feather="log-out"></span>
-                        <span>
+                        <button>
                             @lang('words.logout')
-                        </span>
-                    </a>
+                        </button>
+                    {!!  Form::close() !!}
                 @else
                     <a href="{{ route('login') }}" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
                         <span class="mr-1 inline text-gray-400" data-feather="log-in"></span>

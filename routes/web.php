@@ -7,7 +7,3 @@
 */
 
 Auth::routes();
-
-// mail
-// @component
-// date serialization
