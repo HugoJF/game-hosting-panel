@@ -49,6 +49,17 @@ window.moment = require('moment');
 window.feather = require('feather-icons');
 require('tempusdominus-bootstrap-4');
 
+/**
+ * TempusDominus bootstrapping
+ */
+$(function () {
+    $('[data-tempusdominus="yes"]').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss',
+        widgetPositioning: {
+            horizontal: 'left'
+        }
+    });
+});
 
 /**
  * Bootstrap bootstrapping

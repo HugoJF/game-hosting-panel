@@ -7,6 +7,8 @@ use Illuminate\View\View;
 
 class GlobalComposer
 {
+    const CACHE_TIME = 1;
+
     public function compose(View $view)
     {
         if (!auth()->check()) {
@@ -17,17 +19,17 @@ class GlobalComposer
         $user = auth()->user();
 
         /** @var Collection $servers */
-        $servers = cache()->remember("$user->id.servers", 300,
+        $servers = cache()->remember("$user->id.servers", self::CACHE_TIME,
             fn() => auth()->user()->servers()->with(['deploys'])->get()
         );
 
         $filter = fn($server) => $server->getDeploy();
 
-        $online = cache()->remember("$user->id.online-servers", 300,
+        $online = cache()->remember("$user->id.online-servers", self::CACHE_TIME,
             fn() => $servers->filter($filter)
         );
 
-        $announcements = cache()->remember('announcements', 300,
+        $announcements = cache()->remember('announcements', self::CACHE_TIME,
             fn() => Announcement::query()
                                 ->latest()
                                 ->where('visible', true)

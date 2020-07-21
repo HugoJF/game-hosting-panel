@@ -14,7 +14,7 @@ class AnnouncementController extends Controller
     // TODO: cada um tem o seu template
     // TODO: tempusdominus
     // TODO: atualizar master layout para corrigir o sidebar
-    
+
     public function index()
     {
 

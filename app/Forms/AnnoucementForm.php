@@ -48,7 +48,6 @@ class AnnoucementForm extends Form
 
     protected function expiresAt()
     {
-        // TODO: datetime
-        $this->add('expires_at', 'text');
+        $this->add('expires_at', 'datetimepicker');
     }
 }

@@ -9,11 +9,11 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Cairo:300,400,500,600&subset=latin" rel="stylesheet">
 
-    <!-- Bootstrap core CSS -->
-    <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Vendor CSS -->
+    <link href="{{ mix('css/vendor.css') }}" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
@@ -23,7 +23,7 @@
 <nav class="navbar-z sticky top-0 left-0 right-0 p-0">
     <!-- Announcement -->
     <div class="shadow-inner">
-        @foreach ($globalAnnouncements as $announcement)
+        @foreach ($globalAnnouncements ?? [] as $announcement)
             @php
                 $colors = [
                     'danger' => 'red',
