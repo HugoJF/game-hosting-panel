@@ -81,8 +81,8 @@
                             @lang('words.go_to_panel')
                         </a>
                     @else
-                        <a class="text-blue-500 text-base font-semibold" href="{{ route('servers.deploy', $server) }}">
-                            @lang('words.deploy')
+                        <a class="text-blue-500 text-base font-semibold" href="{{ route('servers.show', $server) }}">
+                            @lang('words.view')
                         </a>
                     @endif
                 </p>

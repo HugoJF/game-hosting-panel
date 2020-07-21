@@ -30,12 +30,12 @@
             <tr>
                 <!-- Visible -->
                 <td>
-                    {{ $announcement->visible }}
+                    {{ $announcement->visible ? '✔' : '❌' }}
                 </td>
 
                 <!-- Type -->
                 <td>
-                    {{ $announcement->type }}
+                    <span class="badge badge-secondary">{{ $announcement->type }}</span>
                 </td>
 
                 <!-- Description -->

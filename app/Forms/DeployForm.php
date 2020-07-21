@@ -9,40 +9,39 @@ use Kris\LaravelFormBuilder\Form;
 
 class DeployForm extends Form
 {
-	use FormSetDisabled;
-	use DynamicForm;
+    use FormSetDisabled;
+    use DynamicForm;
 
-	/** @var Server */
-	private $server;
+    /** @var Server */
+    private $server;
 
-	public function buildForm()
-	{
-		$this->server = $this->getData('server');
+    public function buildForm()
+    {
+        $this->server = $this->getData('server');
 
-		$this->addDefaultDeployFields();
-		$this->addGameSpecificFields();
-	}
+        $this->addDefaultDeployFields();
+        $this->addGameSpecificFields();
+    }
 
-	protected function addDefaultDeployFields()
-	{
+    protected function addDefaultDeployFields()
+    {
 		$this->add('billing_period', 'select', [
-			'choices' => [
-				'minutely' => 'Each minute',
-				'hourly'   => 'Each hour',
-				'daily'    => 'Each day',
-				'weekly'   => 'Each week',
-				'monthly'  => 'Each month',
-			],
-		]);
+            'choices' => [
+                'minutely' => 'Each minute',
+                'hourly'   => 'Each hour',
+                'daily'    => 'Each day',
+                'weekly'   => 'Each week',
+                'monthly'  => 'Each month',
+            ],
+        ]);
 	}
 
-	protected function addGameSpecificFields(): void
-	{
-		$type = $this->server->node->type;
-		$config = $this->server->game->parameters($type);
+    protected function addGameSpecificFields(): void
+    {
+        $type = $this->server->node->type;
+        $config = $this->server->game->parameters($type);
 
-		$this->buildDeployForm($config);
-	}
-
+        $this->buildDeployForm($config);
+    }
 
 }

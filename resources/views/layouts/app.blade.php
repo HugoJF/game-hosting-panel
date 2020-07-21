@@ -62,7 +62,7 @@
                             @endif
                         </div>
                     </a>
-                    <a href="{{ route('servers.create') }}" class="trans p-3 no-underline text-gray-400 hover:bg-gray-700">
+                    <a href="{{ route('servers.create') }}" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
                         <span class="mr-1 inline text-gray-400" data-feather="plus"></span>
                         <span>
                             @lang('servers.create')
