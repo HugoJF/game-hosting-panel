@@ -48,7 +48,7 @@ class CheckServerRemoved extends Command
         }
     }
 
-    protected function remove(Server $server): void: void
+    protected function remove(Server $server): void
     {
         $this->_info("Server $server->id [PID: $server->panel_id] triggered NotFoundException, marking as removed");
         $server->delete();

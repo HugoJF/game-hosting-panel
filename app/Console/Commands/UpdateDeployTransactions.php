@@ -49,7 +49,7 @@ class UpdateDeployTransactions extends Command
         }
     }
 
-    protected function updateDeploy(Deploy $deploy): void: void
+    protected function updateDeploy(Deploy $deploy): void
     {
         $realCost = $this->costService->getDeployCost($deploy, true);
         $cost = $this->costService->getDeployCost($deploy, false);
