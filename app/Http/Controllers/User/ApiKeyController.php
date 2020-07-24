@@ -14,7 +14,7 @@ class ApiKeyController extends Controller
 {
 	public function index()
 	{
-		$keys = Auth::user()->apiKeys()->latest()->get();
+		$keys = auth()->user()->apiKeys()->latest()->get();
 
 		return view('api-keys.index', compact('keys'));
 	}

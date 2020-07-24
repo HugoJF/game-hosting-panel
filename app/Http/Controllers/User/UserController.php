@@ -23,7 +23,7 @@ class UserController extends Controller
 
 	public function update(UserService $service, Request $request, User $user)
 	{
-		$service->updateUser($user, $request->all());
+		$service->update($user, $request->all());
 
 		flash()->success("User $user->name updated!");
 

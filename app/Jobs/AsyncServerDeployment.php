@@ -79,6 +79,7 @@ class AsyncServerDeployment implements ShouldQueue
      *
      * @return void
      * @throws ServerNotInstalledException
+     * @throws \Throwable
      */
     public function handle(
         Pterodactyl $pterodactyl,

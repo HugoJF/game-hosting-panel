@@ -8,6 +8,7 @@ use App\Services\ServerService;
 use Exception;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use HCGCloud\Pterodactyl\Resources\Resource;
+use Throwable;
 
 class ServerDeploymentService
 {
@@ -38,6 +39,7 @@ class ServerDeploymentService
      *
      * @return bool
      * @throws Exception
+     * @throws Throwable
      */
     public function handle(Server $server, string $billingPeriod, array $config): bool
     {

@@ -11,10 +11,11 @@ namespace App\Services\Forms;
 use App\Forms\UserForm;
 use App\Forms\UserSettingsForm;
 use App\User;
+use Kris\LaravelFormBuilder\Form;
 
 class UserSettingsForms extends ServiceForm
 {
-	public function settings(User $user): \Kris\LaravelFormBuilder\Form
+	public function settings(User $user): Form
     {
 		return $this->formBuilder->create(UserSettingsForm::class, [
 			'method' => 'PATCH',

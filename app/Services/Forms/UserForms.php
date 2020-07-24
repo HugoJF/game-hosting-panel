@@ -10,10 +10,11 @@ namespace App\Services\Forms;
 
 use App\Forms\UserForm;
 use App\User;
+use Kris\LaravelFormBuilder\Form;
 
 class UserForms extends ServiceForm
 {
-	public function edit(User $user): \Kris\LaravelFormBuilder\Form
+	public function edit(User $user): Form
     {
 		return $this->formBuilder->create(UserForm::class, [
 			'method' => 'PATCH',

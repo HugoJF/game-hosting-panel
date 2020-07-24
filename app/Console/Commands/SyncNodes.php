@@ -30,9 +30,9 @@ class SyncNodes extends Command
      * @param PterodactylApiService $apiService
      * @param NodeService           $service
      *
-     * @return mixed
+     * @return void
      */
-    public function handle(PterodactylApiService $apiService, NodeService $service)
+    public function handle(PterodactylApiService $apiService, NodeService $service): void
     {
         $nodes = collect($apiService->nodes());
 

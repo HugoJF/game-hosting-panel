@@ -12,6 +12,7 @@ use App\Server;
 use App\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class DeployCreationService
 {
@@ -31,17 +32,20 @@ class DeployCreationService
      *
      * @return Deploy
      * @throws Exception
+     * @throws Throwable
      */
     public function handle(Server $server, string $billingPeriod, array $config): Deploy
+    {
+        return DB::transaction(fn() => $this->create($server, $billingPeriod, $config));
+    }
+
+    protected function create(Server $server, string $billingPeriod, array $config): Deploy
     {
         $this->preChecks($server->user, $server->node, $billingPeriod, $config);
 
         $costPerPeriod = $this->costService->getCostPerPeriod($server->node, $billingPeriod, $config);
 
-        try {
-            DB::beginTransaction();
-
-            $deploy = new Deploy();
+        return tap(new Deploy, fn(Deploy $deploy) =>
             $deploy->forceFill([
                 'billing_period'  => $billingPeriod,
                 'cost_per_period' => $costPerPeriod,
@@ -51,15 +55,8 @@ class DeployCreationService
                 'databases'       => $config['databases'],
                 'server_id'       => $server->id,
                 'io'              => 500,
-            ])->save();
-
-            DB::commit();
-
-            return $deploy;
-        } catch (Exception $e) {
-            DB::rollBack();
-            throw $e;
-        }
+            ])->save()
+        );
     }
 
     /**

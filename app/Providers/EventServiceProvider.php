@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Events\CouponUsed;
-use App\Listeners\CreateCouponTransaction;
 use App\Listeners\RegisterUserOnPanel;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;

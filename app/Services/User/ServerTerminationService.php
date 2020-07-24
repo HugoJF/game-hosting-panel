@@ -5,6 +5,7 @@ namespace App\Services\User;
 use App\Classes\PterodactylClient;
 use App\Deploy;
 use App\Server;
+use App\Services\ServerService;
 use Exception;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use HCGCloud\Pterodactyl\Resources\Resource;
@@ -12,12 +13,18 @@ use HCGCloud\Pterodactyl\Resources\Resource;
 class ServerTerminationService
 {
     protected Pterodactyl $pterodactyl;
-    protected PterodactylClient $pterodacylClient;
+    protected PterodactylClient $pterodactylClient;
+    protected ServerService $serverService;
 
-    public function __construct(Pterodactyl $pterodactyl, PterodactylClient $pterodactylClient)
+    public function __construct(
+        Pterodactyl $pterodactyl,
+        PterodactylClient $pterodactylClient,
+        ServerService $serverService
+    )
     {
         $this->pterodactyl = $pterodactyl;
-        $this->pterodacylClient = $pterodactylClient;
+        $this->pterodactylClient = $pterodactylClient;
+        $this->serverService = $serverService;
     }
 
     /**
@@ -41,12 +48,12 @@ class ServerTerminationService
 
         $appServer = $this->pterodactyl->updateServerBuild($server->panel_id, array_merge($buildConfig, $defaults));
 
-        $clientServer = $this->pterodacylClient->getServer($appServer->identifier);
+        $clientServer = $this->pterodactylClient->getServer($appServer->identifier);
 
         $clientServer->power('kill');
 
         /** @var Deploy $deploy */
-        $deploy = $server->getDeploy();
+        $deploy = $this->serverService->getCurrentDeploy($server);
 
         $deploy->terminated_at = now();
         $deploy->save();

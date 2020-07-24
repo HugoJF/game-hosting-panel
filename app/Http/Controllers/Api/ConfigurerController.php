@@ -36,9 +36,7 @@ class ConfigurerController extends Controller
             $arr = $location->attributesToArray();
             // Check if we have a Node, that has $game
             $arr['available'] = $location->nodes->filter(function (Node $node) use ($game) {
-                    return $node->games->filter(function (Game $g) use ($game) {
-                            return $g->id === $game->id;
-                        })->count() > 0;
+                    return $node->games->filter(fn (Game $g) => $g->id === $game->id)->count() > 0;
                 })->count() > 0;
 
             return $arr;

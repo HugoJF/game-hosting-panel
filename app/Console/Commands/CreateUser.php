@@ -25,9 +25,9 @@ class CreateUser extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $email = $this->ask("What is the new user's email address?");
         $firstName = $this->ask("What is the new user's first name?");

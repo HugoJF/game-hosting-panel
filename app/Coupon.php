@@ -3,7 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Nicolaslopezj\Searchable\SearchableTrait;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Coupon extends Model
 {
@@ -14,12 +15,12 @@ class Coupon extends Model
 		return 'code';
 	}
 
-	public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	public function users(): BelongsToMany
     {
 		return $this->belongsToMany(User::class)->withTimestamps();
 	}
 
-	public function transaction(): \Illuminate\Database\Eloquent\Relations\MorphOne
+	public function transaction(): MorphOne
     {
 		return $this->morphOne(Transaction::class, 'reason');
 	}

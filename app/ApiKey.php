@@ -4,6 +4,7 @@ namespace App;
 
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ApiKey extends Model
 {
@@ -15,7 +16,7 @@ class ApiKey extends Model
 
 	protected $dates = ['last_used_at'];
 
-	public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+	public function user(): BelongsTo
     {
 		return $this->belongsTo(User::class);
 	}

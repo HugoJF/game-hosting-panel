@@ -15,7 +15,7 @@ class CouponController extends Controller
 {
     public function index()
     {
-        $coupons = Auth::user()->coupons;
+        $coupons = auth()->user()->coupons;
 
         return view('coupons.index', compact('coupons'));
     }

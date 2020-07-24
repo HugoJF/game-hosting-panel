@@ -10,10 +10,11 @@ namespace App\Services\Forms;
 
 use App\Coupon;
 use App\Forms\CouponForm;
+use Kris\LaravelFormBuilder\Form;
 
 class CouponForms extends ServiceForm
 {
-	public function create(): \Kris\LaravelFormBuilder\Form
+	public function create(): Form
     {
 		return $this->formBuilder->create(CouponForm::class, [
 			'method' => 'POST',
@@ -21,7 +22,7 @@ class CouponForms extends ServiceForm
 		]);
 	}
 
-	public function edit(Coupon $coupon): \Kris\LaravelFormBuilder\Form
+	public function edit(Coupon $coupon): Form
     {
 		return $this->formBuilder->create(CouponForm::class, [
 			'method' => 'PATCH',

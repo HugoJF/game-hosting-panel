@@ -9,7 +9,6 @@ use App\Order;
 use App\Policies\ApiKeyPolicy;
 use App\Policies\CouponPolicy;
 use App\Policies\DeployPolicy;
-use App\Policies\LocationPolicy;
 use App\Policies\NotificationPolicy;
 use App\Policies\OrderPolicy;
 use App\Policies\ServerPolicy;

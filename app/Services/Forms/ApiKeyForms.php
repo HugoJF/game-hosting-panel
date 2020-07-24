@@ -10,10 +10,11 @@ namespace App\Services\Forms;
 
 use App\ApiKey;
 use App\Forms\ApiKeyForm;
+use Kris\LaravelFormBuilder\Form;
 
 class ApiKeyForms extends ServiceForm
 {
-	public function create(): \Kris\LaravelFormBuilder\Form
+	public function create(): Form
     {
 		return $this->formBuilder->create(ApiKeyForm::class, [
 			'method' => 'POST',
@@ -21,7 +22,7 @@ class ApiKeyForms extends ServiceForm
 		]);
 	}
 
-	public function edit(ApiKey $key): \Kris\LaravelFormBuilder\Form
+	public function edit(ApiKey $key): Form
     {
 		return $this->formBuilder->create(ApiKeyForm::class, [
 			'method' => 'PATCH',

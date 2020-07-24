@@ -8,7 +8,6 @@ use App\Deploy;
 use App\GlobalComposer;
 use App\Observers\DeployObserver;
 use App\Observers\OrderObserver;
-use App\Observers\ServerObserver;
 use App\Observers\TransactionObserver;
 use App\Order;
 use App\Transaction;

@@ -30,9 +30,9 @@ class SyncLocations extends Command
      * @param PterodactylApiService $apiService
      * @param LocationService       $service
      *
-     * @return mixed
+     * @return void
      */
-    public function handle(PterodactylApiService $apiService, LocationService $service)
+    public function handle(PterodactylApiService $apiService, LocationService $service): void
     {
         $locations = collect($apiService->locations());
 

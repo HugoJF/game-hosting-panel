@@ -66,7 +66,7 @@ class ServerController extends Controller
         $latestDeploys = $server->deploys()->latest()->limit(5)->get();
         $transactions = Transaction::whereIn('id', $latestDeploys->pluck('transaction_id'))->get();
 
-        $deploys = collect($latestDeploys->count() == 0 ? [] : [$latestDeploys->first()]);
+        $deploys = collect($latestDeploys->count() === 0 ? [] : [$latestDeploys->first()]);
 
         return view('servers.show', compact('server', 'deploys', 'transactions'));
     }

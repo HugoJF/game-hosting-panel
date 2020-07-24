@@ -30,9 +30,9 @@ class SyncEggs extends Command
      * @param PterodactylApiService $apiService
      * @param GameService           $service
      *
-     * @return mixed
+     * @return void
      */
-    public function handle(PterodactylApiService $apiService, GameService $service)
+    public function handle(PterodactylApiService $apiService, GameService $service): void
     {
         $eggs = collect($apiService->eggs());
 

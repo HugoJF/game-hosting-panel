@@ -10,10 +10,11 @@ namespace App\Services\Forms;
 
 use App\Announcement;
 use App\Forms\AnnouncementForm;
+use Kris\LaravelFormBuilder\Form;
 
 class AnnouncementForms extends ServiceForm
 {
-    public function create(): \Kris\LaravelFormBuilder\Form
+    public function create(): Form
     {
         return $this->formBuilder->create(AnnouncementForm::class, [
             'method' => 'POST',
@@ -21,7 +22,7 @@ class AnnouncementForms extends ServiceForm
         ]);
     }
 
-    public function edit(Announcement $announcement): \Kris\LaravelFormBuilder\Form
+    public function edit(Announcement $announcement): Form
     {
         return $this->formBuilder->create(AnnouncementForm::class, [
             'method' => 'PATCH',

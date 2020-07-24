@@ -32,18 +32,7 @@ class ServerCreationService
 
     public function handle(User $user, Game $game, Node $node, array $data): ?Server
     {
-        DB::beginTransaction();
-        try {
-            $server = $this->create($user, $game, $node, $data);
-            DB::commit();
-
-            return $server;
-        } catch (Exception $e) {
-            report($e);
-            DB::rollBack();
-
-            return null;
-        }
+        return DB::transaction(fn () => $this->create($user, $game, $node, $data));
     }
 
     /**

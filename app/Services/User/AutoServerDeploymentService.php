@@ -42,7 +42,11 @@ class AutoServerDeploymentService
      * @param string $billingPeriod
      * @param array  $config
      *
-     * @throws Exception
+     * @throws InsufficientBalanceException
+     * @throws InvalidPeriodCostException
+     * @throws TooManyServersException
+     * @throws \App\Exceptions\InvalidBillingPeriodException
+     * @throws \Throwable
      */
     public function handle(Server $server, string $billingPeriod, array $config): void
     {

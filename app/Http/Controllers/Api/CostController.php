@@ -51,9 +51,9 @@ class CostController extends Controller
     {
         $specs = ['cpu', 'memory', 'disk', 'databases'];
 
-        $data = collect($specs)->mapWithKeys(function ($spec) use ($config) {
-            return [$spec => Arr::get($config, $spec, 0)];
-        })->toArray();
+        $data = collect($specs)->mapWithKeys(fn($spec) => [
+            $spec => Arr::get($config, $spec, 0)
+        ])->toArray();
 
         if (!$period = $config['billing_period'] ?? null) {
             return null;

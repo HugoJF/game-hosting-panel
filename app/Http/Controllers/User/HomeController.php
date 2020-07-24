@@ -30,7 +30,7 @@ class HomeController extends Controller
     public function dashboard()
     {
         /** @var User $user */
-        $user = Auth::user();
+        $user = auth()->user();
         $locations = Location::all();
         $servers = $user->servers()->with(['game', 'node', 'deploys'])->get();
 

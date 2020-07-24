@@ -4,6 +4,7 @@ namespace App;
 
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Order extends Model
 {
@@ -13,12 +14,12 @@ class Order extends Model
 
 	protected $observables = ['paid'];
 
-	public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+	public function user(): BelongsTo
     {
 		return $this->belongsTo(User::class);
 	}
 
-	public function transaction(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+	public function transaction(): BelongsTo
     {
 		return $this->belongsTo(Transaction::class);
 	}
