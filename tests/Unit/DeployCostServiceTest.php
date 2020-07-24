@@ -92,7 +92,6 @@ class DeployCostServiceTest extends TestCase
     public function test_get_next_billable_period()
     {
         $test = function (string $billingPeriod, Carbon $base, Carbon $next) {
-
             $deploy = factory(Deploy::class)->make([
                 'billing_period' => $billingPeriod,
                 'created_at'     => $base,

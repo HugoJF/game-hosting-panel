@@ -8,6 +8,7 @@
 
 namespace App\Services;
 
+use App\Deploy;
 use App\Exceptions\MultipleLiveDeploys;
 use App\Server;
 use Exception;
@@ -37,6 +38,12 @@ class ServerService
         return $resource->container['installed'];
     }
 
+    /**
+     * @param Server $server
+     *
+     * @return Deploy|null
+     * @throws MultipleLiveDeploys
+     */
     public function getCurrentDeploy(Server $server)
     {
         $server->loadMissing('deploys');

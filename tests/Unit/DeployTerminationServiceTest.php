@@ -2,13 +2,14 @@
 
 namespace Tests\Unit;
 
-use App\Classes\PterodactylClient;
 use App\Deploy;
+use App\Game;
+use App\Node;
 use App\Server;
+use App\Services\User\DeployTerminationService;
 use App\Services\User\ServerTerminationService;
+use App\User;
 use Carbon\Carbon;
-use HCGCloud\Pterodactyl\Pterodactyl;
-use HCGCloud\Pterodactyl\Resources\Server as ServerResource;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
@@ -19,74 +20,110 @@ class DeployTerminationServiceTest extends TestCase
     use RefreshDatabase;
     use DatabaseMigrations;
 
+    protected DeployTerminationService $deployTermination;
+    protected Server $server;
+    protected Carbon $firstTime;
+    protected Carbon $secondTime;
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        Carbon::setTestNow(Carbon::create(2020, 1, 1, 0, 0, 0));
-    }
+        $this->firstTime = Carbon::create(2020, 1, 1, 0, 0, 0);
+        $this->secondTime = Carbon::create(2021, 1, 1, 0, 0, 0);
 
-    public function test_server_termination()
-    {
+        $game = factory(Game::class)->create();
+        $node = factory(Node::class)->create();
+        $user = factory(User::class)->create();
+
         /** @var Server $server */
-        $server = factory(Server::class)->make(['panel_id' => 42]);
-
-        /** @var Deploy $deploy */
-        $deploy = factory(Deploy::class)->make([
-            'id'              => 1,
-            'billing_period'  => 'hourly',
-            'cost_per_period' => 100,
-            'cpu'             => 2400,
-            'memory'          => 1000,
-            'disk'            => 10000,
-            'databases'       => 0,
-            'io'              => 500,
+        $this->server = factory(Server::class)->create([
+            'game_id' => $game->id,
+            'node_id' => $node->id,
+            'user_id' => $user->id,
         ]);
 
-        // Set relation without saving to database
-        $server->setRelation('deploys', collect([$deploy]));
+        factory(Deploy::class)->create([
+            'server_id'       => $this->server->id,
+            'billing_period'  => 'daily',
+            'cost_per_period' => 0,
+            'created_at'      => now()->subDay(),
+        ]);
+    }
 
-        // Disable observers to avoid other stuff from running
-        Deploy::unsetEventDispatcher();
+    protected function prepareDeployTermination($mockServerTermination = false, $shouldBeCalled = 1)
+    {
+        if ($mockServerTermination) {
+            $calls = [
+                0 => 'never',
+                1 => 'once',
+            ];
+            $call = $calls[ $shouldBeCalled ];
 
-        $this->instance(Pterodactyl::class, Mockery::mock(Pterodactyl::class, function ($mock) use ($server) {
-            /** @var Mockery\Mock $mock */
-            $mock
-                ->shouldReceive('server')
-                ->withArgs([$server->panel_id])
-                ->andReturn(new ServerResource([
-                    'allocation' => [], // this is needed since the property is not defined in the Resource
-                ]))
-                ->once();
+            $serverTermination = Mockery::mock(ServerTerminationService::class);
+            $serverTermination->shouldReceive('handle')->$call();
 
-            $mock
-                ->shouldReceive('updateServerBuild')
-                ->andReturn(new ServerResource([
-                    'identifier' => 'my_identifier',
-                ]))
-                ->once();
-        }));
+            $this->instance(ServerTerminationService::class, $serverTermination);
+        }
 
-        $this->instance(PterodactylClient::class, Mockery::mock(PterodactylClient::class, function ($mock) use ($server) {
-            $mockedServer = Mockery::mock(ServerResource::class, function ($mock) {
-                /** @var Mockery\Mock $mock */
-                $mock->shouldReceive('power')
-                     ->once();
-            });
+        $this->deployTermination = app(DeployTerminationService::class);
+    }
 
-            /** @var Mockery\Mock $mock */
-            $mock
-                ->shouldReceive('getServer')
-                ->andReturn($mockedServer)
-                ->once();
-        }));
+    /**
+     * Tests first termination call (that should set termination_requested_at)
+     */
+    public function test_server_termination_requested_at_is_set_on_termination()
+    {
+        $this->prepareDeployTermination();
 
-        $service = app(ServerTerminationService::class);
+        Carbon::setTestNow($this->firstTime);
 
-        $this->assertEquals(null, $deploy->terminated_at);
+        $this->deployTermination->handle($this->server, 'Testing');
 
-        $service->handle($server);
+        $deploy = $this->server->deploys()->first();
 
-        $this->assertEquals(now(), $deploy->terminated_at);
+        $this->assertEquals('Testing', $deploy->termination_reason);
+        $this->assertEquals($this->firstTime, $deploy->termination_requested_at);
+    }
+
+    /**
+     * Tests second termination call (that should NOT change termination_requested_at)
+     */
+    public function test_multiple_server_termination_requests_do_not_reset_termination_requested_at()
+    {
+        $this->prepareDeployTermination();
+
+        Carbon::setTestNow($this->firstTime);
+        $this->deployTermination->handle($this->server, 'Testing');
+
+        Carbon::setTestNow($this->secondTime);
+        $this->deployTermination->handle($this->server, 'Testing');
+
+        $deploy = $this->server->deploys()->first();
+
+        $this->assertEquals($this->firstTime, $deploy->termination_requested_at);
+    }
+
+    /**
+     * No asserts are defined here since the Mock is already created and registered on setUp
+     */
+    public function test_forced_deploy_termination_will_call_server_termination()
+    {
+        $this->prepareDeployTermination(true);
+
+        $this->deployTermination->handle($this->server, 'Testing', true);
+    }
+
+    /**
+     * This is a somewhat bad test, since nothing should happen.
+     *
+     * If everything is correct, ServerTerminationService will not be called a second time.
+     * This is the reason the flag 'forced' is true
+     */
+    public function test_nothing_happens_when_termination_is_requested_without_live_deploys()
+    {
+        $this->server->deploys()->delete();
+        $this->prepareDeployTermination(true, 0);
+        $this->deployTermination->handle($this->server, 'Testing', true);
     }
 }

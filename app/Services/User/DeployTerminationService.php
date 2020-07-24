@@ -4,20 +4,22 @@ namespace App\Services\User;
 
 use App\Deploy;
 use App\Server;
+use App\Services\ServerService;
 
 class DeployTerminationService
 {
+    protected ServerService $serverService;
     protected ServerTerminationService $serverTermination;
 
-    public function __construct(ServerTerminationService $terminationService)
+    public function __construct(ServerService $serverService, ServerTerminationService $terminationService)
     {
+        $this->serverService = $serverService;
         $this->serverTermination = $terminationService;
     }
 
     public function handle(Server $server, string $reason, bool $forced = false)
     {
-        /** @var Deploy $deploy */
-        $deploy = $server->getDeploy();
+        $deploy = $this->serverService->getCurrentDeploy($server);
 
         if (!$deploy) {
             return;
