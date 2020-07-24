@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Services\ServerService;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -46,16 +47,10 @@ class Server extends Model implements Searchable
         return $this->belongsTo(User::class);
     }
 
+    /** @deprecated  */
     public function getDeploy()
     {
-        $this->loadMissing('deploys');
-        $deploys = $this->deploys->where('terminated_at', null);
-
-        if ($deploys->count() > 1) {
-            throw new Exception('Multiple non-terminated deploys, something is fucked');
-        }
-
-        return $deploys->first();
+        return app(ServerService::class)->getCurrentDeploy($this);
     }
 
     public function getSearchResult(): SearchResult

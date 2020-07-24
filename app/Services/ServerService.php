@@ -8,7 +8,9 @@
 
 namespace App\Services;
 
+use App\Exceptions\MultipleLiveDeploys;
 use App\Server;
+use Exception;
 use HCGCloud\Pterodactyl\Pterodactyl;
 
 class ServerService
@@ -33,5 +35,17 @@ class ServerService
 
         // Waiting installation if container is NOT installed
         return $resource->container['installed'];
-	}
+    }
+
+    public function getCurrentDeploy(Server $server)
+    {
+        $server->loadMissing('deploys');
+        $deploys = $server->deploys->where('terminated_at', null);
+
+        if ($deploys->count() > 1) {
+            throw new MultipleLiveDeploys;
+        }
+
+        return $deploys->first();
+    }
 }
