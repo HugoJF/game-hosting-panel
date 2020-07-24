@@ -8,7 +8,8 @@ use Faker\Generator as Faker;
 
 $factory->define(Node::class, function (Faker $faker) {
     return [
-        'type'     => 'ogp',
-        'hostname' => 'https://' . $faker->word . '.denerdtv.com/',
+        'name'        => 'Host' . $faker->word,
+        'description' => $faker->sentence,
+        'location_id' => $faker->numberBetween(0, 100),
     ];
 });

@@ -20,10 +20,21 @@ Breadcrumbs::for('home', function ($trail) {
     $trail->push('Home', route('home'));
 });
 
+// Notifications
+Breadcrumbs::for('notifications.index', function ($trail) {
+    $trail->push('Notifications', route('notifications.index'));
+});
+
 // Home > Servers
 Breadcrumbs::for('servers.index', function ($trail) {
     $trail->parent('home');
     $trail->push('Servers', route('servers.index'));
+});
+
+// Home > Servers > Create
+Breadcrumbs::for('servers.create', function ($trail) {
+    $trail->parent('servers.index');
+    $trail->push('Creating server', route('servers.create'));
 });
 
 // Home > Admin > Locations

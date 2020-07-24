@@ -110,10 +110,7 @@ abstract class Processor
         // Build a config for each parameter option and current choices, calculate cost and filter results.
         return collect($options)
             ->mapWithKeys(fn($option) => [
-                $option => [
-                    ...$choices,
-                    $param => $option,
-                ],
+                $option => array_merge($choices, [$param => $option]),
             ])
             // Compute resource cost for each config
             ->map(fn($config) => $this->cost($config))

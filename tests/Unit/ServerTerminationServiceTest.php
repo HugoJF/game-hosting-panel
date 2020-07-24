@@ -8,6 +8,7 @@ use App\Server;
 use App\Services\User\ServerTerminationService;
 use Carbon\Carbon;
 use HCGCloud\Pterodactyl\Pterodactyl;
+use HCGCloud\Pterodactyl\Resources\Server as ServerResource;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
@@ -53,21 +54,21 @@ class ServerTerminationServiceTest extends TestCase
             $mock
                 ->shouldReceive('server')
                 ->withArgs([$server->panel_id])
-                ->andReturn(new \HCGCloud\Pterodactyl\Resources\Server([
+                ->andReturn(new ServerResource([
                     'allocation' => [], // this is needed since the property is not defined in the Resource
                 ]))
                 ->once();
 
             $mock
                 ->shouldReceive('updateServerBuild')
-                ->andReturn(new \HCGCloud\Pterodactyl\Resources\Server([
+                ->andReturn(new ServerResource([
                     'identifier' => 'my_identifier',
                 ]))
                 ->once();
         }));
 
         $this->instance(PterodactylClient::class, Mockery::mock(PterodactylClient::class, function ($mock) use ($server) {
-            $mockedServer = Mockery::mock(\HCGCloud\Pterodactyl\Resources\Server::class, function ($mock) {
+            $mockedServer = Mockery::mock(ServerResource::class, function ($mock) {
                 /** @var Mockery\Mock $mock */
                 $mock->shouldReceive('power')
                      ->once();

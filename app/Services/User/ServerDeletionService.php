@@ -18,7 +18,6 @@ class ServerDeletionService
     {
         $this->pterodactyl->deleteServer($server->panel_id);
 
-        $server->deleted_at = now();
-        $server->save();
+        $server->delete();
     }
 }

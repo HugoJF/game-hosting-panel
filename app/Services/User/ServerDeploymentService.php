@@ -12,12 +12,19 @@ use HCGCloud\Pterodactyl\Resources\Resource;
 class ServerDeploymentService
 {
     protected ServerService $serverService;
+    protected ServerBuildConfigService $buildConfigService;
     protected Pterodactyl $pterodactyl;
     protected DeployCreationService $deployCreation;
 
-    public function __construct(ServerService $serverService, Pterodactyl $pterodactyl, DeployCreationService $deployCreation)
+    public function __construct(
+        ServerService $serverService,
+        ServerBuildConfigService $buildConfigService,
+        Pterodactyl $pterodactyl,
+        DeployCreationService $deployCreation
+    )
     {
         $this->pterodactyl = $pterodactyl;
+        $this->buildConfigService = $buildConfigService;
         $this->deployCreation = $deployCreation;
         $this->serverService = $serverService;
     }
@@ -38,31 +45,12 @@ class ServerDeploymentService
             throw new ServerNotInstalledException;
         }
 
-        $newLimits = $this->getServerLimits($server, $config);
-        $details = $this->pterodactyl->server($server->panel_id);
-        $defaults = config('pterodactyl.server-deployment-defaults');
+        $serverConfig = $this->buildConfigService->handle($server, $config);
 
-        $buildConfig = [
-            'limits'         => array_merge($details->limits, $newLimits, $defaults['limits']),
-            'feature_limits' => $details->featureLimits,
-            'allocation'     => $details->allocation,
-            'oom_disabled'   => true,
-        ];
-
-        $s = $this->pterodactyl->updateServerBuild($server->panel_id, $buildConfig);
+        $s = $this->pterodactyl->updateServerBuild($server->panel_id, $serverConfig);
 
         $this->deployCreation->handle($server, $billingPeriod, $config);
 
         return $s instanceof Resource;
-    }
-
-    private function getServerLimits(Server $server, array $config)
-    {
-        // TODO: normalize this using $node information instead of being hardcoded
-        $cpu = $config['cpu'];
-        $nodePerformance = 2400;
-        return array_merge($config, [
-            'cpu' => $cpu / $nodePerformance * 100,
-        ]);
     }
 }
