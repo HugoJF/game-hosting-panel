@@ -73,13 +73,13 @@ class DeployCreationService
      * @throws InvalidPeriodCostException
      * @throws InvalidBillingPeriodException
      */
-    public function preChecks(User $user, Node $node, string $billingPeriod, array $config)
+    public function preChecks(User $user, Node $node, string $billingPeriod, array $config): void
     {
         if (!config("ghp.billing-periods.$billingPeriod")) {
             throw new InvalidBillingPeriodException($billingPeriod);
         }
 
-        if ($costPerPeriod = $this->costService->getCostPerPeriod($node, $billingPeriod, $config) <= 0) {
+        if ($costPerPeriod = ($this->costService->getCostPerPeriod($node, $billingPeriod, $config) <= 0)) {
             throw new InvalidPeriodCostException;
         }
 

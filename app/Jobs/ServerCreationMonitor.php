@@ -56,7 +56,7 @@ class ServerCreationMonitor implements ShouldQueue
      * @return void
      * @throws ServerNotInstalledException
      */
-    public function handle(ServerService $service)
+    public function handle(ServerService $service): void
     {
         if (!$service->isInstalled($this->server)) {
             throw new ServerNotInstalledException;

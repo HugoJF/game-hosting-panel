@@ -13,7 +13,7 @@ class LocationForm extends Form
         $this->add('flag', 'text', $this->params('Flag ID for location'));
     }
 
-    protected function params($text)
+    protected function params($text): array
     {
         return [
             'help_block' => [

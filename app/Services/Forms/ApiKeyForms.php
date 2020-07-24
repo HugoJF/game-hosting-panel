@@ -13,16 +13,16 @@ use App\Forms\ApiKeyForm;
 
 class ApiKeyForms extends ServiceForm
 {
-	public function create()
-	{
+	public function create(): \Kris\LaravelFormBuilder\Form
+    {
 		return $this->formBuilder->create(ApiKeyForm::class, [
 			'method' => 'POST',
 			'url'    => route('api-keys.store'),
 		]);
 	}
 
-	public function edit(ApiKey $key)
-	{
+	public function edit(ApiKey $key): \Kris\LaravelFormBuilder\Form
+    {
 		return $this->formBuilder->create(ApiKeyForm::class, [
 			'method' => 'PATCH',
 			'url'    => route('api-keys.update', $key),

@@ -14,11 +14,11 @@ abstract class Processor
      *
      * TODO: wrap cost function to validate it first
      *
-     * @param $cost
+     * @param array $cost
      *
      * @return array
      */
-    abstract function cost(array $cost): array;
+    abstract public function cost(array $cost): array;
 
     /**
      * Checks if resource cost is invalid
@@ -27,7 +27,7 @@ abstract class Processor
      *
      * @return bool
      */
-    abstract function reject($cost): bool;
+    abstract protected function reject($cost): bool;
 
     /**
      * Check if the request was somehow modified to send parameters that are not listed.

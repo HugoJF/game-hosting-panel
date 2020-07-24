@@ -14,8 +14,8 @@ use App\User;
 
 class UserSettingsForms extends ServiceForm
 {
-	public function settings(User $user)
-	{
+	public function settings(User $user): \Kris\LaravelFormBuilder\Form
+    {
 		return $this->formBuilder->create(UserSettingsForm::class, [
 			'method' => 'PATCH',
 			'url'    => route('settings.update'),

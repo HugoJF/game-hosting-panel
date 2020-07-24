@@ -36,8 +36,9 @@ class RegisterUserOnPanel implements ShouldQueue
      * @param Registered $event
      *
      * @return void
+     * @throws Exception
      */
-    public function handle(Registered $event)
+    public function handle(Registered $event): void
     {
         /** @var User $user */
         $user = $event->user;

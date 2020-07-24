@@ -14,7 +14,7 @@ class UserPanelRegistrationService
         $this->pterodactyl = $pterodactyl;
     }
 
-    public function handle(User $user)
+    public function handle(User $user): \HCGCloud\Pterodactyl\Resources\User
     {
         return $this->pterodactyl->createUser([
             'username' => $user->username,

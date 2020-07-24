@@ -14,7 +14,7 @@ class ServerDeletionService
         $this->pterodactyl = $pterodactyl;
     }
 
-    public function handle(Server $server)
+    public function handle(Server $server): void
     {
         $this->pterodactyl->deleteServer($server->panel_id);
 

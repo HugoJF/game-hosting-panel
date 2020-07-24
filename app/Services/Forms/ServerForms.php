@@ -35,8 +35,8 @@ class ServerForms extends ServiceForm
 		]);
 	}
 
-	public function create(Location $location, Game $game, Node $node)
-	{
+	public function create(Location $location, Game $game, Node $node): \Kris\LaravelFormBuilder\Form
+    {
 		return $this->formBuilder->create(ServerForm::class, [
 			'method' => 'POST',
 			'url'    => route('servers.store', [$location, $game]),

@@ -39,7 +39,7 @@ class ServerDeploymentService
      * @return bool
      * @throws Exception
      */
-    public function handle(Server $server, string $billingPeriod, array $config)
+    public function handle(Server $server, string $billingPeriod, array $config): bool
     {
         if (!$this->serverService->isInstalled($server)) {
             throw new ServerNotInstalledException;

@@ -4,6 +4,7 @@ namespace App\Events;
 
 use App\Coupon;
 use App\User;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -24,7 +25,8 @@ class CouponUsed
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param Coupon $coupon
+     * @param User   $user
      */
     public function __construct(Coupon $coupon, User $user)
     {
@@ -35,7 +37,7 @@ class CouponUsed
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return Channel|array
      */
     public function broadcastOn()
     {

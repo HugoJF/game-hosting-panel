@@ -9,7 +9,7 @@ class MinecraftProcessor extends Processor
         $this->params = config('processors.minecraft.parameters');
     }
 
-    public function cost($cost): array
+    public function cost(array $cost): array
     {
         $memoryPerPlayer = config('processors.minecraft.memory_per_player');
         $diskPerSize = config('processors.minecraft.disk_per_size');
@@ -26,7 +26,7 @@ class MinecraftProcessor extends Processor
         );
     }
 
-    function reject($cost): bool
+    protected function reject($cost): bool
     {
         // TODO: this should come from node
         return $cost['cpu'] > 2400;

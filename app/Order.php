@@ -13,18 +13,18 @@ class Order extends Model
 
 	protected $observables = ['paid'];
 
-	public function user()
-	{
+	public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
 		return $this->belongsTo(User::class);
 	}
 
-	public function transaction()
-	{
+	public function transaction(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
 		return $this->belongsTo(Transaction::class);
 	}
 
-	public function firePaid()
-	{
+	public function firePaid(): void
+    {
 		$this->fireModelEvent('paid');
 	}
 }

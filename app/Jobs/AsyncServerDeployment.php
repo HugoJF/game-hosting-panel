@@ -84,7 +84,7 @@ class AsyncServerDeployment implements ShouldQueue
         Pterodactyl $pterodactyl,
         ServerService $serverService,
         ServerDeploymentService $deploymentService
-    )
+    ): void
     {
         $this->pterodactyl = $pterodactyl;
 
@@ -100,7 +100,7 @@ class AsyncServerDeployment implements ShouldQueue
      *
      * @return DateTime
      */
-    public function retryUntil()
+    public function retryUntil(): DateTime
     {
         return now()->addMinutes(5);
     }

@@ -15,8 +15,8 @@ use Kris\LaravelFormBuilder\Form;
 
 class DeployForms extends ServiceForm
 {
-	public function create(Server $server)
-	{
+	public function create(Server $server): Form
+    {
 		$form = $this->formBuilder->create(DeployForm::class, [
 			'method' => 'POST',
 			'url'    => route('deploys.store', $server),
@@ -27,8 +27,8 @@ class DeployForms extends ServiceForm
 		return $form;
 	}
 
-	public function edit(Deploy $deploy)
-	{
+	public function edit(Deploy $deploy): Form
+    {
 		$form = $this->formBuilder->create(DeployForm::class, [
 			'method' => 'PATCH',
 			'url'    => route('deploys.update', $deploy),
@@ -42,22 +42,24 @@ class DeployForms extends ServiceForm
 		return $form;
 	}
 
-	protected function disablePaidFields(Form $form, Deploy $deploy)
-	{
+	protected function disablePaidFields(Form $form, Deploy $deploy): void
+    {
 		$type = $deploy->server->node->type;
 		$parameters = $deploy->server->game->parameters($type);
 
 		$form->setDisabled('billing_period');
 		foreach ($deploy->settings()->all() as $key => $value) {
 			$field = $form->getField($key);
-			if (!$field)
-				continue;
+			if (!$field) {
+                continue;
+            }
 
 			$field->setValue($value);
 			$cost = $parameters[ $key ]['cost'] ?? false;
 
-			if ($cost)
-				$form->setDisabled($key);
+			if ($cost) {
+                $form->setDisabled($key);
+            }
 		}
 	}
 }

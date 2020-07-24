@@ -20,7 +20,7 @@ class LocationService
      *
      * @return Location
      */
-    public function firstOrCreate(int $id, array $data)
+    public function firstOrCreate(int $id, array $data): Location
     {
         return Location::firstOrCreate(compact('id'), $data);
     }

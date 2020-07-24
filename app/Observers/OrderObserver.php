@@ -9,7 +9,7 @@ use Exception;
 
 class OrderObserver
 {
-    public function created(Order $order)
+    public function created(Order $order): void
     {
         $transaction = Transaction::make();
 
@@ -22,7 +22,7 @@ class OrderObserver
         $order->save();
     }
 
-    public function retrieved(Order $order)
+    public function retrieved(Order $order): void
     {
         $ps = app(PaymentSystem::class);
 
@@ -33,13 +33,14 @@ class OrderObserver
         $order->save();
     }
 
-    public function saving(Order $order)
+    public function saving(Order $order): void
     {
-        if (!$order->getOriginal('paid') && $order->paid)
+        if ($order->paid && !$order->getOriginal('paid')) {
             $order->firePaid();
+        }
     }
 
-    public function paid(Order $order)
+    public function paid(Order $order): void
     {
         if (!$order->transaction) {
             throw new Exception('Order was paid but could not find transaction to update!');

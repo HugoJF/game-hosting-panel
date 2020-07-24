@@ -20,7 +20,7 @@ class NodeService
      *
      * @return Node
      */
-    public function firstOrCreate(int $id, array $data)
+    public function firstOrCreate(int $id, array $data): Node
     {
         return Node::firstOrCreate(compact('id'), $data);
     }

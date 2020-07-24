@@ -15,12 +15,12 @@ class AnnouncementController extends Controller
     // TODO: tempusdominus
     // TODO: atualizar master layout para corrigir o sidebar
 
-    public function index()
+    public function index(): void
     {
 
     }
 
-    public function show(Announcement $announcement)
+    public function show(Announcement $announcement): void
     {
 
     }

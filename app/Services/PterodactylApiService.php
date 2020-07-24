@@ -14,7 +14,7 @@ class PterodactylApiService
         $this->pterodactyl = $pterodactyl;
     }
 
-    protected function fetchAll(string $resource)
+    protected function fetchAll(string $resource): array
     {
         $aggregate = [];
         $currentPage = 1;
@@ -30,7 +30,7 @@ class PterodactylApiService
         return $aggregate;
     }
 
-    public function users()
+    public function users(): array
     {
         return $this->fetchAll('users');
     }
@@ -40,22 +40,22 @@ class PterodactylApiService
      *
      * @return array
      */
-    public function locations()
+    public function locations(): array
     {
         return $this->fetchAll('locations');
     }
 
-    public function nodes()
+    public function nodes(): array
     {
         return $this->fetchAll('nodes');
     }
 
-    public function nests()
+    public function nests(): array
     {
         return $this->fetchAll('nests');
     }
 
-    public function eggs()
+    public function eggs(): array
     {
         $nests = collect($this->nests());
 

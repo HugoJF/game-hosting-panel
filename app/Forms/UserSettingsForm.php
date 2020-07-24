@@ -11,7 +11,7 @@ class UserSettingsForm extends Form
         $this->add('email', 'text', $this->params('Email to send notifications.'));
     }
 
-    protected function params($text)
+    protected function params($text): array
     {
         return [
             'help_block' => [

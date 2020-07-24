@@ -9,7 +9,7 @@ use App\Transaction;
 
 class DeployObserver
 {
-    public function created(Deploy $deploy)
+    public function created(Deploy $deploy): void
     {
         /** @var DeployCostService $costService */
         $costService = app(DeployCostService::class);
@@ -27,7 +27,7 @@ class DeployObserver
         $deploy->save();
     }
 
-    public function updating(Deploy $deploy)
+    public function updating(Deploy $deploy): void
     {
         $reasons = config('ghp.termination-reasons');
 

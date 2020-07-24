@@ -12,6 +12,7 @@ use App\Observers\ServerObserver;
 use App\Observers\TransactionObserver;
 use App\Order;
 use App\Transaction;
+use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
 	public function register()
 	{
 		if ($this->app->environment() !== 'production') {
-			$this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+			$this->app->register(IdeHelperServiceProvider::class);
 		}
 		// ...
 	}
@@ -37,16 +38,16 @@ class AppServiceProvider extends ServiceProvider
 	 *
 	 * @return void
 	 */
-	public function boot()
-	{
+	public function boot(): void
+    {
 	    $this->registerSingletons();
 		$this->registerObservers();
 		$this->registerCustomBladeDirectives();
-		$this->registerCustomRouteBindinds();
+		$this->registerCustomRouteBindings();
 		$this->registerViewComposers();
 	}
 
-    protected function registerSingletons()
+    protected function registerSingletons(): void
     {
         $this->app->singleton(Pterodactyl::class, function ($app) {
             return new Pterodactyl(config('pterodactyl.api.key'), config('pterodactyl.api.endpoint'));
@@ -71,14 +72,14 @@ class AppServiceProvider extends ServiceProvider
 		});
 	}
 
-    protected function registerCustomRouteBindinds(): void
+    protected function registerCustomRouteBindings(): void
 	{
 		Route::bind('coupon', function ($value) {
 			return Coupon::where('code', $value)->first() ?? abort(404);
 		});
 	}
 
-    protected function registerViewComposers()
+    protected function registerViewComposers(): void
     {
         view()->composer('*', GlobalComposer::class);
     }

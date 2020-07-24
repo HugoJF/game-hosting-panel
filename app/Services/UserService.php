@@ -12,12 +12,12 @@ use App\User;
 
 class UserService
 {
-	public function updateUser(User $user, array $data)
-	{
+	public function updateUser(User $user, array $data): void
+    {
 		$user->fill(collect($data)->only(['name', 'server_limit', 'server_expiration_days', 'email'])->toArray());
 
-		$user->server_limit = intval($data['server_limit']);
-		$user->server_expiration_days = intval($data['server_expiration_days']);
+		$user->server_limit = (int) $data['server_limit'];
+		$user->server_expiration_days = (int) $data['server_expiration_days'];
 
 		$user->save();
 	}

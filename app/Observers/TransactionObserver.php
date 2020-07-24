@@ -10,14 +10,14 @@ use Exception;
 
 class TransactionObserver
 {
-    public function creating(Transaction $transaction)
+    public function creating(Transaction $transaction): void
     {
         if (!$transaction->user->hasBalance($transaction->value)) {
             throw new InsufficientBalanceException;
         }
     }
 
-    public function updating(Transaction $transaction)
+    public function updating(Transaction $transaction): void
     {
         $old = $transaction->getOriginal('value');
         $new = $transaction->value;

@@ -32,7 +32,7 @@ class CostController extends Controller
         $this->nodeSelection = $nodeSelection;
     }
 
-    public function creation(Request $request, Location $location)
+    public function creation(Request $request)
     {
         $location = Location::find($request->get('location'));
         $node = $this->nodeSelection->handle($location);

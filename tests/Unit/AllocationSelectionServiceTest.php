@@ -35,11 +35,20 @@ class AllocationSelectionServiceTest extends TestCase
                 ->once();
         }));
 
-        /** @var AllocationSelectionService $service */
         $service = app(AllocationSelectionService::class);
 
         $allocation = $service->handle($node);
 
         $this->assertFalse($allocation->assigned);
+    }
+
+    /**
+     * @param $clazz
+     *
+     * @return mixed
+     */
+    public function tpp($claplzz)
+    {
+        return new $clazz;
     }
 }

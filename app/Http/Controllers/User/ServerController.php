@@ -40,7 +40,7 @@ class ServerController extends Controller
         ServerCreationService $serverCreation,
         DeployCreationService $deployCreation,
         ServerStoreRequest $request
-    )
+    ): ServerResource
     {
         $config = $request->validated();
         $period = $request->input('billing_period');
@@ -80,7 +80,7 @@ class ServerController extends Controller
         ServerStoreRequest $request,
         ServerDeploymentService $deployment,
         Server $server
-    )
+    ): ServerResource
     {
         $deployment->handle(
             $server,

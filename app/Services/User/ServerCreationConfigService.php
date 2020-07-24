@@ -21,7 +21,7 @@ class ServerCreationConfigService
         $this->allocationService = $allocationService;
     }
 
-    public function handle(User $user, Node $node, Game $game, Server $server, Allocation $allocation, array $config)
+    public function handle(User $user, Node $node, Game $game, Server $server, Allocation $allocation, array $config): array
     {
         $defaults = $this->getDefaultConfig();
         $base = $this->getBaseConfig($game);
@@ -35,7 +35,7 @@ class ServerCreationConfigService
         return config('pterodactyl.server-creation-defaults');
     }
 
-    protected function getConfig(User $user, Node $node, Allocation $allocation, Server $server, array $config)
+    protected function getConfig(User $user, Node $node, Allocation $allocation, Server $server, array $config): array
     {
         return [
             'name'                => $server->name,
@@ -48,7 +48,7 @@ class ServerCreationConfigService
         ];
     }
 
-    protected function getBaseConfig(Game $game)
+    protected function getBaseConfig(Game $game): array
     {
         $egg = $this->pterodactyl->egg($game->nest_id, $game->id, ['variables']);
 
@@ -58,7 +58,7 @@ class ServerCreationConfigService
         return array_merge($properties, $environment);
     }
 
-    protected function getImageProperties(Egg $egg)
+    protected function getImageProperties(Egg $egg): array
     {
         return [
             'egg'          => $egg->id,
@@ -67,7 +67,7 @@ class ServerCreationConfigService
         ];
     }
 
-    protected function getDefaultEnvironment(Egg $egg)
+    protected function getDefaultEnvironment(Egg $egg): array
     {
         $environment = collect($egg->relationships['variables'])->mapWithKeys(fn($v) => [
             $v['env_variable'] => $v['default_value'],

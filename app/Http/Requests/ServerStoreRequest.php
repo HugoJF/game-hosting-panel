@@ -12,10 +12,10 @@ class ServerStoreRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         $periods = collect(config('ghp.billing-periods'))->filter(fn ($p) => $p)->keys()->toArray();
-        list($cpu, $memory, $disk, $databases) = config('ghp.limits');
+        [$cpu, $memory, $disk, $databases] = config('ghp.limits');
 
         return [
             'billing_period' => ['required', Rule::in($periods)],

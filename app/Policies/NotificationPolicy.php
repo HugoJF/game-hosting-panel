@@ -9,7 +9,7 @@ class NotificationPolicy extends BasePolicy
 {
     use HandlesAuthorization;
 
-    public function list(User $user)
+    public function list(User $user): bool
     {
         return true;
     }

@@ -101,7 +101,7 @@ class DeployCostService
      *
      * @return Carbon
      */
-    public function getNextBillablePeriod(Deploy $deploy)
+    public function getNextBillablePeriod(Deploy $deploy): Carbon
     {
         $billablePeriod = $this->getBillablePeriod($deploy, false);
         $adder = $this->getBillingPeriodAdd($deploy->billing_period);
@@ -120,7 +120,7 @@ class DeployCostService
      *
      * @return int
      */
-    public function getBillablePeriod(Deploy $deploy, bool $real = false)
+    public function getBillablePeriod(Deploy $deploy, bool $real = false): int
     {
         $billingPeriod = $deploy->billing_period;
         $reference = $real ? 'terminated_at' : 'termination_requested_at';

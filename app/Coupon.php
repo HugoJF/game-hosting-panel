@@ -14,13 +14,13 @@ class Coupon extends Model
 		return 'code';
 	}
 
-	public function users()
-	{
+	public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
 		return $this->belongsToMany(User::class)->withTimestamps();
 	}
 
-	public function transaction()
-	{
+	public function transaction(): \Illuminate\Database\Eloquent\Relations\MorphOne
+    {
 		return $this->morphOne(Transaction::class, 'reason');
 	}
 

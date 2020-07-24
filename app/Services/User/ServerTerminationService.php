@@ -26,7 +26,7 @@ class ServerTerminationService
      * @return bool
      * @throws Exception
      */
-    public function handle(Server $server)
+    public function handle(Server $server): bool
     {
         $defaults = config('pterodactyl.server-termination-defaults');
 

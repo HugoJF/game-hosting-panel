@@ -12,7 +12,7 @@ class GameForm extends Form
         $this->add('cover', 'text', $this->params('Image cover used for the game'));
     }
 
-    protected function params($text)
+    protected function params($text): array
     {
         return [
             'help_block' => [

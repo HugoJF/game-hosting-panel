@@ -44,7 +44,7 @@ class AutoServerDeploymentService
      *
      * @throws Exception
      */
-    public function handle(Server $server, string $billingPeriod, array $config)
+    public function handle(Server $server, string $billingPeriod, array $config): void
     {
         $this->deployCreation->preChecks($server->user, $server->node, $billingPeriod, $config);
 

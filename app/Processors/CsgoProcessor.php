@@ -11,7 +11,7 @@ class CsgoProcessor extends Processor
         $this->params = config('processors.csgo.parameters');
     }
 
-    public function cost($cost): array
+    public function cost(array $cost): array
     {
         $tickrateCostPerSlot = config('processors.csgo.cost_per_slot');
 
@@ -29,7 +29,7 @@ class CsgoProcessor extends Processor
         );
     }
 
-    function reject($cost): bool
+    protected function reject($cost): bool
     {
         // TODO: this should come from node
         return $cost['cpu'] > 2400;

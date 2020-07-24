@@ -7,12 +7,12 @@ use App\User;
 
 class TransactionPolicy extends BasePolicy
 {
-	public function list(User $user)
-	{
+	public function list(User $user): bool
+    {
 		return true;
 	}
 
-    public function search(User $user, Transaction $transaction)
+    public function search(User $user, Transaction $transaction): bool
     {
         return $user->id === $transaction->user_id;
 	}

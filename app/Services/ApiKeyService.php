@@ -21,8 +21,8 @@ class ApiKeyService
 	 *
 	 * @return ApiKey
 	 */
-	public function store(User $user, array $data)
-	{
+	public function store(User $user, array $data): ApiKey
+    {
 		$key = new ApiKey;
 
 		$key->fill($data);
@@ -42,8 +42,8 @@ class ApiKeyService
 	 *
 	 * @return ApiKey
 	 */
-	public function update(ApiKey $key, array $data)
-	{
+	public function update(ApiKey $key, array $data): ApiKey
+    {
 		$key->fill($data);
 
 		$key->save();

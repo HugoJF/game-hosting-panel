@@ -8,7 +8,7 @@ class Location extends Model
 {
     protected $fillable = ['id', 'short', 'long', 'flag'];
 
-    public function nodes()
+    public function nodes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Node::class);
     }

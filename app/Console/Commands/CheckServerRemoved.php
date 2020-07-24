@@ -27,7 +27,7 @@ class CheckServerRemoved extends Command
     /**
      * Execute the console command.
      *
-     * @param PterodactylApi $pterodactyl
+     * @param Pterodactyl $pterodactyl
      *
      * @return mixed
      */
@@ -48,13 +48,13 @@ class CheckServerRemoved extends Command
         }
     }
 
-    protected function remove(Server $server)
+    protected function remove(Server $server): void: void
     {
         $this->_info("Server $server->id [PID: $server->panel_id] triggered NotFoundException, marking as removed");
         $server->delete();
     }
 
-    protected function _info($message)
+    protected function _info($message): void
     {
         $this->info($message);
         info($message);

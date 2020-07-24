@@ -7,23 +7,23 @@ use App\User;
 
 class ApiKeyPolicy extends BasePolicy
 {
-	public function index(User $user)
-	{
+	public function index(User $user): bool
+    {
 		return true;
 	}
 
-	public function create(User $user)
-	{
+	public function create(User $user): bool
+    {
 		return true;
 	}
 
-	public function update(User $user, ApiKey $key)
-	{
+	public function update(User $user, ApiKey $key): bool
+    {
 		return $key->user->is($user);
 	}
 
-	public function delete(User $user, ApiKey $key)
-	{
+	public function delete(User $user, ApiKey $key): bool
+    {
 		return $key->user->is($user);
 	}
 }

@@ -30,7 +30,7 @@ class ServerCreationService
         $this->allocationService = $allocationService;
     }
 
-    public function handle(User $user, Game $game, Node $node, array $data)
+    public function handle(User $user, Game $game, Node $node, array $data): ?Server
     {
         DB::beginTransaction();
         try {
@@ -84,7 +84,7 @@ class ServerCreationService
         return $server;
     }
 
-    protected function preCreateServerModel(User $user, Node $node, Game $game, Allocation $allocation, array $config)
+    protected function preCreateServerModel(User $user, Node $node, Game $game, Allocation $allocation, array $config): Server
     {
         $server = new Server;
 
@@ -104,7 +104,7 @@ class ServerCreationService
         return $server;
     }
 
-    protected function attachPanelId(Server $server, int $id, string $hash)
+    protected function attachPanelId(Server $server, int $id, string $hash): void
     {
         $server->panel_id = $id;
         $server->panel_hash = $hash;
@@ -112,7 +112,7 @@ class ServerCreationService
         $server->save();
     }
 
-    protected function dispatchMonitoringJob(Server $server)
+    protected function dispatchMonitoringJob(Server $server): void
     {
         dispatch(new ServerCreationMonitor($server));
     }

@@ -21,8 +21,8 @@ class OrderService
 	 *
 	 * @return bool
 	 */
-	public function isValidAmount($amount)
-	{
+	public function isValidAmount($amount): bool
+    {
 		$amounts = config('orders.amounts');
 
 		return in_array($amount, $amounts);
@@ -68,8 +68,8 @@ class OrderService
 	 *
 	 * @return Order
 	 */
-	public function storeOrder($apiResponse, $amount)
-	{
+	public function storeOrder($apiResponse, $amount): Order
+    {
 		$order = Order::make();
 
 		$order->reference = $apiResponse->id;

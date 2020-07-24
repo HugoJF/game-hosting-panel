@@ -30,7 +30,7 @@ class ServerService
      *
      * @return bool
      */
-    public function isInstalled(Server $server)
+    public function isInstalled(Server $server): bool
     {
         $resource = $this->pterodactyl->server($server->panel_id);
 
@@ -44,7 +44,7 @@ class ServerService
      * @return Deploy|null
      * @throws MultipleLiveDeploys
      */
-    public function getCurrentDeploy(Server $server)
+    public function getCurrentDeploy(Server $server): ?Deploy
     {
         $server->loadMissing('deploys');
         $deploys = $server->deploys->where('terminated_at', null);

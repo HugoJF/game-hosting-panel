@@ -13,8 +13,8 @@ use App\User;
 
 class UserForms extends ServiceForm
 {
-	public function edit(User $user)
-	{
+	public function edit(User $user): \Kris\LaravelFormBuilder\Form
+    {
 		return $this->formBuilder->create(UserForm::class, [
 			'method' => 'PATCH',
 			'url'    => route('users.update', $user),

@@ -14,15 +14,16 @@ class BasePolicy
 {
 	use HandlesAuthorization;
 
-	/**
-	 * @param $user
-	 * @param $ability
-	 *
-	 * @return bool
-	 */
-	public function before($user, $ability)
-	{
-		if ($user->admin)
-			return true;
+    /**
+     * @param $user
+     * @param $ability
+     *
+     * @return bool|null
+     */
+	public function before($user, $ability): ?bool: ?bool
+    {
+		if ($user->admin) {
+            return true;
+        }
 	}
 }

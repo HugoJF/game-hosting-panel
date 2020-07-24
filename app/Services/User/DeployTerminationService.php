@@ -17,7 +17,7 @@ class DeployTerminationService
         $this->serverTermination = $terminationService;
     }
 
-    public function handle(Server $server, string $reason, bool $forced = false)
+    public function handle(Server $server, string $reason, bool $forced = false): void
     {
         $deploy = $this->serverService->getCurrentDeploy($server);
 

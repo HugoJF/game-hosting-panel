@@ -13,16 +13,16 @@ use App\Forms\CouponForm;
 
 class CouponForms extends ServiceForm
 {
-	public function create()
-	{
+	public function create(): \Kris\LaravelFormBuilder\Form
+    {
 		return $this->formBuilder->create(CouponForm::class, [
 			'method' => 'POST',
 			'url'    => route('coupons.store'),
 		]);
 	}
 
-	public function edit(Coupon $coupon)
-	{
+	public function edit(Coupon $coupon): \Kris\LaravelFormBuilder\Form
+    {
 		return $this->formBuilder->create(CouponForm::class, [
 			'method' => 'PATCH',
 			'url'    => route('coupons.update', $coupon),

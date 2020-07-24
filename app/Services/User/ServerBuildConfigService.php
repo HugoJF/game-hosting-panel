@@ -41,7 +41,7 @@ class ServerBuildConfigService
         ];
     }
 
-    private function getServerLimits(Server $server, array $config)
+    private function getServerLimits(Server $server, array $config): array
     {
         // TODO: normalize this using $node information instead of being hardcoded
         $cpu = $config['cpu'];

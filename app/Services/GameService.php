@@ -20,7 +20,7 @@ class GameService
      *
      * @return Game
      */
-    public function firstOrCreate(int $id, array $data)
+    public function firstOrCreate(int $id, array $data): Game
     {
         return Game::firstOrCreate(compact('id'), $data);
     }

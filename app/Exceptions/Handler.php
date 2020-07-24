@@ -47,12 +47,12 @@ class Handler extends ExceptionHandler
      * @param Request   $request
      * @param Exception $exception
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      * @throws Exception
      */
     public function render($request, Exception $exception)
     {
-        if (!$request->expectsJson() && $exception instanceof FlashException) {
+        if ($exception instanceof FlashException && !$request->expectsJson()) {
             flash()->error($exception->getMessage());
 
             return back();

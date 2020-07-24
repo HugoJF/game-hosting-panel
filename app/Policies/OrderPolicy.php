@@ -9,12 +9,12 @@ class OrderPolicy extends BasePolicy
 {
     use HandlesAuthorization;
 
-    public function list(User $user)
+    public function list(User $user): bool
     {
         return true;
     }
 
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return true;
     }

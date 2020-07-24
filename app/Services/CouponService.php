@@ -24,7 +24,7 @@ class CouponService
      *
      * @return Coupon
      */
-    public function store(array $data)
+    public function store(array $data): Coupon
     {
         $coupon = new Coupon;
 
@@ -43,7 +43,7 @@ class CouponService
      *
      * @return Coupon
      */
-    public function update(Coupon $coupon, array $data)
+    public function update(Coupon $coupon, array $data): Coupon
     {
         $coupon->fill($data);
 
@@ -61,7 +61,7 @@ class CouponService
      * @return Transaction|null
      * @throws Exception
      */
-    public function use(User $user, Coupon $coupon)
+    public function use(User $user, Coupon $coupon): ?Transaction
     {
         if ($coupon->uses >= $coupon->max_uses) {
             flash()->error('Coupon max uses reached!');

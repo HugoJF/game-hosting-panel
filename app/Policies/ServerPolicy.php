@@ -10,42 +10,42 @@ class ServerPolicy extends BasePolicy
 {
     use HandlesAuthorization;
 
-    public function list(User $user)
+    public function list(User $user): bool
     {
         return true;
     }
 
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return true;
     }
 
-    public function view(User $user, Server $server)
+    public function view(User $user, Server $server): bool
     {
         return $user->id === $server->user_id;
     }
 
-    public function search(User $user, Server $server)
+    public function search(User $user, Server $server): bool
     {
         return $user->id === $server->user_id;
     }
 
-    public function deploy(User $user, Server $server)
+    public function deploy(User $user, Server $server): bool
     {
         return $user->id === $server->user_id;
     }
 
-    public function terminate(User $user, Server $server)
+    public function terminate(User $user, Server $server): bool
     {
         return $user->id === $server->user_id;
     }
 
-    public function forceTerminate(User $user, Server $server)
+    public function forceTerminate(User $user, Server $server): bool
     {
         return $user->id === $server->user_id;
     }
 
-    public function destroy(User $user, Server $server)
+    public function destroy(User $user, Server $server): bool
     {
         return $user->id === $server->user_id;
     }

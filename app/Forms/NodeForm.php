@@ -24,7 +24,7 @@ class NodeForm extends Form
         $this->add('database_cost', 'number', $this->params('Cost per database'));
     }
 
-    protected function params($text)
+    protected function params($text): array
     {
         return $this->numberParameters + [
                 'help_block' => [

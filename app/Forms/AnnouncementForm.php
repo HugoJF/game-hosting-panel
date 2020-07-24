@@ -4,7 +4,7 @@ namespace App\Forms;
 
 use Kris\LaravelFormBuilder\Form;
 
-class AnnoucementForm extends Form
+class AnnouncementForm extends Form
 {
     public function buildForm()
     {
@@ -16,12 +16,12 @@ class AnnoucementForm extends Form
         $this->expiresAt();
     }
 
-    protected function visible()
+    protected function visible(): void
     {
         $this->add('visible', 'checkbox');
     }
 
-    public function type()
+    public function type(): void
     {
         $this->add('type', 'select', [
             'choices' => [
@@ -36,17 +36,17 @@ class AnnoucementForm extends Form
         $this->add('description', 'text');
     }
 
-    protected function action()
+    protected function action(): void
     {
         $this->add('action', 'text');
     }
 
-    protected function actionUrl()
+    protected function actionUrl(): void
     {
         $this->add('action_url', 'text');
     }
 
-    protected function expiresAt()
+    protected function expiresAt(): void
     {
         $this->add('expires_at', 'datetimepicker');
     }

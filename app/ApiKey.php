@@ -15,8 +15,8 @@ class ApiKey extends Model
 
 	protected $dates = ['last_used_at'];
 
-	public function user()
-	{
+	public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
 		return $this->belongsTo(User::class);
 	}
 }

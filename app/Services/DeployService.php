@@ -21,8 +21,8 @@ class DeployService
 	 *
 	 * @return Deploy|null
 	 */
-	public function store(Server $server, array $deployParameters)
-	{
+	public function store(Server $server, array $deployParameters): ?Deploy
+    {
 		$type = $server->node->type;
 		$parameters = $server->game->parameters($type);
 		$keys = array_keys($parameters);
@@ -60,14 +60,15 @@ class DeployService
 	 *
 	 * @return Deploy
 	 */
-	public function updateDeploy(Deploy $deploy, array $data)
-	{
+	public function updateDeploy(Deploy $deploy, array $data): Deploy
+    {
 		$parameters = $this->getUpdatableDeployParameters($deploy);
 
 		foreach ($parameters as $key => $value) {
 			$value = $data[ $key ] ?? null;
-			if ($value)
-				$deploy->settings()->set($key, $value);
+			if ($value) {
+                $deploy->settings()->set($key, $value);
+            }
 		}
 
 		$deploy->save();
@@ -82,8 +83,8 @@ class DeployService
 	 *
 	 * @return array
 	 */
-	public function getUpdatableDeployParameters(Deploy $deploy)
-	{
+	public function getUpdatableDeployParameters(Deploy $deploy): array
+    {
 		$type = $deploy->server->node->type;
 		$parameters = $deploy->server->game->parameters($type);
 
