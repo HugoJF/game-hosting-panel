@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Services\User\UserPanelRegistrationService;
 use App\User;
 use HCGCloud\Pterodactyl\Pterodactyl;
+use HCGCloud\Pterodactyl\Resources\User as UserResource;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
@@ -30,6 +31,7 @@ class UserPanelRegistrationServiceTest extends TestCase
             $mock
                 ->shouldReceive('createUser')
                 ->withArgs([$userInfo])
+                ->andReturn(new UserResource([]))
                 ->once();
         }));
 

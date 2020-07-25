@@ -20,7 +20,7 @@ class BasePolicy
      *
      * @return bool|null
      */
-	public function before($user, $ability): ?bool: ?bool
+	public function before($user, $ability): ?bool
     {
 		if ($user->admin) {
             return true;

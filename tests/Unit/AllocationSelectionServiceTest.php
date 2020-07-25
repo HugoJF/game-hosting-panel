@@ -41,14 +41,4 @@ class AllocationSelectionServiceTest extends TestCase
 
         $this->assertFalse($allocation->assigned);
     }
-
-    /**
-     * @param $clazz
-     *
-     * @return mixed
-     */
-    public function tpp($claplzz)
-    {
-        return new $clazz;
-    }
 }

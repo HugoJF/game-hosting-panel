@@ -12,7 +12,7 @@ class AdvancedDeployRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(): array: array
+    public function rules(): array
     {
         return [
             'cpu'       => 'required|gte:25|lte:100',
