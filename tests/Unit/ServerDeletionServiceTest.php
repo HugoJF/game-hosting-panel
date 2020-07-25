@@ -25,10 +25,6 @@ class ServerDeletionServiceTest extends TestCase
         parent::setUp();
 
         Carbon::setTestNow(Carbon::create(2020, 1, 1, 0, 0, 0));
-
-        $mocked = Mockery::mock(DeployCreationService::class);
-        $this->instance(DeployCreationService::class, $mocked);
-        $mocked->shouldReceive('preChecks')->once();
     }
 
     public function test_server_deletion(): void
@@ -45,18 +41,14 @@ class ServerDeletionServiceTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $this->instance(Pterodactyl::class, Mockery::mock(Pterodactyl::class, function ($mock) use ($server) {
-            /** @var Mockery\Mock $mock */
-            $mock
-                ->shouldReceive('deleteServer')
-                ->withArgs([$server->panel_id])
-                ->once();
-        }));
+        $mocked = Mockery::mock(Pterodactyl::class);
+        $mocked
+            ->shouldReceive('deleteServer')
+            ->withArgs([$server->panel_id])
+            ->once();
+        $this->instance(Pterodactyl::class, $mocked);
 
-        /** @var ServerDeletionService $service */
-        $service = app(ServerDeletionService::class);
-
-        $service->handle($server);
+        app(ServerDeletionService::class)->handle($server);
 
         $this->assertEquals(now(), $server->deleted_at);
     }

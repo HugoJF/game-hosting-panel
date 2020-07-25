@@ -12,7 +12,10 @@ class TransactionObserver
 {
     public function creating(Transaction $transaction): void
     {
-        if (!$transaction->user->hasBalance($transaction->value)) {
+        // The value of the transaction is negative since a positive transaction means receiving money
+        // and a negative transaction means losing money. hasBalance() will check if the user
+        // has a balance greater then the parameter passed.
+        if (!$transaction->user->hasBalance(-$transaction->value)) {
             throw new InsufficientBalanceException;
         }
     }

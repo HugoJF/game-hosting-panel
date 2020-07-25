@@ -62,7 +62,7 @@ class ServerCreationServiceTest extends TestCase
         $this->instance(Pterodactyl::class, $mocked);
     }
 
-    protected function mockCreateServerTofail(): void
+    protected function mockCreateServerToFail(): void
     {
         $mocked = Mockery::mock(Pterodactyl::class);
         $mocked->shouldReceive('createServer')->andReturn(null)->once();
@@ -94,7 +94,7 @@ class ServerCreationServiceTest extends TestCase
 
         $this->expectsServerBuildConfigGeneration();
         $this->expectsAllocationSelection();
-        $this->mockCreateServerTofail();
+        $this->mockCreateServerToFail();
 
         $game = factory(Game::class)->create();
         $node = factory(Node::class)->create();

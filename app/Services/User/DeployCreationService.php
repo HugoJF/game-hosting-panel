@@ -76,7 +76,7 @@ class DeployCreationService
             throw new InvalidBillingPeriodException($billingPeriod);
         }
 
-        if ($costPerPeriod = ($this->costService->getCostPerPeriod($node, $billingPeriod, $config) <= 0)) {
+        if (($costPerPeriod = $this->costService->getCostPerPeriod($node, $billingPeriod, $config)) <= 0) {
             throw new InvalidPeriodCostException;
         }
 
