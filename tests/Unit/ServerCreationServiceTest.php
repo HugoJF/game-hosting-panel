@@ -33,7 +33,7 @@ class ServerCreationServiceTest extends TestCase
     ];
 
     protected int $panelId = 512;
-    protected $panelHash = 'random_hash';
+    protected string $panelHash = 'random_hash';
 
     protected function expectsAllocationSelection(): void
     {

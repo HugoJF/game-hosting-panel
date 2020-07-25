@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Game;
 use App\Node;
 use App\Server;
+use App\Services\User\DeployCreationService;
 use App\Services\User\ServerDeletionService;
 use App\User;
 use Carbon\Carbon;
@@ -24,9 +25,13 @@ class ServerDeletionServiceTest extends TestCase
         parent::setUp();
 
         Carbon::setTestNow(Carbon::create(2020, 1, 1, 0, 0, 0));
+
+        $mocked = Mockery::mock(DeployCreationService::class);
+        $this->instance(DeployCreationService::class, $mocked);
+        $mocked->shouldReceive('preChecks')->once();
     }
 
-    public function test_server_deletion()
+    public function test_server_deletion(): void
     {
         $game = factory(Game::class)->create();
         $node = factory(Node::class)->create();

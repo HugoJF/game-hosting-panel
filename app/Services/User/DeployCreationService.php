@@ -84,7 +84,7 @@ class DeployCreationService
             throw new InsufficientBalanceException;
         }
 
-        if ($user->servers()->count() >= $user->server_limit) {
+        if ($user->servers()->count() > $user->server_limit) {
             throw new TooManyServersException;
         }
     }
