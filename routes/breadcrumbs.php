@@ -137,7 +137,13 @@ Breadcrumbs::for('admins.coupons', function ($trail) {
 // Home > Administrative > Nodes
 Breadcrumbs::for('admins.nodes', function ($trail) {
     $trail->parent('admins.dashboard');
-    $trail->push('Nodes', route('admins.nodes'));
+    $trail->push('Nodes', route('admins.dashboard'));
+});
+
+// Home > Administrative > Nodes > Edit
+Breadcrumbs::for('admins.nodes.edit', function ($trail, $node) {
+    $trail->parent('admins.nodes');
+    $trail->push('Nodes', route('admins.nodes.edit', $node));
 });
 
 // Home > Coupons > [Edit]
