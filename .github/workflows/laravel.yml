@@ -29,6 +29,6 @@ jobs:
       run: vendor/bin/phpunit --configuration phpunit.dist.xml
     - uses: codecov/codecov-action@v1
       with:
-      token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-      file: ./build/clover.xml # optional
-      fail_ci_if_error: true # optional (default = false)
+        token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+        file: ./build/clover.xml # optional
+        fail_ci_if_error: true # optional (default = false)
