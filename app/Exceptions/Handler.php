@@ -39,26 +39,31 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
-        parent::report($exception);
-    }
-
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @param Request   $request
-     * @param Throwable $exception
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws Throwable
-     */
-    public function render($request, Throwable $exception)
-    {
-        if ($exception instanceof FlashException && !$request->expectsJson()) {
-            flash()->error($exception->getMessage());
-
-            return back();
+        if (app()->bound('sentry') && $this->shouldReport($exception)) {
+            app('sentry')->captureException($exception);
         }
 
-        return parent::render($request, $exception);
+            parent::report($exception);
+        }
+
+        /**
+         * Render an exception into an HTTP response.
+         *
+         * @param Request   $request
+         * @param Throwable $exception
+         *
+         * @return \Symfony\Component\HttpFoundation\Response
+         * @throws Throwable
+         */
+        public
+        function render($request, Throwable $exception)
+        {
+            if ($exception instanceof FlashException && !$request->expectsJson()) {
+                flash()->error($exception->getMessage());
+
+                return back();
+            }
+
+            return parent::render($request, $exception);
+        }
     }
-}

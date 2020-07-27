@@ -21,6 +21,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
         "laravelcollective/html": "^6.1",
+        "sentry/sentry-laravel": "1.8.0",
         "socialiteproviders/steam": "^1.1",
         "spatie/laravel-searchable": "^1.6",
         "tymon/jwt-auth": "1.0.*",
