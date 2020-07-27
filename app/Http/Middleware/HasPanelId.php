@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Events\UserMissingPanelRegistration;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,9 @@ class HasPanelId
      */
     public function handle($request, Closure $next)
     {
-        if (!auth()->user()->panel_id) {
+        if (!($user = auth()->user())->panel_id) {
+            event(new UserMissingPanelRegistration($user));
+
             flash()->error('You account is not registered on our panel yet. Please wait a few minutes and try again.');
 
             return redirect()->route('home');

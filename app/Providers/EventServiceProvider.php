@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\CouponUsed;
+use App\Events\UserMissingPanelRegistration;
 use App\Listeners\RegisterUserOnPanel;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -17,14 +18,17 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        Registered::class         => [
+        Registered::class                   => [
             SendEmailVerificationNotification::class,
             RegisterUserOnPanel::class,
         ],
-        SocialiteWasCalled::class => [
+        UserMissingPanelRegistration::class => [
+            RegisterUserOnPanel::class,
+        ],
+        SocialiteWasCalled::class           => [
             'SocialiteProviders\\Steam\\SteamExtendSocialite@handle',
         ],
-        CouponUsed::class         => [
+        CouponUsed::class                   => [
             //
         ],
     ];
