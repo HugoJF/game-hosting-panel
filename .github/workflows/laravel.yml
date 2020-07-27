@@ -27,3 +27,8 @@ jobs:
       run: chmod -R 777 storage bootstrap/cache
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: vendor/bin/phpunit
+    - uses: codecov/codecov-action@v1
+      with:
+      token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+      file: ./build/clover.xml # optional
+      fail_ci_if_error: true # optional (default = false)
