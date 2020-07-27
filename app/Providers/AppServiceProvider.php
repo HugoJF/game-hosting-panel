@@ -76,6 +76,7 @@ class AppServiceProvider extends ServiceProvider
 
     protected function registerCustomRouteBindings(): void
 	{
+	    // TODO: getRouteKey?
 		Route::bind('coupon', function ($value) {
 			return Coupon::where('code', $value)->first() ?? abort(404);
 		});

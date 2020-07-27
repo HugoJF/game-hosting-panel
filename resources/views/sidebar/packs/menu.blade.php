@@ -43,7 +43,7 @@
                 </a>
             </li>
 
-            <!-- Usuários -->
+            <!-- Pedidos -->
             <li class="flex justify-between my-2 ml-3">
                 <a href="{{ route('orders.index') }}" class="flex items-center text-gray-500 no-underline text-base group">
                     <span class="mr-1 text-gray-400 group-hover:text-white" data-feather="shopping-cart"></span>
@@ -54,7 +54,21 @@
                 </a>
             </li>
 
-            <!-- Coupons -->
+            <!-- API -->
+        {{--            <li class="flex justify-between my-2 ml-3">--}}
+        {{--                <a href="{{ route('api-keys.index') }}" class="flex items-center text-gray-500 no-underline text-base group">--}}
+        {{--                    <span class="mr-1 text-gray-400 group-hover:text-white" data-feather="key"></span>--}}
+        {{--                    <span class="group-hover:text-gray-400">--}}
+        {{--                        @lang('words.api_keys')--}}
+        {{--                    </span>--}}
+        {{--                </a>--}}
+        {{--                <a class="group no-underline" href="#">--}}
+        {{--                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#productsHelpModal" data-feather="help-circle"></span>--}}
+        {{--                </a>--}}
+        {{--            </li>--}}
+        @admin
+
+        <!-- Coupons -->
             <li class="flex justify-between my-2 ml-3">
                 <a href="{{ route('coupons.index') }}" class="flex items-center text-gray-500 no-underline text-base group">
                     <span class="mr-1 text-gray-400 group-hover:text-white" data-feather="gift"></span>
@@ -66,19 +80,6 @@
                     <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#affiliatesHelpModal" data-feather="help-circle"></span>
                 </a>
             </li>
-
-            <!-- API -->
-{{--            <li class="flex justify-between my-2 ml-3">--}}
-{{--                <a href="{{ route('api-keys.index') }}" class="flex items-center text-gray-500 no-underline text-base group">--}}
-{{--                    <span class="mr-1 text-gray-400 group-hover:text-white" data-feather="key"></span>--}}
-{{--                    <span class="group-hover:text-gray-400">--}}
-{{--                        @lang('words.api_keys')--}}
-{{--                    </span>--}}
-{{--                </a>--}}
-{{--                <a class="group no-underline" href="#">--}}
-{{--                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#productsHelpModal" data-feather="help-circle"></span>--}}
-{{--                </a>--}}
-{{--            </li>--}}
 
             <!-- Administrative -->
             <li class="flex justify-between my-2 ml-3">
@@ -92,6 +93,7 @@
                     <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#couponsHelpModal" data-feather="help-circle"></span>
                 </a>
             </li>
+            @endadmin
         </ul>
     @endcomponent
 @endauth

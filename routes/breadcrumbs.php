@@ -10,6 +10,14 @@ Breadcrumbs::for('register', function ($trail) {
     $trail->push('Register', route('register'));
 });
 
+// Search
+Breadcrumbs::for('search', function ($trail) {
+    $term = request()->query('term');
+    $suffix = $term ? " results for \"$term\"" : '';
+
+    $trail->push("Search$suffix", route('search'));
+});
+
 // Dashboard
 Breadcrumbs::for('dashboard', function ($trail) {
     $trail->push('Dashboard', route('dashboard'));
