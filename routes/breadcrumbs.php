@@ -48,7 +48,13 @@ Breadcrumbs::for('servers.create', function ($trail) {
 // Home > Admin > Locations
 Breadcrumbs::for('admins.locations', function ($trail) {
     $trail->parent('admins.dashboard');
-    $trail->push('Locations', route('admins.locations'));
+    $trail->push('Locations', route('admins.dashboard'));
+});
+
+// Home > Admin > Locations > Edit
+Breadcrumbs::for('admins.locations.edit', function ($trail, $location) {
+    $trail->parent('admins.locations');
+    $trail->push('Edit', route('admins.locations.edit', $location));
 });
 
 Breadcrumbs::for('locations.index', function ($trail) {
