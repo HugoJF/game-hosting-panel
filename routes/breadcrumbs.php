@@ -157,3 +157,16 @@ Breadcrumbs::for('deploys.edit', function ($trail, $deploy) {
     $trail->parent('servers.show', $deploy->server);
     $trail->push('Editing deploy', route('deploys.edit', $deploy));
 });
+
+// Admin Dashboard > Games
+Breadcrumbs::for('admins.games', function ($trail) {
+    $trail->parent('admins.dashboard');
+    $trail->push("Games", route('admins.dashboard'));
+});
+
+
+// Admin Dashboard > Games > Edit
+Breadcrumbs::for('admins.games.edit', function ($trail, $game) {
+    $trail->parent('admins.games', $game);
+    $trail->push("Editing $game->name", route('admins.games.edit', $game));
+});
