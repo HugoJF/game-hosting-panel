@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
 
             $table->boolean('admin')->default(false);
 
-            $table->unsignedBigInteger('panel_id')->nullable();
+            $table->unsignedBigInteger('panel_id')->unique()->nullable();
 
             $table->rememberToken();
             $table->timestamps();
