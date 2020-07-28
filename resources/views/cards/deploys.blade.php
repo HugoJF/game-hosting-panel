@@ -61,7 +61,7 @@
                                 </span>
                             </p>
                             <span class="text-gray-700">
-                                {{ round($deploy->cpu) }}%
+                                {{ round($deploy->cpu) }} marks
                             </span>
                         </div>
 
