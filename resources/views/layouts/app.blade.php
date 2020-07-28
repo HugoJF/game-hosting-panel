@@ -125,7 +125,7 @@
             <div class="flex-grow text-gray-800 pt-8 p-1 md:p-8 overflow-x-hidden">
                 <!-- Flash message -->
                 <div class="container">
-                    @include('flash::message')
+                    @include('partials.flash')
                 </div>
 
                 <!-- Content -->
