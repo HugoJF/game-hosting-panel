@@ -83,6 +83,8 @@ return [
     'update'          => 'Update',
     'register'        => 'Register',
 
+    'english'              => 'English',
+    'brazilian-portuguese' => 'Brazilian Portuguese',
 
     'billing_period'   => 'Billing period',
     'period_cost'      => 'Period cost',

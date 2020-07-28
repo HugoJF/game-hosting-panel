@@ -8,7 +8,16 @@ class UserSettingsForm extends Form
 {
     public function buildForm()
     {
-        $this->add('email', 'text', $this->params('Email to send notifications.'));
+        $choices = collect(config('localization.locales'))
+            ->map(fn($details) => $details['language_key'])
+            ->map(fn($key) => trans($key))
+            ->toArray();
+
+
+        $this->add('locale', 'select', array_merge(
+            $this->params('Email to send notifications.'),
+            compact('choices')
+        ));
     }
 
     protected function params($text): array

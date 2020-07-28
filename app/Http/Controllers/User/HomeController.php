@@ -6,7 +6,6 @@ use App\Deploy;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserSettingsUpdateRequest;
 use App\Location;
-use App\Policies\UserPolicy;
 use App\Server;
 use App\Services\Forms\UserSettingsForms;
 use App\Transaction;
@@ -101,6 +100,6 @@ class HomeController extends Controller
 
         flash()->success(trans('user-settings.updated'));
 
-        return redirect()->route('dashboard');
+        return redirect()->route('settings');
     }
 }

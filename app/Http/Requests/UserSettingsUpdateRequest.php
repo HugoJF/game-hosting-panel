@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserSettingsUpdateRequest extends FormRequest
 {
@@ -14,7 +15,7 @@ class UserSettingsUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email'
+            'locale' => ['required', Rule::in(array_keys(config('localization.locales')))]
         ];
     }
 }
