@@ -9,19 +9,12 @@ use App\Server;
 use App\Services\User\DeployCostService;
 use App\Services\User\NodeSelectionService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class CostController extends Controller
 {
-    /**
-     * @var DeployCostService
-     */
-    protected $deployCost;
-
-    /**
-     * @var NodeSelectionService
-     */
-    protected $nodeSelection;
+    protected DeployCostService $deployCost;
+    protected NodeSelectionService $nodeSelection;
 
     public function __construct(
         DeployCostService $deployCost,
@@ -35,6 +28,11 @@ class CostController extends Controller
     public function creation(Request $request)
     {
         $location = Location::find($request->get('location'));
+
+        if (!($location instanceof Location))  {
+            throw new BadRequestException;
+        }
+
         $node = $this->nodeSelection->handle($location);
 
         return $this->cost($node, $request->all());
@@ -52,7 +50,7 @@ class CostController extends Controller
         $specs = ['cpu', 'memory', 'disk', 'databases'];
 
         $data = collect($specs)->mapWithKeys(fn($spec) => [
-            $spec => Arr::get($config, $spec, 0)
+            $spec => $config[ $spec ] ?? 0,
         ])->toArray();
 
         if (!$period = $config['billing_period'] ?? null) {
