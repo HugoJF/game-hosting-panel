@@ -53,7 +53,7 @@ class ServerController extends Controller
         $node = $nodeSelection->handle($location);
 
         // Checks if user can deploy a server, before creating the server.
-        $deployCreation->preChecks(auth()->user(), $node, $period, $config);
+        $deployCreation->creationPreChecks(auth()->user(), $node, $period, $config);
 
         // Create the server
         $server = $serverCreation->handle(auth()->user(), $game, $node, $config);
