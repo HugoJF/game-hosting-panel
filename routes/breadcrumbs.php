@@ -92,6 +92,12 @@ Breadcrumbs::for('coupons.index', function ($trail) {
     $trail->push('Coupons', route('coupons.index'));
 });
 
+// Home > Settings
+Breadcrumbs::for('settings', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Settings', route('settings'));
+});
+
 // Home > Coupons > Viewing coupon
 Breadcrumbs::for('coupons.show', function ($trail, $coupon) {
     $trail->parent('coupons.index');
@@ -162,6 +168,12 @@ Breadcrumbs::for('servers.show', function ($trail, $server) {
 Breadcrumbs::for('deploys.create', function ($trail, $server) {
     $trail->parent('servers.show', $server);
     $trail->push($server->name, route('deploys.create', $server));
+});
+
+// Home > Servers > [Server] > Configure
+Breadcrumbs::for('deploys.configure', function ($trail, $server) {
+    $trail->parent('servers.show', $server);
+    $trail->push($server->name, route('deploys.configure', $server));
 });
 
 // Home > Deploys > Edit
