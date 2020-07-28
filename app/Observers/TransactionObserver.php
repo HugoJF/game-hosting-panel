@@ -31,11 +31,13 @@ class TransactionObserver
             throw new InsufficientBalanceException;
         }
 
-        try {
-            /** @var User $user */
-            $user = $transaction->user;
+        // Do not notify user when a transaction was just created.
+        if ($transaction->wasRecentlyCreated) {
+            return;
+        }
 
-            $user->notify(new TransactionUpdated($transaction, $old, $new));
+        try {
+            $transaction->user->notify(new TransactionUpdated($transaction, $old, $new));
         } catch (Exception $e) {
             logger()->error('Failed to notify user of updated transaction');
             report($e);
