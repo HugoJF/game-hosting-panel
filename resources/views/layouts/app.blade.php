@@ -81,10 +81,16 @@
                         </button>
                     {!!  Form::close() !!}
                 @else
+                    <a href="{{ route('register') }}" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
+                        <span class="mr-1 inline text-gray-400" data-feather="user-plus"></span>
+                        <span>
+                            @lang('words.register')
+                        </span>
+                    </a>
                     <a href="{{ route('login') }}" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
                         <span class="mr-1 inline text-gray-400" data-feather="log-in"></span>
                         <span>
-                            @lang('login')
+                            @lang('words.login')
                         </span>
                     </a>
                 @endauth

@@ -81,6 +81,8 @@ return [
     'type'            => 'Type',
     'create'          => 'Create',
     'update'          => 'Update',
+    'register'        => 'Register',
+
 
     'billing_period'   => 'Billing period',
     'period_cost'      => 'Period cost',
