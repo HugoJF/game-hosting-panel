@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Game;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ServerDeployRequest;
 use App\Http\Requests\ServerStoreRequest;
 use App\Http\Resources\ServerResource;
 use App\Location;
@@ -77,7 +78,7 @@ class ServerController extends Controller
     }
 
     public function deploy(
-        ServerStoreRequest $request,
+        ServerDeployRequest $request,
         ServerDeploymentService $deployment,
         Server $server
     ): ServerResource
