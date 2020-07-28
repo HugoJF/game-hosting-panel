@@ -9,17 +9,18 @@ class MinecraftProcessor extends Processor
         $this->params = config('processors.minecraft.parameters');
     }
 
+    // TODO: somehow validate this shit
     public function cost(array $cost): array
     {
         $memoryPerPlayer = config('processors.minecraft.memory_per_player');
         $diskPerSize = config('processors.minecraft.disk_per_size');
 
-        $disk = $diskPerSize[ $cost['size'] ];
+        $disk = $diskPerSize[ $cost['size'] ?? 'small' ];
 
         return array_merge(
             config('processors.minecraft.costs'),
             [
-                'cpu'    => 600 + (int) $cost['plugins'] * 50, // TODO: magic variables nop
+                'cpu'    => 300 + (int) $cost['plugins'] * 50, // TODO: magic variables nop
                 'memory' => $memoryPerPlayer * (int) $cost['slots'],
                 'disk'   => $disk,
             ],
