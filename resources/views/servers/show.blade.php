@@ -22,19 +22,31 @@
                 <a class="btn btn-primary btn-lg" href="{{ config('pterodactyl.url') }}/server/{{ $server->panel_hash }}" target="_blank">
                     @lang('words.go_to_panel')
                 </a>
-            @endif
-
-            @if($server->getDeploy())
-                <a class="btn btn-outline-warning btn-lg" href="{{ route('servers.terminate', $server) }}" data-toggle="tooltip" data-placement="top" title="set deploy to terminate at the end of paid period.">
-                    @lang('terminate')
-                </a>
-                <a class="btn btn-outline-danger btn-lg" href="{{ route('servers.force-terminate', $server) }}" data-toggle="tooltip" data-placement="top" title="terminates deploy without waiting for currently paid period.">
-                    @lang('words.force_terminate')
-                </a>
+                @if($server->getDeploy())
+                    <a
+                        class="btn btn-warning btn-lg"
+                        href="{{ route('servers.terminate', $server) }}"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Set deploy to terminate at the end of paid period."
+                    >
+                        @lang('words.terminate')
+                    </a>
+                    <a
+                        class="btn btn-outline-danger btn-lg"
+                        href="{{ route('servers.force-terminate', $server) }}"
+                        data-toggle="tooltip"
+                        data-placement="top" title="Terminates deploy without waiting for currently paid period."
+                    >
+                        @lang('words.force_terminate')
+                    </a>
+                @else
+                    <a class="btn btn-primary btn-lg" href="{{ route('servers.configure', $server) }}">
+                        @lang('words.deploy')
+                    </a>
+                @endif
             @else
-                <a class="btn btn-primary btn-lg" href="{{ route('servers.configure', $server) }}">
-                    @lang('words.deploy')
-                </a>
+                <h2>@include('servers.status')</h2>
             @endif
         </div>
     </div>
