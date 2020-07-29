@@ -27,7 +27,7 @@ class DeployCostServiceTest extends TestCase
     /**
      * Test getBillablePeriod will correctly round periods to
      */
-    public function test_get_billable_period_will_compute_minutely_correctly()
+    public function test_get_billable_period_will_compute_minutely_correctly(): void
     {
         $test = function (
             string $billingPeriod,

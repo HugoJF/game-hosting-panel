@@ -27,23 +27,24 @@ class AutoServerDeploymentServiceTest extends TestCase
     {
         parent::setUp();
 
-        $mocked = Mockery::mock(DeployCreationService::class);
-        $this->instance(DeployCreationService::class, $mocked);
-        $mocked->shouldReceive('preChecks')->once();
+        $this->mock(DeployCreationService::class)
+             ->shouldReceive('preChecks')
+             ->once();
     }
 
     protected function mockServerService(bool $isInstalled): void
     {
-        $mocked = Mockery::mock(ServerService::class);
-        $mocked->shouldReceive('isInstalled')->andReturn($isInstalled)->once();
-        $this->instance(ServerService::class, $mocked);
+        $this->partialMock(ServerService::class)
+             ->shouldReceive('isInstalled')
+             ->andReturn($isInstalled)
+             ->once();
     }
 
     protected function mockServerDeploymentService(): void
     {
-        $mocked = Mockery::mock(ServerDeploymentService::class);
-        $mocked->shouldReceive('handle')->once();
-        $this->instance(ServerDeploymentService::class, $mocked);
+        $this->mock(ServerDeploymentService::class)
+             ->shouldReceive('handle')
+             ->once();
     }
 
     protected function createServer()
@@ -75,7 +76,6 @@ class AutoServerDeploymentServiceTest extends TestCase
         $this->mockServerService(false);
 
         $server = $this->createServer();
-
 
         app(AutoServerDeploymentService::class)->handle($server, 'daily', []);
     }

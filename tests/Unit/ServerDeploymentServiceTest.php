@@ -24,10 +24,7 @@ class ServerDeploymentServiceTest extends TestCase
     use RefreshDatabase;
     use DatabaseMigrations;
 
-    /**
-     * @var ServerDeploymentService
-     */
-    protected $deploymentService;
+    protected ServerDeploymentService $deploymentService;
 
     protected function setUp(): void
     {
@@ -36,16 +33,14 @@ class ServerDeploymentServiceTest extends TestCase
         Carbon::setTestNow(Carbon::create(2020, 1, 1, 0, 0, 0));
     }
 
-    public function test_exception_will_be_raised_if_trying_to_deploy_a_server_that_is_not_installed()
+    public function test_exception_will_be_raised_if_trying_to_deploy_a_server_that_is_not_installed(): void
     {
         $server = factory(Server::class)->make();
 
-        $this->instance(ServerService::class, Mockery::mock(ServerService::class, function ($mock) {
-            $mock
-                ->shouldReceive('isInstalled')
-                ->andReturn(false)
-                ->once();
-        }));
+        $this->mock(ServerService::class)
+             ->shouldReceive('isInstalled')
+             ->andReturn(false)
+             ->once();
 
         $this->expectException(ServerNotInstalledException::class);
 
@@ -79,40 +74,32 @@ class ServerDeploymentServiceTest extends TestCase
         $billingPeriod = 'daily';
 
         // Force server to be installed
-        $serverService = Mockery::mock(ServerService::class);
-        $this->instance(ServerService::class, $serverService);
-        $serverService
-            ->shouldReceive('isInstalled')
-            ->andReturn(true)
-            ->once();
+        $this->mock(ServerService::class)
+             ->shouldReceive('isInstalled')
+             ->andReturn(true)
+             ->once();
 
         // Mock server build config generation
-        $buildConfigService = Mockery::mock(ServerBuildConfigService::class);
-        $buildConfigService
-            ->shouldReceive('handle')
-            ->withArgs([$server, $config])
-            ->andReturn($serverConfig)
-            ->once();
-        $this->instance(ServerBuildConfigService::class, $buildConfigService);
+        $this->mock(ServerBuildConfigService::class)
+             ->shouldReceive('handle')
+             ->withArgs([$server, $config])
+             ->andReturn($serverConfig)
+             ->once();
 
         // Mock call to update server build
-        $pterodactyl = Mockery::mock(Pterodactyl::class);
-        $pterodactyl
-            ->shouldReceive('updateServerBuild')
-            ->withArgs([$server->panel_id, $serverConfig])
-            ->andReturn(new ServerResource([
-                'allocation' => [], // this is needed since the property is not defined in the Resource
-            ]))
-            ->once();
-        $this->instance(Pterodactyl::class, $pterodactyl);
+        $this->mock(Pterodactyl::class)
+             ->shouldReceive('updateServerBuild')
+             ->withArgs([$server->panel_id, $serverConfig])
+             ->andReturn(new ServerResource([
+                 'allocation' => [], // this is needed since the property is not defined in the Resource
+             ]))
+             ->once();
 
         // Mock call to register deploy to database
-        $deployCreationService = Mockery::mock(DeployCreationService::class);
-        $deployCreationService
+        $this->mock(DeployCreationService::class)
             ->shouldReceive('handle')
             ->withArgs([$server, $billingPeriod, $config])
             ->once();
-        $this->instance(DeployCreationService::class, $deployCreationService);
 
         app(ServerDeploymentService::class)->handle($server, $billingPeriod, $config);
     }

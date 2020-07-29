@@ -35,36 +35,31 @@ class UserPanelRegistrationServiceTest extends TestCase
 
     public function test_create_new_user_will_be_called_on_pterodactyl_api(): void
     {
-        ($api = Mockery::mock(PterodactylApiService::class))
+        $this->mock(PterodactylApiService::class)
             ->shouldReceive('users')
             ->andReturn([])
             ->once();
-        $this->instance(PterodactylApiService::class, $api);
 
-        ($mocked = Mockery::mock(Pterodactyl::class))
+        $this->mock(Pterodactyl::class)
             ->shouldReceive('createUser')
             ->withArgs([$this->userInfo])
             ->andReturn(new UserResource([]))
             ->once();
-        $this->instance(Pterodactyl::class, $mocked);
 
         app(UserPanelRegistrationService::class)->handle($this->user);
     }
 
     public function test_create_existing_user_will_correctly_search_users_on_api(): void
     {
-        ($api = Mockery::mock(PterodactylApiService::class))
+        $this->mock(PterodactylApiService::class)
             ->shouldReceive('users')
             ->andReturn([
                 new UserResource($this->userInfo)
             ])
             ->once();
-        $this->instance(PterodactylApiService::class, $api);
 
-        ($mocked = Mockery::mock(Pterodactyl::class))
-            ->shouldReceive('createUser')
-            ->never();
-        $this->instance(Pterodactyl::class, $mocked);
+        $this->mock(Pterodactyl::class)
+            ->shouldNotReceive('createUser');
 
         app(UserPanelRegistrationService::class)->handle($this->user);
     }

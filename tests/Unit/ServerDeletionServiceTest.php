@@ -41,12 +41,10 @@ class ServerDeletionServiceTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $mocked = Mockery::mock(Pterodactyl::class);
-        $mocked
+        $this->mock(Pterodactyl::class)
             ->shouldReceive('deleteServer')
             ->withArgs([$server->panel_id])
             ->once();
-        $this->instance(Pterodactyl::class, $mocked);
 
         app(ServerDeletionService::class)->handle($server);
 

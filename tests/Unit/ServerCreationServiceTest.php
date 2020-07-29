@@ -40,50 +40,54 @@ class ServerCreationServiceTest extends TestCase
 
     protected function expectsAllocationSelection(): void
     {
-        $mocked = Mockery::mock(AllocationSelectionService::class);
-        $mocked->shouldReceive('handle')->andReturn(new AllocationResource([
-            'ip'   => '123.123.123.123',
-            'port' => '12345',
-        ]))->once();
-        $this->instance(AllocationSelectionService::class, $mocked);
+        $this->mock(AllocationSelectionService::class)
+             ->shouldReceive('handle')
+             ->andReturn(new AllocationResource([
+                 'ip'   => '123.123.123.123',
+                 'port' => '12345',
+             ]))->once();
     }
 
     protected function expectsServerBuildConfigGeneration(): void
     {
-        $mocked = Mockery::mock(ServerCreationConfigService::class);
-        $mocked->shouldReceive('handle')->andReturn([])->once();
-        $this->instance(ServerCreationConfigService::class, $mocked);
+        $this->mock(ServerCreationConfigService::class)
+             ->shouldReceive('handle')
+             ->andReturn([])
+             ->once();
     }
 
     protected function expectsPanelServerCreation(): void
     {
-        $mocked = Mockery::mock(Pterodactyl::class);
-        $mocked->shouldReceive('createServer')->andReturn(new ServerResource([
-            'id'         => $this->panelId,
-            'identifier' => $this->panelHash,
-        ]))->once();
-        $this->instance(Pterodactyl::class, $mocked);
+        $this->mock(Pterodactyl::class)
+             ->shouldReceive('createServer')
+             ->andReturn(new ServerResource([
+                 'id'         => $this->panelId,
+                 'identifier' => $this->panelHash,
+             ]))->once();
     }
 
     protected function mockCreateServerToFail(): void
     {
-        $mocked = Mockery::mock(Pterodactyl::class);
-        $mocked->shouldReceive('createServer')->andReturn(null)->once();
-        $this->instance(Pterodactyl::class, $mocked);
+        $this->mock(Pterodactyl::class)
+             ->shouldReceive('createServer')
+             ->andReturn(null)
+             ->once();
     }
 
     protected function mockCreateServerToPass(): void
     {
-        $mocked = Mockery::mock(Pterodactyl::class);
-        $mocked->shouldReceive('createServer')->andReturn(new ServerResource([]))->once();
-        $this->instance(Pterodactyl::class, $mocked);
+        $this->mock(Pterodactyl::class)
+             ->shouldReceive('createServer')
+             ->andReturn(new ServerResource([]))
+             ->once();
     }
 
     protected function mockCostServiceToPass(): void
     {
-        $mocked = Mockery::mock(DeployCostService::class);
-        $mocked->shouldReceive('getCostPerPeriod')->andReturn(100)->once();
-        $this->instance(DeployCostService::class, $mocked);
+        $this->mock(DeployCostService::class)
+             ->shouldReceive('getCostPerPeriod')
+             ->andReturn(100)
+             ->once();
     }
 
     public function test_server_creation_service_will_create_a_server(): void

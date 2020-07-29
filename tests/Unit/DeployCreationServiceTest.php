@@ -37,10 +37,11 @@ class DeployCreationServiceTest extends TestCase
 
     protected function expectsCostCalculation(): void
     {
-        $mocked = Mockery::mock(DeployCostService::class)->makePartial();
         // 'twice' since deploy has a creating() event listener that also uses getCostPerPeriod
-        $mocked->shouldReceive('getCostPerPeriod')->andReturn($this->costPerPeriod)->twice();
-        $this->instance(DeployCostService::class, $mocked);
+        $this->partialMock(DeployCostService::class)
+             ->shouldReceive('getCostPerPeriod')
+             ->andReturn($this->costPerPeriod)
+             ->twice();
     }
 
     public function test_deploy_model_is_created(): void
@@ -52,7 +53,7 @@ class DeployCreationServiceTest extends TestCase
         $user = factory(User::class)->create([
             'server_limit' => 1,
         ]);
-        $transaction = factory(Transaction::class)->create([
+        factory(Transaction::class)->create([
             'value'   => 200,
             'user_id' => $user->id,
         ]);
@@ -95,9 +96,10 @@ class DeployCreationServiceTest extends TestCase
             'server_limit' => 1,
         ]);
 
-        $mocked = Mockery::mock(DeployCostService::class)->makePartial();
-        $mocked->shouldReceive('getCostPerPeriod')->andReturn(-200)->once();
-        $this->instance(DeployCostService::class, $mocked);
+        $this->partialMock(DeployCostService::class)
+             ->shouldReceive('getCostPerPeriod')
+             ->andReturn(-200)
+             ->once();
 
         $this->expectException(InvalidPeriodCostException::class);
 
@@ -115,9 +117,10 @@ class DeployCreationServiceTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $mocked = Mockery::mock(DeployCostService::class)->makePartial();
-        $mocked->shouldReceive('getCostPerPeriod')->andReturn(200)->once();
-        $this->instance(DeployCostService::class, $mocked);
+        $this->partialMock(DeployCostService::class)
+             ->shouldReceive('getCostPerPeriod')
+             ->andReturn(200)
+             ->once();
 
         $this->expectException(InsufficientBalanceException::class);
 
@@ -143,9 +146,10 @@ class DeployCreationServiceTest extends TestCase
             'user_id'  => $user->id,
         ]);
 
-        $mocked = Mockery::mock(DeployCostService::class)->makePartial();
-        $mocked->shouldReceive('getCostPerPeriod')->andReturn(200)->once();
-        $this->instance(DeployCostService::class, $mocked);
+        $this->partialMock(DeployCostService::class)
+             ->shouldReceive('getCostPerPeriod')
+             ->andReturn(200)
+             ->once();
 
         $this->expectException(TooManyServersException::class);
 

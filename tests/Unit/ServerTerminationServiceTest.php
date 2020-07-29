@@ -26,7 +26,7 @@ class ServerTerminationServiceTest extends TestCase
         Carbon::setTestNow(Carbon::create(2020, 1, 1, 0, 0, 0));
     }
 
-    public function test_server_termination()
+    public function test_server_termination(): void
     {
         /** @var Server $server */
         $server = factory(Server::class)->make(['panel_id' => 42]);
@@ -49,37 +49,32 @@ class ServerTerminationServiceTest extends TestCase
         // Disable observers to avoid other stuff from running
         Deploy::unsetEventDispatcher();
 
-        $this->instance(Pterodactyl::class, Mockery::mock(Pterodactyl::class, function ($mock) use ($server) {
-            /** @var Mockery\Mock $mock */
-            $mock
-                ->shouldReceive('server')
-                ->withArgs([$server->panel_id])
-                ->andReturn(new ServerResource([
-                    'allocation' => [], // this is needed since the property is not defined in the Resource
-                ]))
-                ->once();
+        $mock = Mockery::mock(Pterodactyl::class);
+        $mock
+            ->shouldReceive('server')
+            ->withArgs([$server->panel_id])
+            ->andReturn(new ServerResource([
+                'allocation' => [], // this is needed since the property is not defined in the Resource
+            ]))
+            ->once();
+        $mock
+            ->shouldReceive('updateServerBuild')
+            ->andReturn(new ServerResource([
+                'identifier' => 'my_identifier',
+            ]))
+            ->once();
+        $this->instance(Pterodactyl::class, $mock);
 
-            $mock
-                ->shouldReceive('updateServerBuild')
-                ->andReturn(new ServerResource([
-                    'identifier' => 'my_identifier',
-                ]))
-                ->once();
-        }));
-
-        $this->instance(PterodactylClient::class, Mockery::mock(PterodactylClient::class, function ($mock) use ($server) {
-            $mockedServer = Mockery::mock(ServerResource::class, function ($mock) {
-                /** @var Mockery\Mock $mock */
-                $mock->shouldReceive('power')
+        $mock = Mockery::mock(PterodactylClient::class);
+        $mockedServer = Mockery::mock(ServerResource::class);
+        $mockedServer->shouldReceive('power')
                      ->once();
-            });
 
-            /** @var Mockery\Mock $mock */
-            $mock
-                ->shouldReceive('getServer')
-                ->andReturn($mockedServer)
-                ->once();
-        }));
+        $mock
+            ->shouldReceive('getServer')
+            ->andReturn($mockedServer)
+            ->once();
+        $this->instance(PterodactylClient::class, $mock);
 
         $service = app(ServerTerminationService::class);
 

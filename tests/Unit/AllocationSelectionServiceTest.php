@@ -21,19 +21,19 @@ class AllocationSelectionServiceTest extends TestCase
             'id' => 1,
         ]);
 
-        $this->instance(Pterodactyl::class, Mockery::mock(Pterodactyl::class, function ($mock) use ($node) {
-            /** @var Mockery\Mock $mock */
-            $mock
-                ->shouldReceive('allocations')
-                ->withArgs([$node->id])
-                ->andReturn([
-                    'data' => [
-                        new Allocation(['assigned' => true]),
-                        new Allocation(['assigned' => false]),
-                    ],
-                ])
-                ->once();
-        }));
+        $this->mockPterodactyl()
+            ->
+
+        $this->mock(Pterodactyl::class)
+             ->shouldReceive('allocations')
+             ->withArgs([$node->id])
+             ->andReturn([
+                 'data' => [
+                     new Allocation(['assigned' => true]),
+                     new Allocation(['assigned' => false]),
+                 ],
+             ])
+             ->once();
 
         $service = app(AllocationSelectionService::class);
 
