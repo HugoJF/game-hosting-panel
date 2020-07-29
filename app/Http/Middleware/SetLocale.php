@@ -19,7 +19,7 @@ class SetLocale
      */
     public function handle($request, Closure $next)
     {
-        if (!auth()->check() && ($locale = auth()->user()->locale)) {
+        if (auth()->check() && ($locale = auth()->user()->locale)) {
             app()->setLocale($locale);
 
             return redirect('home');
