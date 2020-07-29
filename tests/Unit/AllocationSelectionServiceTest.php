@@ -21,9 +21,6 @@ class AllocationSelectionServiceTest extends TestCase
             'id' => 1,
         ]);
 
-        $this->mockPterodactyl()
-            ->
-
         $this->mock(Pterodactyl::class)
              ->shouldReceive('allocations')
              ->withArgs([$node->id])
