@@ -9,7 +9,7 @@ use Exception;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use HCGCloud\Pterodactyl\Resources\Resource;
 
-class ServerBuildConfigService
+class ServerDeployConfigService
 {
     /**
      * @var Pterodactyl

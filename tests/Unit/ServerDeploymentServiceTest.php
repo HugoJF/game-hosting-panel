@@ -8,7 +8,7 @@ use App\Exceptions\ServerNotInstalledException;
 use App\Server;
 use App\Services\ServerService;
 use App\Services\User\DeployCreationService;
-use App\Services\User\ServerBuildConfigService;
+use App\Services\User\ServerDeployConfigService;
 use App\Services\User\ServerDeploymentService;
 use App\Services\User\ServerTerminationService;
 use Carbon\Carbon;
@@ -80,7 +80,7 @@ class ServerDeploymentServiceTest extends TestCase
              ->once();
 
         // Mock server build config generation
-        $this->mock(ServerBuildConfigService::class)
+        $this->mock(ServerDeployConfigService::class)
              ->shouldReceive('handle')
              ->withArgs([$server, $config])
              ->andReturn($serverConfig)

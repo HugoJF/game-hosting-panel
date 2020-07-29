@@ -13,19 +13,19 @@ use Throwable;
 class ServerDeploymentService
 {
     protected ServerService $serverService;
-    protected ServerBuildConfigService $buildConfigService;
+    protected ServerDeployConfigService $configService;
     protected Pterodactyl $pterodactyl;
     protected DeployCreationService $deployCreation;
 
     public function __construct(
-        ServerService $serverService,
-        ServerBuildConfigService $buildConfigService,
-        Pterodactyl $pterodactyl,
-        DeployCreationService $deployCreation
+		ServerService $serverService,
+		ServerDeployConfigService $buildConfigService,
+		Pterodactyl $pterodactyl,
+		DeployCreationService $deployCreation
     )
     {
         $this->pterodactyl = $pterodactyl;
-        $this->buildConfigService = $buildConfigService;
+        $this->configService = $buildConfigService;
         $this->deployCreation = $deployCreation;
         $this->serverService = $serverService;
     }
@@ -47,7 +47,7 @@ class ServerDeploymentService
             throw new ServerNotInstalledException;
         }
 
-        $serverConfig = $this->buildConfigService->handle($server, $config);
+        $serverConfig = $this->configService->handle($server, $config);
 
         $s = $this->pterodactyl->updateServerBuild($server->panel_id, $serverConfig);
 
