@@ -19,7 +19,6 @@ use HCGCloud\Pterodactyl\Resources\Allocation as AllocationResource;
 use HCGCloud\Pterodactyl\Resources\Server as ServerResource;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery;
 use Tests\TestCase;
 
 class ServerCreationServiceTest extends TestCase
@@ -37,6 +36,32 @@ class ServerCreationServiceTest extends TestCase
 
     protected int $panelId = 512;
     protected string $panelHash = 'random_hash';
+
+    public function test_server_creation_service_will_create_a_server(): void
+    {
+        $this->expectsAllocationSelection();
+        $this->expectsServerBuildConfigGeneration();
+        $this->expectsPanelServerCreation();
+        $this->mockCostServiceToPass();
+
+        $this->expectsJobs(ServerCreationMonitor::class);
+
+        $game = factory(Game::class)->create();
+        $node = factory(Node::class)->create();
+        $user = factory(User::class)->create([
+            'server_limit' => 5,
+        ]);
+        factory(Transaction::class)->create([
+            'value'   => 5000,
+            'user_id' => $user->id,
+        ]);
+
+        $result = app(ServerCreationService::class)->handle($user, $game, $node, $this->formData);
+
+        $this->assertInstanceOf(Server::class, $result);
+        $this->assertEquals($this->panelId, $result->panel_id);
+        $this->assertEquals($this->panelHash, $result->panel_hash);
+    }
 
     protected function expectsAllocationSelection(): void
     {
@@ -66,54 +91,12 @@ class ServerCreationServiceTest extends TestCase
              ]))->once();
     }
 
-    protected function mockCreateServerToFail(): void
-    {
-        $this->mock(Pterodactyl::class)
-             ->shouldReceive('createServer')
-             ->andReturn(null)
-             ->once();
-    }
-
-    protected function mockCreateServerToPass(): void
-    {
-        $this->mock(Pterodactyl::class)
-             ->shouldReceive('createServer')
-             ->andReturn(new ServerResource([]))
-             ->once();
-    }
-
     protected function mockCostServiceToPass(): void
     {
         $this->mock(DeployCostService::class)
              ->shouldReceive('getCostPerPeriod')
              ->andReturn(100)
              ->once();
-    }
-
-    public function test_server_creation_service_will_create_a_server(): void
-    {
-        $this->expectsAllocationSelection();
-        $this->expectsServerBuildConfigGeneration();
-        $this->expectsPanelServerCreation();
-        $this->mockCostServiceToPass();
-
-        $this->expectsJobs(ServerCreationMonitor::class);
-
-        $game = factory(Game::class)->create();
-        $node = factory(Node::class)->create();
-        $user = factory(User::class)->create([
-            'server_limit' => 5,
-        ]);
-        factory(Transaction::class)->create([
-            'value'   => 5000,
-            'user_id' => $user->id,
-        ]);
-
-        $result = app(ServerCreationService::class)->handle($user, $game, $node, $this->formData);
-
-        $this->assertInstanceOf(Server::class, $result);
-        $this->assertEquals($this->panelId, $result->panel_id);
-        $this->assertEquals($this->panelHash, $result->panel_hash);
     }
 
     public function test_server_creation_fails_if_pterodactyl_does_not_return_a_resource(): void
@@ -144,5 +127,21 @@ class ServerCreationServiceTest extends TestCase
         ]);
 
         app(ServerCreationService::class)->handle($user, $game, $node, $this->formData);
+    }
+
+    protected function mockCreateServerToFail(): void
+    {
+        $this->mock(Pterodactyl::class)
+             ->shouldReceive('createServer')
+             ->andReturn(null)
+             ->once();
+    }
+
+    protected function mockCreateServerToPass(): void
+    {
+        $this->mock(Pterodactyl::class)
+             ->shouldReceive('createServer')
+             ->andReturn(new ServerResource([]))
+             ->once();
     }
 }

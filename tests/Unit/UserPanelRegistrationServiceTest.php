@@ -9,7 +9,6 @@ use Exception;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use HCGCloud\Pterodactyl\Resources\User as UserResource;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mockery;
 use Tests\TestCase;
 
 class UserPanelRegistrationServiceTest extends TestCase
@@ -19,32 +18,18 @@ class UserPanelRegistrationServiceTest extends TestCase
     protected array $userInfo;
     protected User $user;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->userInfo = $userInfo = [
-            'username'   => 'cool_username42',
-            'email'      => 'contact@cool.com',
-            'first_name' => 'Cool',
-            'last_name'  => 'Boy',
-        ];
-
-        $this->user = factory(User::class)->make($this->userInfo);
-    }
-
     public function test_create_new_user_will_be_called_on_pterodactyl_api(): void
     {
         $this->mock(PterodactylApiService::class)
-            ->shouldReceive('users')
-            ->andReturn([])
-            ->once();
+             ->shouldReceive('users')
+             ->andReturn([])
+             ->once();
 
         $this->mock(Pterodactyl::class)
-            ->shouldReceive('createUser')
-            ->withArgs([$this->userInfo])
-            ->andReturn(new UserResource([]))
-            ->once();
+             ->shouldReceive('createUser')
+             ->withArgs([$this->userInfo])
+             ->andReturn(new UserResource([]))
+             ->once();
 
         app(UserPanelRegistrationService::class)->handle($this->user);
     }
@@ -52,14 +37,14 @@ class UserPanelRegistrationServiceTest extends TestCase
     public function test_create_existing_user_will_correctly_search_users_on_api(): void
     {
         $this->mock(PterodactylApiService::class)
-            ->shouldReceive('users')
-            ->andReturn([
-                new UserResource($this->userInfo)
-            ])
-            ->once();
+             ->shouldReceive('users')
+             ->andReturn([
+                 new UserResource($this->userInfo),
+             ])
+             ->once();
 
         $this->mock(Pterodactyl::class)
-            ->shouldNotReceive('createUser');
+             ->shouldNotReceive('createUser');
 
         app(UserPanelRegistrationService::class)->handle($this->user);
     }
@@ -73,5 +58,19 @@ class UserPanelRegistrationServiceTest extends TestCase
             // SQLSTATE[23000]: Integrity constraint violation: 19 UNIQUE constraint failed: users.email
             $this->assertEquals(23000, $e->getCode());
         }
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->userInfo = $userInfo = [
+            'username'   => 'cool_username42',
+            'email'      => 'contact@cool.com',
+            'first_name' => 'Cool',
+            'last_name'  => 'Boy',
+        ];
+
+        $this->user = factory(User::class)->make($this->userInfo);
     }
 }

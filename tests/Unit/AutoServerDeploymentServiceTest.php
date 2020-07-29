@@ -10,12 +10,9 @@ use App\Services\ServerService;
 use App\Services\User\AutoServerDeploymentService;
 use App\Services\User\DeployCreationService;
 use App\Services\User\ServerDeploymentService;
-use App\Services\User\UserPanelRegistrationService;
 use App\User;
-use HCGCloud\Pterodactyl\Pterodactyl;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mockery;
 use Tests\TestCase;
 
 class AutoServerDeploymentServiceTest extends TestCase
@@ -23,13 +20,14 @@ class AutoServerDeploymentServiceTest extends TestCase
     use RefreshDatabase;
     use DatabaseMigrations;
 
-    protected function setUp(): void
+    public function test_server_deployment_will_be_called_directly_if_server_is_installed(): void
     {
-        parent::setUp();
+        $this->mockServerService(true);
+        $this->mockServerDeploymentService();
 
-        $this->mock(DeployCreationService::class)
-             ->shouldReceive('preChecks')
-             ->once();
+        $server = $this->createServer();
+
+        app(AutoServerDeploymentService::class)->handle($server, 'daily', []);
     }
 
     protected function mockServerService(bool $isInstalled): void
@@ -60,16 +58,6 @@ class AutoServerDeploymentServiceTest extends TestCase
         ]);
     }
 
-    public function test_server_deployment_will_be_called_directly_if_server_is_installed(): void
-    {
-        $this->mockServerService(true);
-        $this->mockServerDeploymentService();
-
-        $server = $this->createServer();
-
-        app(AutoServerDeploymentService::class)->handle($server, 'daily', []);
-    }
-
     public function test_server_deployment_will_dispatch_async_server_deployment(): void
     {
         $this->expectsJobs(AsyncServerDeployment::class);
@@ -78,5 +66,14 @@ class AutoServerDeploymentServiceTest extends TestCase
         $server = $this->createServer();
 
         app(AutoServerDeploymentService::class)->handle($server, 'daily', []);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->mock(DeployCreationService::class)
+             ->shouldReceive('preChecks')
+             ->once();
     }
 }

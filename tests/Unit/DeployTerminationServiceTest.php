@@ -25,30 +25,21 @@ class DeployTerminationServiceTest extends TestCase
     protected Carbon $firstTime;
     protected Carbon $secondTime;
 
-    protected function setUp(): void
+    /**
+     * Tests first termination call (that should set termination_requested_at)
+     */
+    public function test_server_termination_requested_at_is_set_on_termination()
     {
-        parent::setUp();
+        $this->prepareDeployTermination();
 
-        $this->firstTime = Carbon::create(2020, 1, 1, 0, 0, 0);
-        $this->secondTime = Carbon::create(2021, 1, 1, 0, 0, 0);
+        Carbon::setTestNow($this->firstTime);
 
-        $game = factory(Game::class)->create();
-        $node = factory(Node::class)->create();
-        $user = factory(User::class)->create();
+        $this->deployTermination->handle($this->server, 'Testing');
 
-        /** @var Server $server */
-        $this->server = factory(Server::class)->create([
-            'game_id' => $game->id,
-            'node_id' => $node->id,
-            'user_id' => $user->id,
-        ]);
+        $deploy = $this->server->deploys()->first();
 
-        factory(Deploy::class)->create([
-            'server_id'       => $this->server->id,
-            'billing_period'  => 'daily',
-            'cost_per_period' => 0,
-            'created_at'      => now()->subDay(),
-        ]);
+        $this->assertEquals('Testing', $deploy->termination_reason);
+        $this->assertEquals($this->firstTime, $deploy->termination_requested_at);
     }
 
     protected function prepareDeployTermination($mockServerTermination = false, $shouldBeCalled = 1)
@@ -67,23 +58,6 @@ class DeployTerminationServiceTest extends TestCase
         }
 
         $this->deployTermination = app(DeployTerminationService::class);
-    }
-
-    /**
-     * Tests first termination call (that should set termination_requested_at)
-     */
-    public function test_server_termination_requested_at_is_set_on_termination()
-    {
-        $this->prepareDeployTermination();
-
-        Carbon::setTestNow($this->firstTime);
-
-        $this->deployTermination->handle($this->server, 'Testing');
-
-        $deploy = $this->server->deploys()->first();
-
-        $this->assertEquals('Testing', $deploy->termination_reason);
-        $this->assertEquals($this->firstTime, $deploy->termination_requested_at);
     }
 
     /**
@@ -125,5 +99,31 @@ class DeployTerminationServiceTest extends TestCase
         $this->server->deploys()->delete();
         $this->prepareDeployTermination(true, 0);
         $this->deployTermination->handle($this->server, 'Testing', true);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->firstTime = Carbon::create(2020, 1, 1, 0, 0, 0);
+        $this->secondTime = Carbon::create(2021, 1, 1, 0, 0, 0);
+
+        $game = factory(Game::class)->create();
+        $node = factory(Node::class)->create();
+        $user = factory(User::class)->create();
+
+        /** @var Server $server */
+        $this->server = factory(Server::class)->create([
+            'game_id' => $game->id,
+            'node_id' => $node->id,
+            'user_id' => $user->id,
+        ]);
+
+        factory(Deploy::class)->create([
+            'server_id'       => $this->server->id,
+            'billing_period'  => 'daily',
+            'cost_per_period' => 0,
+            'created_at'      => now()->subDay(),
+        ]);
     }
 }

@@ -15,15 +15,6 @@ class DeployCostServiceTest extends TestCase
      */
     protected $service;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        Carbon::setTestNow(Carbon::create(2020, 1, 1, 0, 0, 0));
-
-        $this->service = app(DeployCostService::class);
-    }
-
     /**
      * Test getBillablePeriod will correctly round periods to
      */
@@ -168,5 +159,14 @@ class DeployCostServiceTest extends TestCase
 
             $this->assertEquals($expected, $cost);
         });
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Carbon::setTestNow(Carbon::create(2020, 1, 1, 0, 0, 0));
+
+        $this->service = app(DeployCostService::class);
     }
 }

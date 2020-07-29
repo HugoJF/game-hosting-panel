@@ -19,13 +19,6 @@ class ServerTerminationServiceTest extends TestCase
     use RefreshDatabase;
     use DatabaseMigrations;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        Carbon::setTestNow(Carbon::create(2020, 1, 1, 0, 0, 0));
-    }
-
     public function test_server_termination(): void
     {
         /** @var Server $server */
@@ -83,5 +76,12 @@ class ServerTerminationServiceTest extends TestCase
         $service->handle($server);
 
         $this->assertEquals(now(), $deploy->terminated_at);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Carbon::setTestNow(Carbon::create(2020, 1, 1, 0, 0, 0));
     }
 }

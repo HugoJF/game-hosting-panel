@@ -8,25 +8,15 @@ use App\Exceptions\InvalidBillingPeriodException;
 use App\Exceptions\InvalidPeriodCostException;
 use App\Exceptions\TooManyServersException;
 use App\Game;
-use App\Jobs\ServerCreationMonitor;
 use App\Node;
 use App\Server;
-use App\Services\User\AllocationSelectionService;
 use App\Services\User\DeployCostService;
 use App\Services\User\DeployCreationService;
-use App\Services\User\ServerCreationConfigService;
-use App\Services\User\ServerCreationService;
 use App\Transaction;
 use App\User;
-use Exception;
-use HCGCloud\Pterodactyl\Pterodactyl;
-use HCGCloud\Pterodactyl\Resources\Allocation as AllocationResource;
-use HCGCloud\Pterodactyl\Resources\Server as ServerResource;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery;
 use Tests\TestCase;
-use Webpatser\Uuid\Uuid;
 
 class DeployCreationServiceTest extends TestCase
 {
@@ -34,15 +24,6 @@ class DeployCreationServiceTest extends TestCase
     use DatabaseTransactions;
 
     protected int $costPerPeriod = 200;
-
-    protected function expectsCostCalculation(): void
-    {
-        // 'twice' since deploy has a creating() event listener that also uses getCostPerPeriod
-        $this->partialMock(DeployCostService::class)
-             ->shouldReceive('getCostPerPeriod')
-             ->andReturn($this->costPerPeriod)
-             ->twice();
-    }
 
     public function test_deploy_model_is_created(): void
     {
@@ -75,6 +56,15 @@ class DeployCreationServiceTest extends TestCase
 
         $this->assertInstanceOf(Deploy::class, $deploy);
         $this->assertEquals($this->costPerPeriod, $deploy->cost_per_period);
+    }
+
+    protected function expectsCostCalculation(): void
+    {
+        // 'twice' since deploy has a creating() event listener that also uses getCostPerPeriod
+        $this->partialMock(DeployCostService::class)
+             ->shouldReceive('getCostPerPeriod')
+             ->andReturn($this->costPerPeriod)
+             ->twice();
     }
 
     public function test_invalid_billing_period_will_raise_exception(): void

@@ -15,11 +15,11 @@ class ServerDeployConfigServiceTest extends TestCase
         $server = factory(Server::class)->make(['panel_id' => 42]);
 
         $this->mock(Pterodactyl::class)
-            ->shouldReceive('server')
-            ->andReturn(new ServerResource([
-                'allocation' => [], // this is needed since the property is not defined in the Resource
-            ]))
-            ->once();
+             ->shouldReceive('server')
+             ->andReturn(new ServerResource([
+                 'allocation' => [], // this is needed since the property is not defined in the Resource
+             ]))
+             ->once();
 
         $config = app(ServerDeployConfigService::class)->handle($server, [
             'cpu'       => 1200,

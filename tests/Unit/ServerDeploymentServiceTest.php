@@ -2,21 +2,17 @@
 
 namespace Tests\Unit;
 
-use App\Classes\PterodactylClient;
-use App\Deploy;
 use App\Exceptions\ServerNotInstalledException;
 use App\Server;
 use App\Services\ServerService;
 use App\Services\User\DeployCreationService;
 use App\Services\User\ServerDeployConfigService;
 use App\Services\User\ServerDeploymentService;
-use App\Services\User\ServerTerminationService;
 use Carbon\Carbon;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use HCGCloud\Pterodactyl\Resources\Server as ServerResource;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mockery;
 use Tests\TestCase;
 
 class ServerDeploymentServiceTest extends TestCase
@@ -25,13 +21,6 @@ class ServerDeploymentServiceTest extends TestCase
     use DatabaseMigrations;
 
     protected ServerDeploymentService $deploymentService;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        Carbon::setTestNow(Carbon::create(2020, 1, 1, 0, 0, 0));
-    }
 
     public function test_exception_will_be_raised_if_trying_to_deploy_a_server_that_is_not_installed(): void
     {
@@ -97,10 +86,17 @@ class ServerDeploymentServiceTest extends TestCase
 
         // Mock call to register deploy to database
         $this->mock(DeployCreationService::class)
-            ->shouldReceive('handle')
-            ->withArgs([$server, $billingPeriod, $config])
-            ->once();
+             ->shouldReceive('handle')
+             ->withArgs([$server, $billingPeriod, $config])
+             ->once();
 
         app(ServerDeploymentService::class)->handle($server, $billingPeriod, $config);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Carbon::setTestNow(Carbon::create(2020, 1, 1, 0, 0, 0));
     }
 }
