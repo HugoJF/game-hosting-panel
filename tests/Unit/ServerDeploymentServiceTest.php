@@ -22,6 +22,13 @@ class ServerDeploymentServiceTest extends TestCase
 
     protected ServerDeploymentService $deploymentService;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Carbon::setTestNow(Carbon::create(2020, 1, 1, 0, 0, 0));
+    }
+
     public function test_exception_will_be_raised_if_trying_to_deploy_a_server_that_is_not_installed(): void
     {
         $server = factory(Server::class)->make();
@@ -36,7 +43,7 @@ class ServerDeploymentServiceTest extends TestCase
         app(ServerDeploymentService::class)->handle($server, 'daily', []);
     }
 
-    public function test_deployment_will_update_server_build_config_with_return_from_service()
+    public function test_deployment_will_update_server_build_config_with_return_from_service(): void
     {
         /** @var Server $server */
         $server = factory(Server::class)->make(['panel_id' => 42]);
@@ -91,12 +98,5 @@ class ServerDeploymentServiceTest extends TestCase
              ->once();
 
         app(ServerDeploymentService::class)->handle($server, $billingPeriod, $config);
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        Carbon::setTestNow(Carbon::create(2020, 1, 1, 0, 0, 0));
     }
 }
