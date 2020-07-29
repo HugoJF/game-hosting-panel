@@ -21,8 +21,6 @@ class SetLocale
     {
         if (auth()->check() && ($locale = auth()->user()->locale)) {
             app()->setLocale($locale);
-
-            return redirect('home');
         }
 
         return $next($request);
