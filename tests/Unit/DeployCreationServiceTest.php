@@ -85,7 +85,7 @@ class DeployCreationServiceTest extends TestCase
 
         $this->expectException(InvalidBillingPeriodException::class);
 
-        app(DeployCreationService::class)->deploymentPreChecks($user, $node, 'potato', []);
+        app(DeployCreationService::class)->preChecks($user, $node, 'potato', []);
     }
 
     public function test_negative_deploy_cost_will_raise_exception(): void
@@ -101,7 +101,7 @@ class DeployCreationServiceTest extends TestCase
 
         $this->expectException(InvalidPeriodCostException::class);
 
-        app(DeployCreationService::class)->deploymentPreChecks($user, $node, 'daily', []);
+        app(DeployCreationService::class)->preChecks($user, $node, 'daily', []);
     }
 
     public function test_user_with_insufficient_balance_will_raise_exception(): void
@@ -121,7 +121,7 @@ class DeployCreationServiceTest extends TestCase
 
         $this->expectException(InsufficientBalanceException::class);
 
-        app(DeployCreationService::class)->deploymentPreChecks($user, $node, 'daily', []);
+        app(DeployCreationService::class)->preChecks($user, $node, 'daily', []);
     }
 
     public function test_creating_too_many_servers_will_raise_exception(): void
@@ -149,6 +149,6 @@ class DeployCreationServiceTest extends TestCase
 
         $this->expectException(TooManyServersException::class);
 
-        app(DeployCreationService::class)->deploymentPreChecks($user, $node, 'daily', []);
+        app(DeployCreationService::class)->preChecks($user, $node, 'daily', []);
     }
 }

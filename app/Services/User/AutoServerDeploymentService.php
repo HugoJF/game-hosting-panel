@@ -3,6 +3,7 @@
 namespace App\Services\User;
 
 use App\Exceptions\InsufficientBalanceException;
+use App\Exceptions\InvalidBillingPeriodException;
 use App\Exceptions\InvalidPeriodCostException;
 use App\Exceptions\TooManyServersException;
 use App\Jobs\AsyncServerDeployment;
@@ -11,6 +12,7 @@ use App\Server;
 use App\Services\ServerService;
 use App\User;
 use Exception;
+use Throwable;
 
 class AutoServerDeploymentService
 {
@@ -45,8 +47,8 @@ class AutoServerDeploymentService
      * @throws InsufficientBalanceException
      * @throws InvalidPeriodCostException
      * @throws TooManyServersException
-     * @throws \App\Exceptions\InvalidBillingPeriodException
-     * @throws \Throwable
+     * @throws InvalidBillingPeriodException
+     * @throws Throwable
      */
     public function handle(Server $server, string $billingPeriod, array $config): void
     {

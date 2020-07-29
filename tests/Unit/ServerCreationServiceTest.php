@@ -2,13 +2,16 @@
 
 namespace Tests\Unit;
 
+use App\Exceptions\TooManyServersException;
 use App\Game;
 use App\Jobs\ServerCreationMonitor;
 use App\Node;
 use App\Server;
 use App\Services\User\AllocationSelectionService;
+use App\Services\User\DeployCostService;
 use App\Services\User\ServerCreationConfigService;
 use App\Services\User\ServerCreationService;
+use App\Transaction;
 use App\User;
 use Exception;
 use HCGCloud\Pterodactyl\Pterodactyl;
@@ -69,17 +72,38 @@ class ServerCreationServiceTest extends TestCase
         $this->instance(Pterodactyl::class, $mocked);
     }
 
+    protected function mockCreateServerToPass(): void
+    {
+        $mocked = Mockery::mock(Pterodactyl::class);
+        $mocked->shouldReceive('createServer')->andReturn(new ServerResource([]))->once();
+        $this->instance(Pterodactyl::class, $mocked);
+    }
+
+    protected function mockCostServiceToPass(): void
+    {
+        $mocked = Mockery::mock(DeployCostService::class);
+        $mocked->shouldReceive('getCostPerPeriod')->andReturn(100)->once();
+        $this->instance(DeployCostService::class, $mocked);
+    }
+
     public function test_server_creation_service_will_create_a_server(): void
     {
         $this->expectsAllocationSelection();
         $this->expectsServerBuildConfigGeneration();
         $this->expectsPanelServerCreation();
+        $this->mockCostServiceToPass();
 
         $this->expectsJobs(ServerCreationMonitor::class);
 
         $game = factory(Game::class)->create();
         $node = factory(Node::class)->create();
-        $user = factory(User::class)->create();
+        $user = factory(User::class)->create([
+            'server_limit' => 5,
+        ]);
+        factory(Transaction::class)->create([
+            'value'   => 5000,
+            'user_id' => $user->id,
+        ]);
 
         $result = app(ServerCreationService::class)->handle($user, $game, $node, $this->formData);
 
@@ -92,13 +116,28 @@ class ServerCreationServiceTest extends TestCase
     {
         $this->expectException(Exception::class);
 
-        $this->expectsServerBuildConfigGeneration();
-        $this->expectsAllocationSelection();
-        $this->mockCreateServerToFail();
-
         $game = factory(Game::class)->create();
         $node = factory(Node::class)->create();
         $user = factory(User::class)->create();
+
+        app(ServerCreationService::class)->handle($user, $game, $node, $this->formData);
+    }
+
+    public function test_server_creation_will_fail_if_user_is_at_limit(): void
+    {
+        $this->expectException(TooManyServersException::class);
+
+        $this->mockCostServiceToPass();
+
+        $game = factory(Game::class)->create();
+        $node = factory(Node::class)->create();
+        $user = factory(User::class)->create([
+            'server_limit' => 0,
+        ]);
+        factory(Transaction::class)->create([
+            'value'   => 500,
+            'user_id' => $user->id,
+        ]);
 
         app(ServerCreationService::class)->handle($user, $game, $node, $this->formData);
     }

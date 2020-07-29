@@ -17,10 +17,12 @@ use Throwable;
 class DeployCreationService
 {
     protected DeployCostService $costService;
+    protected UserPreChecks $preChecks;
 
-    public function __construct(DeployCostService $costService)
+    public function __construct(DeployCostService $costService, UserPreChecks $preChecks)
     {
         $this->costService = $costService;
+        $this->preChecks = $preChecks;
     }
 
     /**
@@ -41,7 +43,7 @@ class DeployCreationService
 
     protected function create(Server $server, string $billingPeriod, array $config): Deploy
     {
-        $this->deploymentPreChecks($server->user, $server->node, $billingPeriod, $config);
+        $this->preChecks($server->user, $server->node, $billingPeriod, $config);
 
         $costPerPeriod = $this->costService->getCostPerPeriod($server->node, $billingPeriod, $config);
 
@@ -69,57 +71,12 @@ class DeployCreationService
      * @throws InvalidPeriodCostException
      * @throws InvalidBillingPeriodException
      */
-    public function creationPreChecks(User $user, Node $node, string $billingPeriod, array $config): void
+    public function preChecks(User $user, Node $node, string $billingPeriod, array $config): void
     {
-        $this->commonPreChecks($user, $node, $billingPeriod, $config);
-
-        if ($user->servers()->count() >= $user->server_limit) {
-            throw new TooManyServersException;
-        }
-    }
-
-    /**
-     * @param User   $user
-     * @param Node   $node
-     * @param string $billingPeriod
-     * @param array  $config
-     *
-     * @throws InsufficientBalanceException
-     * @throws TooManyServersException
-     * @throws InvalidPeriodCostException
-     * @throws InvalidBillingPeriodException
-     */
-    public function deploymentPreChecks(User $user, Node $node, string $billingPeriod, array $config): void
-    {
-        $this->commonPreChecks($user, $node, $billingPeriod, $config);
+        $this->preChecks->handle($user, $node, $billingPeriod, $config);
 
         if ($user->servers()->count() > $user->server_limit) {
             throw new TooManyServersException;
-        }
-    }
-
-    /**
-     * @param User   $user
-     * @param Node   $node
-     * @param string $billingPeriod
-     * @param array  $config
-     *
-     * @throws InsufficientBalanceException
-     * @throws InvalidBillingPeriodException
-     * @throws InvalidPeriodCostException
-     */
-    protected function commonPreChecks(User $user, Node $node, string $billingPeriod, array $config): void
-    {
-        if (!config("ghp.billing-periods.$billingPeriod")) {
-            throw new InvalidBillingPeriodException($billingPeriod);
-        }
-
-        if (($costPerPeriod = $this->costService->getCostPerPeriod($node, $billingPeriod, $config)) <= 0) {
-            throw new InvalidPeriodCostException;
-        }
-
-        if (!$user->hasBalance($costPerPeriod)) {
-            throw new InsufficientBalanceException;
         }
     }
 }

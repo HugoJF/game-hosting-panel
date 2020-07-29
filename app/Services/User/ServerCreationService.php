@@ -2,6 +2,10 @@
 
 namespace App\Services\User;
 
+use App\Exceptions\InsufficientBalanceException;
+use App\Exceptions\InvalidBillingPeriodException;
+use App\Exceptions\InvalidPeriodCostException;
+use App\Exceptions\TooManyServersException;
 use App\Game;
 use App\Jobs\ServerCreationMonitor;
 use App\Node;
@@ -15,16 +19,19 @@ use Illuminate\Support\Str;
 
 class ServerCreationService
 {
+    protected UserPreChecks $preChecks;
     protected Pterodactyl $pterodactyl;
     protected ServerCreationConfigService $configService;
     protected AllocationSelectionService $allocationService;
 
     public function __construct(
+        UserPreChecks $preChecks,
         Pterodactyl $pterodactyl,
         ServerCreationConfigService $configService,
         AllocationSelectionService $allocationService
     )
     {
+        $this->preChecks = $preChecks;
         $this->pterodactyl = $pterodactyl;
         $this->configService = $configService;
         $this->allocationService = $allocationService;
@@ -46,6 +53,8 @@ class ServerCreationService
      */
     public function create(User $user, Game $game, Node $node, array $data): Server
     {
+        $this->preChecks($user, $node, $data['billing_period'], $data);
+
         // Find an allocation
         $allocation = $this->allocationService->handle($node);
 
@@ -71,6 +80,26 @@ class ServerCreationService
         $this->dispatchMonitoringJob($server);
 
         return $server;
+    }
+
+    /**
+     * @param User   $user
+     * @param Node   $node
+     * @param string $billingPeriod
+     * @param array  $config
+     *
+     * @throws InsufficientBalanceException
+     * @throws InvalidBillingPeriodException
+     * @throws InvalidPeriodCostException
+     * @throws TooManyServersException
+     */
+    protected function preChecks(User $user, Node $node, string $billingPeriod, array $config): void
+    {
+        $this->preChecks->handle($user, $node, $billingPeriod, $config);
+
+        if ($user->servers()->count() >= $user->server_limit) {
+            throw new TooManyServersException;
+        }
     }
 
     protected function preCreateServerModel(User $user, Node $node, Game $game, Allocation $allocation, array $config): Server
