@@ -26,6 +26,7 @@
 
                 <!-- Specs -->
                 <div class="flex flex-col flex-grow justify-end">
+                    <!-- CPU -->
                     <div class="flex py-2 justify-between border-b border-gray-100">
                         <p>
                             <span class="inline text-gray-600" data-feather="cpu"></span>
@@ -37,6 +38,8 @@
                             {{ round($server->cpu) }} marks
                         </span>
                     </div>
+
+                    <!-- Memory -->
                     <div class="flex py-2 justify-between border-b border-gray-100">
                         <p>
                             <span class="inline text-gray-600" data-feather="database"></span>
@@ -48,6 +51,8 @@
                             {{ number_format($server->memory) }} MB
                         </span>
                     </div>
+
+                    <!-- Disk -->
                     <div class="flex py-2 justify-between border-b border-gray-100">
                         <p>
                             <span class="inline text-gray-600" data-feather="hard-drive"></span>
@@ -59,6 +64,8 @@
                             {{ $server->disk / 1000 }} GB
                         </span>
                     </div>
+
+                    <!-- Databases -->
                     <div class="flex py-2 justify-between">
                         <p>
                             <span class="inline text-gray-600" data-feather="archive"></span>
@@ -95,6 +102,10 @@
                             <span class="trans text-gray-600 hover:text-gray-700" data-feather="clock"></span>
                         </a>
                     @else
+                        <!-- TODO: link me -->
+                        <a href="#" title="Deploy server">
+                            <span class="trans ml-1 text-gray-600 hover:text-gray-700" data-feather="play"></span>
+                        </a>
                         <a href="{{ route('servers.configure', $server) }}" title="Configure server">
                             <span class="trans ml-1 text-gray-600 hover:text-gray-700" data-feather="settings"></span>
                         </a>

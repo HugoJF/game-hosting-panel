@@ -35,6 +35,11 @@ class ServerPolicy extends BasePolicy
         return $user->id === $server->user_id;
     }
 
+    public function update(User $user, Server $server): bool
+    {
+        return $user->id === $server->user_id;
+    }
+
     public function terminate(User $user, Server $server): bool
     {
         return $user->id === $server->user_id;

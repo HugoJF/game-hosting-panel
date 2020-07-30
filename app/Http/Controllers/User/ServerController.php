@@ -9,7 +9,7 @@ use App\Http\Requests\ServerStoreRequest;
 use App\Http\Resources\ServerResource;
 use App\Location;
 use App\Server;
-use App\Services\User\AutoServerDeploymentService;
+use App\Services\User\DeployCostService;
 use App\Services\User\DeployCreationService;
 use App\Services\User\DeployTerminationService;
 use App\Services\User\NodeSelectionService;
@@ -18,7 +18,6 @@ use App\Services\User\ServerDeletionService;
 use App\Services\User\ServerDeploymentService;
 use App\Transaction;
 use App\User;
-use Illuminate\Http\Request;
 
 class ServerController extends Controller
 {
@@ -61,15 +60,19 @@ class ServerController extends Controller
         return new ServerResource($server);
     }
 
-    public function show(Server $server)
+    public function show(DeployCostService $costService, Server $server)
     {
         // TODO: fix this shit show
         $latestDeploys = $server->deploys()->latest()->limit(5)->get();
         $transactions = Transaction::whereIn('id', $latestDeploys->pluck('transaction_id'))->get();
-
         $deploys = collect($latestDeploys->count() === 0 ? [] : [$latestDeploys->first()]);
+        $costPerPeriod = $costService->getCostPerPeriod(
+            $server->node,
+            $server->billing_period,
+            $server->only(['cpu', 'memory', 'disk', 'databases'])
+        );
 
-        return view('servers.show', compact('server', 'deploys', 'transactions'));
+        return view('servers.show', compact('server', 'deploys', 'transactions', 'costPerPeriod'));
     }
 
     public function configure(Server $server)
@@ -77,19 +80,43 @@ class ServerController extends Controller
         return view('servers.configure', compact('server'));
     }
 
-    public function deploy(
-        ServerDeployRequest $request,
-        ServerDeploymentService $deployment,
-        Server $server
-    ): ServerResource
+    public function update(ServerDeployRequest $request, Server $server)
+    {
+        $server->billing_period = $request->input('billing_period');
+        $server->cpu = $request->input('cpu');
+        $server->memory = $request->input('memory');
+        $server->disk = $request->input('disk');
+        $server->databases = $request->input('databases');
+
+        $server->update();
+
+        flash()->success('Server parameters updated successfully!');
+
+        return new ServerResource($server);
+    }
+
+    public function deploying(DeployCostService $costService, Server $server)
+    {
+        $costPerPeriod = $costService->getCostPerPeriod(
+            $server->node,
+            $server->billing_period,
+            $server->only(['cpu', 'memory', 'disk', 'databases'])
+        );
+
+        return view('servers.deploying', compact('server', 'costPerPeriod'));
+    }
+
+    public function deploy(ServerDeploymentService $deployment, Server $server)
     {
         $deployment->handle(
             $server,
-            $request->get('billing_period'),
-            $request->only(['cpu', 'memory', 'disk', 'databases'])
+            $server->billing_period,
+            $server->only(['cpu', 'memory', 'disk', 'databases'])
         );
 
-        return new ServerResource($server);
+        flash()->success('Server successfully deployed!');
+
+        return redirect()->route('servers.show', $server);
     }
 
     public function terminate(DeployTerminationService $terminationService, Server $server)

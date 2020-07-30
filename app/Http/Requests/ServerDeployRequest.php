@@ -24,10 +24,10 @@ class ServerDeployRequest extends FormRequest
 
         return [
             'billing_period' => ['required', Rule::in($periods)],
-            'cpu'            => "required|min:0|max:$cpu",
-            'memory'         => "required|min:0|max:$memory",
-            'disk'           => "required|min:0|max:$disk",
-            'databases'      => "required|min:0|max:$databases",
+            'cpu'            => "required|numeric|min:0|max:$cpu",
+            'memory'         => "required|numeric|min:0|max:$memory",
+            'disk'           => "required|numeric|min:0|max:$disk",
+            'databases'      => "required|numeric|min:0|max:$databases",
         ];
     }
 }

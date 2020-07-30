@@ -4,7 +4,7 @@
         $color = $colors[$message['level'] ?? 'success'];
     @endphp
 
-    <div class="flex items-center w-full p-4 my-4
+    <div class="flex items-center w-full p-4 mb-8
                 bg-{{ $color }}-500 text-base text-{{ $color }}-100
                 border border-{{ $color }}-600"
          role="alert"

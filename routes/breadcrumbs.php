@@ -45,6 +45,13 @@ Breadcrumbs::for('servers.create', function ($trail) {
     $trail->push('Creating server', route('servers.create'));
 });
 
+// TODO: update
+// Home > Servers > [Server] > Deploying
+Breadcrumbs::for('servers.deploying', function ($trail, $server) {
+    $trail->parent('servers.show', $server);
+    $trail->push('Deploying server', route('servers.deploying', $server));
+});
+
 // Home > Servers > Create
 Breadcrumbs::for('servers.configure', function ($trail, $server) {
     $trail->parent('servers.index');

@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'no_deploys' => 'No deploys!',
-    'current' => 'Current deploy',
-    'description' => 'Information about the current deploy of your server',
+    'deploying'   => 'Deploying server',
+    'no_deploys'  => 'No deploys!',
+    'latest'     => 'Latest deploy',
+    'description' => 'Information about the latest deploy of your server',
 ];

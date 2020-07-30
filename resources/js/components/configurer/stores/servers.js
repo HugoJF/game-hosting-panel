@@ -18,7 +18,7 @@ export const servers = {
             dispatch.servers.setLoading(true);
             dispatch.servers.setError();
             try {
-                let response = await axios.post(`/servers/${payload.server}/deploy`, payload.config);
+                let response = await axios.patch(`/servers/${payload.server}`, payload.config);
                 return response.data;
             } catch (e) {
                 let message = e.message;

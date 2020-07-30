@@ -127,10 +127,13 @@ Route::middleware('auth')->group(function () {
         Route::get('create', 'ServerController@create')->name('servers.create');
 
         Route::get('{server}', 'ServerController@show')->name('servers.show');
-        Route::get('{server}/deploy', 'ServerController@configure')->name('servers.configure');
+        Route::get('{server}/deploying', 'ServerController@deploying')->name('servers.deploying');
+        Route::get('{server}/configure', 'ServerController@configure')->name('servers.configure');
 
         Route::post('/', 'ServerController@store')->name('servers.store')->middleware('can:create,App\Server');
         Route::post('{server}/deploy', 'ServerController@deploy')->name('servers.deploy')->middleware('can:deploy,server');
+
+        Route::patch('{server}', 'ServerController@update')->name('servers.update')->middleware('can:update,server');
 
         // TODO: patch
         Route::get('{server}/terminate', 'ServerController@terminate')->name('servers.terminate')->middleware('can:terminate,server');

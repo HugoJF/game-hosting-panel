@@ -39,6 +39,7 @@ return [
     'description'     => 'Description',
     'action'          => 'Action',
     'actions'         => 'Actions',
+    'configure'       => 'Configure',
     'delete'          => 'Delete',
     'edit'            => 'Edit',
     'view'            => 'View',

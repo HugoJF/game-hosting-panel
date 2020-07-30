@@ -41,8 +41,11 @@
                         @lang('words.force_terminate')
                     </a>
                 @else
-                    <a class="btn btn-primary btn-lg" href="{{ route('servers.configure', $server) }}">
+                    <a class="btn btn-primary btn-lg" href="{{ route('servers.deploying', $server) }}">
                         @lang('words.deploy')
+                    </a>
+                    <a class="btn btn-outline-primary btn-lg" href="{{ route('servers.configure', $server) }}">
+                        @lang('words.configure')
                     </a>
                 @endif
             @else
@@ -52,8 +55,19 @@
     </div>
 
     <div class="mb-4">
+        <h3>Server summary</h3>
+        <small class="text-gray-500">
+            Summary of current configuration and costs for deployment
+        </small>
+    </div>
+
+    <div class="mb-10 p-8 flex-grow bg-white">
+        @include('servers.information')
+    </div>
+
+    <div class="mb-4">
         <h3>
-            @lang('deploys.current')
+            @lang('deploys.latest')
         </h3>
         <small class="text-gray-500">
             @lang('deploys.description')

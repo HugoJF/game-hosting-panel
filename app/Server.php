@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Services\ServerService;
-use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Searchable\Searchable;
@@ -13,7 +12,7 @@ class Server extends Model implements Searchable
 {
     use SoftDeletes;
 
-    protected $fillable = ['name', 'game_id', 'node_id', 'user_id', 'billing_period'];
+    protected $fillable = ['name', 'game_id', 'node_id', 'user_id'];
 
     protected $dates = ['installed_at', 'removed_at'];
 
@@ -47,7 +46,7 @@ class Server extends Model implements Searchable
         return $this->belongsTo(User::class);
     }
 
-    /** @deprecated  */
+    /** @deprecated */
     public function getDeploy()
     {
         return app(ServerService::class)->getCurrentDeploy($this);
