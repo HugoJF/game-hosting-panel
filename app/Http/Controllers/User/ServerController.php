@@ -38,7 +38,6 @@ class ServerController extends Controller
     public function store(
         NodeSelectionService $nodeSelection,
         ServerCreationService $serverCreation,
-        DeployCreationService $deployCreation,
         ServerStoreRequest $request
     ): ServerResource
     {
@@ -52,7 +51,7 @@ class ServerController extends Controller
         $node = $nodeSelection->handle($location);
 
         // Checks if user can deploy a server, before creating the server.
-        $deployCreation->creationPreChecks(auth()->user(), $node, $period, $config);
+        $serverCreation->preChecks(auth()->user(), $node, $period, $config);
 
         // Create the server
         $server = $serverCreation->handle(auth()->user(), $game, $node, $config);

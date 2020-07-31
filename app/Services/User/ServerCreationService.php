@@ -93,7 +93,7 @@ class ServerCreationService
      * @throws InvalidPeriodCostException
      * @throws TooManyServersException
      */
-    protected function preChecks(User $user, Node $node, string $billingPeriod, array $config): void
+    public function preChecks(User $user, Node $node, string $billingPeriod, array $config): void
     {
         $this->preChecks->handle($user, $node, $billingPeriod, $config);
 
