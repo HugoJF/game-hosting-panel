@@ -61,9 +61,9 @@
         </small>
     </div>
 
-    <div class="mb-10 p-8 flex-grow bg-white">
+    <x-well>
         @include('servers.information')
-    </div>
+    </x-well>
 
     <div class="mb-4">
         <h3>

@@ -1,165 +1,162 @@
-<div class="mb-10 p-8 flex-grow bg-white">
-    @forelse ($deploys as $deploy)
-        <!-- Body -->
-        <div class="flex-grow bg-white">
-            <!-- Started  -->
-            <div class="mb-2 flex flex-col lg:flex-row justify-between">
-                @if($deploy->created_at)
-                    <p class="text-sm text-gray-400 font-light tracking-tight">
-                        @lang('words.created_at'):
-                        {{ $deploy->created_at }}
-                    </p>
-                @endif
-                @if($deploy->terminated_at)
-                    <p class="text-sm text-gray-400 font-light tracking-tight">
-                        @lang('words.terminated_at'):
-                        {{ $deploy->terminated_at }}
-                    </p>
-                @elseif($deploy->termination_requested_at)
-                    <p class="text-sm text-gray-400 font-light tracking-tight">
-                        @lang('words.termination_requested_at'):
-                        {{ $deploy->termination_requested_at }}
-                    </p>
-                @endif
-            </div>
+<x-well>
+@forelse ($deploys as $deploy)
+    <!-- Started  -->
+        <div class="mb-2 flex flex-col lg:flex-row justify-between">
+            @if($deploy->created_at)
+                <p class="text-sm text-gray-400 font-light tracking-tight">
+                    @lang('words.created_at'):
+                    {{ $deploy->created_at }}
+                </p>
+            @endif
+            @if($deploy->terminated_at)
+                <p class="text-sm text-gray-400 font-light tracking-tight">
+                    @lang('words.terminated_at'):
+                    {{ $deploy->terminated_at }}
+                </p>
+            @elseif($deploy->termination_requested_at)
+                <p class="text-sm text-gray-400 font-light tracking-tight">
+                    @lang('words.termination_requested_at'):
+                    {{ $deploy->termination_requested_at }}
+                </p>
+            @endif
+        </div>
 
-            <!-- Header + Status -->
-            <div class="mb-6 flex flex-col lg:flex-row items-center">
-                <h2 class="mb-4 lg:mr-auto text-center text-base md:text-lg lg:text-2xl text-gray-700 font-normal">
+        <!-- Header + Status -->
+        <div class="mb-6 flex flex-col lg:flex-row items-center">
+            <h2 class="mb-4 lg:mr-auto text-center text-base md:text-lg lg:text-2xl text-gray-700 font-normal">
                     <span class="hidden xl:inline">
                         @lang('words.deploy')
                     </span>
-                    <span class="py-1 px-2 bg-red-200 text-red-800 font-mono tracking-tight break-words select-all rounded">
+                <span class="py-1 px-2 bg-red-200 text-red-800 font-mono tracking-tight break-words select-all rounded">
                         {{ $deploy->id }}
                     </span>
-                </h2>
+            </h2>
 
-                <span class="text-base lg:text-xl">
+            <span class="text-base lg:text-xl">
                     @include('deploy.status')
                 </span>
-            </div>
+        </div>
 
-            <!-- Information -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 col-gap-8">
-                <div class="flex-grow">
-                    <!-- CPU -->
-                    <div class="flex py-2 justify-between border-b border-gray-100">
-                        <p>
-                            <span class="inline text-gray-600" data-feather="cpu"></span>
-                            <span class="text-gray-900 font-semibold">
+        <!-- Information -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 col-gap-8">
+            <div class="flex-grow">
+                <!-- CPU -->
+                <div class="flex py-2 justify-between border-b border-gray-100">
+                    <p>
+                        <span class="inline text-gray-600" data-feather="cpu"></span>
+                        <span class="text-gray-900 font-semibold">
                                 @lang('words.cpu')
                             </span>
-                        </p>
-                        <span class="text-gray-700">
+                    </p>
+                    <span class="text-gray-700">
                             {{ round($deploy->cpu) }} marks
                         </span>
-                    </div>
-
-                    <!-- RAM -->
-                    <div class="flex py-2 justify-between border-b border-gray-100">
-                        <p>
-                            <span class="inline text-gray-600" data-feather="database"></span>
-                            <span class="text-gray-900 font-semibold">
-                                @lang('words.ram')
-                            </span>
-                        </p>
-                        <span class="text-gray-700">
-                            {{ number_format($deploy->memory) }} MB
-                        </span>
-                    </div>
-
-                    <!-- Disk -->
-                    <div class="flex py-2 justify-between border-b border-gray-100">
-                        <p>
-                            <span class="inline text-gray-600" data-feather="hard-drive"></span>
-                            <span class="text-gray-900 font-semibold">
-                                @lang('words.disk')
-                            </span>
-                        </p>
-                        <span class="text-gray-700">
-                            {{ $deploy->disk / 1000 }} GB
-                        </span>
-                    </div>
-
-                    <!-- Databases -->
-                    <div class="flex py-2 justify-between border-b lg:border-none border-gray-100">
-                        <p>
-                            <span class="inline text-gray-600" data-feather="archive"></span>
-                            <span class="text-gray-900 font-semibold">
-                                @lang('words.databases')
-                            </span>
-                        </p>
-                        <span class="text-gray-700">
-                            {{ $deploy->databases }}
-                        </span>
-                    </div>
                 </div>
 
-                <div class="flex-grow">
-                    <!-- Billing period -->
-                    <div class="flex py-2 justify-between border-b border-gray-100">
-                        <p>
-                            <span class="inline text-gray-600" data-feather="pie-chart"></span>
-                            <span class="text-gray-900 font-semibold">
+                <!-- RAM -->
+                <div class="flex py-2 justify-between border-b border-gray-100">
+                    <p>
+                        <span class="inline text-gray-600" data-feather="database"></span>
+                        <span class="text-gray-900 font-semibold">
+                                @lang('words.ram')
+                            </span>
+                    </p>
+                    <span class="text-gray-700">
+                            {{ number_format($deploy->memory) }} MB
+                        </span>
+                </div>
+
+                <!-- Disk -->
+                <div class="flex py-2 justify-between border-b border-gray-100">
+                    <p>
+                        <span class="inline text-gray-600" data-feather="hard-drive"></span>
+                        <span class="text-gray-900 font-semibold">
+                                @lang('words.disk')
+                            </span>
+                    </p>
+                    <span class="text-gray-700">
+                            {{ $deploy->disk / 1000 }} GB
+                        </span>
+                </div>
+
+                <!-- Databases -->
+                <div class="flex py-2 justify-between border-b lg:border-none border-gray-100">
+                    <p>
+                        <span class="inline text-gray-600" data-feather="archive"></span>
+                        <span class="text-gray-900 font-semibold">
+                                @lang('words.databases')
+                            </span>
+                    </p>
+                    <span class="text-gray-700">
+                            {{ $deploy->databases }}
+                        </span>
+                </div>
+            </div>
+
+            <div class="flex-grow">
+                <!-- Billing period -->
+                <div class="flex py-2 justify-between border-b border-gray-100">
+                    <p>
+                        <span class="inline text-gray-600" data-feather="pie-chart"></span>
+                        <span class="text-gray-900 font-semibold">
                                 @lang('words.billing_period')
                             </span>
-                        </p>
-                        <div>
+                    </p>
+                    <div>
                             <span class="text-base badge badge-secondary">
                                 {{ ucfirst($deploy->billing_period) }}
                             </span>
-                        </div>
                     </div>
+                </div>
 
-                    <!-- Period cost -->
-                    <div class="flex py-2 justify-between border-b border-gray-100">
-                        <p>
-                            <span class="inline text-gray-600" data-feather="refresh-cw"></span>
-                            <span class="text-gray-900 font-semibold">
+                <!-- Period cost -->
+                <div class="flex py-2 justify-between border-b border-gray-100">
+                    <p>
+                        <span class="inline text-gray-600" data-feather="refresh-cw"></span>
+                        <span class="text-gray-900 font-semibold">
                                 @lang('words.period_cost')
                             </span>
-                        </p>
-                        <span class="text-gray-700">
+                    </p>
+                    <span class="text-gray-700">
                             R$ {{ number_format(abs($deploy->cost_per_period) / 100, 2) }}
                         </span>
-                    </div>
+                </div>
 
-                    <!-- Total cost -->
-                    <div class="flex py-2 justify-between border-b border-gray-100">
-                        <p>
-                            <span class="inline text-gray-600" data-feather="dollar-sign"></span>
-                            <span class="text-gray-900 font-semibold">
+                <!-- Total cost -->
+                <div class="flex py-2 justify-between border-b border-gray-100">
+                    <p>
+                        <span class="inline text-gray-600" data-feather="dollar-sign"></span>
+                        <span class="text-gray-900 font-semibold">
                                 @lang('words.total_cost')
                             </span>
-                        </p>
-                        <span class="text-gray-700">
+                    </p>
+                    <span class="text-gray-700">
                             R$ {{ number_format(abs($deploy->transaction->value) / 100, 2) }}
                         </span>
-                    </div>
+                </div>
 
-                    <!-- Duration -->
-                    <div class="flex py-2 justify-between">
-                        <p>
-                            <span class="inline text-gray-600" data-feather="clock"></span>
-                            <span class="text-gray-900 font-semibold">
+                <!-- Duration -->
+                <div class="flex py-2 justify-between">
+                    <p>
+                        <span class="inline text-gray-600" data-feather="clock"></span>
+                        <span class="text-gray-900 font-semibold">
                                 @lang('words.duration')
                             </span>
-                        </p>
-                        @if($deploy->terminated_at)
-                            <span class="text-gray-700">
+                    </p>
+                    @if($deploy->terminated_at)
+                        <span class="text-gray-700">
                                 {{ $deploy->terminated_at->longAbsoluteDiffForHumans($deploy->created_at) }}
                             </span>
-                        @else
-                            <span class="text-gray-700">
+                    @else
+                        <span class="text-gray-700">
                                 {{ $deploy->created_at->longAbsoluteDiffForHumans() }}
                             </span>
-                        @endif
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
     @empty
-        <div class="flex flex-col flex-grow items-center">
+        <div class="flex flex-col items-center">
             <h2>
                 @lang('deploys.no_deploys')
             </h2>
@@ -196,4 +193,4 @@
             @endisset
         </div>
     @endforelse
-</div>
+</x-well>
