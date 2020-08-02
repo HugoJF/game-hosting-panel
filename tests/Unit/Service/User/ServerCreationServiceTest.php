@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Service\User;
 
 use App\Exceptions\TooManyServersException;
 use App\Game;
