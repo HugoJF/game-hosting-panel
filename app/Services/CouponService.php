@@ -20,19 +20,19 @@ class CouponService
     /**
      * Stores new Coupon.
      *
+     * @param array $form
      * @param array $data
      *
      * @return Coupon
      */
-    public function store(array $data): Coupon
+    public function store(array $form, array $data = []): Coupon
     {
         $coupon = new Coupon;
 
-        $coupon->fill($data);
+        $coupon->fill($form);
+        $coupon->forceFill($data);
 
-        $coupon->save();
-
-        return $coupon;
+        return save($coupon);
     }
 
     /**
@@ -47,9 +47,7 @@ class CouponService
     {
         $coupon->fill($data);
 
-        $coupon->save();
-
-        return $coupon;
+        return save($coupon);
     }
 
     /**

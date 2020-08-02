@@ -10,7 +10,7 @@ class Coupon extends Model
 {
 	protected $fillable = ['code', 'value', 'max_uses'];
 
-	public function getRouteKeyName()
+	public function getRouteKeyName(): string
 	{
 		return 'code';
 	}

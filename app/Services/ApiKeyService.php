@@ -13,41 +13,40 @@ use App\User;
 
 class ApiKeyService
 {
-	/**
-	 * Stores new API Key.
-	 *
-	 * @param User  $user
-	 * @param array $data
-	 *
-	 * @return ApiKey
-	 */
-	public function store(User $user, array $data): ApiKey
+    /**
+     * Stores new API Key.
+     *
+     * @param User  $user
+     * @param array $form
+     *
+     * @param array $data
+     *
+     * @return ApiKey
+     */
+    public function store(User $user, array $form, array $data = []): ApiKey
     {
-		$key = new ApiKey;
+        $key = new ApiKey($form);
 
-		$key->fill($data);
+        $key->forceFill($data);
+        $key->user()->associate($user);
 
-		$key->user()->associate($user);
+        return save($key);
+    }
 
-		$key->save();
-
-		return $key;
-	}
-
-	/**
-	 * Updates API Key information.
-	 *
-	 * @param ApiKey $key
-	 * @param array  $data
-	 *
-	 * @return ApiKey
-	 */
-	public function update(ApiKey $key, array $data): ApiKey
+    /**
+     * Updates API Key information.
+     *
+     * @param ApiKey $key
+     * @param array  $form
+     * @param array  $data
+     *
+     * @return ApiKey
+     */
+    public function update(ApiKey $key, array $form, array $data = []): ApiKey
     {
-		$key->fill($data);
+        $key->fill($form);
+        $key->forceFill($data);
 
-		$key->save();
-
-		return $key;
-	}
+        return save($key);
+    }
 }
