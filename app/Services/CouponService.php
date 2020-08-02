@@ -10,6 +10,8 @@ namespace App\Services;
 
 use App\Coupon;
 use App\Events\CouponUsed;
+use App\Exceptions\CouponAlreadyUsedException;
+use App\Exceptions\CouponMaxUsesReachedException;
 use App\Transaction;
 use App\User;
 use DB;
@@ -56,41 +58,31 @@ class CouponService
      * @param User   $user
      * @param Coupon $coupon
      *
-     * @return Transaction|null
+     * @return Transaction
      * @throws Exception
      */
-    public function use(User $user, Coupon $coupon): ?Transaction
+    public function use(User $user, Coupon $coupon): Transaction
     {
         if ($coupon->uses >= $coupon->max_uses) {
-            flash()->error('Coupon max uses reached!');
-
-            return null;
+            throw new CouponMaxUsesReachedException;
         }
 
         if ($user->coupons()->where('coupons.id', $coupon->id)->exists()) {
-            flash()->error('Coupons can only be used one time!');
-
-            return null;
+            throw new CouponAlreadyUsedException;
         }
 
-        DB::beginTransaction();
+        return DB::transaction(fn () => $this->processCoupon($user, $coupon));
+    }
 
-        try {
-            $transaction = $this->generateTransaction($user, $coupon);
+    protected function processCoupon(User $user, Coupon $coupon)
+    {
+        $transaction = $this->generateTransaction($user, $coupon);
 
-            $coupon->users()->attach($user);
+        $coupon->users()->attach($user);
 
-            event(new CouponUsed($coupon, $user));
+        event(new CouponUsed($coupon, $user));
 
-            DB::commit();
-
-            return $transaction;
-        } catch (Exception $e) {
-            report($e);
-            DB::rollBack();
-
-            return null;
-        }
+        return $transaction;
     }
 
     protected function generateTransaction(User $user, Coupon $coupon)

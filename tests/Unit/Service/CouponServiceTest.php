@@ -3,6 +3,8 @@
 namespace Tests\Unit\Service;
 
 use App\Coupon;
+use App\Exceptions\CouponAlreadyUsedException;
+use App\Exceptions\CouponMaxUsesReachedException;
 use App\Services\CouponService;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -54,4 +56,51 @@ class CouponServiceTest extends TestCase
 
         $this->assertDatabaseHas('coupons', $this->update);
     }
+
+    public function test_coupon_will_generate_transaction()
+    {
+        $coupon = factory(Coupon::class)->create([
+            'value'    => 5000,
+            'max_uses' => 1,
+        ]);
+
+        /** @var User $user */
+        $user = factory(User::class)->create();
+
+        $this->service->use($user, $coupon);
+
+        $this->assertEquals(5000, $user->balance);
+    }
+
+    public function test_coupon_can_only_be_used_limited_times()
+    {
+        $coupon = factory(Coupon::class)->create([
+            'value'    => 5000,
+            'max_uses' => 1,
+        ]);
+
+        $user1 = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+
+        $this->expectException(CouponMaxUsesReachedException::class);
+
+        $this->service->use($user1, $coupon);
+        $this->service->use($user2, $coupon);
+    }
+
+    public function test_coupons_can_only_be_used_once_per_user()
+    {
+        $coupon = factory(Coupon::class)->create([
+            'value'    => 5000,
+            'max_uses' => 2,
+        ]);
+
+        $user = factory(User::class)->create();
+
+        $this->expectException(CouponAlreadyUsedException::class);
+
+        $this->service->use($user, $coupon);
+        $this->service->use($user, $coupon);
+    }
+
 }
