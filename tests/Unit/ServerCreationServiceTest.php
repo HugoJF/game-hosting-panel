@@ -63,6 +63,32 @@ class ServerCreationServiceTest extends TestCase
         $this->assertEquals($this->panelHash, $result->panel_hash);
     }
 
+    public function test_server_creation_will_fail_if_api_didnt_return_resource(): void
+    {
+        $this->expectsAllocationSelection();
+        $this->expectsServerBuildConfigGeneration();
+        $this->mockCreateServerToFail();
+        $this->mockCostServiceToPass();
+
+        $this->expectException(Exception::class);
+
+        $game = factory(Game::class)->create();
+        $node = factory(Node::class)->create();
+        $user = factory(User::class)->create([
+            'server_limit' => 5,
+        ]);
+        factory(Transaction::class)->create([
+            'value'   => 5000,
+            'user_id' => $user->id,
+        ]);
+
+        $result = app(ServerCreationService::class)->handle($user, $game, $node, $this->formData);
+
+        $this->assertInstanceOf(Server::class, $result);
+        $this->assertEquals($this->panelId, $result->panel_id);
+        $this->assertEquals($this->panelHash, $result->panel_hash);
+    }
+
     protected function expectsAllocationSelection(): void
     {
         $this->mock(AllocationSelectionService::class)
@@ -89,6 +115,14 @@ class ServerCreationServiceTest extends TestCase
                  'id'         => $this->panelId,
                  'identifier' => $this->panelHash,
              ]))->once();
+    }
+
+    protected function mockPanelServerCreationToFail(): void
+    {
+        $this->mock(Pterodactyl::class)
+             ->shouldReceive('createServer')
+             ->andReturn(null)
+             ->once();
     }
 
     protected function mockCostServiceToPass(): void
