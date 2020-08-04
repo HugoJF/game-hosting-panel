@@ -11,17 +11,6 @@ class CsgoProcessor extends Processor
         $this->params = config('processors.csgo.parameters');
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function rules(): array
-    {
-        return [
-            'tickrate' => 'required|numeric',
-            'slots'    => 'required|numeric',
-        ];
-    }
-
     public function cost(array $cost): array
     {
         $tickrateCostPerSlot = config('processors.csgo.cost_per_slot');

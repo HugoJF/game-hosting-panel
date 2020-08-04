@@ -123,26 +123,45 @@ return [
         */
 
         'parameters' => [
-            'slots' => [
+            'slots'   => [
                 'name'        => 'Slots',
                 'icon'        => 'cpu',
                 'description' => 'Maximum player count',
                 'empty_value' => '10',
-                'options'     => ['10', '20', '30', '40', '50', '75', '100'],
+                'options'     => [
+                    '10'  => '10',
+                    '20'  => '20',
+                    '30'  => '30',
+                    '40'  => '40',
+                    '50'  => '50',
+                    '75'  => '75',
+                    '100' => '100',
+                ],
             ],
             'plugins' => [
                 'name'        => 'Plugins',
                 'icon'        => 'cpu',
                 'description' => 'Amount of plugins',
                 'empty_value' => '0',
-                'options'     => ['0', '5', '10', '25', '50'],
+                'options'     => [
+                    '0'  => '0',
+                    '5'  => '5',
+                    '10' => '10',
+                    '25' => '25',
+                    '50' => '50',
+                ],
             ],
-            'size'  => [
+            'size'    => [
                 'name'        => 'World size',
                 'icon'        => 'cpu',
                 'description' => 'World size',
                 'empty_value' => 'small',
-                'options'     => ['small', 'medium', 'large', 'huge'],
+                'options'     => [
+                    'small'  => 'Small',
+                    'medium' => 'Medium',
+                    'large'  => 'Large',
+                    'huge'   => 'Huge',
+                ],
             ],
         ],
     ],

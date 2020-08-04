@@ -20,8 +20,8 @@ class MinecraftProcessor extends Processor
         return array_merge(
             config('processors.minecraft.costs'),
             [
-                'cpu'    => 300 + (int) $cost['plugins'] * 50, // TODO: magic variables nop
-                'memory' => $memoryPerPlayer * (int) $cost['slots'],
+                'cpu'    => 300 + (int) ($cost['plugins'] ?? 0) * 50, // TODO: magic variables nop
+                'memory' => $memoryPerPlayer * (int) ($cost['slots'] ?? 0),
                 'disk'   => $disk,
             ],
         );

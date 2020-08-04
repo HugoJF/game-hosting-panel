@@ -42,7 +42,7 @@ abstract class Processor
         foreach ($choices as $key => $value) {
             $options = $this->params[ $key ]['options'];
 
-            if (!in_array($value, $options)) {
+            if (!array_key_exists($value, $options)) {
                 throw new InvalidParameterChoiceException;
             }
         }
@@ -109,7 +109,7 @@ abstract class Processor
 
         // Build a config for each parameter option and current choices, calculate cost and filter results.
         return collect($options)
-            ->mapWithKeys(fn($option) => [
+            ->mapWithKeys(fn($text, $option) => [
                 $option => array_merge($choices, [$param => $option]),
             ])
             // Compute resource cost for each config
@@ -118,6 +118,7 @@ abstract class Processor
             ->reject(fn($cost) => $this->reject($cost))
             // Options that were not rejected
             ->keys()
+            ->mapWithKeys(fn($option) => [$option => $options[ $option ]])
             ->toArray();
     }
 }
