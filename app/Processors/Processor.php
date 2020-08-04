@@ -4,17 +4,10 @@ namespace App\Processors;
 
 use App\Exceptions\InvalidParameterChoiceException;
 use Exception;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 
 abstract class Processor
 {
     protected array $params = [];
-
-    /**
-     * @return array
-     */
-    abstract public function rules(): array;
 
     /**
      * Calculates resources cost for a given config
@@ -41,11 +34,18 @@ abstract class Processor
      *
      * @param array $choices
      *
-     * @throws ValidationException
+     * @throws InvalidParameterChoiceException
      */
     public function validate(array $choices): void
     {
-        Validator::make($choices, $this->rules())->validate();
+        // For each choice, check if they are present in the definition
+        foreach ($choices as $key => $value) {
+            $options = $this->params[ $key ]['options'];
+
+            if (!in_array($value, $options)) {
+                throw new InvalidParameterChoiceException;
+            }
+        }
     }
 
     /**
@@ -55,7 +55,6 @@ abstract class Processor
      *
      * @return array
      * @throws InvalidParameterChoiceException
-     * @throws ValidationException
      */
     public function calculate(array $choices): array
     {
