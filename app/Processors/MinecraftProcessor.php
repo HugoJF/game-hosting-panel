@@ -2,6 +2,8 @@
 
 namespace App\Processors;
 
+use Illuminate\Validation\Rule;
+
 class MinecraftProcessor extends Processor
 {
     public function __construct()
@@ -10,6 +12,19 @@ class MinecraftProcessor extends Processor
     }
 
     // TODO: somehow validate this shit
+
+    /**
+     * @inheritDoc
+     */
+    public function rules(): array
+    {
+        return [
+            'size'    => ['required', Rule::in(array_keys(config('processors.minecraft.disk_per_size')))],
+            'plugins' => 'required|numeric',
+            'slots'   => 'required|numeric',
+        ];
+    }
+
     public function cost(array $cost): array
     {
         $memoryPerPlayer = config('processors.minecraft.memory_per_player');
