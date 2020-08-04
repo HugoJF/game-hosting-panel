@@ -48,7 +48,7 @@ class ConfigurerController extends Controller
         /** @var Processor $processor */
         $processor = $service->getProcessor($game);
 
-        $cost = $processor->cost($request->all());
+        $cost = $processor->resourceCost($request->all());
         $remainder = $request->only(['game', 'location']);
 
         return array_merge($cost, $remainder);

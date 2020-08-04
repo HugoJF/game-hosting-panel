@@ -4,6 +4,8 @@ namespace App\Processors;
 
 use App\Exceptions\InvalidParameterChoiceException;
 use Exception;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 abstract class Processor
 {
@@ -12,13 +14,18 @@ abstract class Processor
     /**
      * Calculates resources cost for a given config
      *
-     * TODO: wrap cost function to validate it first
-     *
-     * @param array $cost
+     * @param array $config
      *
      * @return array
      */
-    abstract public function cost(array $cost): array;
+    abstract protected function cost(array $config): array;
+
+    /**
+     * Generates rules needed to compute cost
+     *
+     * @return array
+     */
+    abstract protected function rules(): array;
 
     /**
      * Checks if resource cost is invalid
@@ -28,6 +35,27 @@ abstract class Processor
      * @return bool
      */
     abstract protected function reject($cost): bool;
+
+    /**
+     * Validates config then compute cost
+     *
+     * @param array $config
+     *
+     * @return array
+     */
+    public function resourceCost(array $config): array
+    {
+        $validator = Validator::make($config, $this->rules());
+        try {
+            $validator->validate();
+
+            return $this->cost($config);
+        } catch (ValidationException $e) {
+            return collect(['cpu', 'memory', 'disk', 'databases'])
+                ->mapWithKeys(fn($resource) => [$resource => 0])
+                ->toArray();
+        }
+    }
 
     /**
      * Check if the request was somehow modified to send parameters that are not listed.
@@ -113,11 +141,12 @@ abstract class Processor
                 $option => array_merge($choices, [$param => $option]),
             ])
             // Compute resource cost for each config
-            ->map(fn($config) => $this->cost($config))
+            ->map(fn($config) => $this->resourceCost($config))
             // Remove configs that have their resource cost rejected
             ->reject(fn($cost) => $this->reject($cost))
             // Options that were not rejected
             ->keys()
+            // Map option key to option text
             ->mapWithKeys(fn($option) => [$option => $options[ $option ]])
             ->toArray();
     }
