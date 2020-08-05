@@ -14,7 +14,7 @@ class CsgoProcessorTest extends TestCase
         'disk'      => 0,
         'databases' => 0,
     ];
-    protected array $possibleSlots = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '30'];
+    protected array $possibleSlots = ['12', '16', '20', '24', '28', '32', '36', '40'];
     protected array $possibleTickrate = ['64', '102.4', '128'];
 
     /**
@@ -38,8 +38,10 @@ class CsgoProcessorTest extends TestCase
      * @param string $slots
      * @param string $tickrate
      */
-    public function test_processor_will_return_nothing_if_parameter_is_missing(?string $slots, ?string $tickrate): void
-    {
+    public function test_processor_will_return_nothing_if_parameter_is_missing(
+        ?string $slots,
+        ?string $tickrate
+    ): void {
         $processor = new CsgoProcessor;
 
         $cost = $processor->resourceCost(compact('slots', 'tickrate'));
