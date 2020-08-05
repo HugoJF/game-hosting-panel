@@ -102,8 +102,7 @@
                             <span class="trans text-gray-600 hover:text-gray-700" data-feather="clock"></span>
                         </a>
                     @else
-                    <!-- TODO: link me -->
-                        <a href="#" title="Deploy server">
+                        <a href="{{ route('servers.deploying', $server) }}" title="Deploy server">
                             <span class="trans ml-1 text-gray-600 hover:text-gray-700" data-feather="play"></span>
                         </a>
                         <a href="{{ route('servers.configure', $server) }}" title="Configure server">
