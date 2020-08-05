@@ -45,9 +45,8 @@ abstract class Processor
      */
     public function resourceCost(array $config): array
     {
-        $validator = Validator::make($config, $this->rules());
         try {
-            $validator->validate();
+            Validator::validate($config, $this->rules());
 
             return $this->cost($config);
         } catch (ValidationException $e) {
