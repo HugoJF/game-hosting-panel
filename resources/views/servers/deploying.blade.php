@@ -75,10 +75,9 @@
         </small>
     </div>
 
-    <div class="mb-10 p-8 flex-grow bg-white">
-        <!-- Information -->
-        @include('servers.information')
-    </div>
+    <!-- Information -->
+    @include('servers.information')
+
     <div class="flex justify-center">
         {{ Form::open(['method' => 'POST', 'url' => route('servers.deploy', $server)]) }}
             <div class="btn-group btn-group-lg">

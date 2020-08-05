@@ -31,11 +31,6 @@ class Server extends Model implements Searchable
         return $this->hasMany(Deploy::class);
     }
 
-    public function transactions()
-    {
-        return $this->hasManyThrough(Transaction::class, Deploy::class);
-    }
-
     public function game()
     {
         return $this->belongsTo(Game::class);

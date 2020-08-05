@@ -61,10 +61,10 @@ class ServerController extends Controller
 
     public function show(DeployCostService $costService, Server $server)
     {
-        // TODO: fix this shit show
-        $latestDeploys = $server->deploys()->latest()->limit(5)->get();
-        $transactions = Transaction::whereIn('id', $latestDeploys->pluck('transaction_id'))->get();
-        $deploys = collect($latestDeploys->count() === 0 ? [] : [$latestDeploys->first()]);
+        $last5 = $server->deploys()->latest()->limit(5)->get();
+        $deploys = collect([$last5->first()]);
+        $transactions = Transaction::findMany($last5->pluck('transaction_id'));
+
         $costPerPeriod = $costService->getCostPerPeriod(
             $server->node,
             $server->billing_period,

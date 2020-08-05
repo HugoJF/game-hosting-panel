@@ -43,7 +43,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'NotificationController@index')->name('notifications.index')->middleware('can:list,App\Notification');
     });
 
-
     /*
     |--------------------------------------------------------------------------
     | Transactions routes
@@ -72,17 +71,17 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-//    Route::prefix('api-keys')->group(function () {
-//        Route::get('/', 'ApiKeyController@index')->name('api-keys.index')->middleware('can:index,App\ApiKey');
-//        Route::get('create', 'ApiKeyController@create')->name('api-keys.create')->middleware('can:create,App\ApiKey');
-//        Route::get('{key}', 'ApiKeyController@edit')->name('api-keys.edit')->middleware('can:update,key');
-//
-//        Route::post('/', 'ApiKeyController@store')->name('api-keys.store')->middleware('can:create,App\ApiKey');
-//
-//        Route::patch('{key}', 'ApiKeyController@update')->name('api-keys.update')->middleware('can:update,key');
-//
-//        Route::delete('{key}', 'ApiKeyController@destroy')->name('api-keys.destroy')->middleware('can:delete,key');
-//    });
+    //    Route::prefix('api-keys')->group(function () {
+    //        Route::get('/', 'ApiKeyController@index')->name('api-keys.index')->middleware('can:index,App\ApiKey');
+    //        Route::get('create', 'ApiKeyController@create')->name('api-keys.create')->middleware('can:create,App\ApiKey');
+    //        Route::get('{key}', 'ApiKeyController@edit')->name('api-keys.edit')->middleware('can:update,key');
+    //
+    //        Route::post('/', 'ApiKeyController@store')->name('api-keys.store')->middleware('can:create,App\ApiKey');
+    //
+    //        Route::patch('{key}', 'ApiKeyController@update')->name('api-keys.update')->middleware('can:update,key');
+    //
+    //        Route::delete('{key}', 'ApiKeyController@destroy')->name('api-keys.destroy')->middleware('can:delete,key');
+    //    });
 
     /*
     |--------------------------------------------------------------------------
@@ -140,6 +139,14 @@ Route::middleware('auth')->group(function () {
         Route::get('{server}/force-terminate', 'ServerController@forceTerminate')->name('servers.force-terminate')->middleware('can:forceTerminate,server');
 
         Route::delete('{server}', 'ServerController@destroy')->name('servers.destroy')->middleware('can:destroy,server');
+
+        Route::prefix('deploys')->group(function () {
+            Route::get('{server}', 'DeployController@server')->name('servers.deploys');
+        });
+
+        Route::prefix('transactions')->group(function () {
+            Route::get('{server}', 'TransactionController@server')->name('servers.transactions');
+        });
     });
 
     /*

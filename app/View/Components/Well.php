@@ -6,14 +6,16 @@ use Illuminate\View\Component;
 
 class Well extends Component
 {
+    protected string $padding;
+
     /**
      * Create a new component instance.
      *
-     * @return void
+     * @param $padding
      */
-    public function __construct()
+    public function __construct($padding = '8')
     {
-        //
+        $this->padding = $padding;
     }
 
     /**
@@ -23,6 +25,8 @@ class Well extends Component
      */
     public function render()
     {
-        return view('components.well');
+        return view('components.well', [
+            'padding' => $this->padding,
+        ]);
     }
 }

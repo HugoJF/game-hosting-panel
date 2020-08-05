@@ -1,6 +1,7 @@
-<x-well>
 @forelse ($deploys as $deploy)
-    <!-- Started  -->
+    <x-well>
+
+        <!-- Started  -->
         <div class="mb-2 flex flex-col lg:flex-row justify-between">
             @if($deploy->created_at)
                 <p class="text-sm text-gray-400 font-light tracking-tight">
@@ -33,7 +34,7 @@
             </h2>
 
             <span class="text-base lg:text-xl">
-                    @include('deploy.status')
+                    @include('deploys.status')
                 </span>
         </div>
 
@@ -155,7 +156,9 @@
                 </div>
             </div>
         </div>
-    @empty
+    </x-well>
+@empty
+    <x-well>
         <div class="flex flex-col items-center">
             <h2>
                 @lang('deploys.no_deploys')
@@ -192,5 +195,5 @@
                 </a>
             @endisset
         </div>
-    @endforelse
-</x-well>
+    </x-well>
+@endforelse

@@ -22,9 +22,9 @@
                             {{ $server->ip }}
                         </span>
                     </p>
-                @endif
+            @endif
 
-                <!-- Specs -->
+            <!-- Specs -->
                 <div class="flex flex-col flex-grow justify-end">
                     <!-- CPU -->
                     <div class="flex py-2 justify-between border-b border-gray-100">
@@ -102,7 +102,7 @@
                             <span class="trans text-gray-600 hover:text-gray-700" data-feather="clock"></span>
                         </a>
                     @else
-                        <!-- TODO: link me -->
+                    <!-- TODO: link me -->
                         <a href="#" title="Deploy server">
                             <span class="trans ml-1 text-gray-600 hover:text-gray-700" data-feather="play"></span>
                         </a>
@@ -121,19 +121,19 @@
         <h2 class="text-center">
             @lang('servers.no_servers_yet')
         </h2>
-        <p class="text-center font-light tracking-tight">
+        <p class="text-center text-base font-light tracking-tight">
             <a class="underline" href="#">
                 @lang('servers.first_server_help')
             </a>
         </p>
-        <div class="btn-group mt-8 flex justify-center">
-            <a class="btn btn-primary" href="{{ route('servers.create') }}">
+        <div class="btn-group btn-group-lg mt-8 flex justify-center">
+            <a class="btn btn-lg btn-primary" href="{{ route('servers.create') }}">
                 @lang('servers.create')
             </a>
-            <a class="btn btn-outline-primary" href="{{ route('orders.create') }}">
+            <a class="btn btn-lg btn-outline-primary" href="{{ route('orders.create') }}">
                 @lang('words.add_credits')
             </a>
-            <a class="btn btn-outline-secondary" href="#">
+            <a class="btn btn-lg btn-outline-secondary" href="#">
                 @lang('words.help')
             </a>
         </div>

@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@php
-    $currentDeploy = $server->getDeploy();
-@endphp
-
 @section('content')
     <div class="flex flex-col lg:flex-row mb-8 items-center justify-between">
         <h2 class="flex items-center text-xl md:text-3xl lg:text-4xl">
@@ -54,35 +50,53 @@
         </div>
     </div>
 
-    <div class="mb-4">
+    <!-- Server information summary -->
+
+    <div class="mb-4 px-2">
         <h3>Server summary</h3>
-        <small class="text-gray-500">
+        <small class="text-sm text-gray-500">
             Summary of current configuration and costs for deployment
         </small>
     </div>
 
-    <x-well>
-        @include('servers.information')
-    </x-well>
+    @include('servers.information')
 
-    <div class="mb-4">
-        <h3>
-            @lang('deploys.latest')
-        </h3>
-        <small class="text-gray-500">
-            @lang('deploys.description')
-        </small>
+    <!-- Last server deploy -->
+
+    <div class="flex mb-4 px-2 justify-between items-end">
+        <div>
+            <h3>
+                @lang('deploys.latest')
+            </h3>
+            <small class="text-sm text-gray-500">
+                @lang('deploys.description')
+            </small>
+        </div>
+        <div>
+            <a class="text-sm text-gray-500 font-thin hover:font-normal" href="{{ route('servers.deploys', $server) }}">
+                View all
+            </a>
+        </div>
     </div>
 
     @include('cards.deploys')
 
-    <div class="mb-4">
-        <h3>
-            @lang('words.transactions')
-        </h3>
-        <small class="text-gray-500">
-            @lang('transactions.description', ['count' => 5])
-        </small>
+    <!-- Transactions -->
+
+    <div class="flex px-2 mb-4 justify-between items-end">
+        <div>
+            <h3>
+                @lang('words.transactions')
+            </h3>
+            <small class="text-sm text-gray-500">
+                @lang('transactions.description', ['count' => 5])
+            </small>
+        </div>
+        <div>
+            <a class="text-sm text-gray-500 font-thin hover:font-normal" href="{{ route('servers.transactions', $server) }}">
+                View all
+            </a>
+        </div>
     </div>
 
     @include('cards.transactions')

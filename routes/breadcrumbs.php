@@ -177,6 +177,18 @@ Breadcrumbs::for('servers.show', function ($trail, $server) {
     $trail->push($server->name, route('servers.show', $server));
 });
 
+// Home > Servers > [Server] > Deploys > Index
+Breadcrumbs::for('servers.deploys', function ($trail, $server) {
+    $trail->parent('servers.show', $server);
+    $trail->push('Deploys', route('servers.deploys', $server));
+});
+
+// Home > Servers > [Server] > Deploys > Index
+Breadcrumbs::for('servers.transactions', function ($trail, $server) {
+    $trail->parent('servers.show', $server);
+    $trail->push('Transactions', route('servers.transactions', $server));
+});
+
 // Home > Servers > [Server] > Deploy
 Breadcrumbs::for('deploys.create', function ($trail, $server) {
     $trail->parent('servers.show', $server);
@@ -200,7 +212,6 @@ Breadcrumbs::for('admins.games', function ($trail) {
     $trail->parent('admins.dashboard');
     $trail->push("Games", route('admins.dashboard'));
 });
-
 
 // Admin Dashboard > Games > Edit
 Breadcrumbs::for('admins.games.edit', function ($trail, $game) {
