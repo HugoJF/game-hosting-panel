@@ -36,15 +36,19 @@ class ConfigurerController extends Controller
             $arr = $location->attributesToArray();
             // Check if we have a Node, that has $game
             $arr['available'] = $location->nodes->filter(function (Node $node) use ($game) {
-                    return $node->games->filter(fn (Game $g) => $g->id === $game->id)->count() > 0;
+                    return $node->games->filter(fn(Game $g) => $g->id === $game->id)->count() > 0;
                 })->count() > 0;
 
             return $arr;
         })->keyBy('id');
     }
 
-    public function computeResources(GameService $service, Request $request, Game $game, Location $location)
-    {
+    public function computeResources(
+        GameService $service,
+        Request $request,
+        Game $game,
+        Location $location
+    ) {
         /** @var Processor $processor */
         $processor = $service->getProcessor($game);
 
@@ -54,10 +58,15 @@ class ConfigurerController extends Controller
         return array_merge($cost, $remainder);
     }
 
-    public function parameters(GameService $service, Request $request, Game $game, Location $location, $mode = 'simple'): ?array
-    {
+    public function parameters(
+        GameService $service,
+        Request $request,
+        Game $game,
+        Location $location,
+        $mode = 'simple'
+    ): array {
         if ($mode === 'simple') {
-            /** @var CsgoProcessor $processor */
+            /** @var Processor $processor */
             $processor = $service->getProcessor($game);
 
             return $processor->calculate($request->all());
@@ -69,8 +78,8 @@ class ConfigurerController extends Controller
                 'icon'        => 'cpu',
                 'description' => 'Maximum core usage',
                 'options'     => [
-                    '1200'  => '1200 points',
-                    '1800'  => '1800 points',
+                    '1200' => '1200 points',
+                    '1800' => '1800 points',
                     '2400' => '2400 points',
                 ],
             ],

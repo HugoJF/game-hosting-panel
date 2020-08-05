@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
         // Add base cost for local node
         Node::first()->update([
             'cpu_cost'      => 2.1,
-            'memory_cost'      => 2,
+            'memory_cost'   => 2,
             'disk_cost'     => 0.05,
             'database_cost' => 500,
         ]);
@@ -61,11 +61,11 @@ class DatabaseSeeder extends Seeder
 
         // Add covers to each game
         $covers = [
-            'https://i.imgur.com/aSpVNeW.png',
-            'https://i.imgur.com/rAwX8Af.png',
-            'https://i.imgur.com/ADfCGqM.png',
-            'https://i.redd.it/uhdomasbp1p31.png',
-            'https://i.imgur.com/ORlkG0P.png',
+            asset('/images/css.png'),
+            asset('/images/csgo.png'),
+            asset('/images/cod2.png'),
+            asset('/images/cod4.png'),
+            asset('/images/minecraft.png'),
         ];
 
         foreach ($covers as $id => $cover) {

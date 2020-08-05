@@ -3,6 +3,7 @@
 namespace App\Processors;
 
 use App\Exceptions\MissingTickrateCpuCost;
+use Illuminate\Validation\Rule;
 
 class CsgoProcessor extends Processor
 {
@@ -16,33 +17,34 @@ class CsgoProcessor extends Processor
      */
     protected function rules(): array
     {
+        $tickrates = array_keys(config('processors.csgo.parameters.tickrate.options'));
+        $slots = array_keys(config('processors.csgo.parameters.slots.options'));
+
         return [
-            'tickrate' => 'required|numeric',
-            'slots'    => 'required|numeric',
+            'tickrate' => ['required', 'numeric', Rule::in($tickrates)],
+            'slots'    => ['required', 'numeric', Rule::in($slots)],
         ];
     }
 
-    public function cost(array $cost): array
+    /**
+     * @inheritDoc
+     */
+    public function cost(array $config): array
     {
         $tickrateCostPerSlot = config('processors.csgo.cost_per_slot');
+        $costPerSlot = (int) $tickrateCostPerSlot[ $config['tickrate'] ];
+        $slots = (int) $config['slots'];
 
-        if (!array_key_exists($cost['tickrate'], $tickrateCostPerSlot)) {
-            throw new MissingTickrateCpuCost;
-        }
+        $staticCosts = config('processors.csgo.costs');
+        $dynamicCosts = [
+            'cpu' => $slots * $costPerSlot,
+        ];
 
-        $costPerSlot = $tickrateCostPerSlot[ $cost['tickrate'] ] ?? null;
-
-        return array_merge(
-            config('processors.csgo.costs'),
-            [
-                'cpu' => (int) $cost['slots'] * (int) $costPerSlot,
-            ]
-        );
+        return array_merge($staticCosts, $dynamicCosts);
     }
 
-    protected function reject($cost): bool
+    public function reject(array $resourceCost): bool
     {
-        // TODO: this should come from node
-        return $cost['cpu'] > 2400;
+        return parent::reject($resourceCost);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Processors;
 
-use App\Exceptions\InvalidParameterChoiceException;
+use App\Node;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -10,6 +10,7 @@ use Illuminate\Validation\ValidationException;
 abstract class Processor
 {
     protected array $params = [];
+    protected Node $node;
 
     /**
      * Calculates resources cost for a given config
@@ -28,13 +29,16 @@ abstract class Processor
     abstract protected function rules(): array;
 
     /**
-     * Checks if resource cost is invalid
+     * Sets the Node used as reference to reject resource costs
      *
-     * @param $cost
+     * @param Node $node
      *
-     * @return bool
+     * @return Processor
      */
-    abstract protected function reject($cost): bool;
+    public function setNode(Node $node): Processor
+    {
+        return tap($this, fn() => $this->node = $node);
+    }
 
     /**
      * Validates config then compute cost
@@ -51,27 +55,9 @@ abstract class Processor
             return $this->cost($config);
         } catch (ValidationException $e) {
             return collect(['cpu', 'memory', 'disk', 'databases'])
-                ->mapWithKeys(fn($resource) => [$resource => 0])
+                ->flip()
+                ->map(fn() => 0)
                 ->toArray();
-        }
-    }
-
-    /**
-     * Check if the request was somehow modified to send parameters that are not listed.
-     *
-     * @param array $choices
-     *
-     * @throws InvalidParameterChoiceException
-     */
-    public function validate(array $choices): void
-    {
-        // For each choice, check if they are present in the definition
-        foreach ($choices as $key => $value) {
-            $options = $this->params[ $key ]['options'];
-
-            if (!array_key_exists($value, $options)) {
-                throw new InvalidParameterChoiceException;
-            }
         }
     }
 
@@ -81,13 +67,9 @@ abstract class Processor
      * @param array $choices
      *
      * @return array
-     * @throws InvalidParameterChoiceException
      */
     public function calculate(array $choices): array
     {
-        // Assert choices actually exist
-        $this->validate($choices);
-
         // Filter choices that was used in this calculator
         $usedChoices = collect($choices)->only(array_keys($this->params))->toArray();
 
@@ -148,5 +130,30 @@ abstract class Processor
             // Map option key to option text
             ->mapWithKeys(fn($option) => [$option => $options[ $option ]])
             ->toArray();
+    }
+
+    /**
+     * Checks if resource cost is invalid
+     *
+     * @param array $resourceCost
+     *
+     * @return bool
+     */
+    public function reject(array $resourceCost): bool
+    {
+        $limits = [
+            'cpu'       => 'cpu_limit',
+            'memory'    => 'memory_limit',
+            'disk'      => 'disk_limit',
+            'databases' => 'database_limit',
+        ];
+
+        foreach ($limits as $resource => $limit) {
+            $cost = $resourceCost[ $resource ];
+
+            if ($cost > $limit) {
+                return false;
+            }
+        }
     }
 }

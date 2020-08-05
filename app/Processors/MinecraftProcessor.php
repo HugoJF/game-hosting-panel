@@ -25,26 +25,25 @@ class MinecraftProcessor extends Processor
         ];
     }
 
-    public function cost(array $cost): array
+    public function cost(array $config): array
     {
         $memoryPerPlayer = config('processors.minecraft.memory_per_player');
         $diskPerSize = config('processors.minecraft.disk_per_size');
 
-        $disk = $diskPerSize[ $cost['size'] ];
+        $disk = $diskPerSize[ $config['size'] ];
 
         return array_merge(
             config('processors.minecraft.costs'),
             [
-                'cpu'    => 300 + (int) ($cost['plugins']) * 50, // TODO: magic variables nop
-                'memory' => $memoryPerPlayer * (int) ($cost['slots']),
+                'cpu'    => 300 + (int) ($config['plugins']) * 50, // TODO: magic variables nop
+                'memory' => $memoryPerPlayer * (int) ($config['slots']),
                 'disk'   => $disk,
             ],
         );
     }
 
-    protected function reject($cost): bool
+    public function reject(array $resourceCost): bool
     {
-        // TODO: this should come from node
-        return $cost['cpu'] > 2400;
+        return parent::reject($resourceCost);
     }
 }

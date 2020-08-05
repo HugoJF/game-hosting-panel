@@ -9,6 +9,7 @@
 namespace App\Services;
 
 use App\Game;
+use App\Processors\Processor;
 
 class GameService
 {
@@ -25,7 +26,7 @@ class GameService
         return Game::firstOrCreate(compact('id'), $data);
     }
 
-    public function getProcessor(Game $game)
+    public function getProcessor(Game $game): ?Processor
     {
         $stub = $game->stub;
 
