@@ -9,7 +9,7 @@ class DeployController extends Controller
 {
     public function server(Server $server)
     {
-        $deploys = $server->deploys()->paginate(5);
+        $deploys = $server->deploys()->orderBy('created_at', 'DESC')->paginate(5);
 
         return view('deploys.index', compact('server', 'deploys'));
     }

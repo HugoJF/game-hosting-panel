@@ -10,7 +10,6 @@ use App\Http\Resources\ServerResource;
 use App\Location;
 use App\Server;
 use App\Services\User\DeployCostService;
-use App\Services\User\DeployCreationService;
 use App\Services\User\DeployTerminationService;
 use App\Services\User\NodeSelectionService;
 use App\Services\User\ServerCreationService;
@@ -39,8 +38,7 @@ class ServerController extends Controller
         NodeSelectionService $nodeSelection,
         ServerCreationService $serverCreation,
         ServerStoreRequest $request
-    ): ServerResource
-    {
+    ): ServerResource {
         $config = $request->validated();
         $period = $request->input('billing_period');
 
@@ -61,7 +59,7 @@ class ServerController extends Controller
 
     public function show(DeployCostService $costService, Server $server)
     {
-        $last5 = $server->deploys()->latest()->limit(5)->get();
+        $last5 = $server->deploys()->latest()->orderBy('created_at', 'DESC')->limit(5)->get();
         $deploys = collect([$last5->first()]);
         $transactions = Transaction::findMany($last5->pluck('transaction_id'));
 
