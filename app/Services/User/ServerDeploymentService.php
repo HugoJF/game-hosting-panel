@@ -3,6 +3,7 @@
 namespace App\Services\User;
 
 use App\Exceptions\ServerNotInstalledException;
+use App\Notifications\ServerDeployed;
 use App\Server;
 use App\Services\ServerService;
 use Exception;
@@ -52,6 +53,8 @@ class ServerDeploymentService
         $s = $this->pterodactyl->updateServerBuild($server->panel_id, $serverConfig);
 
         $this->deployCreation->handle($server, $billingPeriod, $config);
+
+        $server->user->notify(new ServerDeployed($server));
 
         return $s instanceof Resource;
     }

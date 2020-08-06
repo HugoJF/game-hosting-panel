@@ -21,6 +21,6 @@ class UserSettingsForms extends ServiceForm
 			'method' => 'PATCH',
 			'url'    => route('settings.update'),
 			'model'  => $user,
-		]);
+		], compact('user'));
 	}
 }

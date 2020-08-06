@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\HasTransactions;
+use Glorand\Model\Settings\Traits\HasSettingsField;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -11,6 +12,12 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasTransactions;
     use Notifiable;
+    use HasSettingsField;
+
+    public array $defaultSettings = [
+        'notify_transaction_updated' => true,
+        'notify_server_deployed'     => true,
+    ];
 
     /**
      * The attributes that are mass assignable.

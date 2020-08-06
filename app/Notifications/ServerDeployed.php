@@ -2,31 +2,27 @@
 
 namespace App\Notifications;
 
-use App\Transaction;
+use App\Server;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TransactionUpdated extends Notification
+class ServerDeployed extends Notification
 {
     use Queueable;
-
-    protected Transaction $transaction;
-    protected int $from;
-    protected int $to;
+    /**
+     * @var Server
+     */
+    protected Server $server;
 
     /**
      * Create a new notification instance.
      *
-     * @param Transaction $transaction
-     * @param int         $from
-     * @param int         $to
+     * @param Server $server
      */
-    public function __construct(Transaction $transaction, int $from, int $to)
+    public function __construct(Server $server)
     {
-        $this->transaction = $transaction;
-        $this->from = $from;
-        $this->to = $to;
+        $this->server = $server;
     }
 
     /**
@@ -51,9 +47,9 @@ class TransactionUpdated extends Notification
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Transaction updated')
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
+            ->subject('Server deployed')
+            ->line("Server $this->id was deployed!")
+            ->action('View server', route('servers.show', $this->server))
             ->line('Thank you for using our application!');
     }
 
@@ -67,10 +63,8 @@ class TransactionUpdated extends Notification
     public function toArray($notifiable): array
     {
         return [
-            'title'          => 'Transaction value updated',
-            'transaction_id' => $this->transaction->id,
-            'from'           => $this->from,
-            'to'             => $this->to,
+            'title'     => "Server {$this->server->name} was deployed!",
+            'server_id' => $this->server->id,
         ];
     }
 }

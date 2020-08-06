@@ -20,6 +20,6 @@ class UserForms extends ServiceForm
 			'method' => 'PATCH',
 			'url'    => route('users.update', $user),
 			'model'  => $user,
-		]);
+		], compact('user'));
 	}
 }

@@ -29,7 +29,7 @@
                 <td class="py-2 px-3">
                     <h3 class="font-semibold">{{ $notification->data['title'] ?? 'Notification without title' }}</h3>
                     <div class="text-sm">
-                        @include(config("notifications.{$notification->type}"), compact('notification'))
+                        @include(config("notifications.{$notification->type}.view"), compact('notification'))
                     </div>
                 </td>
                 @if($link = $notification->data['link'] ?? null)

@@ -12,7 +12,6 @@ use App\Transaction;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Searchable\Search;
 
@@ -92,11 +91,15 @@ class HomeController extends Controller
 
     public function update(UserSettingsUpdateRequest $request)
     {
+        /** @var User $user */
         $user = auth()->user();
 
-        $user->fill($request->validated());
+        foreach (config('notifications') as $details) {
+            $setting = $details['setting'];
+            $user->settings()->set($setting, $request->input($setting, false));
+        }
 
-        $user->save();
+        $user->fill($request->validated())->save();
 
         flash()->success(trans('user-settings.updated'));
 
