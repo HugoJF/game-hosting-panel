@@ -4,6 +4,7 @@ namespace App;
 
 use App\Traits\HasTransactions;
 use Glorand\Model\Settings\Traits\HasSettingsField;
+use Illuminate\Contracts\Notifications\Dispatcher;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -65,6 +66,19 @@ class User extends Authenticatable implements JWTSubject
     public function apiKeys()
     {
         return $this->hasMany(ApiKey::class);
+    }
+
+    public function notify($instance)
+    {
+        $class = class_basename($instance);
+
+        if (($setting = config("notifications.$class.setting", null)) !== null) {
+            if (!$this->settings()->get($setting, true)) {
+                return;
+            }
+        }
+
+        app(Dispatcher::class)->send($this, $instance);
     }
 
     /**

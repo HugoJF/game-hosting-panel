@@ -54,7 +54,9 @@ class ServerDeploymentService
 
         $this->deployCreation->handle($server, $billingPeriod, $config);
 
-        $server->user->notify(new ServerDeployed($server));
+        if ($server->user->settings()->get(config("notifications"))) {
+            $server->user->notify(new ServerDeployed($server));
+        }
 
         return $s instanceof Resource;
     }
