@@ -68,6 +68,7 @@ return [
     'force_terminate' => 'Force terminate',
     'running'         => 'Running',
     'configuration'   => 'Configuration',
+    'settings'     => 'Settings',
     'logout'          => 'Logout',
     'login'           => 'Login',
     'notifications'   => 'Notifications',

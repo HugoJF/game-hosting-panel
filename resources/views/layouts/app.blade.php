@@ -56,7 +56,7 @@
                 @auth
                     <a href="{{ route('notifications.index') }}" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
                         <div class="relative">
-                            <span class="mr-1 inline text-gray-400" data-feather="message-circle"></span>
+                            <span class="mr-1 inline text-gray-400" data-feather="bell"></span>
                             @if(auth()->user()->unreadNotifications()->count() > 0)
                                 <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
                             @endif
@@ -71,7 +71,7 @@
                     <a href="{{ route('settings') }}" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
                         <span class="mr-1 inline text-gray-400" data-feather="settings"></span>
                         <span>
-                            @lang('words.configuration')
+                            @lang('words.settings')
                         </span>
                     </a>
                     {!! Form::open(['method' => 'POST', 'url' => route('logout'), 'class' => 'trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700 select-none']) !!}
