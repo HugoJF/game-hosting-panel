@@ -19,12 +19,11 @@ class ServerDeploymentService
     protected DeployCreationService $deployCreation;
 
     public function __construct(
-		ServerService $serverService,
-		ServerDeployConfigService $buildConfigService,
-		Pterodactyl $pterodactyl,
-		DeployCreationService $deployCreation
-    )
-    {
+        ServerService $serverService,
+        ServerDeployConfigService $buildConfigService,
+        Pterodactyl $pterodactyl,
+        DeployCreationService $deployCreation
+    ) {
         $this->pterodactyl = $pterodactyl;
         $this->configService = $buildConfigService;
         $this->deployCreation = $deployCreation;
@@ -54,9 +53,7 @@ class ServerDeploymentService
 
         $this->deployCreation->handle($server, $billingPeriod, $config);
 
-        if ($server->user->settings()->get(config("notifications"))) {
-            $server->user->notify(new ServerDeployed($server));
-        }
+        $server->user->notify(new ServerDeployed($server));
 
         return $s instanceof Resource;
     }

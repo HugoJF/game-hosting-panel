@@ -3,11 +3,15 @@
 namespace Tests\Unit\Service\User;
 
 use App\Exceptions\ServerNotInstalledException;
+use App\Game;
+use App\Node;
+use App\Notifications\ServerDeployed;
 use App\Server;
 use App\Services\ServerService;
 use App\Services\User\DeployCreationService;
 use App\Services\User\ServerDeployConfigService;
 use App\Services\User\ServerDeploymentService;
+use App\User;
 use Carbon\Carbon;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use HCGCloud\Pterodactyl\Resources\Server as ServerResource;
@@ -29,7 +33,8 @@ class ServerDeploymentServiceTest extends TestCase
         Carbon::setTestNow(Carbon::create(2020, 1, 1, 0, 0, 0));
     }
 
-    public function test_exception_will_be_raised_if_trying_to_deploy_a_server_that_is_not_installed(): void
+    public function test_exception_will_be_raised_if_trying_to_deploy_a_server_that_is_not_installed(
+    ): void
     {
         $server = factory(Server::class)->make();
 
@@ -45,8 +50,17 @@ class ServerDeploymentServiceTest extends TestCase
 
     public function test_deployment_will_update_server_build_config_with_return_from_service(): void
     {
+        $game = factory(Game::class)->create();
+        $node = factory(Node::class)->create();
+        $user = factory(User::class)->create();
+
         /** @var Server $server */
-        $server = factory(Server::class)->make(['panel_id' => 42]);
+        $server = factory(Server::class)->make([
+            'panel_id' => 42,
+            'game_id'  => $game->id,
+            'node_id'  => $node->id,
+            'user_id'  => $user->id,
+        ]);
 
         $config = [
             'cpu'       => 2400,
@@ -96,6 +110,8 @@ class ServerDeploymentServiceTest extends TestCase
              ->shouldReceive('handle')
              ->withArgs([$server, $billingPeriod, $config])
              ->once();
+
+        $this->expectsNotification($user, ServerDeployed::class);
 
         app(ServerDeploymentService::class)->handle($server, $billingPeriod, $config);
     }
