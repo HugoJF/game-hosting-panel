@@ -2,7 +2,9 @@
 
 namespace App\Forms;
 
+use App\Notifications\ServerCreated;
 use App\Notifications\ServerDeployed;
+use App\Notifications\ServerInstalled;
 use App\Notifications\TransactionUpdated;
 use App\User;
 use Kris\LaravelFormBuilder\Form;
@@ -23,6 +25,18 @@ class UserSettingsForm extends Form
             ServerDeployed::class,
             'Server deployed notifications',
             'Enable notifications when a server is deployed.'
+        );
+
+        $this->_notification(
+            ServerCreated::class,
+            'Server creation notifications',
+            'Enable notifications when a server is created.'
+        );
+
+        $this->_notification(
+            ServerInstalled::class,
+            'Server installation notifications',
+            'Enable notifications when a server finishes installation.'
         );
     }
 

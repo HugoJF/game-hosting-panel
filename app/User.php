@@ -18,6 +18,8 @@ class User extends Authenticatable implements JWTSubject
     public array $defaultSettings = [
         'notify_transaction_updated' => true,
         'notify_server_deployed'     => true,
+        'notify_server_created'      => true,
+        'notify_server_installed'    => true,
     ];
 
     /**

@@ -7,7 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ServerDeployed extends Notification
+class ServerCreated extends Notification
 {
     use Queueable;
 
@@ -48,10 +48,9 @@ class ServerDeployed extends Notification
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Server deployed')
-            ->line("Server $this->id was deployed!")
-            ->action('View server', route('servers.show', $this->server))
-            ->line('Thank you for using our application!');
+            ->subject("Server {$this->server->name} successfully created!")
+            ->line("Your server $this->id was created for {$this->server->game->name}!")
+            ->action('View server', route('servers.show', $this->server));
     }
 
     /**
@@ -64,7 +63,7 @@ class ServerDeployed extends Notification
     public function toArray($notifiable): array
     {
         return [
-            'title'     => "Server {$this->server->name} was deployed!",
+            'title'     => "Server {$this->server->name} was created!",
             'server_id' => $this->server->id,
         ];
     }

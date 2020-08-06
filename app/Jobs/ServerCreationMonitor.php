@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Exceptions\ServerNotInstalledException;
+use App\Notifications\ServerInstalled;
 use App\Server;
 use App\Services\ServerService;
 use Illuminate\Bus\Queueable;
@@ -65,6 +66,8 @@ class ServerCreationMonitor implements ShouldQueue
         if (!$this->server->installed_at) {
             $this->server->installed_at = now();
             $this->server->save();
+
+            $this->server->user->notify(new ServerInstalled($this->server));
         }
     }
 }

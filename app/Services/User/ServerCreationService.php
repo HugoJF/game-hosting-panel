@@ -9,11 +9,13 @@ use App\Exceptions\TooManyServersException;
 use App\Game;
 use App\Jobs\ServerCreationMonitor;
 use App\Node;
+use App\Notifications\ServerCreated;
 use App\Server;
 use App\User;
 use Exception;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use HCGCloud\Pterodactyl\Resources\Allocation;
+use HCGCloud\Pterodactyl\Resources\Server as ServerResource;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -68,7 +70,7 @@ class ServerCreationService
         $resource = $this->pterodactyl->createServer($config);
 
         // TODO: temporary check since we disabled non-useful validation messages from panel.
-        if (!($resource instanceof \HCGCloud\Pterodactyl\Resources\Server)) {
+        if (!($resource instanceof ServerResource)) {
             logger()->error($resource);
             throw new Exception('Pterodactyl API returned non-resource');
         }
@@ -78,6 +80,8 @@ class ServerCreationService
 
         // Dispatch job that will monitor when server is installed
         $this->dispatchMonitoringJob($server);
+
+        $user->notify(new ServerCreated($server));
 
         return $server;
     }
