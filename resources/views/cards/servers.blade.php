@@ -1,6 +1,6 @@
 <div class="grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
     @foreach ($servers as $server)
-        <div class="trans flex flex-col justify-between bg-white border rounded-lg overflow-hidden hover:shadow hover:border-gray-400">
+        <div class="trans flex flex-col justify-between bg-white border border-gray-300 rounded-lg overflow-hidden hover:shadow hover:border-gray-400">
             <a class="flex flex-grow flex-col p-4" href="{{ route('servers.show', $server) }}">
                 <!-- Header -->
                 <div class="flex justify-between items-center text-base">
@@ -81,7 +81,7 @@
             </a>
 
             <!-- Footer -->
-            <div class="flex p-4 bg-gray-100 border-t ">
+            <div class="flex p-4 bg-gray-100 border-t border-gray-300">
                 <p class="flex-grow">
                     @if($server->getDeploy())
                         <a class="text-blue-500 text-base font-semibold" href="{{ config('pterodactyl.url') }}/server/{{ $server->panel_hash }}">
