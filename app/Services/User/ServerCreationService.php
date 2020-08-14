@@ -31,8 +31,7 @@ class ServerCreationService
         Pterodactyl $pterodactyl,
         ServerCreationConfigService $configService,
         AllocationSelectionService $allocationService
-    )
-    {
+    ) {
         $this->preChecks = $preChecks;
         $this->pterodactyl = $pterodactyl;
         $this->configService = $configService;
@@ -41,7 +40,7 @@ class ServerCreationService
 
     public function handle(User $user, Game $game, Node $node, array $data): ?Server
     {
-        return DB::transaction(fn () => $this->create($user, $game, $node, $data));
+        return DB::transaction(fn() => $this->create($user, $game, $node, $data));
     }
 
     /**
@@ -106,8 +105,13 @@ class ServerCreationService
         }
     }
 
-    protected function preCreateServerModel(User $user, Node $node, Game $game, Allocation $allocation, array $config): Server
-    {
+    protected function preCreateServerModel(
+        User $user,
+        Node $node,
+        Game $game,
+        Allocation $allocation,
+        array $config
+    ): Server {
         $server = new Server;
 
         $fromDefaults = ['io' => 500];

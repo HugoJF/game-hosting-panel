@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use HCGCloud\Pterodactyl\Exceptions\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -61,6 +62,13 @@ class Handler extends ExceptionHandler
             flash()->error($exception->getMessage());
 
             return back();
+        }
+
+        if ($exception instanceof ValidationException && $request->expectsJson()) {
+            return response()->json([
+                'message' => $exception->getMessage(),
+                'errors' => $exception->errors(),
+            ], 422);
         }
 
         return parent::render($request, $exception);
