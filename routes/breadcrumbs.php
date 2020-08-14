@@ -29,6 +29,11 @@ Breadcrumbs::for('home', function ($trail) {
 });
 
 // Notifications
+Breadcrumbs::for('users.edit', function ($trail, $user) {
+    $trail->push('Edit user', route('users.edit', $user));
+});
+
+// Notifications
 Breadcrumbs::for('notifications.index', function ($trail) {
     $trail->push('Notifications', route('notifications.index'));
 });
