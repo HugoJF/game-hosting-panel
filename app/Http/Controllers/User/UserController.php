@@ -10,23 +10,25 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-	public function edit(UserForms $forms, User $user)
-	{
-		$form = $forms->edit($user);
+    public function edit(UserForms $forms, User $user)
+    {
+        $form = $forms->edit($user);
 
-		return view('form', [
-			'title'       => "Updating user $user->name",
-			'form'        => $form,
-			'submit_text' => 'Update',
-		]);
-	}
+        return view('form', [
+            'title'       => "Updating user $user->name",
+            'form'        => $form,
+            'submit_text' => 'Update',
+        ]);
+    }
 
-	public function update(UserService $service, Request $request, User $user)
-	{
-		$service->update($user, $request->all());
+    public function update(UserService $service, Request $request, User $user)
+    {
+        $service->update($user, $request->all(), $request->only([
+            'server_limit', 'server_expiration_days',
+        ]));
 
-		flash()->success("User $user->name updated!");
+        flash()->success("User $user->name updated!");
 
-		return redirect()->route('admins.users');
-	}
+        return redirect()->route('admins.dashboard');
+    }
 }
