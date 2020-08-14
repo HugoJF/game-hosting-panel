@@ -15,7 +15,7 @@ class UpdateUsersTableAddSettings extends Migration
     {
         if (!Schema::hasColumn('users', 'settings')) {
             Schema::table('users', function (Blueprint $table) {
-                $table->json('settings')->nullable();
+                $table->text('settings')->nullable();
             });
         }
     }
