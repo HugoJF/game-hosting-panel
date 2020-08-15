@@ -11,13 +11,19 @@ export default function ModeSelection({selected, onSelect}) {
         title="Mode"
         subtitle="Select simple if you don't know that you are doing"
     >
-        <Button
-            onClick={handleOnClick.bind(this, 'simple')}
-            selected={selected === 'simple'}
-        >Simple</Button>
-        <Button
-            onClick={handleOnClick.bind(this, 'advanced')}
-            selected={selected === 'advanced'}
-        >Advanced</Button>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            <Button
+                onClick={handleOnClick.bind(this, 'simple')}
+                selected={selected === 'simple'}
+            >
+                Simple
+            </Button>
+            <Button
+                onClick={handleOnClick.bind(this, 'advanced')}
+                selected={selected === 'advanced'}
+            >
+                Advanced
+            </Button>
+        </div>
     </Card>
 }

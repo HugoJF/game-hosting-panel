@@ -3,7 +3,7 @@ import feather from 'feather-icons';
 import tailwind from "../tailwind";
 
 const Item = tailwind.div(() => `
-    trans flex justify-between px-4 py-2 text-black text-center border rounded
+    trans flex justify-between px-4 py-2 text-black text-center border rounded-lg border-gray-200
 `);
 
 const RedText = tailwind.div(() => `

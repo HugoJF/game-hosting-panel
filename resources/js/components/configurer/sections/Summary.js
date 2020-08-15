@@ -63,49 +63,52 @@ export default function Summary({onNameChange, onPeriodSelect, onSubmit, onSubmi
     return <Card
         title="Summary"
         subtitle="Details and cost for your new server"
-        cols={2}
     >
-        <Section
-            title="Resumo"
-            subtitle="Server specification"
-            icon="summary"
-            cols={1}
-        >
-            {/* Global parameter Game */}
-            <SummaryItem name="Game" value={getGameName()}/>
 
-            {/* Global parameter Location */}
-            <SummaryItem name="Location" value={getLocationName()}/>
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+            <Section
+                title="Resumo"
+                subtitle="Server specification"
+                icon="summary"
+            >
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
+                    {/* Global parameter Game */}
+                    <SummaryItem name="Game" value={getGameName()}/>
 
-            {/* Server spec */}
-            <SummaryItem name="CPU" value={getCpu()}/>
-            <SummaryItem name="Memory" value={getMemory()}/>
-            <SummaryItem name="Disk" value={getDisk()}/>
-            <SummaryItem name="Databases" value={getDatabases()}/>
+                    {/* Global parameter Location */}
+                    <SummaryItem name="Location" value={getLocationName()}/>
 
-            {/* Global parameter Period */}
-            <SummaryItem name="Period" value={getPeriod()}/>
-        </Section>
+                    {/* Server spec */}
+                    <SummaryItem name="CPU" value={getCpu()}/>
+                    <SummaryItem name="Memory" value={getMemory()}/>
+                    <SummaryItem name="Disk" value={getDisk()}/>
+                    <SummaryItem name="Databases" value={getDatabases()}/>
 
-        {/* Second column */}
-        <div>
-            {
-                onNameChange && <div className="mb-8">
-                    <NameSelector value={config.config.name} onNameChange={onNameChange}/>
+                    {/* Global parameter Period */}
+                    <SummaryItem name="Period" value={getPeriod()}/>
                 </div>
-            }
+            </Section>
+
+            {/* Second column */}
+            <div>
+                {
+                    onNameChange && <div className="mb-8">
+                        <NameSelector value={config.config.name} onNameChange={onNameChange}/>
+                    </div>
+                }
 
 
-            {/* Period select */}
-            <div className="mb-8">
-                <PeriodSelector selected={config.config.billing_period} onSelect={onPeriodSelect}/>
+                {/* Period select */}
+                <div className="mb-8">
+                    <PeriodSelector selected={config.config.billing_period} onSelect={onPeriodSelect}/>
+                </div>
+
+                {/* Total cost */}
+                <SummaryTotalCost/>
+
+                {/* Submit button */}
+                <SummarySubmitButton onSubmit={onSubmit} onSubmitted={onSubmitted}/>
             </div>
-
-            {/* Total cost */}
-            <SummaryTotalCost/>
-
-            {/* Submit button */}
-            <SummarySubmitButton onSubmit={onSubmit} onSubmitted={onSubmitted}/>
         </div>
     </Card>
 }

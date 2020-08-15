@@ -11,7 +11,6 @@ const tailwindcss = require('tailwindcss');
  | file for the application as well as bundling up all the JS files.
  |
  */
-
 mix
     .js('resources/js/bootstrap.js', 'public/js')
     .react('resources/js/app.js', 'public/js')
@@ -19,7 +18,11 @@ mix
         tailwindcss('./tailwind.config.js'),
     ])
     .sass('resources/sass/vendor.scss', 'public/css')
-    .webpackConfig({devtool: 'source-map'})
+    .webpackConfig({
+        devtool: 'source-map',
+        devServer: {
+            disableHostCheck: true
+        },
+    })
     .sourceMaps()
-    .version()
 ;

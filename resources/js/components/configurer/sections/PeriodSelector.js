@@ -1,5 +1,6 @@
 import React from 'react';
-import GenericSelector from "../resources/GenericSelector";
+import Section from "../ui/Section";
+import Button from "../ui/Button";
 
 const options = {
     minutely: 'Minutely',
@@ -10,14 +11,30 @@ const options = {
 };
 
 export default function PeriodSelector({selected, onSelect}) {
-    return <GenericSelector
-        specId="billing_period"
+    function handleOnClick(optionId) {
+        if (onSelect) onSelect({
+            billing_period: selected === optionId ? null : optionId
+        });
+    }
+
+    return <Section
         title="Billing period"
         subtitle=""
         icon="period"
-        selected={selected}
-        onSelect={onSelect}
-        cols={3}
-        options={options}
-    />;
+    >
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4">
+            {
+                Object
+                    .entries(options)
+                    .map(([optionId, text]) => (
+                        <Button
+                            onClick={handleOnClick.bind(this, optionId)}
+                            selected={optionId === selected}
+                        >
+                            {text}
+                        </Button>
+                    ))
+            }
+        </div>
+    </Section>
 }

@@ -22,11 +22,7 @@ const Subtitle = tailwind.div(() => `
     ml-1 text-sm text-gray-600 font-light
 `);
 
-const Options = tailwind.div(({cols}) => `
-    grid grid-cols-${cols} gap-4
-`);
-
-export default function Section({icon, title, subtitle, cols = 4, children}) {
+export default function Section({icon, title, subtitle, children}) {
     const Icon = icons[icon];
 
     return <Wrapper>
@@ -40,9 +36,9 @@ export default function Section({icon, title, subtitle, cols = 4, children}) {
                 <Subtitle>{subtitle}</Subtitle>
             </Header>
 
-            <Options cols={cols}>
+            <div>
                 {children}
-            </Options>
+            </div>
         </Body>
     </Wrapper>
 }

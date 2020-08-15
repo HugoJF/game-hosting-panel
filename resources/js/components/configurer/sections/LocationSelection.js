@@ -21,18 +21,20 @@ export default function LocationSelection({selected, onSelect}) {
         subtitle="Where do you want the server to be hosted"
         loading={locations.loading}
     >
-        {
-            Object
-                .entries(locations.locations)
-                .map(([id, location]) => {
-                    return <Location
-                        key={id}
-                        id={id}
-                        location={location}
-                        selected={selected === id}
-                        onClick={handleOnClick.bind(this, id)}
-                    />
-                })
-        }
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            {
+                Object
+                    .entries(locations.locations)
+                    .map(([id, location]) => {
+                        return <Location
+                            key={id}
+                            id={id}
+                            location={location}
+                            selected={selected === id}
+                            onClick={handleOnClick.bind(this, id)}
+                        />
+                    })
+            }
+        </div>
     </Card>
 }

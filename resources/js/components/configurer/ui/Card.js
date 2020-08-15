@@ -3,11 +3,23 @@ import Loader from "./Loader";
 import tailwind from "../tailwind";
 
 const CardWrapper = tailwind.div(() => `
-    mb-8 bg-white rounded-lg overflow-hidden
+    mb-8 bg-white rounded-lg overflow-hidden border border-gray-300
 `);
 
 const CardHeader = tailwind.div(() => `
-    px-8 py-4 border-b bg-gray-100
+    flex items-center px-6 py-2 border-b border-gray-300 bg-gray-100
+`);
+
+const Status = tailwind.div(({color = 'red'}) => `
+    mr-3 h-4 w-4 bg-${color}-500 border-4 border-${color}-300 rounded-full
+`);
+
+const CardTitle = tailwind.div(() => `
+    text-xl lg:text-3xl text-base
+`);
+
+const HeaderDivider = tailwind.div(() => `
+    self-stretch my-2 mx-4 border-r border-gray-300
 `);
 
 const CardSubtitle = tailwind.div(() => `
@@ -15,7 +27,7 @@ const CardSubtitle = tailwind.div(() => `
 `);
 
 const CardBody = tailwind.div(() => `
-    relative
+    relative grid grid-2
 `);
 
 const CardLoadingOverlay = tailwind.div(() => `
@@ -23,11 +35,11 @@ const CardLoadingOverlay = tailwind.div(() => `
     absolute top-0 left-0 right-0 bottom-0 z-50
 `);
 
-const ContentWrapper = tailwind.div(({cols, gap}) => `
-    trans grid grid-cols-${cols} gap-${gap} min-h-32 p-8
+const ContentWrapper = tailwind.div(() => `
+    trans min-h-32 p-8
 `);
 
-export default function Card({title, subtitle, children, loading = false, gap = 4, cols = 4}) {
+export default function Card({title, subtitle, children, loading = false, status = undefined}) {
 
     function getContentWrapperStyle() {
         return {
@@ -37,7 +49,9 @@ export default function Card({title, subtitle, children, loading = false, gap = 
 
     return <CardWrapper>
         <CardHeader>
-            <h2>{title}</h2>
+            {status && <Status/>}
+            <CardTitle>{title}</CardTitle>
+            <HeaderDivider/>
             <CardSubtitle>{subtitle}</CardSubtitle>
         </CardHeader>
 
@@ -49,8 +63,6 @@ export default function Card({title, subtitle, children, loading = false, gap = 
             }
 
             <ContentWrapper
-                cols={cols}
-                gap={gap}
                 $style={getContentWrapperStyle()}
             >
                 {children}

@@ -25,7 +25,7 @@ const Info = tailwind.div(({selected}) => `
 `);
 
 const Short = tailwind.div(() => `
-    text-xl font-bold
+    text-xl font-medium
 `);
 
 const Long = tailwind.div(() => `

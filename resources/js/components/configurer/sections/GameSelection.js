@@ -22,20 +22,22 @@ export default function GameSelection({selected, selectable = true, onSelect}) {
         loading={games.loading}
         cols={5}
     >
-        {
-            Object
-                .entries(games.games)
-                .filter(([_, game]) => game.cover)
-                .map(([id, game]) => (
-                    <Game
-                        key={id}
-                        id={id}
-                        game={game}
-                        selectable={selectable}
-                        selected={selected ? id === selected : null}
-                        onClick={handleOnClick}
-                    />
-                ))
-        }
+        <div className="grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            {
+                Object
+                    .entries(games.games)
+                    .filter(([_, game]) => game.cover)
+                    .map(([id, game]) => (
+                        <Game
+                            key={id}
+                            id={id}
+                            game={game}
+                            selectable={selectable}
+                            selected={selected ? id === selected : null}
+                            onClick={handleOnClick}
+                        />
+                    ))
+            }
+        </div>
     </Card>
 }

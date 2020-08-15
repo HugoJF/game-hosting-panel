@@ -21,7 +21,7 @@
     <a class="px-6 py-3 text-gray-400 text-lg no-underline w-1/5 mr-0" href="#">Servidores de_nerdTV</a>
     <div class="flex items-stretch flex-grow text-gray-400">
         {!! Form::open(['url' => route('home'), 'method' => 'GET', 'class' => 'flex items-stretch w-100']) !!}
-        <input name="term" class="trans-fast py-2 px-5 w-100 bg-transparent outline-none focus:border-b focus:border-gray-500 focus:shadow-inner focus:bg-gray-200 focus:text-gray-700" type="text" placeholder="Search" aria-label="Search">
+        <input name="term" class="transition-colors duration-150 py-2 px-5 w-100 bg-transparent outline-none focus:border-b focus:border-gray-500 focus:shadow-inner focus:bg-gray-200 focus:text-gray-700" type="text" placeholder="Search" aria-label="Search">
         {!! Form::close() !!}
     </div>
     <ul class="navbar-nav flex-shrink">
