@@ -4,14 +4,14 @@ import flags from "../../flags";
 import tailwind from "../../tailwind";
 
 const Wrapper = tailwind.div(({available, selected}) => `
-    trans relative flex flex-row items-center
+    transition-all duration-150 relative flex flex-row items-center select-none
     px-6 py-4 border ${selected ? 'border-blue-600 bg-blue-100 shadow' : ''}
     rounded ${available ? 'cursor-pointer' : 'cursor-not-allowed'} ${!available && !selected ? 'opacity-50' : ''}
     ${available || selected && 'hover:shadow'}
 `);
 
 const SelectionCheck = tailwind.div(({selected}) => `
-    trans m-2 absolute text-white top-0 right-0
+    transition-all duration-150 m-2 absolute text-white top-0 right-0
     bg-blue-600 ${selected ? 'opacity-100' : 'opacity-0'}
     rounded-full shadow
 `);

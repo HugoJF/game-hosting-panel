@@ -2,11 +2,11 @@ import React from 'react';
 import tailwind from "../../tailwind";
 
 const Card = tailwind.div(() => `
-    trans relative rounded hover:shadow-md overflow-hidden
+    transition-all duration-150 relative rounded hover:shadow-md overflow-hidden
 `);
 
 const Image = tailwind.img(({selectable}) => `
-    z-0 trans ${selectable ? 'cursor-pointer' : 'cursor-not-allowed'} shadow-lg
+    z-0 transition-all duration-150 ${selectable ? 'cursor-pointer' : 'cursor-not-allowed'} shadow-lg
 `);
 
 export default function Game({id, game, selectable = true, selected, onClick}) {

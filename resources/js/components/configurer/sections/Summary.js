@@ -60,9 +60,13 @@ export default function Summary({onNameChange, onPeriodSelect, onSubmit, onSubmi
         return `${databases}`;
     }
 
+    const nameSet = config.config.name;
+    const periodSet = config.config.billing_period;
+
     return <Card
         title="Summary"
         subtitle="Details and cost for your new server"
+        status={nameSet && periodSet ? 'green' : 'red'}
     >
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">

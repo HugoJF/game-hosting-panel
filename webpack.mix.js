@@ -25,4 +25,5 @@ mix
         },
     })
     .sourceMaps()
+    .dump()
 ;

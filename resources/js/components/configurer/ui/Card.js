@@ -11,7 +11,7 @@ const CardHeader = tailwind.div(() => `
 `);
 
 const Status = tailwind.div(({color = 'red'}) => `
-    mr-3 h-4 w-4 bg-${color}-500 border-4 border-${color}-300 rounded-full
+    transition-colors duration-300 mr-3 h-4 w-4 bg-${color}-500 border-4 border-${color}-300 rounded-full
 `);
 
 const CardTitle = tailwind.div(() => `
@@ -49,7 +49,7 @@ export default function Card({title, subtitle, children, loading = false, status
 
     return <CardWrapper>
         <CardHeader>
-            {status && <Status/>}
+            {status && <Status color={status}/>}
             <CardTitle>{title}</CardTitle>
             <HeaderDivider/>
             <CardSubtitle>{subtitle}</CardSubtitle>

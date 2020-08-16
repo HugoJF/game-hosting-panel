@@ -20,7 +20,7 @@ export default function GameSelection({selected, selectable = true, onSelect}) {
         title="Game"
         subtitle="Which game do you want to host"
         loading={games.loading}
-        cols={5}
+        status={selected ? 'green' : 'red'}
     >
         <div className="grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {
