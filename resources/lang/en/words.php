@@ -30,6 +30,12 @@ return [
     'na'   => 'N/A',
     'days' => 'Days',
 
+    'minutely' => 'Minutely',
+    'hourly'   => 'Hourly',
+    'daily'    => 'Daily',
+    'weekly'   => 'Weekly',
+    'monthly'  => 'Monthly',
+
     'id'              => 'ID',
     'value'           => 'Value',
     'use'             => 'Use',
@@ -68,7 +74,7 @@ return [
     'force_terminate' => 'Force terminate',
     'running'         => 'Running',
     'configuration'   => 'Configuration',
-    'settings'     => 'Settings',
+    'settings'        => 'Settings',
     'logout'          => 'Logout',
     'login'           => 'Login',
     'notifications'   => 'Notifications',

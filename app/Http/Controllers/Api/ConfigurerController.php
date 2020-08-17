@@ -6,13 +6,22 @@ use App\Game;
 use App\Http\Controllers\Controller;
 use App\Location;
 use App\Node;
-use App\Processors\CsgoProcessor;
 use App\Processors\Processor;
 use App\Services\GameService;
 use Illuminate\Http\Request;
 
 class ConfigurerController extends Controller
 {
+    public function periods()
+    {
+        $periods = config('ghp.billing-periods');
+
+        return collect($periods)
+            ->filter(fn($enabled) => $enabled)
+            ->map(fn($enabled, $key) => $key)
+            ->map(fn($key) => trans("words.$key"));
+    }
+
     public function games()
     {
         return Game::all()->keyBy('id');

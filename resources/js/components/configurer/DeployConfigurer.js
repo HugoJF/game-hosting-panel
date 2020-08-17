@@ -17,6 +17,7 @@ export default function DeployConfigurer({server, game, location}) {
     const [mode, setMode] = useState('simple');
 
     useEffect(() => {
+        dispatch.periods.getPeriods();
         dispatch.form.clear();
         dispatch.form.update({game, location});
         dispatch.config.clear();

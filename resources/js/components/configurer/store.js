@@ -7,11 +7,12 @@ import {locations} from './stores/locations';
 import {parameters} from './stores/parameters';
 import {servers} from './stores/servers';
 import {config} from "./stores/config";
+import {periods} from "./stores/periods";
 
 const store = init({
     plugins: [immer()],
     models: {
-        cost, form, games, locations, parameters, servers, config,
+        cost, form, games, locations, parameters, servers, config, periods
     },
 });
 

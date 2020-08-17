@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux'
 import Title from "./ui/Title";
 import GameSelection from "./sections/GameSelection";
@@ -15,6 +15,10 @@ export default function CreationConfigurer() {
     const form = useForm();
     const config = useConfig();
     const [mode, setMode] = useState('simple');
+
+    useEffect(() => {
+        dispatch.periods.getPeriods();
+    }, []);
 
     function handleGameSelect(game) {
         dispatch.form.update({game});
