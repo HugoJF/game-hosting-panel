@@ -20,7 +20,7 @@ const periods = {
     monthly: 'Monthly',
 };
 
-export default function Summary({onNameChange, onPeriodSelect, onSubmit, onSubmitted}) {
+export default function Summary({onNameChange, onPeriodSelect, onSubmit, submitText}) {
     const config = useConfig();
     const form = useForm();
     const games = useGames();
@@ -111,7 +111,10 @@ export default function Summary({onNameChange, onPeriodSelect, onSubmit, onSubmi
                 <SummaryTotalCost/>
 
                 {/* Submit button */}
-                <SummarySubmitButton onSubmit={onSubmit} onSubmitted={onSubmitted}/>
+                <SummarySubmitButton
+                    text={submitText}
+                    onSubmit={onSubmit}
+                />
             </div>
         </div>
     </Card>

@@ -3,8 +3,8 @@ import {Provider} from 'react-redux'
 import store from './store'
 import DeployConfigurer from "./DeployConfigurer";
 
-export default function DeployConfigurerWrapper(props) {
+export default function DeployConfigurerWrapper() {
     return <Provider store={store}>
-        <DeployConfigurer {...props}/>
+        <DeployConfigurer/>
     </Provider>
 }

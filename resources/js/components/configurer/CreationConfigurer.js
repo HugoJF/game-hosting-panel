@@ -123,6 +123,7 @@ export default function CreationConfigurer() {
             onNameChange={handleNameChange}
             onPeriodSelect={handlePeriodSelect}
             onSubmit={onSubmit}
+            submitText="Create"
         />
     </>
 }

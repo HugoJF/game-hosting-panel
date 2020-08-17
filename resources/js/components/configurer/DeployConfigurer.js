@@ -24,12 +24,12 @@ export default function DeployConfigurer({server, game, location}) {
         dispatch.parameters.fetchParameters({game, location, mode});
     }, []);
 
-    function handleModeSelect(_mode) {
-        setMode(_mode);
+    function handleModeSelect(mode) {
+        setMode(mode);
         dispatch.form.clear(['game', 'location', 'billing_period']);
         dispatch.parameters.fetchParameters({
             game: form.game,
-            mode: _mode,
+            mode: mode,
             location: form.location,
         });
     }
@@ -65,8 +65,6 @@ export default function DeployConfigurer({server, game, location}) {
             server
         });
 
-        if (response === false) return;
-
         let url = get(response, 'data.links.show');
 
         if (url) {
@@ -96,6 +94,7 @@ export default function DeployConfigurer({server, game, location}) {
         <Summary
             onPeriodSelect={handlePeriodSelect}
             onSubmit={onSubmit}
+            submitText="Update"
         />
     </>
 }

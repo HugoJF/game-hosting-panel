@@ -11,7 +11,7 @@ export default function NameSelector({value, onNameChange}) {
         cols={1}
     >
         <input
-            className="w-full px-4 py-2 text-xl border rounded"
+            className="w-full px-4 py-2 text-xl font-normal border border-gray-300 rounded"
             placeholder="Insert server name here..."
             maxLength={191}
             value={value}

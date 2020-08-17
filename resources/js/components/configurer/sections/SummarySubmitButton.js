@@ -15,7 +15,7 @@ const Center = tailwind.div(() => `
     flex justify-center
 `);
 
-export default function SummarySubmitButton({onSubmit}) {
+export default function SummarySubmitButton({onSubmit, text}) {
     const servers = useServers();
 
     async function handleOnClick() {
@@ -40,7 +40,7 @@ export default function SummarySubmitButton({onSubmit}) {
         {
             !servers.loading &&
             <OrderButton $onClick={handleOnClick}>
-                Finalizar pedido
+                {text}
             </OrderButton>
         }
     </>
