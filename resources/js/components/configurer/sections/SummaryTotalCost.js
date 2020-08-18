@@ -2,8 +2,8 @@ import React from 'react';
 import useConfig from "../hooks/useConfig";
 import useCost from "../hooks/useCost";
 import Section from "../ui/Section";
-import Loader from "../ui/Loader";
 import tailwind from "../tailwind";
+import Gate from "../ui/Gate";
 
 const formatter = new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'});
 
@@ -34,33 +34,27 @@ export default function SummaryTotalCost() {
     return <Section
         icon="cost"
         title="Total cost"
-        cols={1}
+        subtitle="Server cost per billing period"
     >
         {/* Cost */}
         <Wrapper>
-            {
-                cost.loading
-                    ? <Loader/>
-                    : <>
-                        {/* Message */}
-                        {
-                            !valid &&
-                            <span className="text-gray-700 text-2xl font-normal">Please complete the form first.</span>
-                        }
-                        {/* Cost */}
-                        {
-                            valid &&
-                            <span>
-                                {formatter.format(_cost)}
-                            </span>
-                        }
-                        {/* Suffix */}
-                        {
-                            valid &&
-                            <Period>{perPeriod}</Period>
-                        }
-                    </>
-            }
+            <Gate ready={!cost.loading}>
+                {/* Message */}
+                {
+                    !valid &&
+                    <span className="text-gray-700 text-2xl font-normal">Please complete the form first.</span>
+                }
+                {/* Cost */}
+                {
+                    valid &&
+                    <span>{formatter.format(_cost)}</span>
+                }
+                {/* Suffix */}
+                {
+                    valid &&
+                    <Period>{perPeriod}</Period>
+                }
+            </Gate>
         </Wrapper>
     </Section>
 }
