@@ -17,6 +17,18 @@ Route::get('home', 'HomeController@index')->name('home');
 
 /*
 |--------------------------------------------------------------------------
+| Registration routes
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['signed'])->group(function () {
+    Route::get('user/{user}', 'PasswordController@set')->name('password.set');
+    Route::patch('user/{user}', 'PasswordController@update')->name('password.update');
+});
+
+
+/*
+|--------------------------------------------------------------------------
 | Authed only routes
 |--------------------------------------------------------------------------
 */

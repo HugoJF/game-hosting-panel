@@ -10,6 +10,11 @@ Breadcrumbs::for('register', function ($trail) {
     $trail->push('Register', route('register'));
 });
 
+// Password set
+Breadcrumbs::for('password.set', function ($trail, $user) {
+    $trail->push('Register', route('password.set', $user));
+});
+
 // Search
 Breadcrumbs::for('search', function ($trail) {
     $term = request()->query('term');
