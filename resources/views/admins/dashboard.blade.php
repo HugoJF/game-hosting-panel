@@ -18,5 +18,9 @@
     <br/>
     @include('cards.coupons')
     <br/>
-    @include('cards.users')
+    @component('cards.users')
+        <a class="btn btn-primary btn-sm" href="#">
+            @lang('users.invite')
+        </a>
+    @endcomponent
 @endsection

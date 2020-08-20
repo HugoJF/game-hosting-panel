@@ -16,6 +16,17 @@ Route::get('/', 'AdminController@dashboard')->name('admins.dashboard');
 
 /*
 |--------------------------------------------------------------------------
+| Invitation routes
+|--------------------------------------------------------------------------
+*/
+Route::prefix('invite')->group(function () {
+    Route::get('create', 'InviteController@create')->name('invites.create');
+
+    Route::post('/', 'InviteController@store')->name('invites.store');
+});
+
+/*
+|--------------------------------------------------------------------------
 | Location routes
 |--------------------------------------------------------------------------
 */
