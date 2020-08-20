@@ -14,7 +14,7 @@ class InviteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|exists:App\User,email',
+            'email' => 'required|email',
             'funds' => 'required|numeric|gt:0|lte:10000',
         ];
     }

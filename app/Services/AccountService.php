@@ -14,7 +14,7 @@ use App\Order;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
-class PasswordService
+class AccountService
 {
     public function preChecks(User $user): void
     {
@@ -23,14 +23,13 @@ class PasswordService
         }
     }
 
-    public function set(User $user, string $input)
+    public function set(User $user, string $input): void
     {
         $this->preChecks($user);
 
         $user->password = bcrypt($input);
         $user->save();
 
-        // TODO: transact this
         auth()->attempt([
             'email'    => $user->email,
             'password' => $input,

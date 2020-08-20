@@ -3,18 +3,18 @@
 namespace Tests\Unit;
 
 use App\Exceptions\PasswordAlreadySetException;
-use App\Services\PasswordService;
+use App\Services\AccountService;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class PasswordServiceTest extends TestCase
+class AccountServiceTest extends TestCase
 {
     use DatabaseTransactions;
     use DatabaseMigrations;
 
-    protected PasswordService $service;
+    protected AccountService $service;
 
     protected string $password = 'mysecretpassowrd';
     protected $email = 'asd@asd.com';
@@ -23,7 +23,7 @@ class PasswordServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->service = app(PasswordService::class);
+        $this->service = app(AccountService::class);
     }
 
     public function test_password_service_will_set_password_and_authenticate_user(): void

@@ -11,7 +11,7 @@ class InviteController extends Controller
 {
     public function create(InviteForms $forms)
     {
-        return view('forms', [
+        return view('form', [
             'title'       => 'Invite form',
             'form'        => $forms->create(),
             'submit_text' => 'Invite',

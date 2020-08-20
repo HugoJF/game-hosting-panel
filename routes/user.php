@@ -22,8 +22,8 @@ Route::get('home', 'HomeController@index')->name('home');
 */
 
 Route::middleware(['signed'])->group(function () {
-    Route::get('user/{user}', 'PasswordController@set')->name('password.set');
-    Route::patch('user/{user}', 'PasswordController@update')->name('password.update');
+    Route::get('user/{user}', 'AccountController@set')->name('accounts.setup');
+    Route::patch('user/{user}', 'AccountController@update')->name('accounts.update');
 });
 
 

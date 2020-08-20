@@ -19,7 +19,7 @@
     @include('cards.coupons')
     <br/>
     @component('cards.users')
-        <a class="btn btn-primary btn-sm" href="#">
+        <a class="btn btn-primary btn-sm" href="{{ route('invites.create') }}">
             @lang('users.invite')
         </a>
     @endcomponent

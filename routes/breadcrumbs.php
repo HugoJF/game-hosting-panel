@@ -11,8 +11,8 @@ Breadcrumbs::for('register', function ($trail) {
 });
 
 // Password set
-Breadcrumbs::for('password.set', function ($trail, $user) {
-    $trail->push('Register', route('password.set', $user));
+Breadcrumbs::for('accounts.setup', function ($trail, $user) {
+    $trail->push('Register', route('accounts.setup', $user));
 });
 
 // Search
@@ -66,6 +66,12 @@ Breadcrumbs::for('servers.deploying', function ($trail, $server) {
 Breadcrumbs::for('servers.configure', function ($trail, $server) {
     $trail->parent('servers.show', $server);
     $trail->push('Configuring server', route('servers.configure', $server));
+});
+
+// Home > Admin > Locations
+Breadcrumbs::for('invites.create', function ($trail) {
+    $trail->parent('admins.dashboard');
+    $trail->push('Create invite', route('admins.dashboard'));
 });
 
 // Home > Admin > Locations

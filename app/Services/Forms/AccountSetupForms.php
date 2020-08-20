@@ -8,18 +8,18 @@
 
 namespace App\Services\Forms;
 
-use App\Forms\PasswordForm;
+use App\Forms\AccountSetupForm;
 use App\User;
 use Illuminate\Support\Facades\URL;
 use Kris\LaravelFormBuilder\Form;
 
-class PasswordForms extends ServiceForm
+class AccountSetupForms extends ServiceForm
 {
     public function set(User $user): Form
     {
-        return $this->formBuilder->create(PasswordForm::class, [
+        return $this->formBuilder->create(AccountSetupForm::class, [
             'method' => 'PATCH',
-            'url'    => URL::signedRoute('password.set', $user),
+            'url'    => URL::signedRoute('accounts.setup', $user),
         ]);
     }
 }

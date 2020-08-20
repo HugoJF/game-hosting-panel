@@ -52,8 +52,8 @@ class UserInvited extends Notification
         return (new MailMessage)
             ->subject('You have been invited!')
             ->line("You have been invited to participate in our beta program!")
-            ->line("Please setup a password for your account via the link below!")
-            ->action('Setup password', URL::signedRoute('password.set', $this->user))
+            ->line("Please setup your account via the link below!")
+            ->action('Setup account', URL::signedRoute('accounts.setup', $this->user))
             ->line('Thank you for joining us!');
     }
 }
