@@ -27,9 +27,6 @@ class InviteServiceTest extends TestCase
 
     public function test_invite_service_will_create_user_and_add_funds(): void
     {
-        // TODO: migrate this to email to test check it
-        // $this->expectsNotification($user, UserInvited::class);
-
         $this->expectsEvents(Registered::class);
 
         $user = $this->service->invite($this->email, $this->funds);
