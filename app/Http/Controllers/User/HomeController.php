@@ -25,6 +25,11 @@ class HomeController extends Controller
         return redirect()->route('dashboard');
     }
 
+    public function landing()
+    {
+        return view('landing.landing');
+    }
+
     public function dashboard()
     {
         /** @var User $user */

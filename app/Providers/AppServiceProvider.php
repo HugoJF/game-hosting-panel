@@ -11,6 +11,7 @@ use App\Observers\OrderObserver;
 use App\Observers\TransactionObserver;
 use App\Order;
 use App\Transaction;
+use App\View\Components\Section;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use Illuminate\Support\Facades\Blade;
@@ -41,6 +42,8 @@ class AppServiceProvider extends ServiceProvider
 	public function boot(): void
     {
         Schema::defaultStringLength(191);
+
+        Blade::component('game-card', Section::class);
 
 	    $this->registerSingletons();
 		$this->registerObservers();

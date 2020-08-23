@@ -14,6 +14,7 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('home', 'HomeController@index')->name('home');
+Route::get('landing', 'HomeController@landing')->name('landing');
 
 /*
 |--------------------------------------------------------------------------
