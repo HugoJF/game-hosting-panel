@@ -10,6 +10,7 @@ module.exports = {
         },
         borderRadius: {
             default: '6px',
+            full: '9999px',
         },
         colors: {
             transparent: 'transparent',
@@ -21,7 +22,8 @@ module.exports = {
                 dark: '#003380',
             },
             gray: {
-                light: '#6D6D6D',
+                light: '#c4c4c4',
+                primary: '#6D6D6D',
                 dark: '#272727',
             },
         }

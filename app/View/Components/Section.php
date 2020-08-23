@@ -6,28 +6,22 @@ use Illuminate\View\Component;
 
 class Section extends Component
 {
-    protected string $img;
-    protected string $alt;
-    protected string $specs;
-    protected string $price;
-    protected string $period;
+    protected string $title;
+    protected string $description;
+    protected string $theme;
 
     /**
      * Create a new component instance.
      *
-     * @param $img
-     * @param $alt
-     * @param $specs
-     * @param $price
-     * @param $period
+     * @param $title
+     * @param $description
+     * @param $theme
      */
-    public function __construct($img, $alt, $specs, $price, $period)
+    public function __construct($title, $description, $theme = 'white')
     {
-        $this->img = $img;
-        $this->alt = $alt;
-        $this->specs = $specs;
-        $this->price = $price;
-        $this->period = $period;
+        $this->title = $title;
+        $this->description = $description;
+        $this->theme = $theme;
     }
 
     /**
@@ -37,12 +31,10 @@ class Section extends Component
      */
     public function render()
     {
-        return view('landing.components.game-card', [
-            'img'    => $this->img,
-            'alt'    => $this->alt,
-            'specs'  => $this->specs,
-            'price'  => $this->price,
-            'period' => $this->period,
+        return view('landing.components.section', [
+            'title'       => $this->title,
+            'description' => $this->description,
+            'theme'       => $this->theme,
         ]);
     }
 }

@@ -15,7 +15,7 @@
     <!-- Styles -->
     <link href="{{ mix('css/landing.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="bg-white text-black">
 
 @yield('content')
 

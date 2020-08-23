@@ -11,6 +11,55 @@
  */
 @tailwind base;
 
+.blue-section {
+    @apply bg-blue-dark;
+}
+.blue-section h1 {
+    @apply text-white;
+}
+.blue-section h2 {
+    @apply text-blue-light;
+}
+.blue-section h3 {
+    @apply text-white;
+}
+.blue-section p {
+    @apply text-blue-light;
+}
+.blue-section .dash {
+    @apply bg-blue-light;
+}
+.blue-section .carousel-selected {
+    @apply bg-white;
+}
+.blue-section .carousel-deselected {
+    @apply bg-gray-primary;
+}
+
+.white-section {
+    @apply bg-white;
+}
+.white-section h1 {
+    @apply text-black;
+}
+.white-section h2 {
+    @apply text-gray-primary;
+}
+.white-section h3 {
+    @apply text-black;
+}
+.white-section p {
+    @apply text-gray-primary;
+}
+.white-section .dash {
+    @apply bg-gray-light;
+}
+.white-section .carousel-selected {
+    @apply bg-gray-dark;
+}
+.white-section .carousel-deselected {
+    @apply bg-gray-light;
+}
 
 /**
  * This injects any component classes registered by plugins.
@@ -46,4 +95,12 @@
  * @import "tailwindcss/utilities";
  */
 @tailwind utilities;
+
+.diagonal-top {
+    clip-path: polygon(0% -0.3%, 100% -0.3%, 100% 100%);
+}
+
+.diagonal-bottom {
+    clip-path: polygon(0% 0%, 0% 100.3%, 100% 100.3%);
+}
 
