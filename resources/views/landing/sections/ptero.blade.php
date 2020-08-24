@@ -3,7 +3,7 @@
     description="Pterodactyl é moderno, é completo, é open-source"
     theme="blue"
 >
-    <div class="my-16 grid grid-cols-2 gap-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
         <!-- Left -->
         <div class="flex flex-col justify-around">
             <x-item title="Console em tempo real">

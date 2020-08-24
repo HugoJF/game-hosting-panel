@@ -17,7 +17,7 @@ class Section extends Component
      * @param $description
      * @param $theme
      */
-    public function __construct($title, $description, $theme = 'white')
+    public function __construct($title, $description = '', $theme = 'white')
     {
         $this->title = $title;
         $this->description = $description;

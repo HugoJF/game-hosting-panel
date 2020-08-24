@@ -3,7 +3,7 @@
     description="Tenha seu próprio servidor em questão de segundos"
     theme="blue"
 >
-    <div class="flex justify-between my-16">
+    <div class="flex justify-between flex-wrap md:flex-no-wrap">
         <!-- 1 -->
         <x-step
             number="1"

@@ -3,7 +3,7 @@
     description="PHP 7, Laravel, NodeJS e Docker"
     theme="white"
 >
-    <div class="my-16 grid grid-cols-2 gap-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
         <!-- Left -->
         <div>
             <img class="rounded shadow" src="https://i.imgur.com/2FNlzor.png" alt="Painel">

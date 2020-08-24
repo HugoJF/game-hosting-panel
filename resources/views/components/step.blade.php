@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center mx-8">
+<div class="flex flex-col mx-auto items-center px-8">
     <div class="flex items-center">
         <div class="w-6 h-1 dash"></div>
         <h1 class="mx-3 text-5xl">{{ $number }}</h1>
