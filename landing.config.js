@@ -4,6 +4,7 @@ module.exports = {
     theme: {
         boxShadow: {
             default: '0 4px 4px 0 rgba(0, 0, 0, 0.25)',
+            lg: '0 5px 10px 0 rgba(0, 0, 0, 0.25)',
         },
         fontFamily: {
             'sans': ['Montserrat', '-apple-system', 'BlinkMacSystemFont'],
@@ -15,6 +16,7 @@ module.exports = {
         colors: {
             transparent: 'transparent',
             black: '#272727',
+            'super-white': '#FFFFFF',
             white: '#F6F6F6',
             blue: {
                 light: '#8BAFE5',
