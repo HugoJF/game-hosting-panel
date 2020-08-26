@@ -2,7 +2,7 @@
     <div class="container mx-auto flex justify-between items-center flex-wrap">
         <!-- Menu -->
         <div class="mx-auto md:mx-0">
-            <ul class="flex">
+            <ul class="flex justify-around md:justify-start">
                 <li class="transition-colors duration-150 mr-8 lg:mr-16 text-base text-white hover:text-super-white hover:underline cursor-pointer">Datacenter</li>
                 <li class="transition-colors duration-150 mr-8 lg:mr-16 text-base text-white hover:text-super-white hover:underline cursor-pointer">Roadmap</li>
                 <li class="transition-colors duration-150 mr-8 lg:mr-16 text-base text-white hover:text-super-white hover:underline cursor-pointer">Blog</li>
