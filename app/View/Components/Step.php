@@ -28,7 +28,7 @@ class Step extends Component
      */
     public function render()
     {
-        return view('components.step', [
+        return view('landing.components.step', [
             'number' => $this->number,
             'image'  => $this->image,
         ]);

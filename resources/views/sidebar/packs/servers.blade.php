@@ -1,6 +1,6 @@
 @auth
     @isset($onlineServers)
-        @component('components.sidebar-pack', ['id' => 'servers'])
+        @component('landing.components.sidebar-pack', ['id' => 'servers'])
             @slot('title')
                 @lang('words.online_servers', [
                     'online' => $onlineServers->count(),

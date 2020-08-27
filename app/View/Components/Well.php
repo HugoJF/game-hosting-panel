@@ -25,7 +25,7 @@ class Well extends Component
      */
     public function render()
     {
-        return view('components.well', [
+        return view('landing.components.well', [
             'padding' => $this->padding,
         ]);
     }

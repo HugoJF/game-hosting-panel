@@ -1,13 +1,18 @@
 // tailwind.config.js
 module.exports = {
     important: true,
+    purge: [
+        './resources/views/layouts/landing.blade.php',
+        './resources/views/landing/*.blade.php',
+        './resources/views/landing/**/*.blade.php'
+    ],
     theme: {
         boxShadow: {
             default: '0 4px 4px 0 rgba(0, 0, 0, 0.25)',
             lg: '0 5px 10px 0 rgba(0, 0, 0, 0.25)',
         },
         fontFamily: {
-            'sans': ['Montserrat', '-apple-system', 'BlinkMacSystemFont'],
+            sans: ['Montserrat', '-apple-system', 'BlinkMacSystemFont'],
         },
         borderRadius: {
             default: '6px',
@@ -16,8 +21,8 @@ module.exports = {
         colors: {
             transparent: 'transparent',
             black: '#272727',
-            'super-white': '#FFFFFF',
             white: '#F6F6F6',
+            'super-white': '#FFFFFF',
             blue: {
                 light: '#8BAFE5',
                 primary: '#007DF1',

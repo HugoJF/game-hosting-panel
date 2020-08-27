@@ -25,7 +25,7 @@ class Item extends Component
      */
     public function render()
     {
-        return view('components.item', [
+        return view('landing.components.item', [
             'title' => $this->title,
         ]);
     }

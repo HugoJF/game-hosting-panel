@@ -28,7 +28,7 @@ class CarouselSelector extends Component
      */
     public function render()
     {
-        return view('components.carousel-selector', [
+        return view('landing.components.carousel-selector', [
             'count'    => $this->count,
             'selected' => $this->selected,
         ]);

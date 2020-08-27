@@ -1,5 +1,5 @@
 @auth
-    @component('components.sidebar-pack', ['id' => 'menu'])
+    @component('landing.components.sidebar-pack', ['id' => 'menu'])
         @slot('title')
             @lang('words.menu')
         @endslot
