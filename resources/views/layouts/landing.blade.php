@@ -15,7 +15,7 @@
     <!-- Styles -->
     <link href="{{ mix('css/landing.css') }}" rel="stylesheet">
 </head>
-<body class="bg-white text-black">
+<body class="custom-gradient text-black">
 
 @yield('content')
 

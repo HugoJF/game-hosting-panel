@@ -1,12 +1,12 @@
-<div class="w-full flex justify-center px-8 pt-8 text-white bg-blue-dark">
+<div class="w-full flex justify-center px-8 pt-8 text-white">
     <div class="container mx-auto flex justify-between items-center flex-wrap">
         <!-- Menu -->
         <div class="mx-auto md:mx-0">
-            <ul class="flex justify-around md:justify-start">
-                <li class="transition-colors duration-150 mr-8 lg:mr-16 text-base text-white hover:text-super-white hover:underline cursor-pointer">Datacenter</li>
-                <li class="transition-colors duration-150 mr-8 lg:mr-16 text-base text-white hover:text-super-white hover:underline cursor-pointer">Roadmap</li>
-                <li class="transition-colors duration-150 mr-8 lg:mr-16 text-base text-white hover:text-super-white hover:underline cursor-pointer">Blog</li>
-                <li class="transition-colors duration-150 text-base text-white hover:text-super-white hover:underline cursor-pointer">Contato</li>
+            <ul class="flex justify-around md:justify-start space-x-16">
+                <li class="transition-colors duration-150 text-base text-white hover:text-super-white font-medium tracking-wide hover:underline cursor-pointer">Datacenter</li>
+                <li class="transition-colors duration-150 text-base text-white hover:text-super-white font-medium tracking-wide hover:underline cursor-pointer">Roadmap</li>
+                <li class="transition-colors duration-150 text-base text-white hover:text-super-white font-medium tracking-wide hover:underline cursor-pointer">Blog</li>
+                <li class="transition-colors duration-150 text-base text-white hover:text-super-white font-medium tracking-wide hover:underline cursor-pointer">Contato</li>
             </ul>
         </div>
 
