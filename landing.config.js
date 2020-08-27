@@ -6,6 +6,9 @@ module.exports = {
         './resources/views/landing/*.blade.php',
         './resources/views/landing/**/*.blade.php'
     ],
+    corePlugins: {
+        animation: false,
+    },
     theme: {
         boxShadow: {
             default: '0 4px 4px 0 rgba(0, 0, 0, 0.25)',
