@@ -12,7 +12,7 @@
 @tailwind base;
 
 .custom-gradient {
-    background-image: linear-gradient(to right, #002b63, #00388c) !important;
+    background-image: linear-gradient(to right, #002859, #003580) !important;
 }
 
 .blue-section h1 {
