@@ -18,11 +18,6 @@
         </div>
 
         <!-- Right -->
-        <div>
-            <img class="rounded shadow" src="https://i.imgur.com/iCIMGRk.png" alt="Painel">
-            <div class="flex justify-center">
-                <x-carousel-selector count="3" selected="1"></x-carousel-selector>
-            </div>
-        </div>
+        <img class="rounded shadow" src="https://i.imgur.com/iCIMGRk.png" alt="Painel">
     </div>
 </x-section>
