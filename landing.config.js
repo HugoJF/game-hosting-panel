@@ -15,7 +15,22 @@ module.exports = {
             lg: '0 7px 20px 0 rgba(0, 0, 0, 0.275)',
         },
         fontFamily: {
-            sans: ['Montserrat', '-apple-system', 'BlinkMacSystemFont'],
+            sans: [
+                'Montserrat',
+                'system-ui',
+                '-apple-system',
+                'BlinkMacSystemFont',
+                'Segoe UI',
+                'Roboto',
+                'Helvetica Neue',
+                'Arial',
+                'Noto Sans',
+                'sans-serif',
+                'Apple Color Emoji',
+                'Segoe UI Emoji',
+                'Segoe UI Symbol',
+                'Noto Color Emoji'
+            ],
         },
         borderRadius: {
             default: '6px',
