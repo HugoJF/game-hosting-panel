@@ -1,6 +1,8 @@
 const mix = require('laravel-mix');
 const tailwindcss = require('tailwindcss');
 
+require('laravel-mix-criticalcss');
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -14,21 +16,36 @@ const tailwindcss = require('tailwindcss');
 mix
     .postCss('resources/css/landing.css', 'public/css', [
         tailwindcss('./landing.config.js'),
-    ]);
-
-mix
-    .js('resources/js/bootstrap.js', 'public/js')
-    .react('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        tailwindcss('./tailwind.config.js'),
     ])
-    .sass('resources/sass/vendor.scss', 'public/css')
-    .webpackConfig({
-        devtool: 'source-map',
-        devServer: {
-            disableHostCheck: true
+    .criticalCss({
+        enabled: true,
+        paths: {
+            base: 'http://game-hosting-panel.test/',
+            templates: './public/css/',
+            suffix: '_critical.min'
         },
-    })
-    .sourceMaps()
-    // .dump()
-;
+        urls: [
+            { url: '/', template: 'landing' },
+        ],
+        options: {
+            minify: true,
+        },
+    });
+
+
+// mix
+//     .js('resources/js/bootstrap.js', 'public/js')
+//     .react('resources/js/app.js', 'public/js')
+//     .postCss('resources/css/app.css', 'public/css', [
+//         tailwindcss('./tailwind.config.js'),
+//     ])
+//     .sass('resources/sass/vendor.scss', 'public/css')
+//     .webpackConfig({
+//         devtool: 'source-map',
+//         devServer: {
+//             disableHostCheck: true
+//         },
+//     })
+//     .sourceMaps()
+//     // .dump()
+// ;
