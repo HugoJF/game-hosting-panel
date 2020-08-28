@@ -12,9 +12,8 @@
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', 'HomeController@index')->name('home');
-Route::get('home', 'HomeController@index')->name('home');
-Route::get('landing', 'HomeController@landing')->name('landing');
+Route::get('/', 'HomeController@landing')->name('home');
+Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +25,6 @@ Route::middleware(['signed'])->group(function () {
     Route::get('user/{user}', 'AccountController@set')->name('accounts.setup');
     Route::patch('user/{user}', 'AccountController@update')->name('accounts.update');
 });
-
 
 /*
 |--------------------------------------------------------------------------

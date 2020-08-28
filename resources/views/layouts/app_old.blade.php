@@ -20,7 +20,7 @@
 <nav class="navbar-z flex items-center flex-no-wrap flex-col md:flex-row items-stretch justify-center sticky top-0 left-0 right-0 bg-gray-800 p-0">
     <a class="px-6 py-3 text-gray-400 text-lg no-underline w-1/5 mr-0" href="#">Servidores de_nerdTV</a>
     <div class="flex items-stretch flex-grow text-gray-400">
-        {!! Form::open(['url' => route('home'), 'method' => 'GET', 'class' => 'flex items-stretch w-100']) !!}
+        {!! Form::open(['url' => route('dashboard'), 'method' => 'GET', 'class' => 'flex items-stretch w-100']) !!}
         <input name="term" class="transition-colors duration-150 py-2 px-5 w-100 bg-transparent outline-none focus:border-b focus:border-gray-500 focus:shadow-inner focus:bg-gray-200 focus:text-gray-700" type="text" placeholder="Search" aria-label="Search">
         {!! Form::close() !!}
     </div>
@@ -81,7 +81,7 @@
                 <!-- Home -->
                 <ul class="pl-0 mb-0 flex flex-col text-sm">
                     <li class="flex justify-between my-2 ml-3">
-                        <a href="{{ route('home') }}" class="flex items-center text-gray-500 no-underline text-base group">
+                        <a href="{{ route('dashboard') }}" class="flex items-center text-gray-500 no-underline text-base group">
                             <span class="group-hover:text-white" data-feather="home"></span>
                             <span class="group-hover:text-gray-400">Home</span>
                         </a>

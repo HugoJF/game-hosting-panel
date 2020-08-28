@@ -43,7 +43,7 @@
 
     <!-- Header -->
     <div class="flex items-center flex-no-wrap flex-col md:flex-row items-stretch justify-center bg-gray-800">
-        <a class="sidebar-width px-6 py-3 text-gray-400 text-lg no-underline flex-shrink-0 mr-0" href="{{ route('home') }}">
+        <a class="sidebar-width px-6 py-3 text-gray-400 text-lg no-underline flex-shrink-0 mr-0" href="{{ route('dashboard') }}">
             @lang('words.denerdtv_servers')
         </a>
         <div class="hidden md:flex items-stretch flex-grow text-gray-400">

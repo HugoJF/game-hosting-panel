@@ -10,7 +10,9 @@
  */
 
 return [
-    'limits' => [
+    'released' => env('RELEASED', false),
+
+    'limits'   => [
         'cpu'       => 2400,
         'memory'    => 3072,
         'disk'      => 50000,

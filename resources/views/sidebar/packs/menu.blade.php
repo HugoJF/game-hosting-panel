@@ -6,7 +6,7 @@
         <ul class="collapse pl-0 mb-0 flex flex-col text-sm">
             <!-- Home -->
             <li class="flex justify-between my-2 ml-3">
-                <a href="{{ route('home') }}" class="flex items-center text-gray-500 no-underline text-base group">
+                <a href="{{ route('dashboard') }}" class="flex items-center text-gray-500 no-underline text-base group">
                     <span class="mr-1 text-gray-400 group-hover:text-white" data-feather="home"></span>
                     <span class="group-hover:text-gray-400">
                         @lang('words.home')
