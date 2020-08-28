@@ -21,6 +21,5 @@
 
     @include('landing.sections.how-to')
 
-
     @include('landing.sections.cta')
 @endsection

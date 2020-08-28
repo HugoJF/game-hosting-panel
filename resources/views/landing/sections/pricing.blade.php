@@ -16,7 +16,7 @@
     </div>
 
     <div class="flex justify-center mt-16">
-        <x-cta>
+        <x-cta href="{{ route('login') }}">
             Criar servidor
         </x-cta>
     </div>

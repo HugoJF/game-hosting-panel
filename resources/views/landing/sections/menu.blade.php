@@ -12,10 +12,10 @@
 
         <!-- Auth -->
         <div class="mx-auto md:mx-0 mt-4 md:mt-0">
-            <a class="inline-block transition-colors duration-150 py-3 px-8 text-base text-white hover:text-super-white font-normal border border-blue-light hover:border-white rounded" href="#">
+            <a class="inline-block transition-colors duration-150 py-3 px-8 text-base text-white hover:text-super-white font-normal border border-blue-light hover:border-white rounded" href="{{ route('login') }}">
                 Conta
             </a>
-            <a class="transition-colors transition-shadow duration-150 inline-block py-3 px-8 ml-8 bg-blue-primary text-base text-white hover:text-super-white font-normal rounded shadow hover:shadow-lg" href="#">
+            <a class="transition-colors transition-shadow duration-150 inline-block py-3 px-8 ml-8 bg-blue-primary text-base text-white hover:text-super-white font-normal rounded shadow hover:shadow-lg" href="{{ route('register') }}">
                 Registrar
             </a>
         </div>
