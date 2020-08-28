@@ -9,14 +9,17 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&subset=latin" rel="stylesheet">
 
-    <!-- Styles -->
+    <!-- Critical CSS -->
     <link href="{{ asset('css/landing_critical.min.css') }}" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="preload" href="{{ mix('css/landing.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ mix('css/landing.css') }}"></noscript>
 </head>
 <body class="custom-gradient text-black">
 
 @yield('content')
 
-<link href="{{ mix('css/landing.css') }}" rel="stylesheet">
 @stack('scripts')
 </body>
 </html>
