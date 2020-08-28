@@ -20,7 +20,7 @@
 </head>
 <body>
 
-<nav class="navbar-z sticky top-0 left-0 right-0 p-0">
+<nav class="navbar-z fixed top-0 left-0 right-0 p-0">
     <!-- Announcement -->
     <div class="shadow-inner">
         @foreach ($globalAnnouncements ?? [] as $announcement)

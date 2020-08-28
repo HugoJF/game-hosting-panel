@@ -4,7 +4,7 @@ export function adjustCollapseView() {
 
     console.log(desktopView);
 
-    if (desktopView >= 1052) {
+    if (desktopView >= 768) {
         $(".collapse:not(.show)").addClass("show");
     } else {
         $('.collapse.show').removeClass('show');
