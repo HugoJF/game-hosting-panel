@@ -3,7 +3,7 @@
         @auth
             <a href="{{ route('orders.create') }}" class="flex items-center text-xl text-gray-200 font-semibold no-underline">
                 <span class="mr-1 font-light">R$</span>
-                <span>{{ number_format(Auth::user()->balance / 100, 2) }}</span>
+                <span>{{ number_format(auth()->user()->balance / 100, 2) }}</span>
                 <span class="m-0 ml-2 inline hover:text-white cursor-pointer" data-feather="plus-circle"></span>
             </a>
         @endauth

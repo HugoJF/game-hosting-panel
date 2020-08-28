@@ -1,3 +1,5 @@
+<!-- TODO: unused -->
+
 <div class="flex justify-center p-4">
     @foreach ($locations as $location)
         <a

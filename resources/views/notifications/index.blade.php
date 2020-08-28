@@ -12,6 +12,7 @@
         @forelse($notifications as $notification)
             <tr class="border-b {{ $notification->read_at ? 'opacity-50' : '' }}">
                 <td class="py-2 px-3">
+                    <!-- TODO: translate -->
                     @if($notification->read_at)
                         <div title="Read notification" class="w-3 h-3 border-2 border-blue-500 rounded-full"></div>
                     @else

@@ -1,4 +1,4 @@
-<!-- Test data -->
+<!-- TODO: unused -->
 @php
     $parameters = [
         'cpu' => [

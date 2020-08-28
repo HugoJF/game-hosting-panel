@@ -1,3 +1,5 @@
+<!-- TODO: unused -->
+
 <div class="flex justify-center items-stretch flex-wrap p-4">
     @foreach ($games as $game)
         <div class="w-1/4 p-4">

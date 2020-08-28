@@ -47,7 +47,9 @@
             <li class="flex justify-between my-2 ml-3">
                 <a href="{{ route('orders.index') }}" class="flex items-center text-gray-500 no-underline text-base group">
                     <span class="mr-1 text-gray-400 group-hover:text-white" data-feather="shopping-cart"></span>
-                    <span class="group-hover:text-gray-400">Pedidos</span>
+                    <span class="group-hover:text-gray-400">
+                        @lang('words.orders')
+                    </span>
                 </a>
                 <a class="group no-underline" href="#">
                     <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#usersHelpModal" data-feather="help-circle"></span>

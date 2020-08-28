@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+<!-- TODO: unused?  -->
+
 @section('content')
     @component('partials.card')
         @slot('title')
