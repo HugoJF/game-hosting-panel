@@ -11,8 +11,10 @@ class DeployTerminationService
     protected ServerService $serverService;
     protected ServerTerminationService $serverTermination;
 
-    public function __construct(ServerService $serverService, ServerTerminationService $terminationService)
-    {
+    public function __construct(
+        ServerService $serverService,
+        ServerTerminationService $terminationService
+    ) {
         $this->serverService = $serverService;
         $this->serverTermination = $terminationService;
     }
@@ -25,14 +27,19 @@ class DeployTerminationService
             return;
         }
 
+        $this->terminateDeploy($deploy, $reason);
+
+        if ($forced) {
+            $this->serverTermination->handle($server);
+        }
+    }
+
+    public function terminateDeploy(Deploy $deploy, $reason): void
+    {
         if (!$deploy->termination_requested_at) {
             $deploy->termination_reason = $reason;
             $deploy->termination_requested_at = now();
             $deploy->save();
-        }
-
-        if ($forced) {
-            $this->serverTermination->handle($server);
         }
     }
 }

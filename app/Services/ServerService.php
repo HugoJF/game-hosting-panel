@@ -11,6 +11,7 @@ namespace App\Services;
 use App\Deploy;
 use App\Exceptions\MultipleLiveDeploys;
 use App\Server;
+use App\Services\User\DeployTerminationService;
 use Exception;
 use HCGCloud\Pterodactyl\Pterodactyl;
 
@@ -54,5 +55,24 @@ class ServerService
         }
 
         return $deploys->first();
+    }
+
+    /**
+     * @param Server $server
+     * @param string $reason
+     */
+    public function terminateAllDeploys(Server $server, string $reason): void
+    {
+        // TODO: this should use DeployTerminationService
+        // TODO: update DTS to ignore NotFoundException 
+        /** @var DeployTerminationService $deployTermination */
+        $deployTermination = app(DeployTerminationService::class);
+
+        $server->loadMissing('deploys');
+        $deploys = $server->deploys->where('terminated_at', null);
+
+        foreach ($deploys as $deploy) {
+            $deployTermination->terminateDeploy($deploy, $reason);
+        }
     }
 }
