@@ -16,7 +16,7 @@
     <link rel="preload" href="{{ mix('css/landing.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{{ mix('css/landing.css') }}"></noscript>
 </head>
-<body class="custom-gradient text-black">
+<body class="custom-gradient text-black font-sans">
 
 @yield('content')
 
