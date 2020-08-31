@@ -53,9 +53,11 @@
     <!-- Server information summary -->
 
     <div class="mb-4 px-2">
-        <h3>Server summary</h3>
+        <h3>
+            @lang('deploying.summary')
+        </h3>
         <small class="text-sm text-gray-500">
-            Summary of current configuration and costs for deployment
+            @lang('deploying.summary_body')
         </small>
     </div>
 
@@ -74,7 +76,7 @@
         </div>
         <div>
             <a class="text-sm text-gray-500 font-thin hover:font-normal" href="{{ route('servers.deploys', $server) }}">
-                View all
+                @lang('deploys.view_all')
             </a>
         </div>
     </div>
@@ -94,7 +96,7 @@
         </div>
         <div>
             <a class="text-sm text-gray-500 font-thin hover:font-normal" href="{{ route('servers.transactions', $server) }}">
-                View all
+                @lang('transactions.view_all')
             </a>
         </div>
     </div>

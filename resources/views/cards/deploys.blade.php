@@ -190,7 +190,7 @@
                 </g>
             </svg>
             @isset($server)
-                <a class="btn btn-primary btn-lg shadow" href="{{ route('servers.deploy', $server) }}">
+                <a class="btn btn-primary btn-lg shadow" href="{{ route('servers.deploying', $server) }}">
                     @lang('servers.deploy_now')
                 </a>
             @endisset

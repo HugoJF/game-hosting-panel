@@ -16,18 +16,18 @@
     </div>
 
     <div class="mb-4">
-        <h3>Information</h3>
+        <h3>@lang('deploying.title')</h3>
         <small class="text-gray-500">
-            Before deploying your server, take your time to read the information below
+            @lang('deploying.body')
         </small>
     </div>
 
     @include('servers.deploying-information')
 
     <div class="mb-4">
-        <h3>Server summary</h3>
+        <h3>@lang('deploying.summary')</h3>
         <small class="text-gray-500">
-            Summary of current configuration and costs for deployment
+            @lang('deploying.summary_body')
         </small>
     </div>
 
@@ -36,10 +36,14 @@
 
     <div class="flex justify-center">
         {{ Form::open(['method' => 'POST', 'url' => route('servers.deploy', $server)]) }}
-            <div class="btn-group btn-group-lg">
-                <button class="btn btn-primary btn-lg" type="submit">Deploy server</button>
-                <a class="btn btn-outline-secondary btn-lg" href="{{ route('servers.configure', $server) }}">Update configuration</a>
-            </div>
+        <div class="btn-group btn-group-lg">
+            <button class="btn btn-primary btn-lg" type="submit">
+                @lang('servers.deploy')
+            </button>
+            <a class="btn btn-outline-secondary btn-lg" href="{{ route('servers.configure', $server) }}">
+                @lang('servers.update_configuration')
+            </a>
+        </div>
         {{ Form::close() }}
     </div>
 @endsection

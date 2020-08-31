@@ -94,6 +94,7 @@ return [
     'english'              => 'English',
     'brazilian-portuguese' => 'Brazilian Portuguese',
 
+    'search_results' => 'Search results for: <strong>:term</strong>',
     'billing_period'   => 'Billing period',
     'period_cost'      => 'Period cost',
     'total_cost'       => 'Total cost',

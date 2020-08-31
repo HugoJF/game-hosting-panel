@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Search results for: <strong>{{ request('term') }}</strong></h1>
-    <br/>
+    <h1 class="mb-8">@lang('words.search_results', ['term' => request('term')])</h1>
 
     @foreach ($result as $type => $items)
         <div class="mb-10">

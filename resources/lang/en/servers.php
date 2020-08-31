@@ -6,11 +6,13 @@ return [
     'create'     => 'Create server',
 
     'created' => 'Server created',
+    'deploy'  => 'Deploy server',
 
     'not_deployed_at' => 'This server has not been deployed yet.',
 
-    'no_servers_yet' => 'You don\'t have any servers yet!',
-    'deploy_now'     => 'Deploy now!',
+    'no_servers_yet'       => 'You don\'t have any servers yet!',
+    'deploy_now'           => 'Deploy now!',
+    'update_configuration' => 'Update configuration',
 
     'first_server_help' => 'If you need any help on how to create your first server, click here to read out documentation.',
 
