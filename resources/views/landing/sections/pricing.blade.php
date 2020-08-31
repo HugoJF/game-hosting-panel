@@ -16,7 +16,7 @@
     </div>
 
     <div class="flex justify-center mt-16">
-        <x-cta href="{{ route('login') }}">
+        <x-cta href="https://forms.gle/aYK8CmarNMRCpSfXA">
             Criar servidor
         </x-cta>
     </div>
