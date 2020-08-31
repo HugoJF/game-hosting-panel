@@ -64,7 +64,7 @@ class ServerService
     public function terminateAllDeploys(Server $server, string $reason): void
     {
         // TODO: this should use DeployTerminationService
-        // TODO: update DTS to ignore NotFoundException 
+        // TODO: update DTS to ignore NotFoundException
         /** @var DeployTerminationService $deployTermination */
         $deployTermination = app(DeployTerminationService::class);
 

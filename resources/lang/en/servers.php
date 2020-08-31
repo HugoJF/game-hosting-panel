@@ -5,6 +5,8 @@ return [
     'no_servers' => 'There are no servers!',
     'create'     => 'Create server',
 
+    'created' => 'Server created',
+
     'not_deployed_at' => 'This server has not been deployed yet.',
 
     'no_servers_yet' => 'You don\'t have any servers yet!',
