@@ -22,10 +22,6 @@ class CheckReleased
             return $next($request);
         }
 
-        if (!$request->routeIs('home')) {
-            return redirect()->route('home');
-        }
-
-        return $next($request);
+        return redirect()->route('home');
     }
 }
