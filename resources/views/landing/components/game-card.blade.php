@@ -2,9 +2,13 @@
     <img src="{{ $img }}" alt="{{ $alt }}">
     <!-- Specs -->
     <div class="flex flex-col items-center p-4">
-        <div class="mb-2 text-center text-sm lg:text-base xl:text-lg text-gray-primary font-normal">
+        <div class="text-center text-sm lg:text-base xl:text-lg text-gray-primary font-normal">
             {{ $specs }}
         </div>
+
+        <p class="mb-2 text-sm text-gray-light">
+            {{ $description }}
+        </p>
 
         <!-- Price -->
         <div class="text-2xl lg:text-3xl text-blue-dark font-semibold">
