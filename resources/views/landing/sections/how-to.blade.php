@@ -3,29 +3,37 @@
     description="Tenha seu próprio servidor em questão de segundos"
     theme="blue"
 >
-    <div class="flex justify-between flex-wrap md:flex-no-wrap">
+    <div class="flex justify-between flex-wrap xl:flex-no-wrap">
         <!-- 1 -->
         <x-step
             number="1"
-            image="https://i.imgur.com/I8U1NCT.png"
+            image="{{ asset('images/select-game.png') }}"
         >
-            Selecione o seu jogo
+            Selecione o jogo
         </x-step>
 
         <!-- 2 -->
         <x-step
             number="2"
-            image="https://i.imgur.com/dfuXc9m.png"
+            image="{{ asset('images/select-parameters.png') }}"
         >
-            Escolha a configuração
+            Escolha uma configuração
         </x-step>
 
         <!-- 3 -->
         <x-step
             number="3"
-            image="https://i.imgur.com/7EozLJ9.png"
+            image="{{ asset('images/configure.png') }}"
         >
-            Aguarde instalação
+            Configure
+        </x-step>
+
+        <!-- 4 -->
+        <x-step
+            number="4"
+            image="{{ asset('images/online.png') }}"
+        >
+            Inicie o servidor
         </x-step>
     </div>
 </x-section>

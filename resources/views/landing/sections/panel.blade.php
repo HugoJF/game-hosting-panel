@@ -5,7 +5,7 @@
 >
     <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
         <!-- Left -->
-        <img class="rounded shadow" src="https://i.imgur.com/2FNlzor.png" alt="Painel">
+        <img class="rounded shadow" src="{{ asset('images/admin-panel.png') }}" alt="Painel">
 
         <!-- Right -->
         <div class="flex flex-col justify-around">

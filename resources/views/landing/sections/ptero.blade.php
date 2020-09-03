@@ -18,6 +18,6 @@
         </div>
 
         <!-- Right -->
-        <img class="rounded shadow" src="https://i.imgur.com/iCIMGRk.png" alt="Painel">
+        <img class="rounded shadow" src="{{ asset('images/game-panel.png') }}" alt="Painel">
     </div>
 </x-section>

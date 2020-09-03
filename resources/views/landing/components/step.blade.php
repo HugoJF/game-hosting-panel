@@ -5,7 +5,7 @@
         <div class="w-6 h-1 dash"></div>
     </div>
 
-    <h3 class="my-3 text-blue-light text-xl">{{ $slot }}</h3>
+    <h3 class="my-3 text-blue-light text-xl whitespace-no-wrap">{{ $slot }}</h3>
 
-    <img class="rounded shadow" src="{{ $image }}" alt="{{ $slot }}">
+    <img style="max-height: 230px" class="rounded shadow" src="{{ $image }}" alt="{{ $slot }}">
 </div>
