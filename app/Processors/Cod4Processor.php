@@ -27,7 +27,7 @@ class Cod4Processor extends Processor
         return array_merge(
             config('processors.cod4.costs'),
             [
-                'cpu' => 50 + $slots * 36, // TODO: magic variables nop
+                'cpu' => 50 + $slots * $costPerSlots // TODO: magic variables nop
             ],
         );
     }
