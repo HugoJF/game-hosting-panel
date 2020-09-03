@@ -3,7 +3,7 @@
     theme="white"
 >
     <div class="flex justify-center">
-        <x-cta href="https://forms.gle/aYK8CmarNMRCpSfXA">
+        <x-cta href="{{ route('register') }}">
             Registrar
         </x-cta>
     </div>

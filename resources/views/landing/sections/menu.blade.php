@@ -15,7 +15,7 @@
             <a class="inline-block transition-colors duration-150 py-3 px-8 text-base text-white hover:text-super-white font-normal border border-blue-light hover:border-white rounded" href="{{ route('login') }}">
                 Painel
             </a>
-            <a class="transition-colors transition-shadow duration-150 inline-block py-3 px-8 ml-8 bg-blue-primary text-base text-white hover:text-super-white font-normal rounded shadow hover:shadow-lg" href="https://forms.gle/aYK8CmarNMRCpSfXA">
+            <a class="transition-colors transition-shadow duration-150 inline-block py-3 px-8 ml-8 bg-blue-primary text-base text-white hover:text-super-white font-normal rounded shadow hover:shadow-lg" href="{{ route('register') }}">
                 Registrar
             </a>
         </div>
