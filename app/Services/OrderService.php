@@ -41,6 +41,7 @@ class OrderService
 		$details['reason'] = "R$ $formattedAmount dias nos servidores de_nerdTV";
 		$details['return_url'] = route('orders.index');
 		$details['cancel_url'] = route('orders.index');
+        $details['preset_units'] = $amount * 100;
 		$details['preset_amount'] = $amount * 100;
 		$details['product_name_singular'] = 'real';
 		$details['product_name_plural'] = 'reais';
@@ -49,11 +50,11 @@ class OrderService
 		$details['payer_steam_id'] = '';
 		$details['payer_tradelink'] = '';
 
-		$details['unit_price'] = 26;
-		$details['unit_price_limit'] = 26;
+		$details['unit_price'] = 1;
+		$details['unit_price_limit'] = 1;
 		$details['discount_per_unit'] = 0;
-		$details['min_units'] = 10;
-		$details['max_units'] = 100;
+		$details['min_units'] = 100;
+		$details['max_units'] = 10000;
 
 		$paymentSystem = app(PaymentSystem::class);
 
