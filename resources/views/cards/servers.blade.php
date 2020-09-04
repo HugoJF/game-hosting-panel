@@ -115,26 +115,32 @@
     @endforeach
 </div>
 
-@if($servers->count() === 0)
+@if($servers->isEmpty())
     <div>
-        <h2 class="text-center">
+        <!-- Title -->
+        <h2 class="text-3xl text-center">
             @lang('servers.no_servers_yet')
         </h2>
-        <p class="text-center text-base font-light tracking-tight">
-            <a class="underline" href="#">
-                @lang('servers.first_server_help')
-            </a>
-        </p>
-        <div class="btn-group btn-group-lg mt-8 flex justify-center">
+
+        <!-- Actions -->
+        <div class="btn-group btn-group-lg my-8 flex justify-center">
             <a class="btn btn-lg btn-primary" href="{{ route('servers.create') }}">
                 @lang('servers.create')
             </a>
             <a class="btn btn-lg btn-outline-primary" href="{{ route('orders.create') }}">
                 @lang('words.add_credits')
             </a>
-            <a class="btn btn-lg btn-outline-secondary" href="#">
+
+            <a class="btn btn-lg btn-outline-secondary" href="https://denerdtv.com/discord">
                 @lang('words.help')
             </a>
         </div>
+
+        <!-- Help text -->
+        <p class="text-center text-gray-500 text-base font-light tracking-tight">
+            <a class="underline" href="https://denerdtv.com/discord">
+                @lang('servers.first_server_help')
+            </a>
+        </p>
     </div>
 @endif

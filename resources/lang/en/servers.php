@@ -8,13 +8,15 @@ return [
     'created' => 'Server created',
     'deploy'  => 'Deploy server',
 
-    'not_deployed_at' => 'This server has not been deployed yet.',
+    'not_deployed_at' => 'This server has not been deployed yet, let\'s fix this!.',
 
-    'no_servers_yet'       => 'You don\'t have any servers yet!',
+    'no_servers_yet'       => 'You don\'t have any servers yet, let\'s create one!',
     'deploy_now'           => 'Deploy now!',
     'update_configuration' => 'Update configuration',
 
-    'first_server_help' => 'If you need any help on how to create your first server, click here to read out documentation.',
+    'first_server_help' => 'If you need any help creating your first server, click here to read out documentation.',
+
+    'survey' => '<strong>Click here</strong> to fill our survey to have a chance to earn up to R$ 50 in credits!',
 
     'TERMINATED_BY_ADMIN'      => 'Server was terminated by an admin',
     'FORCE_TERMINATED_BY_USER' => 'Server was force terminated by you',

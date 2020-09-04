@@ -74,6 +74,18 @@ Breadcrumbs::for('invites.create', function ($trail) {
     $trail->push('Create invite', route('admins.dashboard'));
 });
 
+// Home > Admin > Announcements
+Breadcrumbs::for('admins.announcements.create', function ($trail) {
+    $trail->parent('admins.dashboard');
+    $trail->push('Announcements', route('admins.dashboard'));
+});
+
+// Home > Admin > Announcements > Edit
+Breadcrumbs::for('admins.announcements.edit', function ($trail, $annoucement) {
+    $trail->parent('admins.announcements.create');
+    $trail->push("Editing annoucement $annoucement->id", route('admins.announcements.edit', $annoucement));
+});
+
 // Home > Admin > Locations
 Breadcrumbs::for('admins.locations', function ($trail) {
     $trail->parent('admins.dashboard');
