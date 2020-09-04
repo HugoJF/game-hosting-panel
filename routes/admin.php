@@ -99,9 +99,9 @@ Route::prefix('servers')->group(function () {
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('transactions')->group(function () {
-    Route::get('/', 'TransactionController@index')->name('admins.transactions.index');
-});
+//Route::prefix('transactions')->group(function () {
+//    Route::get('/', 'TransactionController@index')->name('admins.transactions.index');
+//});
 
 /*
 |--------------------------------------------------------------------------
@@ -109,9 +109,9 @@ Route::prefix('transactions')->group(function () {
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('coupons')->group(function () {
-    Route::get('/', 'CouponController@index')->name('admins.coupons.index');
-});
+//Route::prefix('coupons')->group(function () {
+//    Route::get('/', 'CouponController@index')->name('admins.coupons.index');
+//});
 
 /*
 |--------------------------------------------------------------------------
@@ -119,6 +119,6 @@ Route::prefix('coupons')->group(function () {
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('users')->group(function () {
-    Route::get('/', 'UserController@index')->name('admins.users.index');
-});
+//Route::prefix('users')->group(function () {
+//    Route::get('/', 'UserController@index')->name('admins.users.index');
+//});

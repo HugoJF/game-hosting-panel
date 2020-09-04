@@ -38,6 +38,6 @@ Route::prefix('configurer')->group(function () {
     Route::get('games/{game}/location/{location}/compute-resources', 'ConfigurerController@computeResources')->name('configurer.compute-resources');
 });
 
-Route::prefix('servers')->middleware(['auth'])->group(function () {
-    Route::post('/', 'ServerController@store')->name('api.servers.store');
-});
+//Route::prefix('servers')->middleware(['auth'])->group(function () {
+//    Route::post('/', 'ServerController@store')->name('api.servers.store');
+//});
