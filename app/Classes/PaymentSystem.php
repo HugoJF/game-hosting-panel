@@ -8,7 +8,6 @@
 
 namespace App\Classes;
 
-
 use Exception;
 use GuzzleHttp\Client;
 
@@ -25,9 +24,10 @@ class PaymentSystem
     }
 
     /**
-     * @param      $path
-     * @param null $data
+     * @param        $path
+     * @param null   $data
      * @param string $method
+     *
      * @return bool|mixed
      * @throws Exception
      */
@@ -36,25 +36,24 @@ class PaymentSystem
         $uri = config('payment-system.url') . $path;
 
         $dataName = [
-            'GET' => 'query',
+            'GET'  => 'query',
             'POST' => 'form_params',
         ];
 
         $options = [
-            'headers' => [
+            'headers'            => [
                 'Accept' => 'application/json',
             ],
-            $dataName[$method] => $data,
+            $dataName[ $method ] => $data,
         ];
 
         $response = $this->client->request($method, $uri, $options);
-
 
         if (!in_array($code = $response->getStatusCode(), [200, 201])) {
             throw new Exception("PaymentSystem request to $path returned code $code");
         }
 
-        return json_decode((string) $response->getBody());
+        return json_decode((string) $response->getBody(), true);
     }
 
     public function createOrder($details)
@@ -64,7 +63,7 @@ class PaymentSystem
 
     public function getOrder($reference)
     {
-        return $this->curl("orders/$reference");
+        return new OrderResource($this->curl("orders/$reference"));
     }
 
 }

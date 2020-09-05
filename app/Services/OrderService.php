@@ -8,80 +8,79 @@
 
 namespace App\Services;
 
+use App\Classes\OrderResource;
+use App\Classes\OrderStoreRequest;
 use App\Classes\PaymentSystem;
 use App\Order;
-use Illuminate\Support\Facades\Auth;
 
 class OrderService
 {
-	/**
-	 * Checks if Order amount is valid.
-	 *
-	 * @param $amount
-	 *
-	 * @return bool
-	 */
-	public function isValidAmount($amount): bool
+    /**
+     * Checks if Order amount is valid.
+     *
+     * @param $amount
+     *
+     * @return bool
+     */
+    public function isValidAmount($amount): bool
     {
-		$amounts = config('orders.amounts');
+        $amounts = config('orders.amounts');
 
-		return in_array($amount, $amounts);
-	}
+        return in_array($amount, $amounts);
+    }
 
-	/**
-	 * Create new order from PaymentAPI and stores new Order.
-	 * @param $amount
-	 *
-	 * @return mixed
-	 */
-	public function storePayment($amount)
-	{
-		$formattedAmount = number_format($amount, 2);
-
-		$details['reason'] = "R$ $formattedAmount dias nos servidores de_nerdTV";
-		$details['return_url'] = route('orders.index');
-		$details['cancel_url'] = route('orders.index');
-        $details['preset_units'] = $amount * 100;
-		$details['preset_amount'] = $amount * 100;
-		$details['product_name_singular'] = 'real';
-		$details['product_name_plural'] = 'reais';
-
-		$details['avatar'] = '';
-		$details['payer_steam_id'] = '';
-		$details['payer_tradelink'] = '';
-
-		$details['unit_price'] = 1;
-		$details['unit_price_limit'] = 1;
-		$details['discount_per_unit'] = 0;
-		$details['min_units'] = 100;
-		$details['max_units'] = 10000;
-
-		$paymentSystem = app(PaymentSystem::class);
-
-        return $paymentSystem->createOrder($details);
-	}
-
-	/**
-	 * Stores new Order.
-	 *
-	 * @param $apiResponse
-	 * @param $amount
-	 *
-	 * @return Order
-	 */
-	public function storeOrder($apiResponse, $amount): Order
+    /**
+     * Create new order from PaymentAPI and stores new Order.
+     *
+     * @param $amount
+     *
+     * @return mixed
+     */
+    public function storePayment($amount)
     {
-		$order = Order::make();
+        $order = new OrderStoreRequest;
+        $formattedAmount = number_format($amount, 2);
 
-		$order->reference = $apiResponse->id;
-		$order->value = $amount * 100;
-		$order->init_point = $apiResponse->init_point;
-		$order->paid = false;
+        $order->reason = "R$ $formattedAmount | Host de_nerdTV";
+        $order->return_url = route('orders.index');
+        $order->cancel_url = route('orders.index');
+        $order->preset_units = $amount * 100;
+        $order->preset_amount = $amount * 100;
+        $order->product_name_singular = 'real';
+        $order->product_name_plural = 'reais';
 
-		$order->user()->associate(auth()->user());
+        $order->unit_price = 1;
+        $order->unit_price_limit = 1;
+        $order->discount_per_unit = 0;
+        $order->min_units = 100;
+        $order->max_units = 10000;
 
-		$order->save();
+        return app(PaymentSystem::class)->createOrder((array) $order);
+    }
 
-		return $order;
-	}
+    /**
+     * Stores new Order.
+     *
+     * @param $apiResponse
+     * @param $amount
+     *
+     * @return Order
+     */
+    public function storeOrder($apiResponse, $amount): Order
+    {
+        $response = new OrderResource($apiResponse);
+
+        $order = new Order;
+
+        $order->reference = $response->id;
+        $order->value = $amount * 100;
+        $order->init_point = $response->init_point;
+        $order->paid = false;
+
+        $order->user()->associate(auth()->user());
+
+        $order->save();
+
+        return $order;
+    }
 }

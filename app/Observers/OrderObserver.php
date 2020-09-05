@@ -11,7 +11,7 @@ class OrderObserver
 {
     public function created(Order $order): void
     {
-        $transaction = Transaction::make();
+        $transaction = new Transaction;
 
         $transaction->value = 0;
         $transaction->user()->associate($order->user);
