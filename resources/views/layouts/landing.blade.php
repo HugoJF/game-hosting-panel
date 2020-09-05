@@ -10,7 +10,9 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&subset=latin" rel="stylesheet">
 
     <!-- Critical CSS -->
-    <link href="{{ asset('css/landing_critical.min.css') }}" rel="stylesheet">
+    <style>
+        {!! file_get_contents(public_path('css/landing_critical.min.css')) !!}
+    </style>
 
     <!-- Styles -->
     <link rel="preload" href="{{ mix('css/landing.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
