@@ -19,6 +19,8 @@ use HCGCloud\Pterodactyl\Resources\Allocation as AllocationResource;
 use HCGCloud\Pterodactyl\Resources\Server as ServerResource;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\Environments\Factories\UserFactory;
+use Tests\Environments\ServerEnvironment;
 use Tests\TestCase;
 
 class ServerCreationServiceTest extends TestCase
@@ -150,17 +152,19 @@ class ServerCreationServiceTest extends TestCase
 
         $this->mockCostServiceToPass();
 
-        $game = factory(Game::class)->create();
-        $node = factory(Node::class)->create();
-        $user = factory(User::class)->create([
-            'server_limit' => 0,
-        ]);
-        factory(Transaction::class)->create([
-            'value'   => 500,
-            'user_id' => $user->id,
-        ]);
+        ($environment = new ServerEnvironment)
+            ->userFactory()
+            ->noServerLimit()
+            ->addTransaction(500);
 
-        app(ServerCreationService::class)->handle($user, $game, $node, $this->formData);
+        $environment->build();
+
+        app(ServerCreationService::class)->handle(
+            $environment->user(),
+            $environment->game(),
+            $environment->node(),
+            $this->formData
+        );
     }
 
     protected function mockCreateServerToFail(): void
