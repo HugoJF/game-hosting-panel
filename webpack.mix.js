@@ -25,7 +25,7 @@ mix
             suffix: '_critical.min'
         },
         urls: [
-            { url: '/', template: 'landing' },
+            {url: '/', template: 'landing'},
         ],
         options: {
             minify: true,
@@ -47,5 +47,5 @@ mix
         },
     })
     .sourceMaps()
-    // .dump()
+// .dump()
 ;

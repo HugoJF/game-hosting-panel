@@ -71,3 +71,11 @@
     - [Devoluções](/{{route}}/{{version}}/pagamentos/devolucoes)
         - Devolução parcial do restante
         - Devolução total em 7 dias do primeiro servidor criado
+    
+- ## Counter-Strike: Global Offensive 
+    - [Instalando Metamod](/{{route}}/{{version}}/conta/notificacoes)
+    - [Instalando Sourcemod](/{{route}}/{{version}}/conta/notificacoes)
+    - [Instalando PTaH](/{{route}}/{{version}}/conta/notificacoes)
+    - [Instalando Weapons](/{{route}}/{{version}}/conta/notificacoes)
+    - [Instalando Gloves](/{{route}}/{{version}}/conta/notificacoes)
+
