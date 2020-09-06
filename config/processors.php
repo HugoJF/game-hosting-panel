@@ -72,6 +72,7 @@ return [
                 'description' => 'Estimated slot count',
                 'empty_value' => '12',
                 'options'     => [
+                    '10' => '10',
                     '12' => '12',
                     '16' => '16',
                     '20' => '20',
