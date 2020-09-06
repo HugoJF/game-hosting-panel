@@ -23,7 +23,7 @@ mix
         paths: {
             base: process.env.APP_URL,
             templates: __dirname + '/public/css/',
-            suffix: '-critical.min'
+            suffix: '-critical'
         },
         urls: [
             {url: '/', template: 'landing'},

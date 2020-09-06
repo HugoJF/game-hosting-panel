@@ -9,10 +9,10 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&subset=latin" rel="stylesheet">
 
-    @if(file_exists(public_path('css/landing-critical.min.css')))
+    @if(file_exists(public_path('css/landing-critical.css')))
         <!-- Critical CSS -->
         <style>
-            {!! file_get_contents(public_path('css/landing-critical.min.css')) !!}
+            {!! file_get_contents(public_path('css/landing-critical.css')) !!}
         </style>
 
         <!-- Styles -->
