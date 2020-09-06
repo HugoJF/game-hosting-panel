@@ -7,24 +7,24 @@
         @include('landing.components.game-card', [
             'img' => asset("images/minecraft.png"),
             'alt' => 'Minecraft | Paper Server',
-            'specs' => '1200 marks + 1GB RAM + 5GB SSD',
-            'description' => '~10 slots',
+            'specs' => '~10 slots',
+            'description' => '1200 marks + 1GB RAM + 5GB SSD',
             'price' => 0.73,
             'period' => 'por hora'
         ])
         @include('landing.components.game-card', [
             'img' => asset("images/csgo.png"),
             'alt' => 'Counter Strike: Global Offensive',
-            'specs' => '1800 marks + 1GB RAM + 30GB SSD',
-            'description' => '10 slots de 128 tick',
+            'specs' => '10 slots de 128 tick',
+            'description' => '1800 marks + 1GB RAM + 30GB SSD',
             'price' => 1.11,
             'period' => 'por hora'
         ])
         @include('landing.components.game-card', [
             'img' => asset("images/cod4.png"),
             'alt' => 'Call of Duty 4 Xtended',
-            'specs' => '1800 marks + 1GB RAM + 20GB SSD',
-            'description' => '12 slots',
+            'specs' => '12 slots',
+            'description' => '1800 marks + 1GB RAM + 20GB SSD',
             'price' => 0.34,
             'period' => 'por hora'
         ])
