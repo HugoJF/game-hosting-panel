@@ -13,6 +13,7 @@ require('laravel-mix-criticalcss');
  | file for the application as well as bundling up all the JS files.
  |
  */
+
 mix
     .postCss('resources/css/landing.css', 'public/css', [
         tailwindcss('./landing.config.js'),
@@ -20,9 +21,9 @@ mix
     .criticalCss({
         enabled: true,
         paths: {
-            base: 'http://game-hosting-panel.test/',
+            base: process.env.APP_URL,
             templates: './public/css/',
-            suffix: '_critical.min'
+            suffix: '-critical.min'
         },
         urls: [
             { url: '/', template: 'landing' },
