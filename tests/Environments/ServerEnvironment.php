@@ -21,7 +21,7 @@ class ServerEnvironment extends Environment
 
     public function serverFactory(): ServerFactory
     {
-        return $this->factory(ServerFactory::class);
+        return $this->dependency(ServerFactory::class);
     }
 
     public function userFactory(): UserFactory
@@ -44,13 +44,8 @@ class ServerEnvironment extends Environment
         return $this->gameFactory()->model();
     }
 
-    public function nodeFactory(): NodeFactory
-    {
-        return $this->serverFactory()->node;
-    }
-
     public function node(): Node
     {
-        return $this->nodeFactory()->model();
+        return $this->serverFactory()->node->model();
     }
 }

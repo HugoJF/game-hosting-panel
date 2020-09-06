@@ -6,13 +6,11 @@ use App\Server;
 
 class ServerFactory extends Factory
 {
+    protected string $for = Server::class;
+
     public GameFactory $game;
     public NodeFactory $node;
     public UserFactory $user;
-
-    public Server $server;
-
-    public $pog;
 
     public function __construct()
     {
@@ -21,12 +19,7 @@ class ServerFactory extends Factory
         $this->user = new UserFactory;
     }
 
-    public function model(): Server
-    {
-        return $this->server;
-    }
-
-    public function build()
+    public function preBuild(): void
     {
         $this->game->build();
         $this->node->build();
@@ -35,7 +28,5 @@ class ServerFactory extends Factory
         $this->parameters['game_id'] = $this->game->model()->id;
         $this->parameters['node_id'] = $this->node->model()->id;
         $this->parameters['user_id'] = $this->user->model()->id;
-
-        return ($this->server = factory(Server::class)->create($this->parameters));
     }
 }

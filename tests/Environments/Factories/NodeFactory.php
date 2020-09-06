@@ -6,7 +6,7 @@ use App\Node;
 
 class NodeFactory extends Factory
 {
-    protected Node $node;
+    protected string $for = Node::class;
 
     protected LocationFactory $location;
 
@@ -15,17 +15,10 @@ class NodeFactory extends Factory
         $this->location = new LocationFactory;
     }
 
-    public function model(): Node
-    {
-        return $this->node;
-    }
-
-    public function build()
+    public function preBuild(): void
     {
         $this->location->build();
 
         $this->parameters['location_id'] = $this->location->model();
-
-        return ($this->node = factory(Node::class)->create($this->parameters));
     }
 }

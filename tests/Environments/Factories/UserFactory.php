@@ -6,7 +6,7 @@ use App\User;
 
 class UserFactory extends Factory
 {
-    protected User $user;
+    protected string $for = User::class;
 
     public TransactionFactory $transaction;
 
@@ -15,7 +15,6 @@ class UserFactory extends Factory
         $this->transaction = new TransactionFactory;
     }
 
-
     public function setServerLimit($limit): UserFactory
     {
         $this->parameters['server_limit'] = $limit;
@@ -23,28 +22,19 @@ class UserFactory extends Factory
         return $this;
     }
 
-    public function addTransaction($balance)
-    {
-        return $this->transaction->setValue($balance);
-    }
-
     public function noServerLimit()
     {
         return $this->setServerLimit(0);
     }
 
-    public function model(): User
+    public function setBalance($balance)
     {
-        return $this->user;
+        return $this->transaction->setValue($balance);
     }
 
-    public function build()
+    public function postBuild(): void
     {
-        $this->user = factory(User::class)->create($this->parameters);
-
-        $this->transaction->setUser($this->user);
+        $this->transaction->setUser($this->model);
         $this->transaction->build();
-
-        return $this->user;
     }
 }

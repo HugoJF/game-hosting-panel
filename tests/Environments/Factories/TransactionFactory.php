@@ -7,12 +7,7 @@ use App\User;
 
 class TransactionFactory extends Factory
 {
-    protected Transaction $transaction;
-
-    public function model(): Transaction
-    {
-        return $this->transaction;
-    }
+    protected string $for = Transaction::class;
 
     public function setValue($value): TransactionFactory
     {
@@ -26,10 +21,5 @@ class TransactionFactory extends Factory
         $this->parameters['user_id'] = $user->id;
 
         return $this;
-    }
-
-    public function build()
-    {
-        return ($this->transaction = factory(Transaction::class)->create($this->parameters));
     }
 }
