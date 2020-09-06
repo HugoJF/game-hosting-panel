@@ -22,7 +22,7 @@ mix
         enabled: true,
         paths: {
             base: process.env.APP_URL,
-            templates: './public/css/',
+            templates: __dirname + '/public/css/',
             suffix: '-critical.min'
         },
         urls: [
