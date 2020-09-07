@@ -17,6 +17,7 @@ use HCGCloud\Pterodactyl\Pterodactyl;
 use HCGCloud\Pterodactyl\Resources\Server as ServerResource;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Environments\ServerEnvironment;
 use Tests\TestCase;
 
 class ServerDeploymentServiceTest extends TestCase
@@ -50,17 +51,11 @@ class ServerDeploymentServiceTest extends TestCase
 
     public function test_deployment_will_update_server_build_config_with_return_from_service(): void
     {
-        $game = factory(Game::class)->create();
-        $node = factory(Node::class)->create();
-        $user = factory(User::class)->create();
+        ($environment = new ServerEnvironment)
+            ->serverFactory()
+            ->setParameter('panel_id', 42);
 
-        /** @var Server $server */
-        $server = factory(Server::class)->make([
-            'panel_id' => 42,
-            'game_id'  => $game->id,
-            'node_id'  => $node->id,
-            'user_id'  => $user->id,
-        ]);
+        $environment->resolveDependencies();
 
         $config = [
             'cpu'       => 2400,
@@ -92,14 +87,14 @@ class ServerDeploymentServiceTest extends TestCase
         // Mock server build config generation
         $this->mock(ServerDeployConfigService::class)
              ->shouldReceive('handle')
-             ->withArgs([$server, $config])
+             ->withArgs([$environment->server(), $config])
              ->andReturn($serverConfig)
              ->once();
 
         // Mock call to update server build
         $this->mock(Pterodactyl::class)
              ->shouldReceive('updateServerBuild')
-             ->withArgs([$server->panel_id, $serverConfig])
+             ->withArgs([$environment->server()->panel_id, $serverConfig])
              ->andReturn(new ServerResource([
                  'allocation' => [], // this is needed since the property is not defined in the Resource
              ]))
@@ -108,11 +103,11 @@ class ServerDeploymentServiceTest extends TestCase
         // Mock call to register deploy to database
         $this->mock(DeployCreationService::class)
              ->shouldReceive('handle')
-             ->withArgs([$server, $billingPeriod, $config])
+             ->withArgs([$environment->server(), $billingPeriod, $config])
              ->once();
 
-        $this->expectsNotification($user, ServerDeployed::class);
+        $this->expectsNotification($environment->user(), ServerDeployed::class);
 
-        app(ServerDeploymentService::class)->handle($server, $billingPeriod, $config);
+        app(ServerDeploymentService::class)->handle($environment->server(), $billingPeriod, $config);
     }
 }

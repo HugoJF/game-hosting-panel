@@ -10,15 +10,13 @@ class NodeFactory extends Factory
 
     protected LocationFactory $location;
 
-    public function __construct()
+    public function __construct(LocationFactory $location)
     {
-        $this->location = new LocationFactory;
+        $this->location = $location;
     }
 
-    public function preBuild(): void
+    public function preCreate(): void
     {
-        $this->location->build();
-
-        $this->parameters['location_id'] = $this->location->model();
+        $this->setParameter('location_id', $this->location->model()->id);
     }
 }

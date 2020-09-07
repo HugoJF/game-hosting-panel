@@ -10,6 +10,5 @@ $factory->define(Node::class, function (Faker $faker) {
     return [
         'name'        => 'Host' . $faker->word,
         'description' => $faker->sentence,
-        'location_id' => $faker->numberBetween(0, 100),
     ];
 });

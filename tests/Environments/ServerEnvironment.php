@@ -2,21 +2,23 @@
 
 namespace Tests\Environments;
 
-use App\Game;
-use App\Node;
-use App\User;
-use Tests\Environments\Factories\GameFactory;
-use Tests\Environments\Factories\NodeFactory;
+use App\Server;
 use Tests\Environments\Factories\ServerFactory;
-use Tests\Environments\Factories\UserFactory;
 
-class ServerEnvironment extends Environment
+class ServerEnvironment extends UserEnvironment
 {
-    protected ServerFactory $server;
-
     public function __construct()
     {
+        parent::__construct();
+
         $this->registerFactory(ServerFactory::class);
+    }
+
+    public function resolveDependencies(): void
+    {
+        parent::resolveDependencies();
+
+        $this->serverFactory()->create();
     }
 
     public function serverFactory(): ServerFactory
@@ -24,28 +26,8 @@ class ServerEnvironment extends Environment
         return $this->dependency(ServerFactory::class);
     }
 
-    public function userFactory(): UserFactory
+    public function server(): Server
     {
-        return $this->serverFactory()->user;
-    }
-
-    public function user(): User
-    {
-        return $this->userFactory()->model();
-    }
-
-    public function gameFactory(): GameFactory
-    {
-        return $this->serverFactory()->game;
-    }
-
-    public function game(): Game
-    {
-        return $this->gameFactory()->model();
-    }
-
-    public function node(): Node
-    {
-        return $this->serverFactory()->node->model();
+        return $this->serverFactory()->model();
     }
 }

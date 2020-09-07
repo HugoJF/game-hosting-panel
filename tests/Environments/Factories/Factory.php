@@ -2,11 +2,14 @@
 
 namespace Tests\Environments\Factories;
 
+use App\Node;
+use Exception;
+
 abstract class Factory
 {
-    protected array $parameters = [];
-
     protected string $for;
+
+    protected array $parameters = [];
 
     /** @var mixed */
     protected $model;
@@ -16,19 +19,26 @@ abstract class Factory
         return $this->model;
     }
 
-    public function build()
+    public function create()
     {
-        $this->preBuild();
+        $this->preCreate();
         $this->model = factory($this->for)->create($this->parameters);
-        $this->postBuild();
+        $this->postCreate();
     }
 
-    public function preBuild(): void
+    public function setParameter(string $name, $value): Factory
+    {
+        $this->parameters[$name] = $value;
+
+        return $this;
+    }
+
+    public function preCreate(): void
     {
         //
     }
 
-    public function postBuild(): void
+    public function postCreate(): void
     {
         //
     }

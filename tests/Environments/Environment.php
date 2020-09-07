@@ -4,6 +4,7 @@ namespace Tests\Environments;
 
 use Closure;
 use Exception;
+use ReflectionClass;
 use ReflectionFunction;
 use Tests\Environments\Factories\Factory;
 
@@ -11,9 +12,32 @@ abstract class Environment
 {
     protected array $dependencies = [];
 
-    public function registerFactory(string $dependency): void
+    public function registerFactory(string $dependency, bool $entryPoints = false): void
     {
-        $this->dependencies[ $dependency ] = app($dependency);
+        $reflection = new ReflectionClass($dependency);
+
+        $arguments = [];
+        $constructor = $reflection->getConstructor();
+
+        if ($constructor === null) {
+            $parameters = [];
+        } else {
+            $parameters = $constructor->getParameters();
+        }
+
+        foreach ($parameters as $parameter) {
+            $environmentClass = static::class;
+            $dependencyClass = $parameter->getClass()->name;
+            $instance = $this->dependency($dependencyClass);
+
+            if ($instance === null) {
+                throw new Exception("Could not find factory dependency \"$dependencyClass\" in $environmentClass environment");
+            }
+
+            $arguments[] = $instance;
+        }
+
+        $this->dependencies[ $dependency ] = new $dependency(...$arguments);
     }
 
     public function with(Closure $call): Environment
@@ -31,29 +55,10 @@ abstract class Environment
         return $this;
     }
 
-    public function get(Closure $call)
-    {
-        $reflection = new ReflectionFunction($call);
-
-        if ($reflection->getNumberOfParameters() > 1) {
-            throw new Exception('Too many parameters for chainable');
-        }
-
-        $parameter = $reflection->getParameters()[0];
-
-        return $call($this->dependency($parameter->getClass()->name));
-    }
-
     public function dependency(string $dependency)
     {
-        return $this->dependencies[ $dependency ];
+        return $this->dependencies[ $dependency ] ?? null;
     }
 
-    public function build(): void
-    {
-        /** @var Factory $dependency */
-        foreach ($this->dependencies as $dependency) {
-            $dependency->build();
-        }
-    }
+    abstract public function resolveDependencies(): void;
 }

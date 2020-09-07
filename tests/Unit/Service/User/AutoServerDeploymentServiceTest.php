@@ -13,6 +13,8 @@ use App\Services\User\ServerDeploymentService;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Environments\ServerEnvironment;
+use Tests\Environments\UserEnvironment;
 use Tests\TestCase;
 
 class AutoServerDeploymentServiceTest extends TestCase
@@ -47,15 +49,14 @@ class AutoServerDeploymentServiceTest extends TestCase
 
     protected function createServer()
     {
-        $game = factory(Game::class)->create();
-        $node = factory(Node::class)->create();
-        $user = factory(User::class)->create();
+        ($environment = new ServerEnvironment)
+            ->userFactory()
+            ->noServerLimit()
+            ->withBalance(500);
 
-        return factory(Server::class)->create([
-            'game_id' => $game->id,
-            'node_id' => $node->id,
-            'user_id' => $user->id,
-        ]);
+        $environment->resolveDependencies();
+
+        return $environment->server();
     }
 
     public function test_server_deployment_will_dispatch_async_server_deployment(): void

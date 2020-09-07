@@ -10,12 +10,12 @@ class UserFactory extends Factory
 
     public TransactionFactory $transaction;
 
-    public function __construct()
+    public function __construct(TransactionFactory $transactionFactory)
     {
-        $this->transaction = new TransactionFactory;
+        $this->transaction = $transactionFactory;
     }
 
-    public function setServerLimit($limit): UserFactory
+    public function withServerLimit($limit): UserFactory
     {
         $this->parameters['server_limit'] = $limit;
 
@@ -24,17 +24,16 @@ class UserFactory extends Factory
 
     public function noServerLimit()
     {
-        return $this->setServerLimit(0);
+        return $this->withServerLimit(0);
     }
 
-    public function setBalance($balance)
+    public function withBalance($balance)
     {
         return $this->transaction->setValue($balance);
     }
 
-    public function postBuild(): void
+    public function postCreate(): void
     {
         $this->transaction->setUser($this->model);
-        $this->transaction->build();
     }
 }

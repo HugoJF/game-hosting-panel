@@ -8,12 +8,15 @@ use App\User;
 use Exception;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use HCGCloud\Pterodactyl\Resources\User as UserResource;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class UserPanelRegistrationServiceTest extends TestCase
 {
     use RefreshDatabase;
+    use DatabaseMigrations;
+
 
     protected array $userInfo;
     protected User $user;

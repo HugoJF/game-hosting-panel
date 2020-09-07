@@ -2,16 +2,13 @@
 
 namespace Tests\Unit\Service\User;
 
-use App\Game;
-use App\Node;
-use App\Server;
 use App\Services\User\ServerCreationConfigService;
-use App\User;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use HCGCloud\Pterodactyl\Resources\Allocation;
 use HCGCloud\Pterodactyl\Resources\Egg as EggResource;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\Environments\ServerEnvironment;
 use Tests\TestCase;
 
 class ServerCreationConfigServiceTest extends TestCase
@@ -64,18 +61,25 @@ class ServerCreationConfigServiceTest extends TestCase
              ]));
 
         $allocation = new Allocation([]);
-        $game = factory(Game::class)->create();
-        $node = factory(Node::class)->create();
-        $user = factory(User::class)->create();
 
-        $server = factory(Server::class)->create([
-            'name'    => 'my server',
-            'game_id' => $game->id,
-            'node_id' => $node->id,
-            'user_id' => $user->id,
-        ]);
+        ($environment = new ServerEnvironment)
+            ->serverFactory()
+            ->setParameter('name', 'my server');
 
-        $config = app(ServerCreationConfigService::class)->handle($user, $node, $game, $server, $allocation, []);
+        $environment
+            ->userFactory()
+            ->withBalance(5000);
+
+        $environment->resolveDependencies();
+
+        $config = app(ServerCreationConfigService::class)->handle(
+            $environment->user(),
+            $environment->node(),
+            $environment->game(),
+            $environment->server(),
+            $allocation,
+            []
+        );
 
         $expected = array_merge(
             config('pterodactyl.server-creation-defaults'),

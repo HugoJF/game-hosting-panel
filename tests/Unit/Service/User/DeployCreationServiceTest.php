@@ -7,15 +7,12 @@ use App\Exceptions\InsufficientBalanceException;
 use App\Exceptions\InvalidBillingPeriodException;
 use App\Exceptions\InvalidPeriodCostException;
 use App\Exceptions\TooManyServersException;
-use App\Game;
-use App\Node;
-use App\Server;
 use App\Services\User\DeployCostService;
 use App\Services\User\DeployCreationService;
-use App\Transaction;
-use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\Environments\ServerEnvironment;
+use Tests\Environments\UserEnvironment;
 use Tests\TestCase;
 
 class DeployCreationServiceTest extends TestCase
@@ -29,25 +26,13 @@ class DeployCreationServiceTest extends TestCase
     {
         $this->expectsCostCalculation();
 
-        $game = factory(Game::class)->create();
-        $node = factory(Node::class)->create();
-        $user = factory(User::class)->create([
-            'server_limit' => 1,
-        ]);
-        factory(Transaction::class)->create([
-            'value'   => 200,
-            'user_id' => $user->id,
-        ]);
+        ($environment = new ServerEnvironment)
+            ->serverFactory()
+            ->setParameter('panel_id', 2);
 
-        $server = factory(Server::class)->create([
-            'id'       => 1,
-            'panel_id' => 2,
-            'game_id'  => $game->id,
-            'node_id'  => $node->id,
-            'user_id'  => $user->id,
-        ]);
+        $environment->resolveDependencies();
 
-        $deploy = app(DeployCreationService::class)->handle($server, 'daily', [
+        $deploy = app(DeployCreationService::class)->handle($environment->server(), 'daily', [
             'cpu'       => 1200,
             'memory'    => 512,
             'disk'      => 2500,
@@ -69,22 +54,29 @@ class DeployCreationServiceTest extends TestCase
 
     public function test_invalid_billing_period_will_raise_exception(): void
     {
-        $node = factory(Node::class)->create();
-        $user = factory(User::class)->create([
-            'server_limit' => 1,
-        ]);
+        ($environment = new UserEnvironment)
+            ->userFactory()
+            ->withServerLimit(1);
+
+        $environment->resolveDependencies();
 
         $this->expectException(InvalidBillingPeriodException::class);
 
-        app(DeployCreationService::class)->preChecks($user, $node, 'potato', []);
+        app(DeployCreationService::class)->preChecks(
+            $environment->user(),
+            $environment->node(),
+            'potato',
+            []
+        );
     }
 
     public function test_negative_deploy_cost_will_raise_exception(): void
     {
-        $node = factory(Node::class)->create();
-        $user = factory(User::class)->create([
-            'server_limit' => 1,
-        ]);
+        ($environment = new UserEnvironment)
+            ->userFactory()
+            ->withServerLimit(1);
+
+        $environment->resolveDependencies();
 
         $this->partialMock(DeployCostService::class)
              ->shouldReceive('getCostPerPeriod')
@@ -93,19 +85,22 @@ class DeployCreationServiceTest extends TestCase
 
         $this->expectException(InvalidPeriodCostException::class);
 
-        app(DeployCreationService::class)->preChecks($user, $node, 'daily', []);
+        app(DeployCreationService::class)->preChecks(
+            $environment->user(),
+            $environment->node(),
+            'daily',
+            []
+        );
     }
 
     public function test_user_with_insufficient_balance_will_raise_exception(): void
     {
-        $node = factory(Node::class)->create();
-        $user = factory(User::class)->create([
-            'server_limit' => 1,
-        ]);
-        factory(Transaction::class)->create([
-            'value'   => 50,
-            'user_id' => $user->id,
-        ]);
+        ($environment = new UserEnvironment)
+            ->userFactory()
+            ->withServerLimit(1)
+            ->withBalance(50);
+
+        $environment->resolveDependencies();
 
         $this->partialMock(DeployCostService::class)
              ->shouldReceive('getCostPerPeriod')
@@ -114,27 +109,21 @@ class DeployCreationServiceTest extends TestCase
 
         $this->expectException(InsufficientBalanceException::class);
 
-        app(DeployCreationService::class)->preChecks($user, $node, 'daily', []);
+        app(DeployCreationService::class)->preChecks(
+            $environment->user(),
+            $environment->node(),
+            'daily',
+            []
+        );
     }
 
     public function test_creating_too_many_servers_will_raise_exception(): void
     {
-        $game = factory(Game::class)->create();
-        $node = factory(Node::class)->create();
-        $user = factory(User::class)->create([
-            'server_limit' => 1,
-        ]);
-        factory(Transaction::class)->create([
-            'value'   => 5000,
-            'user_id' => $user->id,
-        ]);
+        ($environment = new ServerEnvironment)
+            ->serverFactory()
+            ->setParameter('panel_id', 2);
 
-        $server = factory(Server::class, 2)->create([
-            'panel_id' => 2,
-            'game_id'  => $game->id,
-            'node_id'  => $node->id,
-            'user_id'  => $user->id,
-        ]);
+        $environment->resolveDependencies();
 
         $this->partialMock(DeployCostService::class)
              ->shouldReceive('getCostPerPeriod')
@@ -143,6 +132,11 @@ class DeployCreationServiceTest extends TestCase
 
         $this->expectException(TooManyServersException::class);
 
-        app(DeployCreationService::class)->preChecks($user, $node, 'daily', []);
+        app(DeployCreationService::class)->preChecks(
+            $environment->user(),
+            $environment->node(),
+            'daily',
+            []
+        );
     }
 }
