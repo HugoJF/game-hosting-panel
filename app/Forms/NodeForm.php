@@ -22,6 +22,11 @@ class NodeForm extends Form
         $this->add('memory_cost', 'number', $this->params('Cost per MB of memory'));
         $this->add('disk_cost', 'number', $this->params('Cost per MB of disk'));
         $this->add('database_cost', 'number', $this->params('Cost per database'));
+
+        $this->add('cpu_limit', 'number', $this->params('CPU limit (marks)'));
+        $this->add('memory_limit', 'number', $this->params('Memory limit (MB)'));
+        $this->add('disk_limit', 'number', $this->params('Disk limit (MB)'));
+        $this->add('database_limit', 'number', $this->params('Database limit (units)'));
     }
 
     protected function params($text): array

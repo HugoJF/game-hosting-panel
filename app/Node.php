@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Node extends Model
 {
-    protected $fillable = ['id', 'name', 'description', 'cpu_cost',
-        'memory_cost', 'disk_cost', 'database_cost', 'location_id'];
+    protected $fillable = ['id', 'name', 'description', 'location_id',
+        'cpu_cost', 'memory_cost', 'disk_cost', 'database_cost',
+        'cpu_limit', 'memory_limit', 'disk_limit', 'database_limit',
+    ];
 
     public function location(): BelongsTo
     {
