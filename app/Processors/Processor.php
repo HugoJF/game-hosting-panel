@@ -151,7 +151,7 @@ abstract class Processor
         foreach ($limits as $resource => $limit) {
             $cost = $resourceCost[ $resource ];
 
-            if ($cost > $limit) {
+            if ($cost > $this->node->$limit) {
                 return false;
             }
         }
