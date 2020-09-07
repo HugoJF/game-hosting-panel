@@ -19,6 +19,7 @@ use HCGCloud\Pterodactyl\Resources\Allocation as AllocationResource;
 use HCGCloud\Pterodactyl\Resources\Server as ServerResource;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\Environments\UserEnvironment;
 use Tests\TestCase;
 
 class ServerCreationServiceTest extends TestCase
@@ -46,17 +47,19 @@ class ServerCreationServiceTest extends TestCase
 
         $this->expectsJobs(ServerCreationMonitor::class);
 
-        $game = factory(Game::class)->create();
-        $node = factory(Node::class)->create();
-        $user = factory(User::class)->create([
-            'server_limit' => 5,
-        ]);
-        factory(Transaction::class)->create([
-            'value'   => 5000,
-            'user_id' => $user->id,
-        ]);
+        ($environment = new UserEnvironment)
+            ->userFactory()
+            ->withServerLimit(5)
+            ->withBalance(5000);
 
-        $result = app(ServerCreationService::class)->handle($user, $game, $node, $this->formData);
+        $environment->resolveDependencies();
+
+        $result = app(ServerCreationService::class)->handle(
+            $environment->user(),
+            $environment->game(),
+            $environment->node(),
+            $this->formData
+        );
 
         $this->assertInstanceOf(Server::class, $result);
         $this->assertEquals($this->panelId, $result->panel_id);
@@ -72,17 +75,20 @@ class ServerCreationServiceTest extends TestCase
 
         $this->expectException(Exception::class);
 
-        $game = factory(Game::class)->create();
-        $node = factory(Node::class)->create();
-        $user = factory(User::class)->create([
-            'server_limit' => 5,
-        ]);
-        factory(Transaction::class)->create([
-            'value'   => 5000,
-            'user_id' => $user->id,
-        ]);
 
-        $result = app(ServerCreationService::class)->handle($user, $game, $node, $this->formData);
+        ($environment = new UserEnvironment)
+            ->userFactory()
+            ->withServerLimit(5)
+            ->withBalance(5000);
+
+        $environment->resolveDependencies();
+
+        $result = app(ServerCreationService::class)->handle(
+            $environment->user(),
+            $environment->game(),
+            $environment->node(),
+            $this->formData
+        );
 
         $this->assertInstanceOf(Server::class, $result);
         $this->assertEquals($this->panelId, $result->panel_id);
@@ -137,11 +143,19 @@ class ServerCreationServiceTest extends TestCase
     {
         $this->expectException(Exception::class);
 
-        $game = factory(Game::class)->create();
-        $node = factory(Node::class)->create();
-        $user = factory(User::class)->create();
+        ($environment = new UserEnvironment)
+            ->userFactory()
+            ->noServerLimit()
+            ->withBalance(500);
 
-        app(ServerCreationService::class)->handle($user, $game, $node, $this->formData);
+        $environment->resolveDependencies();
+
+        app(ServerCreationService::class)->handle(
+            $environment->user(),
+            $environment->game(),
+            $environment->node(),
+            $this->formData
+        );
     }
 
     public function test_server_creation_will_fail_if_user_is_at_limit(): void
@@ -150,17 +164,19 @@ class ServerCreationServiceTest extends TestCase
 
         $this->mockCostServiceToPass();
 
-        $game = factory(Game::class)->create();
-        $node = factory(Node::class)->create();
-        $user = factory(User::class)->create([
-            'server_limit' => 0,
-        ]);
-        factory(Transaction::class)->create([
-            'value'   => 500,
-            'user_id' => $user->id,
-        ]);
+        ($environment = new UserEnvironment)
+            ->userFactory()
+            ->noServerLimit()
+            ->withBalance(500);
 
-        app(ServerCreationService::class)->handle($user, $game, $node, $this->formData);
+        $environment->resolveDependencies();
+
+        app(ServerCreationService::class)->handle(
+            $environment->user(),
+            $environment->game(),
+            $environment->node(),
+            $this->formData
+        );
     }
 
     protected function mockCreateServerToFail(): void

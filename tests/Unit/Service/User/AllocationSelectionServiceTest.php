@@ -6,10 +6,15 @@ use App\Node;
 use App\Services\User\AllocationSelectionService;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use HCGCloud\Pterodactyl\Resources\Allocation;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class AllocationSelectionServiceTest extends TestCase
 {
+    use RefreshDatabase;
+    use DatabaseMigrations;
+
     /**
      * TODO: split the service into 2 functions: one to filter allocations and another to select the best one.
      */

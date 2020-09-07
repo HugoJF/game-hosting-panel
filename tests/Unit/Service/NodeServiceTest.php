@@ -27,6 +27,7 @@ class NodeServiceTest extends TestCase
         $this->create = [
             'name'        => 'Node Name',
             'description' => 'Node Description',
+            'location_id' => $this->location->id,
         ];
     }
 

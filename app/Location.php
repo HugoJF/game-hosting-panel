@@ -9,6 +9,8 @@ class Location extends Model
 {
     protected $fillable = ['id', 'short', 'long', 'flag'];
 
+    public $incrementing = false;
+
     public function nodes(): HasMany
     {
         return $this->hasMany(Node::class);

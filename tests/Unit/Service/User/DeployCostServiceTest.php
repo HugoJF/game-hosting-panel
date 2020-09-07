@@ -6,10 +6,15 @@ use App\Deploy;
 use App\Node;
 use App\Services\User\DeployCostService;
 use Carbon\Carbon;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class DeployCostServiceTest extends TestCase
 {
+    use RefreshDatabase;
+    use DatabaseMigrations;
+
     /**
      * @var DeployCostService
      */

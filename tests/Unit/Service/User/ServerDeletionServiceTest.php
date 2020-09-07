@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Environments\ServerEnvironment;
 use Tests\TestCase;
 
 class ServerDeletionServiceTest extends TestCase
@@ -20,26 +21,20 @@ class ServerDeletionServiceTest extends TestCase
 
     public function test_server_deletion(): void
     {
-        $game = factory(Game::class)->create();
-        $node = factory(Node::class)->create();
-        $user = factory(User::class)->create();
+        ($environment = new ServerEnvironment)
+            ->serverFactory()
+            ->setParameter('panel_id', 2);
 
-        $server = factory(Server::class)->create([
-            'id'       => 1,
-            'panel_id' => 2,
-            'game_id'  => $game->id,
-            'node_id'  => $node->id,
-            'user_id'  => $user->id,
-        ]);
+        $environment->resolveDependencies();
 
         $this->mock(Pterodactyl::class)
              ->shouldReceive('deleteServer')
-             ->withArgs([$server->panel_id])
+             ->withArgs([$environment->server()->panel_id])
              ->once();
 
-        app(ServerDeletionService::class)->handle($server);
+        app(ServerDeletionService::class)->handle($environment->server());
 
-        $this->assertEquals(now(), $server->deleted_at);
+        $this->assertEquals(now(), $environment->server()->deleted_at);
     }
 
     protected function setUp(): void

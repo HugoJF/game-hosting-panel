@@ -13,12 +13,12 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
+use Tests\Environments\ServerEnvironment;
 use Tests\TestCase;
 
 class DeployTerminationServiceTest extends TestCase
 {
     use RefreshDatabase;
-    use DatabaseMigrations;
 
     protected DeployTerminationService $deployTermination;
     protected Server $server;
@@ -51,10 +51,9 @@ class DeployTerminationServiceTest extends TestCase
             ];
             $call = $calls[ $shouldBeCalled ];
 
-            $serverTermination = Mockery::mock(ServerTerminationService::class);
-            $serverTermination->shouldReceive('handle')->$call();
-
-            $this->instance(ServerTerminationService::class, $serverTermination);
+            $this->mock(ServerTerminationService::class)
+                ->shouldReceive('handle')
+                ->$call();
         }
 
         $this->deployTermination = app(DeployTerminationService::class);
@@ -108,16 +107,11 @@ class DeployTerminationServiceTest extends TestCase
         $this->firstTime = Carbon::create(2020, 1, 1, 0, 0, 0);
         $this->secondTime = Carbon::create(2021, 1, 1, 0, 0, 0);
 
-        $game = factory(Game::class)->create();
-        $node = factory(Node::class)->create();
-        $user = factory(User::class)->create();
+        ($environment = new ServerEnvironment)
+            ->resolveDependencies();
 
         /** @var Server $server */
-        $this->server = factory(Server::class)->create([
-            'game_id' => $game->id,
-            'node_id' => $node->id,
-            'user_id' => $user->id,
-        ]);
+        $this->server = $environment->server();
 
         factory(Deploy::class)->create([
             'server_id'       => $this->server->id,
