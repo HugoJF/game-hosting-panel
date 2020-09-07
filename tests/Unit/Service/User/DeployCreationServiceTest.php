@@ -56,6 +56,7 @@ class DeployCreationServiceTest extends TestCase
     {
         ($environment = new UserEnvironment)
             ->userFactory()
+            ->withBalance(9999)
             ->withServerLimit(1);
 
         $environment->resolveDependencies();

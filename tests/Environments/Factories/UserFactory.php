@@ -3,6 +3,7 @@
 namespace Tests\Environments\Factories;
 
 use App\User;
+use function Clue\StreamFilter\register;
 
 class UserFactory extends Factory
 {
@@ -29,7 +30,9 @@ class UserFactory extends Factory
 
     public function withBalance($balance)
     {
-        return $this->transaction->setValue($balance);
+        $this->transaction->setValue($balance);
+
+        return $this;
     }
 
     public function postCreate(): void
