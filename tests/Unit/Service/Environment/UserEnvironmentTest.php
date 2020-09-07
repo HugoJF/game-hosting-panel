@@ -8,7 +8,6 @@ use App\Node;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\Environments\BaseEnvironment;
 use Tests\Environments\UserEnvironment;
 use Tests\TestCase;
 
@@ -19,7 +18,9 @@ class UserEnvironmentTest extends TestCase
 
     public function test_user_environment()
     {
-        $env = new UserEnvironment;
+        ($env = new UserEnvironment)
+            ->userFactory()
+            ->withBalance(0);
 
         $env->resolveDependencies();
 
