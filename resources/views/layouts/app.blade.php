@@ -68,6 +68,12 @@
                             @lang('servers.create')
                         </span>
                     </a>
+                    <a href="{{ url('/docs') }}" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
+                        <span class="mr-1 inline text-gray-400" data-feather="book"></span>
+                        <span>
+                            @lang('words.documentation')
+                        </span>
+                    </a>
                     <a href="{{ route('settings') }}" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
                         <span class="mr-1 inline text-gray-400" data-feather="settings"></span>
                         <span>
