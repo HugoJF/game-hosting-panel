@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Classes\PterodactylApi;
 use App\Server;
+use App\Services\User\ServerDeletionService;
 use HCGCloud\Pterodactyl\Exceptions\NotFoundException;
 use HCGCloud\Pterodactyl\Pterodactyl;
 use Illuminate\Console\Command;
@@ -24,15 +25,20 @@ class CheckServerRemoved extends Command
      */
     protected $description = 'Command description';
 
+    protected ServerDeletionService $serverDeletion;
+
     /**
      * Execute the console command.
      *
-     * @param Pterodactyl $pterodactyl
+     * @param ServerDeletionService $deletionService
+     * @param Pterodactyl           $pterodactyl
      *
      * @return mixed
      */
-    public function handle(Pterodactyl $pterodactyl)
+    public function handle(ServerDeletionService $deletionService, Pterodactyl $pterodactyl)
     {
+        $this->serverDeletion = $deletionService;
+
         foreach (Server::cursor() as $server) {
             if (!$server->panel_id && $server->created_at->diffInHours() > 1) {
                 $this->remove($server);
@@ -51,7 +57,7 @@ class CheckServerRemoved extends Command
     protected function remove(Server $server): void
     {
         $this->_info("Server $server->id [PID: $server->panel_id] triggered NotFoundException, marking as removed");
-        $server->delete();
+        $this->serverDeletion->handle($server);
     }
 
     protected function _info($message): void
