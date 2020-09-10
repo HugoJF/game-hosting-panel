@@ -1,12 +1,14 @@
-# Geral
+# Suporte
 
 ---
 
-- [Discord](#1)
+- [Canais](#canais)
 - [Email (marcar inatividade)](#1)
 
-<a name="section-1"></a>
-## First Section    
+<a name="canais"></a>
+## Canais    
 
-Write something cool.. 🦊
+Nossos canais para contato e suporte.
 
+ - [Discord](https://denerdtv.com/discord)
+ - Email: ![Email](/images/email.png)

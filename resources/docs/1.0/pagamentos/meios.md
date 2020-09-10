@@ -1,12 +1,15 @@
-# Geral
+# Meios de pagamento
 
 ---
 
-- [Meios de pagamento](#1)
-- [Detalhes do gateway de pagamento](#1)
+- [Gateways](#gateways)
 
-<a name="section-1"></a>
-## First Section    
+<a name="gateway"></a>
+## Gateways    
 
-Write something cool.. 🦊
+Utilizamos PayPal e MercadoPago como gateways de pagamentos. Todos os meios de pagamento (cartão de crédito, cartão de débito, boleto bancário, etc) são disponibilizados pelas duas empresas. 
 
+<br>
+
+> {danger} Não aceitamos pagamentos por **depósito, itens de jogos, cripto-moedas**, ou qualquer outro meio não disponibilizado pelos nossos gateways de pagamento..
+ 

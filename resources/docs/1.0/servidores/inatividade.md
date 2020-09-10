@@ -10,6 +10,8 @@
 
 Atualmente não possuímos uma política determinada para remoção de servidores inativos.
 
+<br>
+
 **Para evitar surpresas até que uma política seja completamente determinada**, garantimos o seguinte:
 
   - Servidores serão considerados inativos após 1 semana sem inicialização;

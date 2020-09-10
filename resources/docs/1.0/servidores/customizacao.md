@@ -9,7 +9,11 @@
 
 Para garantir que nenhum servidor afete negativamente outros servidores hospedados na mesma máquina, introduzimos limites de recursos em todas as instâncias de servidores de jogos.
 
+<br>
+
 Em alguns casos especiais, nossos limites sugeridos pelo configurador pode não ser o suficiente, geralmente quando um servidor possui diversos *plugins* ou modificações que necessitam ainda de mais recursos.
+
+<br>
 
 Para isso fornecemos o configurador avançado, que permite o usuário escolher exatamente as cotas do servidor e o que está pagando.
 

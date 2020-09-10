@@ -2,20 +2,8 @@
 
     - [Visão geral](/{{route}}/{{version}}/geral)
     
-    - [Criando servidor](/{{route}}/{{version}}/criando-servidor)
-    
-    - [Configurando servidor](/{{route}}/{{version}}/configurando-servidor)
-    
-    - [Iniciando servidor](/{{route}}/{{version}}/iniciando-servidor)
-    
-    - [Custos](/{{route}}/{{version}}/custos)
-        
-    - [Encerrando servidor](/{{route}}/{{version}}/encerrando-servidor)
-        
     - [Suporte](/{{route}}/{{version}}/suporte)
         
-    - [Contato](/{{route}}/{{version}}/contato)
-    
     
 - ## Servidores
 

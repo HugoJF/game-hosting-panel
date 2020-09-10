@@ -2,11 +2,11 @@
 
 ---
 
-- [Todo processo por cima](#1)
+- [TODO](#todo)
+- [Todo processo por cima](#todo)
 - [Video criando um servidor](#2)
 
-<a name="section-1"></a>
-## First Section    
+<a name="todo"></a>
+## TODO    
 
-Write something cool.. 🦊
-
+Esse guia ainda está sendo escrito e diversas partes dele ainda estão incompletas.
