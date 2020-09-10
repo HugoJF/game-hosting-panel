@@ -15,6 +15,8 @@ class UserSettingsForm extends Form
     {
         $this->locale();
 
+        $this->panelPassword();
+
         $this->_notification(
             TransactionUpdated::class,
             'Transaction updated notifications',
@@ -50,6 +52,14 @@ class UserSettingsForm extends Form
         $this->add('locale', 'select', array_merge(
             $this->_params('Email to send notifications.'),
             compact('choices')
+        ));
+    }
+
+    public function panelPassword(): void
+    {
+        $this->add('panel-password', 'password', array_merge(
+            $this->_params(trans('user-settings.panel-password-description')),
+            ['label' => trans('user-settings.panel-password')]
         ));
     }
 
