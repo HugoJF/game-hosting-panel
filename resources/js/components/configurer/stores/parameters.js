@@ -14,12 +14,13 @@ export const parameters = {
         },
     },
     effects: dispatch => ({
-        async fetchParameters({game, location, mode, ...rest}, root) {
+        async fetchParameters({game, location, ...rest}, root) {
             dispatch.parameters.setLoading(true);
             try {
-                let response = await axios.get(`/api/configurer/games/${game}/locations/${location}/parameters/${mode}`, {
+                let response = await axios.get(`/api/configurer/games/${game}/locations/${location}/parameters`, {
                     params: rest,
                 });
+
                 dispatch.parameters.set(response.data);
             } catch (e) {
                 console.error(e);

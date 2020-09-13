@@ -2,31 +2,39 @@ import React from 'react';
 import domElements from "./domElements";
 
 // Filters props prefixed with $ to avoid passing React props to DOM elements.
-// Props prefixed with $ reach the DOM.
+// Props prefixed with $ DO NOT reach the DOM.
+// Props prefixed with $ are considered style-only props
 const filterProps = (props) => {
-    const filtered = {};
-    const domProp = /^\$/;
+    const stylePatterns = /^\$/;
+    const styleProps = {};
+    const domProps = {};
 
     for (let key in props) {
         if (!props.hasOwnProperty(key)) continue;
 
-        if (domProp.test(key)) {
-            filtered[key.substr(1)] = props[key];
+        if (stylePatterns.test(key)) {
+            styleProps[key.substr(1)] = props[key];
+        } else {
+            domProps[key] = props[key];
         }
     }
 
-    return filtered;
+    return {domProps, styleProps};
 };
 
 const createConstructor = (type) => function (template) {
     return function (props) {
-        const {className: preClassName, children} = props;
+        const {domProps, styleProps} = filterProps(props);
+        const result = template({
+            ...domProps,
+            ...styleProps
+        });
 
-        const result = template(props);
+        const className = [result, props.className].join(' ').replace(/\s+/g, ' ').trim();
 
-        const className = [result, preClassName].join(' ').replace(/\s+/g, ' ').trim();
-
-        return React.createElement(type, {...filterProps(props), className}, children);
+        return React.createElement(type, {
+            ...domProps, className
+        }, props.children);
     };
 };
 

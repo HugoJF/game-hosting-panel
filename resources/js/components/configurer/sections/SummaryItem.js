@@ -19,10 +19,10 @@ export default function SummaryItem({name, value}) {
                 value
                 :
                 <RedText
-                    $title="This resources is required to compute server cost!"
-                    $data-toggle="tooltip"
-                    $data-placement="right"
-                    $dangerouslySetInnerHTML={{__html: feather.icons['alert-circle'].toSvg()}}
+                    title="This resources is required to compute server cost!"
+                    data-toggle="tooltip"
+                    data-placement="right"
+                    dangerouslySetInnerHTML={{__html: feather.icons['alert-circle'].toSvg()}}
                 />
         }
     </Item>

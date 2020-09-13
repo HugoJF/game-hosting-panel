@@ -63,7 +63,7 @@ export default function Card({title, subtitle, children, loading = false, status
             }
 
             <ContentWrapper
-                $style={getContentWrapperStyle()}
+                style={getContentWrapperStyle()}
             >
                 {children}
             </ContentWrapper>

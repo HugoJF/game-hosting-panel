@@ -29,6 +29,7 @@ export const locations = {
     effects: dispatch => ({
         async preLoad(payload, root) {
             dispatch.locations.setLoading(true);
+
             try {
                 let response = await axios.get(`/api/configurer/locations`);
                 dispatch.locations.set(response.data);

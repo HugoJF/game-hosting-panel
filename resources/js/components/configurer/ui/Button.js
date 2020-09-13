@@ -9,7 +9,7 @@ const ButtonBody = tailwind.div(({selected}) => `
 `);
 
 export default function Button({onClick, selected, children}) {
-    return <ButtonBody $onClick={onClick} selected={selected}>
+    return <ButtonBody onClick={onClick} $selected={selected}>
         {children}
     </ButtonBody>
 }

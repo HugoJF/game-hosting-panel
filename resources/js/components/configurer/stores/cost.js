@@ -24,9 +24,10 @@ export const cost = {
                 dispatch.form.update(payload);
 
                 let response = await axios.get('/api/cost/creation', {
-                    params: root.config.config,
+                    params: root.form,
                     cancelToken: source.token,
                 });
+
                 dispatch.cost.setValue(response.data.cost);
             } catch (e) {
                 console.error(e);

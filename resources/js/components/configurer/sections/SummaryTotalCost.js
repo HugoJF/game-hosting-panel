@@ -1,9 +1,9 @@
 import React from 'react';
-import useConfig from "../hooks/useConfig";
 import useCost from "../hooks/useCost";
 import Section from "../ui/Section";
 import tailwind from "../tailwind";
 import Gate from "../ui/Gate";
+import useForm from "../hooks/useForm";
 
 const formatter = new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'});
 
@@ -24,10 +24,10 @@ const texts = {
 };
 
 export default function SummaryTotalCost() {
+    const form = useForm();
     const cost = useCost();
-    const config = useConfig();
 
-    const perPeriod = texts[config.config.billing_period];
+    const perPeriod = texts[form.billing_period];
     const _cost = cost.value / 100;
     const valid = !isNaN(_cost) && cost.value > 0;
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux'
 import Title from "./ui/Title";
 import GameSelection from "./sections/GameSelection";
@@ -7,14 +7,10 @@ import ResourceSelection from "./sections/ResourceSelection";
 import Summary from "./sections/Summary";
 import useForm from "./hooks/useForm";
 import get from "lodash.get";
-import ModeSelection from "./sections/ModeSelection";
-import useConfig from "./hooks/useConfig";
 
 export default function CreationConfigurer() {
     const dispatch = useDispatch();
     const form = useForm();
-    const config = useConfig();
-    const [mode, setMode] = useState('simple');
 
     useEffect(() => {
         dispatch.periods.getPeriods();
@@ -23,8 +19,6 @@ export default function CreationConfigurer() {
     function handleGameSelect(game) {
         dispatch.form.update({game});
         dispatch.form.clear(['game', 'billing_period']);
-        dispatch.config.clear();
-        dispatch.config.update({game});
         if (game) {
             dispatch.locations.load(game);
         } else {
@@ -35,60 +29,27 @@ export default function CreationConfigurer() {
     function handleLocationSelect(location) {
         dispatch.form.update({location});
         dispatch.form.clear(['game', 'location', 'billing_period']);
-        dispatch.config.clear(['game']);
-        dispatch.config.update({location});
         dispatch.parameters.fetchParameters({
             game: form.game,
-            mode,
             location
         });
     }
 
-    function handleModeSelect(_mode) {
-        setMode(_mode);
-        dispatch.form.clear(['game', 'location', 'billing_period']);
-        dispatch.parameters.fetchParameters({
-            game: form.game,
-            mode: _mode,
-            location: form.location,
-        });
-    }
-
-    async function handleResourceSelect(resource) {
+    function handleResourceSelect(resource) {
         dispatch.form.update(resource);
-        if (mode === 'simple') {
-            await Promise.all([
-                dispatch.config.computeResources({
-                    game: config.config.game,
-                    location: config.config.location,
-                }),
-                dispatch.parameters.fetchParameters({
-                    mode: mode,
-                    ...form,
-                    ...resource,
-                })
-            ]);
-        } else {
-            dispatch.config.update(resource);
-            dispatch.cost.calculateCost();
-        }
+        dispatch.parameters.fetchParameters({
+            ...form,
+            ...resource,
+        })
     }
-
-    /*
-     * remover loading do config (?)
-     * cancelar requests da translations
-     * cleanar tudo quando mudar de modo
-     */
 
     function handlePeriodSelect(period) {
-        dispatch.config.update(period);
+        dispatch.form.update({billing_period: period});
         dispatch.cost.calculateCost();
     }
 
     function handleNameChange(event) {
-        dispatch.config.update({
-            name: event.target.value,
-        })
+        dispatch.form.update({name: event.target.value});
     }
 
     async function onSubmit() {
@@ -115,10 +76,6 @@ export default function CreationConfigurer() {
         <LocationSelection
             selected={form.location}
             onSelect={handleLocationSelect}
-        />
-        <ModeSelection
-            selected={mode}
-            onSelect={handleModeSelect}
         />
         <ResourceSelection
             onSelect={handleResourceSelect}
