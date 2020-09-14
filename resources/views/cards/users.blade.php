@@ -21,8 +21,9 @@
         <thead>
         <tr>
             <th>@lang('words.name')</th>
-            <th>@lang('words.server_limit')</th>
+            <th>@lang('words.servers')</th>
             <th>@lang('words.server_expiration')</th>
+            <th>@lang('words.balance')</th>
             <th>@lang('words.email')</th>
             <th>@lang('words.created_at')</th>
             <th>@lang('words.actions')</th>
@@ -36,10 +37,10 @@
                     {{ $user->name }}
                 </td>
 
-                <!-- Server limit -->
+                <!-- Servers -->
                 <td>
                     <span class="badge badge-dark">
-                        {{ $user->server_limit }}
+                        {{ $user->servers->count() }} / {{ $user->server_limit }}
                     </span>
                 </td>
 
@@ -48,6 +49,13 @@
                     <span class="badge badge-dark">
                         {{ $user->server_expiration_days }}
                         {{ strtolower(trans('words.days')) }}
+                    </span>
+                </td>
+
+                <!-- Balance -->
+                <td>
+                    <span class="badge badge-dark">
+                        R$ {{ number_format($user->balance / 100, 2) }}
                     </span>
                 </td>
 

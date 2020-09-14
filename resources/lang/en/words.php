@@ -91,6 +91,7 @@ return [
     'create'          => 'Create',
     'update'          => 'Update',
     'register'        => 'Register',
+    'balance'         => 'Balance',
 
     'english'              => 'English',
     'brazilian-portuguese' => 'Brazilian Portuguese',
