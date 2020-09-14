@@ -49,7 +49,7 @@ class ServerCreated extends Notification
     {
         return (new MailMessage)
             ->subject("Server {$this->server->name} successfully created!")
-            ->line("Your server $this->id was created for {$this->server->game->name}!")
+            ->line("Your server {$this->server->hash} was created for {$this->server->game->name}!")
             ->action('View server', route('servers.show', $this->server));
     }
 
@@ -64,7 +64,7 @@ class ServerCreated extends Notification
     {
         return [
             'title'     => "Server {$this->server->name} was created!",
-            'server_id' => $this->server->id,
+            'server_id' => $this->server->hash,
         ];
     }
 }
