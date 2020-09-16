@@ -18,20 +18,21 @@ mix
     .postCss('resources/css/landing.css', 'public/css', [
         tailwindcss('./landing.config.js'),
     ])
-    .criticalCss({
-        enabled: true,
-        paths: {
-            base: process.env.APP_URL,
-            templates: __dirname + '/public/css/',
-            suffix: '-critical.min'
-        },
-        urls: [
-            {url: '/', template: 'landing'},
-        ],
-        options: {
-            minify: true,
-        },
-    });
+    // .criticalCss({
+    //     enabled: true,
+    //     paths: {
+    //         base: process.env.APP_URL,
+    //         templates: __dirname + '/public/css/',
+    //         suffix: '-critical.min'
+    //     },
+    //     urls: [
+    //         {url: '/', template: 'landing'},
+    //     ],
+    //     options: {
+    //         minify: true,
+    //     },
+    // })
+;
 
 
 mix
