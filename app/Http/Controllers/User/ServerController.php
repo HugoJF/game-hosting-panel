@@ -60,7 +60,6 @@ class ServerController extends Controller
 
     public function show(DeployCostService $costService, Server $server)
     {
-        event(new ServerInstalled($server));
         $last5 = $server->deploys()->latest()->orderBy('created_at', 'DESC')->limit(5)->get();
         $deploys = collect($last5->first() ? [$last5->first()] : []);
         $transactions = Transaction::findMany($last5->pluck('transaction_id'));
