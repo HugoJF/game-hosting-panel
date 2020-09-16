@@ -1,7 +1,7 @@
 module.exports = {
     apps: [{
         name: 'game-hosting-panel-staging',
-        interpreter: 'php',
+        interpreter: '/RunCloud/Packages/php74rc/bin/php',
         script: 'artisan',
         args: 'queue:work',
 
