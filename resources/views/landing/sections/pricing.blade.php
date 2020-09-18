@@ -8,28 +8,25 @@
             'game' => 'Minecraft Vanilla',
             'img'           => asset("images/minecraft.png"),
             'alt'           => 'Hospedagem de servidor de Minecraft Vanilla',
-            'specs'         => '~10 slots',
-            'description'   => '1200 marks + 1GB RAM + 5GB SSD',
-            'hourlyPrice'   => 0.73,
-            'dailyPrice'    => 7.00,
+            'specs'         => '1GB RAM ~10 slots',
+            'hourlyPrice'   => 0.46,
+            'dailyPrice'    => 4.77,
         ])
         @include('landing.components.game-card', [
 	        'game' => 'Counter-Strike: Global Offensive',
             'img'           => asset("images/csgo.png"),
             'alt'           => 'Hospedagem de servidor de Counter Strike: Global Offensive',
             'specs'         => '10 slots de 128 tick',
-            'description'   => '1800 marks + 1GB RAM + 30GB SSD',
-            'hourlyPrice'   => 0.99,
-            'dailyPrice'    => 9.47,
+            'hourlyPrice'   => 0.63,
+            'dailyPrice'    => 6.50,
         ])
         @include('landing.components.game-card', [
             'game' => 'Call of Duty 4: Modern Warfare',
             'img'           => asset("images/cod4.png"),
             'alt'           => 'Hospedagem de servidor de Call of Duty 4 Xtended',
             'specs'         => '12 slots',
-            'description'   => '1800 marks + 1GB RAM + 20GB SSD',
-            'hourlyPrice'   => 0.34,
-            'dailyPrice'    => 3.27,
+            'hourlyPrice'   => 0.21,
+            'dailyPrice'    => 2.16,
         ])
     </div>
 
