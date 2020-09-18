@@ -8,6 +8,7 @@ use App\Http\Requests\UserSettingsUpdateRequest;
 use App\Location;
 use App\Server;
 use App\Services\Forms\UserSettingsForms;
+use App\Services\User\UserPanelPasswordUpdate;
 use App\Transaction;
 use App\User;
 use Illuminate\Http\Request;
@@ -94,14 +95,27 @@ class HomeController extends Controller
         ]);
     }
 
-    public function update(UserSettingsUpdateRequest $request)
-    {
+    public function update(
+        UserSettingsUpdateRequest $request,
+        UserPanelPasswordUpdate $passwordUpdate
+    ) {
         /** @var User $user */
         $user = auth()->user();
 
+        // Email notifications
         foreach (config('notifications') as $details) {
             $setting = $details['setting'];
             $user->settings()->set($setting, $request->input($setting, false));
+        }
+
+        if ($newPassword = $request->input('panel-password')) {
+            $updated = $passwordUpdate->handle($user, $newPassword);
+
+            if ($updated) {
+                flash()->success(trans('user-settings.panel-password-updated'));
+            } else {
+                flash()->danger(trans('user-settings.panel-password-updated'));
+            }
         }
 
         $user->fill($request->validated())->save();

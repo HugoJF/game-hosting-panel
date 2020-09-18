@@ -8,6 +8,7 @@ use App\Location;
 use App\Node;
 use App\Processors\Processor;
 use App\Services\GameService;
+use App\Services\User\NodeSelectionService;
 use Illuminate\Http\Request;
 
 class ConfigurerController extends Controller
@@ -68,6 +69,7 @@ class ConfigurerController extends Controller
     }
 
     public function parameters(
+        NodeSelectionService $nodeSelection,
         GameService $service,
         Request $request,
         Game $game,
@@ -77,6 +79,8 @@ class ConfigurerController extends Controller
         if ($mode === 'simple') {
             /** @var Processor $processor */
             $processor = $service->getProcessor($game);
+
+            $processor->setNode($nodeSelection->handle($location));
 
             return $processor->calculate($request->all());
         }

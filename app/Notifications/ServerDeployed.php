@@ -49,7 +49,7 @@ class ServerDeployed extends Notification
     {
         return (new MailMessage)
             ->subject('Server deployed')
-            ->line("Server $this->id was deployed!")
+            ->line("Server {$this->server->hash} was deployed!")
             ->action('View server', route('servers.show', $this->server))
             ->line('Thank you for using our application!');
     }
@@ -65,7 +65,7 @@ class ServerDeployed extends Notification
     {
         return [
             'title'     => "Server {$this->server->name} was deployed!",
-            'server_id' => $this->server->id,
+            'server_id' => $this->server->hash,
         ];
     }
 }

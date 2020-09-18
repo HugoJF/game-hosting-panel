@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title', 'Home') | Host de_nerdTV</title>
 
@@ -66,6 +67,12 @@
                         <span class="mr-1 inline text-gray-400" data-feather="plus"></span>
                         <span>
                             @lang('servers.create')
+                        </span>
+                    </a>
+                    <a href="{{ url('/docs') }}" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">
+                        <span class="mr-1 inline text-gray-400" data-feather="book"></span>
+                        <span>
+                            @lang('words.documentation')
                         </span>
                     </a>
                     <a href="{{ route('settings') }}" class="trans flex flex-grow justify-center items-center p-3 no-underline text-gray-400 hover:bg-gray-700">

@@ -64,7 +64,7 @@ class ServerInstalled extends Notification
     {
         return [
             'title'     => "Server {$this->server->name} finished installation!",
-            'server_id' => $this->server->id,
+            'server_id' => $this->server->hash,
         ];
     }
 }

@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@push('scripts')
+    <script>
+        Echo.private('server.{{ $server->hash }}')
+            .listen('ServerInstalled', () => {
+                window.location.reload();
+            });
+    </script>
+@endpush
+
 @section('content')
     <div class="flex flex-col lg:flex-row mb-8 items-center justify-between">
         <h2 class="flex items-center text-xl md:text-3xl lg:text-4xl">

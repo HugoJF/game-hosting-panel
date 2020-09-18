@@ -12,9 +12,6 @@
                         @lang('words.home')
                     </span>
                 </a>
-                <a class="group no-underline" href="#">
-                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#homeHelpModal" data-feather="help-circle"></span>
-                </a>
             </li>
 
             <!-- Servidores -->
@@ -24,9 +21,6 @@
                     <span class="group-hover:text-gray-400">
                         @lang('words.servers')
                     </span>
-                </a>
-                <a class="group no-underline" href="#">
-                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#ordersHelpModal" data-feather="help-circle"></span>
                 </a>
             </li>
 
@@ -38,9 +32,6 @@
                         @lang('words.transactions')
                     </span>
                 </a>
-                <a class="group no-underline" href="#">
-                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#tokensHelpModal" data-feather="help-circle"></span>
-                </a>
             </li>
 
             <!-- Pedidos -->
@@ -50,9 +41,6 @@
                     <span class="group-hover:text-gray-400">
                         @lang('words.orders')
                     </span>
-                </a>
-                <a class="group no-underline" href="#">
-                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#usersHelpModal" data-feather="help-circle"></span>
                 </a>
             </li>
 
@@ -64,7 +52,6 @@
         {{--                        @lang('words.api_keys')--}}
         {{--                    </span>--}}
         {{--                </a>--}}
-        {{--                <a class="group no-underline" href="#">--}}
         {{--                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#productsHelpModal" data-feather="help-circle"></span>--}}
         {{--                </a>--}}
         {{--            </li>--}}
@@ -78,9 +65,6 @@
                         @lang('words.coupons')
                     </span>
                 </a>
-                <a class="group no-underline" href="#">
-                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#affiliatesHelpModal" data-feather="help-circle"></span>
-                </a>
             </li>
 
             <!-- Administrative -->
@@ -90,9 +74,6 @@
                     <span class="group-hover:text-gray-400">
                         @lang('words.administrative')
                     </span>
-                </a>
-                <a class="group no-underline" href="#">
-                    <span class="text-gray-400 group-hover:text-white" data-toggle="modal" data-target="#couponsHelpModal" data-feather="help-circle"></span>
                 </a>
             </li>
             @endadmin
