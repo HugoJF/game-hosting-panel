@@ -22,8 +22,8 @@ Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
 */
 
 Route::middleware(['signed'])->group(function () {
-    Route::get('user/{user}', 'AccountController@set')->name('accounts.setup');
-    Route::patch('user/{user}', 'AccountController@update')->name('accounts.update');
+    Route::get('user/{user}', 'AccountController@set')->name('panel-accounts.setup');
+    Route::patch('user/{user}', 'AccountController@update')->name('panel-accounts.update');
 });
 
 /*
