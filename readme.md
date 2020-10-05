@@ -22,6 +22,12 @@ Pterodactyl powered game server reselling platform.
  
  - 🤔 **Lots more**: multi-node by design, announcements, discount coupons, configurable server resources, and lots or planned features...
  
+## Status of the project
+
+This project is currently not being actively developed.
+
+It also depends on `payment-system`, which is an unified payment gateway I developed for my projects. It's source code it NOT public yet, so if you plan on using this project, you need to implement your own solution for payments.
+
 ## Screenshots
 
 #### Main user dashboard 
@@ -49,10 +55,9 @@ Pterodactyl powered game server reselling platform.
 
 ## Installation
   - Deploy this Laravel app;
-  - If you don't have [CS:GO Pipeline](https://github.com/HugoJF/csgo-pipeline), deploy it;
-  - Add a list in your CS:GO Pipeline installation with the key `sessions` (set maximum size to at least 5k items);
-  - Setup a cronjob for the scheduler;
-  - Add your server address into the `servers` table.
+  - Configure .env variables;
+  - Run `panel:sync-all` to sync stuff from Pterodactyl;
+  - Configure scheduler and queue worker;
   
 ## .env file
 
@@ -65,7 +70,3 @@ Pterodactyl powered game server reselling platform.
  - **`PTERODACTYL_API_KEY`** - Pterodactyl **application** API key;
  - **`PTERODACTYL_CLIENT_KEY`** - Pterodactyl **user** API key (create one using an admin account, we need this to controle server power and a few other essential things);
  - **`SENTRY_LARAVEL_DSN`** - always a good idea to have Sentry setup;
- 
- 
- 
- 
