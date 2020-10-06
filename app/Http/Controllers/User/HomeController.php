@@ -114,7 +114,7 @@ class HomeController extends Controller
             if ($updated) {
                 flash()->success(trans('user-settings.panel-password-updated'));
             } else {
-                flash()->danger(trans('user-settings.panel-password-updated'));
+                flash()->error(trans('user-settings.panel-password-updated'));
             }
         }
 

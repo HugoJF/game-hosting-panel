@@ -4,6 +4,7 @@ namespace App\Services\User;
 
 use App\Server;
 use App\Services\ServerService;
+use HCGCloud\Pterodactyl\Exceptions\NotFoundException;
 use HCGCloud\Pterodactyl\Pterodactyl;
 
 class ServerDeletionService
@@ -22,7 +23,11 @@ class ServerDeletionService
 
     public function handle(Server $server): void
     {
-        $this->pterodactyl->deleteServer($server->panel_id);
+        try {
+            $this->pterodactyl->deleteServer($server->panel_id);
+        } catch (NotFoundException $e) {
+            // Do nothing since server is not found
+        }
 
         $this->service->terminateAllDeploys($server, 'SERVER_DELETED');
 

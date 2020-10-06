@@ -91,6 +91,7 @@ return [
     'create'          => 'Criar',
     'update'          => 'Atualizar',
     'register'        => 'Registrar',
+    'balance'         => 'Créditos',
 
     'english'              => 'Inglês',
     'brazilian-portuguese' => 'Português Brasileiro',

@@ -21,8 +21,8 @@ class OrderResource extends Resource
     public int $min_units;
     public int $max_units;
     public int $recheck_attempts;
-    public string $orderable_type;
-    public int $orderable_id;
+    public ?string $orderable_type;
+    public ?int $orderable_id;
     public string $created_at;
     public string $updated_at;
     public ?string $webhook_url;

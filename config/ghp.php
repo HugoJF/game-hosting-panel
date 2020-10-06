@@ -30,9 +30,9 @@ return [
 
     'cost-multiplier' => [
         'minutely' => 1 / (30 * 24 * 60) * 20,
-        'hourly'   => 1 / (30 * 24) * 10,
-        'daily'    => 1 / 30 * 4,
-        'weekly'   => 1 / 4 * 1.5,
+        'hourly'   => 1 / (30 * 24) * 7,
+        'daily'    => 1 / 30 * 3,
+        'weekly'   => 1 / 4 * 1.25,
         'monthly'  => 1,
     ],
 

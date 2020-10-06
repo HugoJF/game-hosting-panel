@@ -2,8 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Events\ServerInstalled;
 use App\Exceptions\ServerNotInstalledException;
-use App\Notifications\ServerInstalled;
+use App\Notifications\ServerInstalled as ServerInstalledNotification;
 use App\Server;
 use App\Services\ServerService;
 use Illuminate\Bus\Queueable;
@@ -31,13 +32,13 @@ class ServerCreationMonitor implements ShouldQueue
      *
      * @var int
      */
-    public $retryAfter = 30;
+    public $retryAfter = 5;
     /**
      * The number of times the job may be attempted.
      *
      * @var int
      */
-    public $tries = 20;
+    public $tries = 120;
 
     /**
      * Create a new job instance.
@@ -67,7 +68,9 @@ class ServerCreationMonitor implements ShouldQueue
             $this->server->installed_at = now();
             $this->server->save();
 
-            $this->server->user->notify(new ServerInstalled($this->server));
+            event(new ServerInstalled($this->server));
+
+            $this->server->user->notify(new ServerInstalledNotification($this->server));
         }
     }
 }

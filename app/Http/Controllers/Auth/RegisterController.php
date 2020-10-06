@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Transaction;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -67,12 +68,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data): User
     {
-        return User::create([
+        $user = User::create([
             'first_name' => $data['first_name'],
             'last_name'  => $data['last_name'],
             'username'   => $data['username'],
             'email'      => $data['email'],
             'password'   => Hash::make($data['password']),
         ]);
+
+        $transaction = new Transaction;
+
+        $transaction->value = 500;
+        $transaction->user()->associate($user);
+
+        $transaction->save();
+
+        return $user;
     }
 }

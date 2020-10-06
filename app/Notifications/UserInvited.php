@@ -53,7 +53,7 @@ class UserInvited extends Notification
             ->subject('You have been invited!')
             ->line("You have been invited to participate in our beta program!")
             ->line("Please setup your account via the link below!")
-            ->action('Setup account', URL::signedRoute('accounts.setup', $this->user))
+            ->action('Setup account', URL::signedRoute('panel-accounts.setup', $this->user))
             ->line('Thank you for joining us!');
     }
 }
