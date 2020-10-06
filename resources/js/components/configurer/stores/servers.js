@@ -28,7 +28,7 @@ export const servers = {
         }
     },
     effects: dispatch => ({
-        async deploy(payload, root) {
+        async update(payload, root) {
             dispatch.servers.setLoading(true);
             dispatch.servers.setError();
 

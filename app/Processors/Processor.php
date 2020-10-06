@@ -2,6 +2,7 @@
 
 namespace App\Processors;
 
+use App\Exceptions\InvalidParameterChoiceException;
 use App\Node;
 use Exception;
 use Illuminate\Support\Facades\Validator;
@@ -41,23 +42,37 @@ abstract class Processor
     }
 
     /**
+     * Validates user input from configurer
+     *
+     * @param array $form
+     *
+     * @return array
+     * @throws InvalidParameterChoiceException
+     */
+    public function validateForm(array $form): array
+    {
+        try {
+            return Validator::validate($form, $this->rules());
+        } catch (ValidationException $e) {
+            throw new InvalidParameterChoiceException;
+        }
+    }
+
+    /**
      * Validates config then compute cost
      *
-     * @param array $config
+     * @param array $form
      *
      * @return array
      */
-    public function resourceCost(array $config): array
+    public function resourceCost(array $form): array
     {
         try {
-            Validator::validate($config, $this->rules());
+            $validatedForm = $this->validateForm($form);
 
-            return $this->cost($config);
-        } catch (ValidationException $e) {
-            return collect(['cpu', 'memory', 'disk', 'databases'])
-                ->flip()
-                ->map(fn() => 0)
-                ->toArray();
+            return $this->cost($validatedForm);
+        } catch (InvalidParameterChoiceException $e) {
+            return null;
         }
     }
 

@@ -92,6 +92,8 @@ return [
     'update'          => 'Update',
     'register'        => 'Register',
     'balance'         => 'Balance',
+    'tickrate'        => 'Tickrate',
+    'slots'           => 'Slots',
 
     'english'              => 'English',
     'brazilian-portuguese' => 'Brazilian Portuguese',

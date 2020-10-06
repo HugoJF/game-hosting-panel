@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Events\ServerInstalled;
 use App\Game;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ServerDeployRequest;
-use App\Http\Requests\ServerStoreRequest;
 use App\Http\Resources\ServerResource;
 use App\Location;
 use App\Server;
+use App\Services\ConfigurerService;
+use App\Services\GameService;
 use App\Services\User\DeployCostService;
 use App\Services\User\DeployTerminationService;
 use App\Services\User\NodeSelectionService;
@@ -18,6 +17,7 @@ use App\Services\User\ServerDeletionService;
 use App\Services\User\ServerDeploymentService;
 use App\Transaction;
 use App\User;
+use Illuminate\Http\Request;
 
 class ServerController extends Controller
 {
@@ -38,22 +38,34 @@ class ServerController extends Controller
     public function store(
         NodeSelectionService $nodeSelection,
         ServerCreationService $serverCreation,
-        ServerStoreRequest $request
+        ConfigurerService $configurerService,
+        GameService $gameService,
+        Request $request
     ): ServerResource {
-        $config = $request->validated();
-        $period = $request->input('billing_period');
-
         $game = Game::findOrFail($request->input('game'));
+        // TODO: we are not using the location for nodeSelection
         $location = Location::findOrFail($request->input('location'));
 
+        $processor = $gameService->getProcessor($game);
+
+        $form = $processor->validateForm($request->all());
+        $period = $request->input('billing_period');
+
         // Selects node to create the server on
+        // TODO: this should come from request
         $node = $nodeSelection->handle($game);
+
+        // Transform user form to server cost
+        $cost = $configurerService->formToCost($game, $node, $form);
+
+        // Create server configuration
+        $config = array_merge($cost, $request->only('name', 'billing_period'));
 
         // Checks if user can deploy a server, before creating the server.
         $serverCreation->preChecks(auth()->user(), $node, $period, $config);
 
         // Create the server
-        $server = $serverCreation->handle(auth()->user(), $game, $node, $config);
+        $server = $serverCreation->handle(auth()->user(), $game, $node, $config, $form);
 
         return new ServerResource($server);
     }
@@ -78,13 +90,23 @@ class ServerController extends Controller
         return view('servers.configure', compact('server'));
     }
 
-    public function update(ServerDeployRequest $request, Server $server)
-    {
+    public function update(
+        GameService $gameService,
+        ConfigurerService $configurerService,
+        Request $request,
+        Server $server
+    ) {
+        $processor = $gameService->getProcessor($server->game);
+        $form = $processor->validateForm($request->all());
+
+        $cost = $configurerService->formToCost($server->game, $server->node, $form);
+
         $server->billing_period = $request->input('billing_period');
-        $server->cpu = $request->input('cpu');
-        $server->memory = $request->input('memory');
-        $server->disk = $request->input('disk');
-        $server->databases = $request->input('databases');
+        $server->cpu = $cost['cpu'];
+        $server->memory = $cost['memory'];
+        $server->disk = $cost['disk'];
+        $server->databases = $cost['databases'];
+        $server->form = $form;
 
         $server->update();
 

@@ -21,12 +21,13 @@ class DatabaseSeeder extends Seeder
 
         /** @var User $user */
         $user = factory(User::class)->create([
-            'first_name' => 'Hugo',
-            'last_name'  => 'JF',
-            'username'   => 'hugojf3',
-            'email'      => 'asdasdasd@hotmail.com',
-            'admin'      => true,
-            'password'   => bcrypt('123123123'),
+            'first_name'   => 'Hugo',
+            'last_name'    => 'JF',
+            'username'     => 'hugojf3',
+            'email'        => 'asdasdasd@hotmail.com',
+            'admin'        => true,
+            'server_limit' => 999,
+            'password'     => bcrypt('123123123'),
         ]);
 
         // Trigger event to register user on Database

@@ -38,9 +38,9 @@ class ServerCreationService
         $this->allocationService = $allocationService;
     }
 
-    public function handle(User $user, Game $game, Node $node, array $data): ?Server
+    public function handle(User $user, Game $game, Node $node, array $data, array $form): ?Server
     {
-        return DB::transaction(fn() => $this->create($user, $game, $node, $data));
+        return DB::transaction(fn() => $this->create($user, $game, $node, $data, $form));
     }
 
     /**
@@ -49,10 +49,15 @@ class ServerCreationService
      * @param Node  $node
      * @param array $data
      *
+     * @param array $form
+     *
      * @return Server
-     * @throws Exception
+     * @throws InsufficientBalanceException
+     * @throws InvalidBillingPeriodException
+     * @throws InvalidPeriodCostException
+     * @throws TooManyServersException
      */
-    public function create(User $user, Game $game, Node $node, array $data): Server
+    public function create(User $user, Game $game, Node $node, array $data, array $form): Server
     {
         $this->preChecks($user, $node, $data['billing_period'], $data);
 
@@ -60,7 +65,7 @@ class ServerCreationService
         $allocation = $this->allocationService->handle($node);
 
         // Register server on database
-        $server = $this->preCreateServerModel($user, $node, $game, $allocation, $data);
+        $server = $this->preCreateServerModel($user, $node, $game, $allocation, $data, $form);
 
         // Generate config
         $config = $this->configService->handle($user, $node, $game, $server, $allocation, $data);
@@ -110,36 +115,45 @@ class ServerCreationService
         Node $node,
         Game $game,
         Allocation $allocation,
-        array $config
+        array $config,
+        array $form
     ): Server {
         $server = new Server;
 
+        // TODO: why this is not in config
         $fromDefaults = ['io' => 500];
-        $fromForm = collect($config)->only(['cpu', 'memory', 'disk', 'databases', 'billing_period'])->toArray();
-        $fromRelationships = [
+        $fromConfig = collect($config)->only(['cpu', 'memory', 'disk', 'databases', 'billing_period'])->toArray();
+        $otherAttributes = [
             'name'    => $config['name'] ?? Str::random(),
             'hash'    => Str::random(),
             'ip'      => "$allocation->ip:$allocation->port",
+            'form'    => $form,
             'user_id' => $user->id,
             'game_id' => $game->id,
             'node_id' => $node->id,
         ];
 
-        $server->forceFill(array_merge($fromDefaults, $fromForm, $fromRelationships))->save();
+        $server->forceFill(array_merge($fromDefaults, $fromConfig, $otherAttributes))->save();
 
         return $server;
     }
 
-    protected function attachPanelId(Server $server, int $id, string $hash): void
-    {
+    protected
+    function attachPanelId(
+        Server $server,
+        int $id,
+        string $hash
+    ): void {
         $server->panel_id = $id;
         $server->panel_hash = $hash;
 
         $server->save();
     }
 
-    protected function dispatchMonitoringJob(Server $server): void
-    {
+    protected
+    function dispatchMonitoringJob(
+        Server $server
+    ): void {
         dispatch(new ServerCreationMonitor($server));
     }
 }

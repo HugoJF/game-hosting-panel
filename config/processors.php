@@ -27,9 +27,8 @@ return [
         */
 
         'costs' => [
-            'memory'    => 1000,
-            'disk'      => 27000,
-            'databases' => 0,
+            'memory' => 1000,
+            'disk'   => 27000,
         ],
 
         /*
@@ -55,7 +54,7 @@ return [
         */
 
         'parameters' => [
-            'tickrate' => [
+            'tickrate'  => [
                 'name'        => 'Tickrate',
                 'icon'        => 'cpu',
                 'description' => 'Maximum player count',
@@ -66,7 +65,7 @@ return [
                     '64'    => '64',
                 ],
             ],
-            'slots'    => [
+            'slots'     => [
                 'name'        => 'Slots',
                 'icon'        => 'cpu',
                 'description' => 'Estimated slot count',
@@ -82,6 +81,35 @@ return [
                     '36' => '36',
                     '40' => '40',
                 ],
+            ],
+            'databases' => [
+                'name'        => 'Databases',
+                'icon'        => 'cpu',
+                'description' => 'Maximum databases',
+                'empty_value' => '0',
+                'options'     => [
+                    '0' => '0',
+                    '1' => '1',
+                ],
+            ],
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Server card parameters
+        |--------------------------------------------------------------------------
+        */
+
+        'card' => [
+            'slots'    => [
+                'name'   => 'words.slots',
+                'icon'   => 'archive',
+                'suffix' => 'players',
+            ],
+            'tickrate' => [
+                'name'   => 'words.tickrate',
+                'icon'   => 'cpu',
+                'suffix' => 'ticks/sec',
             ],
         ],
     ],

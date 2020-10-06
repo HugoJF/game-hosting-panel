@@ -5,66 +5,49 @@ namespace App\Http\Controllers\Api;
 use App\Game;
 use App\Http\Controllers\Controller;
 use App\Location;
-use App\Node;
-use App\Processors\Processor;
+use App\Server;
+use App\Services\ConfigurerService;
 use App\Services\GameService;
 use App\Services\User\NodeSelectionService;
 use Illuminate\Http\Request;
 
 class ConfigurerController extends Controller
 {
-    public function periods()
+    public function periods(ConfigurerService $service)
     {
-        $periods = config('ghp.billing-periods');
-
-        return collect($periods)
-            ->filter(fn($enabled) => $enabled)
-            ->map(fn($enabled, $key) => $key)
-            ->map(fn($key) => trans("words.$key"));
+        return $service->periods();
     }
 
-    public function games()
+    public function games(ConfigurerService $service)
     {
-        return Game::all()->keyBy('id');
+        return $service->games();
     }
 
-    public function locations()
+    public function locations(ConfigurerService $service)
     {
-        return Location::all()->map(function (Location $location) {
-            return $location->attributesToArray() + [
-                    'available' => true,
-                ];
-        })->keyBy('id');
+        return $service->locations();
     }
 
-    public function gameLocations(Game $game)
+    public function gameLocations(ConfigurerService $service, Game $game)
     {
-        $locations = Location::with(['nodes', 'nodes.games'])->get();
+        return $service->gameLocations($game);
+    }
 
-        // Serialize Location and add 'available' field, if ANY node has $game
-        return $locations->map(function (Location $location) use ($game) {
-            $arr = $location->attributesToArray();
-            // Check if we have a Node, that has $game
-            $arr['available'] = $location->nodes->filter(function (Node $node) use ($game) {
-                    return $node->games->filter(fn(Game $g) => $g->id === $game->id)->count() > 0;
-                })->count() > 0;
-
-            return $arr;
-        })->keyBy('id');
+    /** @deprecated */
+    public function currentForm(Server $server)
+    {
+        return $server->form;
     }
 
     public function parameters(
         NodeSelectionService $nodeSelection,
-        GameService $service,
+        ConfigurerService $configurerService,
         Request $request,
         Game $game,
         Location $location
     ): array {
-        /** @var Processor $processor */
-        $processor = $service->getProcessor($game);
+        $node = $nodeSelection->handle($game);
 
-        $processor->setNode($nodeSelection->handle($location));
-
-        return $processor->calculate($request->all());
+        return $configurerService->parameterSelection($game, $node, $request->all());
     }
 }

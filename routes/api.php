@@ -33,6 +33,7 @@ Route::prefix('configurer')->group(function () {
     Route::get('games', 'ConfigurerController@games')->name('configurer.games');
     Route::get('locations', 'ConfigurerController@locations')->name('configurer.locations');
     Route::get('billing-periods', 'ConfigurerController@periods')->name('configurer.periods');
+    Route::get('{server}/current-form', 'ConfigurerController@currentForm')->name('configurer.current-form');
     Route::get('games/{game}/locations', 'ConfigurerController@gameLocations')->name('configurer.game-locations');
     Route::get('games/{game}/locations/{location}/parameters', 'ConfigurerController@parameters')->name('configurer.parameters');
 });

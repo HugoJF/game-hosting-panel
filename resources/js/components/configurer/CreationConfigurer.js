@@ -40,12 +40,13 @@ export default function CreationConfigurer() {
         dispatch.parameters.fetchParameters({
             ...form,
             ...resource,
-        })
+        });
+        dispatch.cost.calculateCreationCost();
     }
 
     function handlePeriodSelect(period) {
         dispatch.form.update({billing_period: period});
-        dispatch.cost.calculateCost();
+        dispatch.cost.calculateCreationCost();
     }
 
     function handleNameChange(event) {
@@ -53,7 +54,7 @@ export default function CreationConfigurer() {
     }
 
     async function onSubmit() {
-        let server = await dispatch.servers.create(config.config);
+        let server = await dispatch.servers.create(form);
 
         if (server === false) return;
 

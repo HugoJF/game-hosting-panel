@@ -12,33 +12,31 @@ export default function DeployConfigurer({server, game, location}) {
     const dispatch = useDispatch();
     const form = useForm();
 
-    useEffect(() => {
+    useEffect(async () => {
         dispatch.periods.getPeriods();
         dispatch.form.clear();
-        dispatch.form.update({game, location});
-        dispatch.parameters.fetchParameters({game, location, mode});
+        dispatch.form.update({game, server, location});
+        await dispatch.form.current(server);
+        await dispatch.parameters.fetchParameters({game, location});
     }, []);
 
     function handleResourceSelect(resource) {
         dispatch.form.update(resource);
         dispatch.parameters.fetchParameters({
-            mode: mode,
             ...form,
             ...resource,
-        })
+        });
+        dispatch.cost.calculateDeploymentCost();
     }
 
     function handlePeriodSelect(period) {
-        // TODO: handle period
-        // dispatch.config.update(period);
-        dispatch.cost.calculateCost();
+        dispatch.form.update({billing_period: period});
+        dispatch.cost.calculateDeploymentCost();
     }
 
     async function onSubmit() {
-        // TODO: update
-        let response = await dispatch.servers.deploy({
-            // config: config.config,
-            server
+        let response = await dispatch.servers.update({
+            form, server
         });
 
         let url = get(response, 'data.links.show');

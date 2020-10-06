@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\InvalidBillingPeriodException;
+use App\Game;
 use App\Http\Controllers\Controller;
 use App\Location;
 use App\Node;
 use App\Server;
+use App\Services\ConfigurerService;
 use App\Services\User\DeployCostService;
 use App\Services\User\NodeSelectionService;
 use Illuminate\Http\Request;
@@ -27,39 +30,38 @@ class CostController extends Controller
 
     public function creation(Request $request)
     {
-        $location = Location::find($request->get('location'));
+        $game = Game::find($request->get('game'));
 
-        if (!($location instanceof Location))  {
+        if (!($game instanceof Game))  {
             throw new BadRequestException;
         }
 
-        $node = $this->nodeSelection->handle($location);
+        $node = $this->nodeSelection->handle($game);
 
-        return $this->cost($node, $request->all());
+        return $this->cost($game, $node, $request->all());
     }
 
     public function deployment(Request $request)
     {
-        $server = Server::find($request->input('server'));
+        $server = Server::query()->where('hash', $request->input('server'))->first();
 
-        return $this->cost($server->node, $request->all());
+        return $this->cost($server->game, $server->node, $request->all());
     }
 
-    protected function cost(Node $node, array $config)
+    protected function cost(Game $game, Node $node, array $form)
     {
-        $specs = ['cpu', 'memory', 'disk', 'databases'];
+        /** @var ConfigurerService $configurerService */
+        $configurerService = app(ConfigurerService::class);
 
-        $data = collect($specs)->mapWithKeys(fn($spec) => [
-            $spec => $config[ $spec ] ?? 0,
-        ])->toArray();
-
-        if (!$period = $config['billing_period'] ?? null) {
-            return null;
+        if (!$period = $form['billing_period'] ?? null) {
+            throw new InvalidBillingPeriodException($period);
         }
+
+        $cost = $configurerService->formToCost($game, $node, $form);
 
         return [
             'node_id' => $node->id,
-            'cost'    => $this->deployCost->getCostPerPeriod($node, $period, $data),
+            'cost'    => $this->deployCost->getCostPerPeriod($node, $period, $cost),
         ];
     }
 }
