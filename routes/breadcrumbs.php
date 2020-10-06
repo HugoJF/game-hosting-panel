@@ -16,8 +16,8 @@ Breadcrumbs::for('password.request', function ($trail) {
 });
 
 // Password set
-Breadcrumbs::for('accounts.setup', function ($trail, $user) {
-    $trail->push('Register', route('accounts.setup', $user));
+Breadcrumbs::for('panel-accounts.setup', function ($trail, $user) {
+    $trail->push('Register', route('panel-accounts.setup', $user));
 });
 
 // Search

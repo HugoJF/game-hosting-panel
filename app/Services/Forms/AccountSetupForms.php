@@ -19,7 +19,7 @@ class AccountSetupForms extends ServiceForm
     {
         return $this->formBuilder->create(AccountSetupForm::class, [
             'method' => 'PATCH',
-            'url'    => URL::signedRoute('accounts.setup', $user),
+            'url'    => URL::signedRoute('panel-accounts.setup', $user),
         ]);
     }
 }
