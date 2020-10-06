@@ -51,25 +51,40 @@ class DatabaseSeeder extends Seeder
         ]));
 
         // Update nodes
-        Location::first()->update(['flag' => 'brazil']);
+        Location::first()->update([
+            'description' => 'Located on Mato Grosso do Sul, BR at my own house.',
+            'flag'        => 'brazil',
+        ]);
         factory(Location::class)->create([
-            'id'    => 44,
-            'short' => 'Remote',
-            'long'  => 'Fake canada server',
-            'flag'  => 'canada',
+            'id'          => 44,
+            'short'       => 'Remote',
+            'long'        => 'Fake canada server',
+            'description' => 'Located on Ontario, CA at OVH T3 datacenter.',
+            'flag'        => 'canada',
         ]);
 
         // Add covers to each game
-        $covers = [
-            asset('/images/css.png'),
-            asset('/images/csgo.png'),
-            asset('/images/cod2.png'),
-            asset('/images/cod4.png'),
-            asset('/images/minecraft.png'),
+        $updates = [
+            [
+                'cover' => asset('/images/css.png'),
+                'stub'  => 'csgo',
+            ], [
+                'cover' => asset('/images/csgo.png'),
+                'stub'  => 'csgo',
+            ], [
+                'cover' => asset('/images/cod2.png'),
+                'stub'  => 'minecraft',
+            ], [
+                'cover' => asset('/images/cod4.png'),
+                'stub'  => 'minecraft',
+            ], [
+                'cover' => asset('/images/minecraft.png'),
+                'stub'  => 'minecraft',
+            ],
         ];
 
-        foreach ($covers as $id => $cover) {
-            Game::query()->find($id + 1)->update(compact('cover'));
+        foreach ($updates as $id => $update) {
+            Game::query()->find($id + 1)->update($update);
         }
     }
 }

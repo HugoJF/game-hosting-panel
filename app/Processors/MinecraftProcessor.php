@@ -16,30 +16,27 @@ class MinecraftProcessor extends Processor
      */
     protected function rules(): array
     {
-        $sizes = array_keys(config('processors.minecraft.parameters.size.options'));
+        $memory = array_keys(config('processors.minecraft.parameters.memory.options'));
+        $disk = array_keys(config('processors.minecraft.parameters.disk.options'));
+        $cpu = array_keys(config('processors.minecraft.parameters.cpu.options'));
+        $databases = array_keys(config('processors.minecraft.parameters.databases.options'));
 
         return [
-            'size'    => ['required', Rule::in($sizes)],
-            'plugins' => 'required|numeric',
-            'slots'   => 'required|numeric',
+            'memory'    => ['required', 'numeric', Rule::in($memory)],
+            'disk'      => ['required', 'numeric', Rule::in($disk)],
+            'cpu'       => ['required', 'numeric', Rule::in($cpu)],
+            'databases' => ['required', 'numeric', Rule::in($databases)],
         ];
     }
 
     public function cost(array $config): array
     {
-        $memoryPerPlayer = config('processors.minecraft.memory_per_player');
-        $diskPerSize = config('processors.minecraft.disk_per_size');
-
-        $disk = $diskPerSize[ $config['size'] ];
-
-        return array_merge(
-            config('processors.minecraft.costs'),
-            [
-                'cpu'    => 300 + (int) ($config['plugins']) * 50, // TODO: magic variables nop
-                'memory' => $memoryPerPlayer * (int) ($config['slots']),
-                'disk'   => $disk,
-            ],
-        );
+        return [
+            'cpu'       => $config['cpu'],
+            'memory'    => $config['memory'],
+            'disk'      => $config['disk'],
+            'databases' => $config['databases'],
+        ];
     }
 
     public function reject(array $resourceCost): bool
