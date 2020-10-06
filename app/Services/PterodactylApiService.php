@@ -14,13 +14,14 @@ class PterodactylApiService
         $this->pterodactyl = $pterodactyl;
     }
 
-    protected function fetchAll(string $resource): array
+    protected function fetchAll(string $resource, ...$arguments): array
     {
         $aggregate = [];
         $currentPage = 1;
 
         do {
-            $api = $this->pterodactyl->$resource($currentPage++);
+            $parameters = [...$arguments, $currentPage++];
+            $api = $this->pterodactyl->$resource(...$parameters);
 
             $aggregate = array_merge($aggregate, $api['data']);
 
@@ -53,6 +54,11 @@ class PterodactylApiService
     public function nests(): array
     {
         return $this->fetchAll('nests');
+    }
+
+    public function allocations(int $nodeId): array
+    {
+        return $this->fetchAll('allocations', $nodeId);
     }
 
     public function eggs(): array
