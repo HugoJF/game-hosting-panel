@@ -3,10 +3,15 @@
         <!-- Menu -->
         <div class="mx-auto md:mx-0">
             <ul class="flex justify-around md:justify-start space-x-16">
-                <li class="transition-colors duration-150 text-base text-white hover:text-super-white font-medium tracking-wide hover:underline cursor-pointer">Datacenter</li>
-                <li class="transition-colors duration-150 text-base text-white hover:text-super-white font-medium tracking-wide hover:underline cursor-pointer">Roadmap</li>
-                <li class="transition-colors duration-150 text-base text-white hover:text-super-white font-medium tracking-wide hover:underline cursor-pointer">Blog</li>
-                <li class="transition-colors duration-150 text-base text-white hover:text-super-white font-medium tracking-wide hover:underline cursor-pointer">Contato</li>
+                <li class="transition-colors duration-150 text-base text-white hover:text-super-white font-medium tracking-wide hover:underline cursor-pointer">
+                    <a href="https://maxihost.com">Datacenter</a>
+                </li>
+                <li class="transition-colors duration-150 text-base text-white hover:text-super-white font-medium tracking-wide hover:underline cursor-pointer">
+                    <a href="https://host.denerdtv.com/docs/1.0/servidores/ddos">Documentação</a>
+                </li>
+                <li class="transition-colors duration-150 text-base text-white hover:text-super-white font-medium tracking-wide hover:underline cursor-pointer">
+                    <a href="https://denerdtv.com/discord">Contato</a>
+                </li>
             </ul>
         </div>
 

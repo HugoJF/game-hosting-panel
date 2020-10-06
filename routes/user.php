@@ -13,6 +13,8 @@
 */
 
 Route::get('/', 'HomeController@landing')->name('home');
+Route::get('/home', 'HomeController@landing')->name('home');
+Route::get('/landing', 'HomeController@landing')->name('home');
 Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
 
 /*
