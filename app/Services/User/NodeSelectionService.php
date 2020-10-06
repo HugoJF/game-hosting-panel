@@ -2,13 +2,13 @@
 
 namespace App\Services\User;
 
-use App\Location;
+use App\Game;
 use App\Node;
 
 class NodeSelectionService
 {
-    public function handle(Location $location): Node
+    public function handle(Game $game): Node
     {
-        return $location->nodes()->inRandomOrder()->first();
+        return $game->nodes()->inRandomOrder()->first();
     }
 }

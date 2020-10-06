@@ -47,7 +47,7 @@ class ServerController extends Controller
         $location = Location::findOrFail($request->input('location'));
 
         // Selects node to create the server on
-        $node = $nodeSelection->handle($location);
+        $node = $nodeSelection->handle($game);
 
         // Checks if user can deploy a server, before creating the server.
         $serverCreation->preChecks(auth()->user(), $node, $period, $config);
