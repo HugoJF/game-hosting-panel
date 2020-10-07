@@ -29,7 +29,7 @@ class AutoServerDeploymentServiceTest extends TestCase
 
         $server = $this->createServer();
 
-        app(AutoServerDeploymentService::class)->handle($server, 'daily', []);
+        app(AutoServerDeploymentService::class)->handle($server, 'daily', [], []);
     }
 
     protected function mockServerService(bool $isInstalled): void
@@ -66,7 +66,7 @@ class AutoServerDeploymentServiceTest extends TestCase
 
         $server = $this->createServer();
 
-        app(AutoServerDeploymentService::class)->handle($server, 'daily', []);
+        app(AutoServerDeploymentService::class)->handle($server, 'daily', [], []);
     }
 
     protected function setUp(): void

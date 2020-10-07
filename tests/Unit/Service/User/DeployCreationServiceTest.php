@@ -37,7 +37,7 @@ class DeployCreationServiceTest extends TestCase
             'memory'    => 512,
             'disk'      => 2500,
             'databases' => 1,
-        ]);
+        ], []);
 
         $this->assertInstanceOf(Deploy::class, $deploy);
         $this->assertEquals($this->costPerPeriod, $deploy->cost_per_period);

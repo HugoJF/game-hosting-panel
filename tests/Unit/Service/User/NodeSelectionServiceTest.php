@@ -23,12 +23,12 @@ class NodeSelectionServiceTest extends TestCase
 
         $environment->resolveDependencies();
 
-        $node = app(NodeSelectionService::class)->handle($environment->game());
+        $node = app(NodeSelectionService::class)->handle($environment->location(), $environment->game());
 
         $this->assertInstanceOf(Node::class, $node);
     }
 
-    public function test_node_selection_will_not_select_uncompatible_node()
+    public function todo_test_node_selection_will_not_select_uncompatible_node()
     {
         // TODO: nodes that do not have the game attached to it.
     }

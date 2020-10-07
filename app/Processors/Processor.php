@@ -27,6 +27,15 @@ abstract class Processor
      */
     abstract protected function calculateResourceCost(array $config): array;
 
+    /**
+     * Generates a custom startup string to include custom form parameters
+     *
+     * @param array $form
+     *
+     * @return string
+     */
+    abstract public function formToStartupConfig(array $form): ?string;
+
     public function __construct()
     {
         $this->stub = collect(config('processors'))
@@ -54,7 +63,9 @@ abstract class Processor
         foreach ($this->parameters as $parameter => $definition) {
             $options = $definition['options'];
 
-            $rules[ $parameter ] = [$defaultRules, Rule::in(array_keys($options))];
+            $values = collect($options)->keys()->map(fn ($value) => (string) $value);
+
+            $rules[ $parameter ] = [$defaultRules, Rule::in($values)];
         }
 
         return $rules;
@@ -85,6 +96,14 @@ abstract class Processor
         try {
             return Validator::validate($form, $this->rules());
         } catch (ValidationException $e) {
+            // TODO: somehow convert the error bag to string
+            /*
+             array:1 [
+                "slots" => array:1 [
+                    0 => "The slots field is required."
+                ]
+             ]
+             */
             throw new InvalidParameterChoiceException;
         }
     }
@@ -94,9 +113,9 @@ abstract class Processor
      *
      * @param array $form
      *
-     * @return array
+     * @return array|null
      */
-    public function resourceCost(array $form): array
+    public function resourceCost(array $form): ?array
     {
         try {
             $validatedForm = $this->validateForm($form);

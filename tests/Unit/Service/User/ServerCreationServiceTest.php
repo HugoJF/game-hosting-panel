@@ -58,7 +58,8 @@ class ServerCreationServiceTest extends TestCase
             $environment->user(),
             $environment->game(),
             $environment->node(),
-            $this->formData
+            $this->formData,
+            []
         );
 
         $this->assertInstanceOf(Server::class, $result);
@@ -87,7 +88,8 @@ class ServerCreationServiceTest extends TestCase
             $environment->user(),
             $environment->game(),
             $environment->node(),
-            $this->formData
+            $this->formData,
+            []
         );
 
         $this->assertInstanceOf(Server::class, $result);
@@ -154,7 +156,8 @@ class ServerCreationServiceTest extends TestCase
             $environment->user(),
             $environment->game(),
             $environment->node(),
-            $this->formData
+            $this->formData,
+            []
         );
     }
 
@@ -175,7 +178,8 @@ class ServerCreationServiceTest extends TestCase
             $environment->user(),
             $environment->game(),
             $environment->node(),
-            $this->formData
+            $this->formData,
+            []
         );
     }
 

@@ -46,7 +46,7 @@ class ServerDeploymentServiceTest extends TestCase
 
         $this->expectException(ServerNotInstalledException::class);
 
-        app(ServerDeploymentService::class)->handle($server, 'daily', []);
+        app(ServerDeploymentService::class)->handle($server, 'daily', [], []);
     }
 
     public function test_deployment_will_update_server_build_config_with_return_from_service(): void
@@ -103,11 +103,11 @@ class ServerDeploymentServiceTest extends TestCase
         // Mock call to register deploy to database
         $this->mock(DeployCreationService::class)
              ->shouldReceive('handle')
-             ->withArgs([$environment->server(), $billingPeriod, $config])
+             ->withArgs([$environment->server(), $billingPeriod, $config, []])
              ->once();
 
         $this->expectsNotification($environment->user(), ServerDeployed::class);
 
-        app(ServerDeploymentService::class)->handle($environment->server(), $billingPeriod, $config);
+        app(ServerDeploymentService::class)->handle($environment->server(), $billingPeriod, $config, []);
     }
 }

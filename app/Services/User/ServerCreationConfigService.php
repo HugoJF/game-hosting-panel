@@ -15,14 +15,22 @@ class ServerCreationConfigService
     protected Pterodactyl $pterodactyl;
     protected AllocationSelectionService $allocationService;
 
-    public function __construct(Pterodactyl $pterodactyl, AllocationSelectionService $allocationService)
-    {
+    public function __construct(
+        Pterodactyl $pterodactyl,
+        AllocationSelectionService $allocationService
+    ) {
         $this->pterodactyl = $pterodactyl;
         $this->allocationService = $allocationService;
     }
 
-    public function handle(User $user, Node $node, Game $game, Server $server, Allocation $allocation, array $config): array
-    {
+    public function handle(
+        User $user,
+        Node $node,
+        Game $game,
+        Server $server,
+        Allocation $allocation,
+        array $config
+    ): array {
         $defaults = $this->getDefaultConfig();
         $base = $this->getBaseConfig($game);
         $config = $this->getConfig($user, $node, $allocation, $server, $config);
@@ -35,8 +43,13 @@ class ServerCreationConfigService
         return config('pterodactyl.server-creation-defaults');
     }
 
-    protected function getConfig(User $user, Node $node, Allocation $allocation, Server $server, array $config): array
-    {
+    protected function getConfig(
+        User $user,
+        Node $node,
+        Allocation $allocation,
+        Server $server,
+        array $config
+    ): array {
         return [
             'name'                => $server->name,
             'user'                => $user->panel_id,

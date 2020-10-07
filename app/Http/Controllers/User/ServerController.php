@@ -130,7 +130,8 @@ class ServerController extends Controller
         $deployment->handle(
             $server,
             $server->billing_period,
-            $server->only(['cpu', 'memory', 'disk', 'databases'])
+            $server->only(['cpu', 'memory', 'disk', 'databases']),
+            $server->form,
         );
 
         flash()->success('Server successfully deployed!');

@@ -25,6 +25,8 @@ class MinecraftProcessorTest extends TestCase
      * @param string $slots
      * @param string $plugins
      * @param string $size
+     *
+     * @throws \App\Exceptions\MissingStubException
      */
     public function test_processor_will_return_resource_cost(
         string $slots,
@@ -53,6 +55,8 @@ class MinecraftProcessorTest extends TestCase
      * @param string $slots
      * @param string $plugins
      * @param string $size
+     *
+     * @throws \App\Exceptions\MissingStubException
      */
     public function test_processor_will_return_nothing_if_parameter_is_missing(
         ?string $slots,
@@ -63,7 +67,7 @@ class MinecraftProcessorTest extends TestCase
 
         $cost = $processor->resourceCost(compact('slots', 'plugins', 'size'));
 
-        $this->assertEquals($this->zeroCost, $cost);
+        $this->assertNull($cost);
     }
 
     public function badProvider(): array

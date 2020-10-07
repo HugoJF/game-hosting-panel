@@ -44,18 +44,21 @@ class AutoServerDeploymentService
      * @param string $billingPeriod
      * @param array  $config
      *
+     * @param array  $form
+     *
      * @throws InsufficientBalanceException
-     * @throws InvalidPeriodCostException
-     * @throws TooManyServersException
      * @throws InvalidBillingPeriodException
+     * @throws InvalidPeriodCostException
      * @throws Throwable
+     * @throws TooManyServersException
+     * @throws \App\Exceptions\ServerNotInstalledException
      */
-    public function handle(Server $server, string $billingPeriod, array $config): void
+    public function handle(Server $server, string $billingPeriod, array $config, array $form): void
     {
         $this->deployCreation->preChecks($server->user, $server->node, $billingPeriod, $config);
 
         if ($this->serverService->isInstalled($server)) {
-            $this->deploymentService->handle($server, $billingPeriod, $config);
+            $this->deploymentService->handle($server, $billingPeriod, $config, $form);
         } else {
             dispatch(new AsyncServerDeployment($server, $billingPeriod, $config));
         }

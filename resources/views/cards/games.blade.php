@@ -28,7 +28,11 @@
         @forelse ($games ?? [] as $game)
             <tr>
                 <!-- Name -->
-                <td>{{ $game->name }}</td>
+                <td>
+                    <a href="{{ route('admins.games.show', $game) }}">
+                        {{ $game->name }}
+                    </a>
+                </td>
 
                 <!-- Cover -->
                 <td>

@@ -2,8 +2,6 @@
 
 namespace App\Processors;
 
-use Illuminate\Validation\Rule;
-
 class MinecraftProcessor extends Processor
 {
     public function calculateResourceCost(array $config): array
@@ -14,6 +12,14 @@ class MinecraftProcessor extends Processor
             'disk'      => $config['disk'],
             'databases' => $config['databases'],
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function formToStartupConfig(array $form): ?string
+    {
+        return null;
     }
 
     public function reject(array $resourceCost): bool

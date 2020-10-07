@@ -25,6 +25,25 @@ class CsgoProcessor extends Processor
         return array_merge($staticCosts, $dynamicCosts);
     }
 
+
+    public function formToStartupConfig(array $form): string
+    {
+        $tickrate = $form['tickrate'];
+
+        $parts = [
+            'java',
+            '-Xms128M',
+            "--tickrate $tickrate",
+            '-Xmx{{SERVER_MEMORY}}M',
+            '-Dterminal.jline=false',
+            '-Dterminal.ansi=true',
+            '-jar',
+            '{{SERVER_JARFILE}}',
+        ];
+
+        return implode(' ', $parts);
+    }
+
     public function reject(array $resourceCost): bool
     {
         return parent::reject($resourceCost);
