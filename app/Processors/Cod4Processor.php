@@ -17,6 +17,14 @@ class Cod4Processor extends Processor
         );
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function formToStartupConfig(array $form): ?string
+    {
+        return null;
+    }
+
     public function reject(array $resourceCost): bool
     {
         return parent::reject($resourceCost);

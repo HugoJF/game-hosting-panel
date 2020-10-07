@@ -2,8 +2,6 @@
 
 namespace App\Processors;
 
-use Illuminate\Validation\Rule;
-
 class CsgoProcessor extends Processor
 {
     /**
@@ -25,20 +23,23 @@ class CsgoProcessor extends Processor
         return array_merge($staticCosts, $dynamicCosts);
     }
 
-
     public function formToStartupConfig(array $form): string
     {
         $tickrate = $form['tickrate'];
+        $slots = $form['slots'];
 
         $parts = [
-            'java',
-            '-Xms128M',
-            "--tickrate $tickrate",
-            '-Xmx{{SERVER_MEMORY}}M',
-            '-Dterminal.jline=false',
-            '-Dterminal.ansi=true',
-            '-jar',
-            '{{SERVER_JARFILE}}',
+            './srcds_run',
+            '-game csgo',
+            '-console',
+            '-port {{SERVER_PORT}}',
+            '+ip 0.0.0.0',
+            '+map {{SRCDS_MAP}}',
+            '-strictportbind',
+            '-norestart',
+            "-tickrate $tickrate",
+            "-maxplayers_override $slots",
+            '+sv_setsteamaccount {{STEAM_ACC}}',
         ];
 
         return implode(' ', $parts);
