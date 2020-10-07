@@ -9,7 +9,7 @@ class CsgoProcessor extends Processor
 {
     public function __construct()
     {
-        $this->params = config('processors.csgo.parameters');
+        $this->parameters = config('processors.csgo.parameters');
     }
 
     /**
@@ -31,7 +31,7 @@ class CsgoProcessor extends Processor
     /**
      * @inheritDoc
      */
-    public function cost(array $config): array
+    public function calculateResourceCost(array $config): array
     {
         $tickrateCostPerSlot = config('processors.csgo.cost_per_slot');
         $costPerSlot = (int) $tickrateCostPerSlot[ $config['tickrate'] ];

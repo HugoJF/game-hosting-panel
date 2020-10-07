@@ -213,7 +213,7 @@ return [
         | Parameter information
         |--------------------------------------------------------------------------
         |
-        | Parameter configuration that is used by the processor to
+        | Parameters configuration that are used by the processor to
         | dynamically generate and filter parameters for the game server.
         |
         */

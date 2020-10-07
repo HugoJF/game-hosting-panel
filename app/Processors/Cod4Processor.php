@@ -6,7 +6,7 @@ class Cod4Processor extends Processor
 {
     public function __construct()
     {
-        $this->params = config('processors.cod4.parameters');
+        $this->parameters = config('processors.cod4.parameters');
     }
 
     /**
@@ -19,7 +19,7 @@ class Cod4Processor extends Processor
         ];
     }
 
-    public function cost(array $config): array
+    public function calculateResourceCost(array $config): array
     {
         $slots = (int) $config['slots'];
         $costPerSlots = (int) config('processors.cod4.cost_per_slot');

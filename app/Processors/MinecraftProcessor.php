@@ -8,7 +8,7 @@ class MinecraftProcessor extends Processor
 {
     public function __construct()
     {
-        $this->params = config('processors.minecraft.parameters');
+        $this->parameters = config('processors.minecraft.parameters');
     }
 
     /**
@@ -29,7 +29,7 @@ class MinecraftProcessor extends Processor
         ];
     }
 
-    public function cost(array $config): array
+    public function calculateResourceCost(array $config): array
     {
         return [
             'cpu'       => $config['cpu'],
