@@ -157,7 +157,7 @@ return [
             'slots' => [
                 'name'        => 'Slots',
                 'icon'        => 'cpu',
-                'description' => 'Estimated slot count',
+                'description' => 'Estimted slot count',
                 'empty_value' => '10',
                 'options'     => [
                     '10' => '10',

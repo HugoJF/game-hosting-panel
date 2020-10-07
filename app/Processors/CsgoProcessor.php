@@ -2,32 +2,10 @@
 
 namespace App\Processors;
 
-use App\Exceptions\MissingTickrateCpuCost;
 use Illuminate\Validation\Rule;
 
 class CsgoProcessor extends Processor
 {
-    public function __construct()
-    {
-        $this->parameters = config('processors.csgo.parameters');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function rules(): array
-    {
-        $tickrates = array_keys(config('processors.csgo.parameters.tickrate.options'));
-        $slots = array_keys(config('processors.csgo.parameters.slots.options'));
-        $databases = array_keys(config('processors.csgo.parameters.databases.options'));
-
-        return [
-            'tickrate'  => ['required', 'numeric', Rule::in($tickrates)],
-            'slots'     => ['required', 'numeric', Rule::in($slots)],
-            'databases' => ['required', 'numeric', Rule::in($databases)],
-        ];
-    }
-
     /**
      * @inheritDoc
      */

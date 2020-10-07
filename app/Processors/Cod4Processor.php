@@ -4,21 +4,6 @@ namespace App\Processors;
 
 class Cod4Processor extends Processor
 {
-    public function __construct()
-    {
-        $this->parameters = config('processors.cod4.parameters');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function rules(): array
-    {
-        return [
-            'slots' => 'required|numeric|gte:10|lte:64',
-        ];
-    }
-
     public function calculateResourceCost(array $config): array
     {
         $slots = (int) $config['slots'];
