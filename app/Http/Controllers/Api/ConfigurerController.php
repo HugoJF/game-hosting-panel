@@ -46,7 +46,7 @@ class ConfigurerController extends Controller
         Game $game,
         Location $location
     ): array {
-        $node = $nodeSelection->handle($game);
+        $node = $nodeSelection->handle($location, $game);
 
         return $configurerService->parameterSelection($game, $node, $request->all());
     }
