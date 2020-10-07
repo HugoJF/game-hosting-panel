@@ -43,7 +43,6 @@ class ServerController extends Controller
         Request $request
     ): ServerResource {
         $game = Game::findOrFail($request->input('game'));
-        // TODO: we are not using the location for nodeSelection
         $location = Location::findOrFail($request->input('location'));
 
         $processor = $gameService->getProcessor($game);
@@ -53,7 +52,7 @@ class ServerController extends Controller
 
         // Selects node to create the server on
         // TODO: this should come from request
-        $node = $nodeSelection->handle($game);
+        $node = $nodeSelection->handle($location, $game);
 
         // Transform user form to server cost
         $cost = $configurerService->formToCost($game, $node, $form);
