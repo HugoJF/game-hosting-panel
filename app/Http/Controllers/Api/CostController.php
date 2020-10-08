@@ -30,13 +30,10 @@ class CostController extends Controller
 
     public function creation(Request $request)
     {
-        $game = Game::find($request->get('game'));
+        $game = Game::findOrFail($request->get('game'));
+        $location = Location::findOrFail($request->get('location'));
 
-        if (!($game instanceof Game))  {
-            throw new BadRequestException;
-        }
-
-        $node = $this->nodeSelection->handle($game);
+        $node = $this->nodeSelection->handle($location, $game);
 
         return $this->cost($game, $node, $request->all());
     }
