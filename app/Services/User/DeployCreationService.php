@@ -10,7 +10,6 @@ use App\Exceptions\TooManyServersException;
 use App\Node;
 use App\Server;
 use App\User;
-use Exception;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -31,18 +30,26 @@ class DeployCreationService
      * @param Server $server
      * @param string $billingPeriod
      * @param array  $config
+     * @param array  $form
      *
      * @return Deploy
-     * @throws Exception
      * @throws Throwable
      */
-    public function handle(Server $server, string $billingPeriod, array $config): Deploy
-    {
-        return DB::transaction(fn() => $this->create($server, $billingPeriod, $config));
+    public function handle(
+        Server $server,
+        string $billingPeriod,
+        array $config,
+        array $form
+    ): Deploy {
+        return DB::transaction(fn() => $this->create($server, $billingPeriod, $config, $form));
     }
 
-    protected function create(Server $server, string $billingPeriod, array $config): Deploy
-    {
+    protected function create(
+        Server $server,
+        string $billingPeriod,
+        array $config,
+        array $form
+    ): Deploy {
         $this->preChecks($server->user, $server->node, $billingPeriod, $config);
 
         $costPerPeriod = $this->costService->getCostPerPeriod($server->node, $billingPeriod, $config);
@@ -54,10 +61,10 @@ class DeployCreationService
             'memory'          => $config['memory'],
             'disk'            => $config['disk'],
             'databases'       => $config['databases'],
+            'form'            => json_encode($form, JSON_THROW_ON_ERROR),
             'server_id'       => $server->id,
             'io'              => 500,
-        ])->save()
-        );
+        ])->save());
     }
 
     /**

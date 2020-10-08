@@ -16,3 +16,4 @@ _ide_helper.php
 _ide_helper_models.php
 .idea/
 build/
+public/sitemap.xml

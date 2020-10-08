@@ -16,6 +16,7 @@ export const games = {
         // use async/await for async actions
         async load(payload, root) {
             dispatch.games.setLoading(true);
+
             try {
                 let response = await axios.get('/api/configurer/games');
                 dispatch.games.set(response.data);

@@ -22,7 +22,7 @@ export default function LocationSelection({selected, onSelect}) {
         loading={locations.loading}
         status={selected ? 'green' : 'red'}
     >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
             {
                 Object
                     .entries(locations.locations)

@@ -2,14 +2,20 @@
 
 namespace App\Processors;
 
+use App\Exceptions\InvalidParameterChoiceException;
+use App\Exceptions\MissingStubException;
 use App\Node;
 use Exception;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 abstract class Processor
 {
-    protected array $params = [];
+    protected array $parameters = [];
+
+    protected string $stub;
+
     protected Node $node;
 
     /**
@@ -19,14 +25,51 @@ abstract class Processor
      *
      * @return array
      */
-    abstract protected function cost(array $config): array;
+    abstract protected function calculateResourceCost(array $config): array;
+
+    /**
+     * Generates a custom startup string to include custom form parameters
+     *
+     * @param array $form
+     *
+     * @return string
+     */
+    abstract public function formToStartupConfig(array $form): ?string;
+
+    public function __construct()
+    {
+        $this->stub = collect(config('processors'))
+            ->map(fn($definition) => $definition['handler'])
+            ->flip()
+            ->get(static::class);
+
+        if ($this->stub === null) {
+            throw new MissingStubException;
+        }
+
+        $this->parameters = config("processors.$this->stub.parameters");
+    }
 
     /**
      * Generates rules needed to compute cost
      *
      * @return array
      */
-    abstract protected function rules(): array;
+    protected function rules(): array
+    {
+        $defaultRules = 'required';
+        $rules = [];
+
+        foreach ($this->parameters as $parameter => $definition) {
+            $options = $definition['options'];
+
+            $values = collect($options)->keys()->map(fn ($value) => (string) $value);
+
+            $rules[ $parameter ] = [$defaultRules, Rule::in($values)];
+        }
+
+        return $rules;
+    }
 
     /**
      * Sets the Node used as reference to reject resource costs
@@ -41,53 +84,75 @@ abstract class Processor
     }
 
     /**
-     * Validates config then compute cost
+     * Validates user input from configurer
      *
-     * @param array $config
+     * @param array $form
      *
      * @return array
+     * @throws InvalidParameterChoiceException
      */
-    public function resourceCost(array $config): array
+    public function validateForm(array $form): array
     {
         try {
-            Validator::validate($config, $this->rules());
-
-            return $this->cost($config);
+            return Validator::validate($form, $this->rules());
         } catch (ValidationException $e) {
-            return collect(['cpu', 'memory', 'disk', 'databases'])
-                ->flip()
-                ->map(fn() => 0)
-                ->toArray();
+            // TODO: somehow convert the error bag to string
+            /*
+             array:1 [
+                "slots" => array:1 [
+                    0 => "The slots field is required."
+                ]
+             ]
+             */
+            throw new InvalidParameterChoiceException;
+        }
+    }
+
+    /**
+     * Validates config then compute cost
+     *
+     * @param array $form
+     *
+     * @return array|null
+     */
+    public function resourceCost(array $form): ?array
+    {
+        try {
+            $validatedForm = $this->validateForm($form);
+
+            return $this->calculateResourceCost($validatedForm);
+        } catch (InvalidParameterChoiceException $e) {
+            return null;
         }
     }
 
     /**
      * Calculates resource usage for a given server configuration choice.
      *
-     * @param array $choices
+     * @param array $form
      *
      * @return array
      */
-    public function calculate(array $choices): array
+    public function calculate(array $form): array
     {
-        // Filter choices that was used in this calculator
-        $usedChoices = collect($choices)->only(array_keys($this->params))->toArray();
+        // Filter choices that were used in this calculator
+        $usedOptions = collect($form)->only(array_keys($this->parameters))->toArray();
 
         // Map 'empty_value' for each parameter
-        $defaultChoices = collect($this->params)->mapWithKeys(fn($value, $param) => [
-            $param => $this->params[ $param ]['empty_value']]
+        $defaultOptions = collect($this->parameters)->mapWithKeys(fn($value, $param) => [
+            $param => $this->parameters[ $param ]['empty_value']]
         )->toArray();
 
         // Add default values to missing choices
-        $choices = array_merge($defaultChoices, $usedChoices);
+        $form = array_merge($defaultOptions, $usedOptions);
 
         // Map possible parameter variables (that are compatible with the current choices)
-        $options = collect($this->params)->mapWithKeys(fn($value, $param) => [
-            $param => $this->possibleVariables($param, $choices),
+        $options = collect($this->parameters)->mapWithKeys(fn($value, $parameter) => [
+            $parameter => $this->computeAllPossibleOptions($parameter, $form),
         ])->toArray();
 
         // Replace possible choices into parameter list
-        return collect($this->params)->mapWithKeys(fn($definition, $param) => [
+        return collect($this->parameters)->mapWithKeys(fn($definition, $param) => [
             $param => array_merge(
                 $definition,
                 [
@@ -98,28 +163,28 @@ abstract class Processor
     }
 
     /**
-     * Given a parameter name, variate all it's options against a configuration and filter configurations
-     * that are get rejected by reject()
+     * Given a parameter name, variate all it's options against a configuration and filter
+     * configurations that are get rejected by reject()
      *
-     * @param string $param
-     * @param array  $choices
+     * @param string $parameter
+     * @param array  $form
      *
      * @return array
      * @throws Exception
      */
-    private function possibleVariables(string $param, array $choices): array
+    private function computeAllPossibleOptions(string $parameter, array $form): array
     {
         // Assert that the parameter is defined
-        if (!array_key_exists('options', $this->params[ $param ])) {
-            throw new Exception("Could not find 'options' definition for parameter $param");
+        if (!array_key_exists('options', $this->parameters[ $parameter ])) {
+            throw new Exception("Could not find 'options' definition for parameter $parameter");
         }
 
-        $options = $this->params[ $param ]['options'];
+        $options = $this->parameters[ $parameter ]['options'];
 
         // Build a config for each parameter option and current choices, calculate cost and filter results.
         return collect($options)
             ->mapWithKeys(fn($text, $option) => [
-                $option => array_merge($choices, [$param => $option]),
+                $option => array_merge($form, [$parameter => $option]),
             ])
             // Compute resource cost for each config
             ->map(fn($config) => $this->resourceCost($config))
@@ -152,8 +217,10 @@ abstract class Processor
             $cost = $resourceCost[ $resource ];
 
             if ($cost > $this->node->$limit) {
-                return false;
+                return true;
             }
         }
+
+        return false;
     }
 }

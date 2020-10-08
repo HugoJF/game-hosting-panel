@@ -5,133 +5,49 @@ namespace App\Http\Controllers\Api;
 use App\Game;
 use App\Http\Controllers\Controller;
 use App\Location;
-use App\Node;
-use App\Processors\Processor;
+use App\Server;
+use App\Services\ConfigurerService;
 use App\Services\GameService;
 use App\Services\User\NodeSelectionService;
 use Illuminate\Http\Request;
 
 class ConfigurerController extends Controller
 {
-    public function periods()
+    public function periods(ConfigurerService $service)
     {
-        $periods = config('ghp.billing-periods');
-
-        return collect($periods)
-            ->filter(fn($enabled) => $enabled)
-            ->map(fn($enabled, $key) => $key)
-            ->map(fn($key) => trans("words.$key"));
+        return $service->periods();
     }
 
-    public function games()
+    public function games(ConfigurerService $service)
     {
-        return Game::all()->keyBy('id');
+        return $service->games();
     }
 
-    public function locations()
+    public function locations(ConfigurerService $service)
     {
-        return Location::all()->map(function (Location $location) {
-            return $location->attributesToArray() + [
-                    'available' => true,
-                ];
-        })->keyBy('id');
+        return $service->locations();
     }
 
-    public function gameLocations(Game $game)
+    public function gameLocations(ConfigurerService $service, Game $game)
     {
-        $locations = Location::with(['nodes', 'nodes.games'])->get();
-
-        // Serialize Location and add 'available' field, if ANY node has $game
-        return $locations->map(function (Location $location) use ($game) {
-            $arr = $location->attributesToArray();
-            // Check if we have a Node, that has $game
-            $arr['available'] = $location->nodes->filter(function (Node $node) use ($game) {
-                    return $node->games->filter(fn(Game $g) => $g->id === $game->id)->count() > 0;
-                })->count() > 0;
-
-            return $arr;
-        })->keyBy('id');
+        return $service->gameLocations($game);
     }
 
-    public function computeResources(
-        GameService $service,
-        Request $request,
-        Game $game,
-        Location $location
-    ) {
-        /** @var Processor $processor */
-        $processor = $service->getProcessor($game);
-
-        $cost = $processor->resourceCost($request->all());
-        $remainder = $request->only(['game', 'location']);
-
-        return array_merge($cost, $remainder);
+    /** @deprecated */
+    public function currentForm(Server $server)
+    {
+        return $server->form;
     }
 
     public function parameters(
         NodeSelectionService $nodeSelection,
-        GameService $service,
+        ConfigurerService $configurerService,
         Request $request,
         Game $game,
-        Location $location,
-        $mode = 'simple'
+        Location $location
     ): array {
-        if ($mode === 'simple') {
-            /** @var Processor $processor */
-            $processor = $service->getProcessor($game);
+        $node = $nodeSelection->handle($location, $game);
 
-            $processor->setNode($nodeSelection->handle($location));
-
-            return $processor->calculate($request->all());
-        }
-
-        return [
-            'cpu'       => [
-                'name'        => 'CPU',
-                'icon'        => 'cpu',
-                'description' => 'Maximum core usage',
-                'options'     => [
-                    '1200' => '1200 points',
-                    '1800' => '1800 points',
-                    '2400' => '2400 points',
-                ],
-            ],
-            'memory'    => [
-                'name'        => 'Memory',
-                'icon'        => 'memory',
-                'description' => 'Maximum memory usage',
-                'options'     => [
-                    '1000' => '1 GB',
-                    '2000' => '2 GB',
-                    '3000' => '3 GB',
-                    '4000' => '4 GB',
-                    '5000' => '5 GB',
-                ],
-            ],
-            'disk'      => [
-                'name'        => 'Disk',
-                'icon'        => 'disk',
-                'description' => 'Maximum disk usage',
-                'options'     => [
-                    '5000'  => '5 GB',
-                    '10000' => '10 GB',
-                    '20000' => '20 GB',
-                    '30000' => '30 GB',
-                    '40000' => '40 GB',
-                    '50000' => '50 GB',
-                ],
-            ],
-            'databases' => [
-                'name'        => 'Databases',
-                'icon'        => 'databases',
-                'description' => 'Maximum database tables',
-                'options'     => [
-                    '0' => '0',
-                    '1' => '1',
-                    '2' => '2',
-                    '3' => '3',
-                ],
-            ],
-        ];
+        return $configurerService->parameterSelection($game, $node, $request->all());
     }
 }

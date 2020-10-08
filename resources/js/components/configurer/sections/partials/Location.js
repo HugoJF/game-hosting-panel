@@ -17,23 +17,31 @@ const SelectionCheck = tailwind.div(({selected}) => `
 `);
 
 const Flag = tailwind.div(() => `
-    w-16 h-16
+    w-16 h-16 flex-shrink-0
+`);
+
+const Body = tailwind.div(() => `
+    ml-4
 `);
 
 const Info = tailwind.div(({selected}) => `
-    ml-4 flex-grow ${selected ? 'text-blue-700' : ''}
-`);
-
-const Short = tailwind.div(() => `
-    text-xl font-medium
+    flex flex-col lg:flex-row lg:items-baseline flex-wrap flex-grow ${selected ? 'text-blue-700' : ''}
 `);
 
 const Long = tailwind.div(() => `
-    text-sm font-light tracking-tight
+    lg:mr-2 text-xl font-medium
+`);
+
+const Short = tailwind.div(() => `
+    text-sm font-normal tracking-tight
+`);
+
+const Description = tailwind.div(() => `
+    text-sm font-light
 `);
 
 export default function Location({id, location, selected, onClick}) {
-    const {short, long, flag, available} = location;
+    const {short, long, description, flag, available} = location;
 
     function getWrapperOnClick() {
         return available ? onClick.bind(this, id) : undefined;
@@ -46,23 +54,29 @@ export default function Location({id, location, selected, onClick}) {
     }
 
     return <Wrapper
-        $onClick={getWrapperOnClick()}
-        selected={selected}
-        available={available}
-        $style={getWrapperStyle()}
+        onClick={getWrapperOnClick()}
+        style={getWrapperStyle()}
+        $selected={selected}
+        $available={available}
     >
         <SelectionCheck
-            selected={selected}
-            $dangerouslySetInnerHTML={{__html: feather.icons.check.toSvg()}}
+            $selected={selected}
+            dangerouslySetInnerHTML={{__html: feather.icons.check.toSvg()}}
         />
 
         <Flag>
-            <img alt={`${short} | ${long}`} src={flags[flag]}/>
+            <img alt={`${long} | ${short}`} src={flags[flag]}/>
         </Flag>
 
-        <Info>
-            <Short>{short}</Short>
-            <Long>{long}</Long>
-        </Info>
+        <Body>
+            <Info>
+                <Long>{long}</Long>
+                <Short>{short}</Short>
+            </Info>
+
+            <Description>
+                {description}
+            </Description>
+        </Body>
     </Wrapper>
 }

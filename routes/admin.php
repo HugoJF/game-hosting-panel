@@ -78,6 +78,7 @@ Route::prefix('nodes')->group(function () {
 */
 
 Route::prefix('games')->group(function () {
+    Route::get('{game}', 'GameController@show')->name('admins.games.show');
     Route::get('{game}/edit', 'GameController@edit')->name('admins.games.edit');
 
     Route::patch('{game}', 'GameController@update')->name('admins.games.update');

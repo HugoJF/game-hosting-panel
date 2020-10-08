@@ -1,5 +1,19 @@
 import get from 'lodash.get';
 
+async function attempt(dispatch, action) {
+    try {
+        return await action();
+    } catch (e) {
+        const message = e.message;
+        const responseMessage = get(e, 'response.data.message');
+
+        dispatch.servers.setLoading(false);
+        dispatch.servers.setError(responseMessage || message);
+
+        return false;
+    }
+}
+
 export const servers = {
     state: {
         creating: false,
@@ -14,37 +28,24 @@ export const servers = {
         }
     },
     effects: dispatch => ({
-        async deploy(payload, root) {
+        async update(payload, root) {
             dispatch.servers.setLoading(true);
             dispatch.servers.setError();
-            try {
-                let response = await axios.patch(`/servers/${payload.server}`, payload.config);
+
+            return await attempt(dispatch, async () => {
+                let response = await axios.patch(`/servers/${payload.server}`, payload.form);
+
                 return response.data;
-            } catch (e) {
-                let message = e.message;
-                let responseMessage = get(e, 'response.data.message');
-
-                dispatch.servers.setLoading(false);
-                dispatch.servers.setError(responseMessage || message);
-
-                return false;
-            }
+            });
         },
         async create(payload, root) {
             dispatch.servers.setLoading(true);
 
-            try {
+            return await attempt(dispatch, async () => {
                 let response = await axios.post(`/servers`, payload);
+
                 return response.data;
-            } catch (e) {
-                let message = e.message;
-                let responseMessage = get(e, 'response.data.message');
-
-                dispatch.servers.setLoading(false);
-                dispatch.servers.setError(responseMessage || message);
-
-                return false;
-            }
+            });
         }
     })
 };

@@ -2,14 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Classes\PterodactylApi;
 use App\Forms\GameForm;
 use App\Game;
 use App\Http\Controllers\Controller;
+use HCGCloud\Pterodactyl\Pterodactyl;
 use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\FormBuilder;
 
 class GameController extends Controller
 {
+    public function show(Pterodactyl $api, Game $game)
+    {
+        $resource = $api->egg($game->nest_id, $game->id);
+
+        dd($resource);
+    }
 
     public function edit(FormBuilder $builder, Game $game)
     {

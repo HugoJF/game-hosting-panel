@@ -27,9 +27,8 @@ return [
         */
 
         'costs' => [
-            'memory'    => 1000,
-            'disk'      => 27000,
-            'databases' => 0,
+            'memory' => 1000,
+            'disk'   => 27000,
         ],
 
         /*
@@ -55,7 +54,7 @@ return [
         */
 
         'parameters' => [
-            'tickrate' => [
+            'tickrate'  => [
                 'name'        => 'Tickrate',
                 'icon'        => 'cpu',
                 'description' => 'Maximum player count',
@@ -66,7 +65,7 @@ return [
                     '64'    => '64',
                 ],
             ],
-            'slots'    => [
+            'slots'     => [
                 'name'        => 'Slots',
                 'icon'        => 'cpu',
                 'description' => 'Estimated slot count',
@@ -82,6 +81,35 @@ return [
                     '36' => '36',
                     '40' => '40',
                 ],
+            ],
+            'databases' => [
+                'name'        => 'Databases',
+                'icon'        => 'cpu',
+                'description' => 'Maximum databases',
+                'empty_value' => '0',
+                'options'     => [
+                    '0' => '0',
+                    '1' => '1',
+                ],
+            ],
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Server card parameters
+        |--------------------------------------------------------------------------
+        */
+
+        'card' => [
+            'slots'    => [
+                'name'   => 'words.slots',
+                'icon'   => 'archive',
+                'suffix' => 'players',
+            ],
+            'tickrate' => [
+                'name'   => 'words.tickrate',
+                'icon'   => 'cpu',
+                'suffix' => 'ticks/sec',
             ],
         ],
     ],
@@ -113,7 +141,7 @@ return [
         |--------------------------------------------------------------------------
         */
 
-        'cost_per_slot' => 30,
+        'cost_per_slot' => 35,
 
         /*
         |--------------------------------------------------------------------------
@@ -129,7 +157,7 @@ return [
             'slots' => [
                 'name'        => 'Slots',
                 'icon'        => 'cpu',
-                'description' => 'Estimated slot count',
+                'description' => 'Estimted slot count',
                 'empty_value' => '10',
                 'options'     => [
                     '10' => '10',
@@ -169,14 +197,6 @@ return [
 
         /*
         |--------------------------------------------------------------------------
-        | MB of memory per player
-        |--------------------------------------------------------------------------
-        */
-
-        'memory_per_player' => 32,
-
-        /*
-        |--------------------------------------------------------------------------
         | MB of disk per world size
         |--------------------------------------------------------------------------
         */
@@ -193,50 +213,61 @@ return [
         | Parameter information
         |--------------------------------------------------------------------------
         |
-        | Parameter configuration that is used by the processor to
+        | Parameters configuration that are used by the processor to
         | dynamically generate and filter parameters for the game server.
         |
         */
 
         'parameters' => [
-            'slots'   => [
-                'name'        => 'Slots',
+            'cpu'       => [
+                'name'        => 'CPU',
                 'icon'        => 'cpu',
-                'description' => 'Maximum player count',
-                'empty_value' => '10',
+                'description' => 'Maximum CPU performance',
+                'empty_value' => '1200',
                 'options'     => [
-                    '10'  => '10',
-                    '20'  => '20',
-                    '30'  => '30',
-                    '40'  => '40',
-                    '50'  => '50',
-                    '75'  => '75',
-                    '100' => '100',
+                    '1200' => '1200 marks',
+                    '1800' => '1800 marks',
+                    '2400' => '2400 marks',
+                    '3600' => '3600 marks',
                 ],
             ],
-            'plugins' => [
-                'name'        => 'Plugins',
-                'icon'        => 'cpu',
-                'description' => 'Amount of plugins',
+            'memory'    => [
+                'name'        => 'Memory',
+                'icon'        => 'memory',
+                'description' => 'Maximum RAM allocation',
+                'empty_value' => '1000',
+                'options'     => [
+                    '1000' => '1 GB',
+                    '1500' => '1,5 GB',
+                    '2000' => '2 GB',
+                    '2500' => '2,5 GB',
+                    '3000' => '3 GB',
+                ],
+            ],
+            'disk'      => [
+                'name'        => 'Disk',
+                'icon'        => 'disk',
+                'description' => 'Maximum disk usage',
+                'empty_value' => '500',
+                'options'     => [
+                    '500'  => '500 MB',
+                    '1000' => '1 GB',
+                    '2000' => '2 GB',
+                    '3000' => '3 GB',
+                    '4000' => '4 GB',
+                    '5000' => '5 GB',
+                ],
+            ],
+            'databases' => [
+                'name'        => 'Databases',
+                'icon'        => 'databases',
+                'description' => 'Maximum databases allowed',
                 'empty_value' => '0',
                 'options'     => [
-                    '0'  => '0',
-                    '5'  => '5',
-                    '10' => '10',
-                    '25' => '25',
-                    '50' => '50',
-                ],
-            ],
-            'size'    => [
-                'name'        => 'World size',
-                'icon'        => 'cpu',
-                'description' => 'World size',
-                'empty_value' => 'small',
-                'options'     => [
-                    'small'  => 'Small',
-                    'medium' => 'Medium',
-                    'large'  => 'Large',
-                    'huge'   => 'Huge',
+                    '0' => '0',
+                    '1' => '1',
+                    '2' => '2',
+                    '3' => '3',
                 ],
             ],
         ],

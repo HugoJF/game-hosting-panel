@@ -16,6 +16,8 @@ class Server extends Model implements Searchable
 
     protected $dates = ['installed_at', 'removed_at'];
 
+    protected $casts = ['form' => 'array'];
+
     public function getRouteKeyName()
     {
         return 'hash';

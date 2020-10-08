@@ -1,5 +1,28 @@
 let source = axios.CancelToken.source();
 
+const CREATION = 'creation';
+const DEPLOYMENT = 'deployment';
+
+async function calculateCost(dispatch, type, params) {
+    try {
+        source.cancel();
+        source = axios.CancelToken.source();
+
+        dispatch.cost.setLoading(true);
+
+        let response = await axios.get(`/api/cost/${type}`, {
+            params: params,
+            cancelToken: source.token,
+        });
+
+        dispatch.cost.setValue(response.data.cost);
+    } catch (e) {
+        console.error(e);
+    } finally {
+        dispatch.cost.setLoading(false);
+    }
+}
+
 export const cost = {
     state: {
         loading: false,
@@ -14,25 +37,11 @@ export const cost = {
         }
     },
     effects: dispatch => ({
-        async calculateCost(payload, root) {
-            try {
-                dispatch.cost.setLoading(true);
-
-                source.cancel();
-                source = axios.CancelToken.source();
-
-                dispatch.form.update(payload);
-
-                let response = await axios.get('/api/cost/creation', {
-                    params: root.config.config,
-                    cancelToken: source.token,
-                });
-                dispatch.cost.setValue(response.data.cost);
-            } catch (e) {
-                console.error(e);
-            } finally {
-                dispatch.cost.setLoading(false);
-            }
+        async calculateCreationCost(payload, root) {
+            await calculateCost(dispatch, CREATION, root.form);
+        },
+        async calculateDeploymentCost(payload, root) {
+            await calculateCost(dispatch, DEPLOYMENT, root.form);
         },
     })
 };

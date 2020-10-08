@@ -13,11 +13,11 @@ class DeployCostService
      *
      * @param Node   $node
      * @param string $billingPeriod
-     * @param array  $config
+     * @param array  $cost
      *
      * @return mixed
      */
-    public function getCostPerPeriod(Node $node, string $billingPeriod, array $config)
+    public function getCostPerPeriod(Node $node, string $billingPeriod, array $cost)
     {
         $multipliers = config('ghp.cost-multiplier');
 
@@ -31,7 +31,7 @@ class DeployCostService
         $final = 0;
 
         foreach ($params as $name => $costName) {
-            $final += $node->$costName * $config[ $name ] ?? 0;
+            $final += $node->$costName * $cost[ $name ] ?? 0;
         }
 
         return $final * $multipliers[ $billingPeriod ];

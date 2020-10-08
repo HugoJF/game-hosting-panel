@@ -1,19 +1,19 @@
 import React from 'react';
 import get from "lodash.get";
-import useParameters from "../hooks/useParameters";
 import SummaryItem from "./SummaryItem";
-import useConfig from "../hooks/useConfig";
+import useParameters from "../hooks/useParameters";
+import useForm from "../hooks/useForm";
 
 export default function SummaryCustomParameters() {
     const parameters = useParameters();
-    const config = useConfig();
+    const form = useForm();
 
     function getSpecName(spec) {
         return get(spec, 'name', '')
     }
 
     function getSpecValue(spec, specId) {
-        return get(spec, `options.${get(config, specId)}`, '')
+        return get(spec, `options.${get(form, specId)}`, '')
     }
 
     return Object

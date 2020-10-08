@@ -39,7 +39,7 @@ export default function SummarySubmitButton({onSubmit, text}) {
         }
         {
             !servers.loading &&
-            <OrderButton $onClick={handleOnClick}>
+            <OrderButton onClick={handleOnClick}>
                 {text}
             </OrderButton>
         }

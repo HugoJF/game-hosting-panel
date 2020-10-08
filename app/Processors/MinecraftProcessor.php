@@ -2,44 +2,24 @@
 
 namespace App\Processors;
 
-use Illuminate\Validation\Rule;
-
 class MinecraftProcessor extends Processor
 {
-    public function __construct()
+    public function calculateResourceCost(array $config): array
     {
-        $this->params = config('processors.minecraft.parameters');
+        return [
+            'cpu'       => $config['cpu'],
+            'memory'    => $config['memory'],
+            'disk'      => $config['disk'],
+            'databases' => $config['databases'],
+        ];
     }
 
     /**
      * @inheritDoc
      */
-    protected function rules(): array
+    public function formToStartupConfig(array $form): ?string
     {
-        $sizes = array_keys(config('processors.minecraft.parameters.size.options'));
-
-        return [
-            'size'    => ['required', Rule::in($sizes)],
-            'plugins' => 'required|numeric',
-            'slots'   => 'required|numeric',
-        ];
-    }
-
-    public function cost(array $config): array
-    {
-        $memoryPerPlayer = config('processors.minecraft.memory_per_player');
-        $diskPerSize = config('processors.minecraft.disk_per_size');
-
-        $disk = $diskPerSize[ $config['size'] ];
-
-        return array_merge(
-            config('processors.minecraft.costs'),
-            [
-                'cpu'    => 300 + (int) ($config['plugins']) * 50, // TODO: magic variables nop
-                'memory' => $memoryPerPlayer * (int) ($config['slots']),
-                'disk'   => $disk,
-            ],
-        );
+        return null;
     }
 
     public function reject(array $resourceCost): bool

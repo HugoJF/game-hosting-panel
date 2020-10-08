@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Location extends Model
 {
-    protected $fillable = ['id', 'short', 'long', 'flag'];
+    protected $fillable = ['id', 'short', 'long', 'description', 'flag'];
 
     public $incrementing = false;
 

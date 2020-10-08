@@ -26,15 +26,15 @@ export default function Game({id, game, selectable = true, selected, onClick}) {
     }
 
     return <Card
-        selected={selected}
-        $onClick={onClick.bind(this, id)}
-        $style={getContainerStyle()}
+        $selected={selected}
+        onClick={onClick.bind(this, id)}
+        style={getContainerStyle()}
     >
         <Image
-            selectable={selectable}
-            $src={cover}
-            $style={getImageStyle()}
-            $alt={name}
+            $selectable={selectable}
+            src={cover}
+            style={getImageStyle()}
+            alt={name}
         />
     </Card>
 }

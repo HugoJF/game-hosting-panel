@@ -3,8 +3,8 @@
 namespace Tests\Unit\Service\User;
 
 use App\Node;
+use App\Services\PterodactylApiService;
 use App\Services\User\AllocationSelectionService;
-use HCGCloud\Pterodactyl\Pterodactyl;
 use HCGCloud\Pterodactyl\Resources\Allocation;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -14,6 +14,11 @@ class AllocationSelectionServiceTest extends TestCase
 {
     use RefreshDatabase;
     use DatabaseMigrations;
+
+    public function todo_test_api_is_paginated()
+    {
+        //
+    }
 
     /**
      * TODO: split the service into 2 functions: one to filter allocations and another to select the best one.
@@ -25,14 +30,12 @@ class AllocationSelectionServiceTest extends TestCase
             'id' => 1,
         ]);
 
-        $this->mock(Pterodactyl::class)
+        $this->mock(PterodactylApiService::class)
              ->shouldReceive('allocations')
              ->withArgs([$node->id])
              ->andReturn([
-                 'data' => [
-                     new Allocation(['assigned' => true]),
-                     new Allocation(['assigned' => false]),
-                 ],
+                 new Allocation(['assigned' => true]),
+                 new Allocation(['assigned' => false]),
              ])
              ->once();
 

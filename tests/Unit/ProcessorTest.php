@@ -19,7 +19,10 @@ class ProcessorTest extends TestCase
     {
         $service = app(GameService::class);
         $node = factory(Node::class)->make([
-            'cpu_limit' => 30000,
+            'cpu_limit'       => 30000,
+            'memory_limit'    => 50000,
+            'disk_limit'      => 1000000,
+            'database_limit' => 10,
         ]);
 
         $processor = $service->getProcessor($game)->setNode($node);

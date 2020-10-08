@@ -31,4 +31,9 @@ class ServerFactory extends Factory
         $this->parameters['node_id'] = $this->node->model()->id;
         $this->parameters['user_id'] = $this->user->model()->id;
     }
+
+    public function postCreate(): void
+    {
+        $this->game->model()->nodes()->attach($this->node->model());
+    }
 }

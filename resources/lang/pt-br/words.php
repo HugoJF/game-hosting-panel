@@ -92,6 +92,8 @@ return [
     'update'          => 'Atualizar',
     'register'        => 'Registrar',
     'balance'         => 'Créditos',
+    'tickrate'        => 'Tickrate',
+    'players'         => 'Slots',
 
     'english'              => 'Inglês',
     'brazilian-portuguese' => 'Português Brasileiro',

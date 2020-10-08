@@ -6,10 +6,10 @@ import usePeriods from "../hooks/usePeriods";
 export default function PeriodSelector({selected, onSelect}) {
     const periods = usePeriods();
 
-    function handleOnClick(optionId) {
-        if (onSelect) onSelect({
-            billing_period: selected === optionId ? null : optionId
-        });
+    function handleOnClick(periodKey) {
+        if (onSelect) {
+            onSelect(selected === periodKey ? null : periodKey);
+        }
     }
 
     return <Section
