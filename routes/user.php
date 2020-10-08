@@ -12,7 +12,8 @@
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', 'HomeController@landing')->name('home');
+Route::get('/', 'HomeController@home')->name('home');
+Route::get('landing', 'HomeController@landing')->name('landing');
 Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
 
 /*
