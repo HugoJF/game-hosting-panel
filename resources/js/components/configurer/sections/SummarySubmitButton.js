@@ -4,6 +4,7 @@ import Loader from "../ui/Loader";
 import Error from "../ui/Error";
 import tailwind from "../tailwind";
 import useCost from "../hooks/useCost";
+import useValidForm from "../hooks/useValidForm";
 
 const OrderButton = tailwind.div(() => `
     trans px-5 py-3 bg-green-500
@@ -18,10 +19,7 @@ const Center = tailwind.div(() => `
 
 export default function SummarySubmitButton({onSubmit, text}) {
     const servers = useServers();
-    const cost = useCost();
-
-    const _cost = cost.value / 100;
-    const valid = !isNaN(_cost) && cost.value > 0;
+    const validForm = useValidForm();
 
     async function handleOnClick() {
         await onSubmit();
@@ -43,7 +41,7 @@ export default function SummarySubmitButton({onSubmit, text}) {
             </div>
         }
         {
-            !servers.loading && valid &&
+            !servers.loading && validForm &&
             <OrderButton onClick={handleOnClick}>
                 {text}
             </OrderButton>
