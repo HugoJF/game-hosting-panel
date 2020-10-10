@@ -2,7 +2,7 @@ import React from 'react';
 import useServers from "../hooks/useServers";
 import Loader from "../ui/Loader";
 import Error from "../ui/Error";
-import useCost from "../hooks/useCost";
+import tailwind from "../tailwind";
 import useValidForm from "../hooks/useValidForm";
 
 const OrderButton = tailwind.div(() => `
