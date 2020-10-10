@@ -2,7 +2,6 @@ import React from 'react';
 import useServers from "../hooks/useServers";
 import Loader from "../ui/Loader";
 import Error from "../ui/Error";
-import tailwind from "../tailwind";
 import useCost from "../hooks/useCost";
 import useValidForm from "../hooks/useValidForm";
 
