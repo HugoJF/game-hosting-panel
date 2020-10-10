@@ -41,6 +41,6 @@ return [
         'hourly'   => true,
         'daily'    => true,
         'weekly'   => true,
-        'monthly'  => true,
+        'monthly'  => false,
     ],
 ];
