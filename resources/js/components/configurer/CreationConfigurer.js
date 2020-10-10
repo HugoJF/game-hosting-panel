@@ -19,6 +19,7 @@ export default function CreationConfigurer() {
     function handleGameSelect(game) {
         dispatch.form.update({game});
         dispatch.form.clear(['game', 'billing_period']);
+        dispatch.parameters.clear();
         if (game) {
             dispatch.locations.load(game);
         } else {

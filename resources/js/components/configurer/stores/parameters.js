@@ -12,6 +12,10 @@ export const parameters = {
             state.parameters = payload;
             return state;
         },
+        clear(state, payload) {
+            state.parameters = {};
+            return state;
+        }
     },
     effects: dispatch => ({
         async fetchParameters({game, location, ...rest}, root) {
