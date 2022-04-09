@@ -30,7 +30,7 @@
         "laravel-echo": "^1.8.1",
         "lodash.get": "^4.4.2",
         "lodash.pickby": "^4.6.0",
-        "moment": "^2.25.3",
+        "moment": "^2.29.2",
         "pusher-js": "^7.0.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
